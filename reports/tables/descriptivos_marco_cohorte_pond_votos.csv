@@ -1,0 +1,111 @@
+frame,cohort,n_peliculas,n_no_clasificables,medida,variable,n,estimacion,ic95_inf,ic95_sup,n_efectivo
+amplio,1980-1989,50,3,Final feliz,y_feliz,47,0.3503,0.0749,0.7822,3.5071
+amplio,1980-1989,50,3,Final agridulce,y_agridulce,47,0.5641,0.1705,0.8907,3.5071
+amplio,1980-1989,50,3,Final ambiguo,y_ambiguo,47,0.0524,0.0023,0.5705,3.5071
+amplio,1980-1989,50,3,Final trágico,y_tragico,47,0.0333,0.0010,0.5536,3.5071
+amplio,1980-1989,50,3,Feliz o agridulce,y_resolucion_positiva,47,0.9143,0.4013,0.9941,3.5071
+amplio,1980-1989,50,3,Tono de cierre positivo,y_tono_positivo,44,0.9463,0.4257,0.9976,3.4646
+amplio,1980-1989,50,3,Protagonista sobrevive,y_sobrevive,44,0.9596,0.4372,0.9986,3.4632
+amplio,1980-1989,50,3,Objetivo logrado,y_objetivo,39,0.8963,0.6054,0.9799,10.8410
+amplio,1980-1989,50,3,Justicia narrativa,y_justicia,38,0.2155,0.0292,0.7154,3.1302
+amplio,1980-1989,50,3,Vínculos fortalecidos,y_relaciones,42,0.2986,0.0558,0.7541,3.4336
+amplio,1980-1989,50,3,Visión de la vida (−2 a +2),vision_vida,46,0.0597,-2.2392,2.3586,
+amplio,1990-1999,50,8,Final feliz,y_feliz,42,0.6093,0.3009,0.8497,8.4955
+amplio,1990-1999,50,8,Final agridulce,y_agridulce,42,0.3634,0.1342,0.6777,8.4955
+amplio,1990-1999,50,8,Final ambiguo,y_ambiguo,42,0.0000,0.0000,0.3114,8.4955
+amplio,1990-1999,50,8,Final trágico,y_tragico,42,0.0272,0.0015,0.3474,8.4955
+amplio,1990-1999,50,8,Feliz o agridulce,y_resolucion_positiva,42,0.9728,0.6526,0.9985,8.4955
+amplio,1990-1999,50,8,Tono de cierre positivo,y_tono_positivo,42,0.6528,0.3354,0.8751,8.4955
+amplio,1990-1999,50,8,Protagonista sobrevive,y_sobrevive,41,0.8351,0.4978,0.9628,8.4426
+amplio,1990-1999,50,8,Objetivo logrado,y_objetivo,39,0.9258,0.5896,0.9909,8.2224
+amplio,1990-1999,50,8,Justicia narrativa,y_justicia,39,0.6195,0.3062,0.8573,8.3099
+amplio,1990-1999,50,8,Vínculos fortalecidos,y_relaciones,39,0.5307,0.2415,0.8007,8.4125
+amplio,1990-1999,50,8,Visión de la vida (−2 a +2),vision_vida,41,0.8650,0.0395,1.6906,
+amplio,2000-2009,50,7,Final feliz,y_feliz,43,0.7106,0.4076,0.8976,10.0981
+amplio,2000-2009,50,7,Final agridulce,y_agridulce,43,0.0196,0.0009,0.3031,10.0981
+amplio,2000-2009,50,7,Final ambiguo,y_ambiguo,43,0.2187,0.0658,0.5266,10.0981
+amplio,2000-2009,50,7,Final trágico,y_tragico,43,0.0511,0.0055,0.3441,10.0981
+amplio,2000-2009,50,7,Feliz o agridulce,y_resolucion_positiva,43,0.7302,0.4253,0.9083,10.0981
+amplio,2000-2009,50,7,Tono de cierre positivo,y_tono_positivo,41,0.7238,0.4179,0.9054,9.9842
+amplio,2000-2009,50,7,Protagonista sobrevive,y_sobrevive,43,0.9574,0.6667,0.9961,10.0981
+amplio,2000-2009,50,7,Objetivo logrado,y_objetivo,37,0.7620,0.4517,0.9256,9.8792
+amplio,2000-2009,50,7,Justicia narrativa,y_justicia,29,0.8691,0.5238,0.9756,8.0363
+amplio,2000-2009,50,7,Vínculos fortalecidos,y_relaciones,38,0.5488,0.2638,0.8050,9.1827
+amplio,2000-2009,50,7,Visión de la vida (−2 a +2),vision_vida,44,0.7781,0.1814,1.3748,
+amplio,2010-2019,50,3,Final feliz,y_feliz,47,0.3583,0.1380,0.6609,9.4070
+amplio,2010-2019,50,3,Final agridulce,y_agridulce,47,0.5799,0.2900,0.8235,9.4070
+amplio,2010-2019,50,3,Final ambiguo,y_ambiguo,47,0.0046,0.0001,0.2964,9.4070
+amplio,2010-2019,50,3,Final trágico,y_tragico,47,0.0572,0.0064,0.3648,9.4070
+amplio,2010-2019,50,3,Feliz o agridulce,y_resolucion_positiva,47,0.9382,0.6297,0.9927,9.4070
+amplio,2010-2019,50,3,Tono de cierre positivo,y_tono_positivo,46,0.8106,0.4883,0.9505,9.2394
+amplio,2010-2019,50,3,Protagonista sobrevive,y_sobrevive,47,0.9246,0.6135,0.9896,9.4070
+amplio,2010-2019,50,3,Objetivo logrado,y_objetivo,40,0.4930,0.2183,0.7720,8.6864
+amplio,2010-2019,50,3,Justicia narrativa,y_justicia,40,0.2120,0.0544,0.5572,7.9547
+amplio,2010-2019,50,3,Vínculos fortalecidos,y_relaciones,46,0.5390,0.2589,0.7965,9.3917
+amplio,2010-2019,50,3,Visión de la vida (−2 a +2),vision_vida,49,0.5992,-0.1515,1.3499,
+amplio,2020-2024,50,2,Final feliz,y_feliz,48,0.6541,0.3452,0.8715,9.1030
+amplio,2020-2024,50,2,Final agridulce,y_agridulce,48,0.1551,0.0353,0.4796,9.1030
+amplio,2020-2024,50,2,Final ambiguo,y_ambiguo,48,0.1167,0.0218,0.4390,9.1030
+amplio,2020-2024,50,2,Final trágico,y_tragico,48,0.0742,0.0099,0.3912,9.1030
+amplio,2020-2024,50,2,Feliz o agridulce,y_resolucion_positiva,48,0.8092,0.4845,0.9503,9.1030
+amplio,2020-2024,50,2,Tono de cierre positivo,y_tono_positivo,48,0.8071,0.4825,0.9494,9.1030
+amplio,2020-2024,50,2,Protagonista sobrevive,y_sobrevive,47,0.8822,0.5568,0.9781,8.9531
+amplio,2020-2024,50,2,Objetivo logrado,y_objetivo,41,0.7483,0.4058,0.9282,7.8970
+amplio,2020-2024,50,2,Justicia narrativa,y_justicia,33,0.6810,0.3293,0.9027,6.8605
+amplio,2020-2024,50,2,Vínculos fortalecidos,y_relaciones,46,0.6670,0.3373,0.8875,7.8950
+amplio,2020-2024,50,2,Visión de la vida (−2 a +2),vision_vida,48,0.8680,0.1047,1.6313,
+popular,1980-1989,150,0,Final feliz,y_feliz,150,0.4400,0.2903,0.6015,35.3053
+popular,1980-1989,150,0,Final agridulce,y_agridulce,150,0.3779,0.2376,0.5423,35.3053
+popular,1980-1989,150,0,Final ambiguo,y_ambiguo,150,0.0760,0.0248,0.2105,35.3053
+popular,1980-1989,150,0,Final trágico,y_tragico,150,0.1061,0.0408,0.2486,35.3053
+popular,1980-1989,150,0,Feliz o agridulce,y_resolucion_positiva,150,0.8179,0.6619,0.9116,35.3053
+popular,1980-1989,150,0,Tono de cierre positivo,y_tono_positivo,149,0.6566,0.4914,0.7909,35.1972
+popular,1980-1989,150,0,Protagonista sobrevive,y_sobrevive,146,0.7269,0.5564,0.8496,32.6015
+popular,1980-1989,150,0,Objetivo logrado,y_objetivo,130,0.5774,0.4074,0.7308,32.1166
+popular,1980-1989,150,0,Justicia narrativa,y_justicia,123,0.3933,0.2355,0.5770,27.7817
+popular,1980-1989,150,0,Vínculos fortalecidos,y_relaciones,136,0.4299,0.2721,0.6034,30.5291
+popular,1980-1989,150,0,Visión de la vida (−2 a +2),vision_vida,150,0.3885,0.0134,0.7636,
+popular,1990-1999,150,0,Final feliz,y_feliz,150,0.5100,0.3684,0.6501,44.5605
+popular,1990-1999,150,0,Final agridulce,y_agridulce,150,0.3257,0.2068,0.4723,44.5605
+popular,1990-1999,150,0,Final ambiguo,y_ambiguo,150,0.0071,0.0005,0.0919,44.5605
+popular,1990-1999,150,0,Final trágico,y_tragico,150,0.1572,0.0783,0.2905,44.5605
+popular,1990-1999,150,0,Feliz o agridulce,y_resolucion_positiva,150,0.8358,0.7014,0.9168,44.5605
+popular,1990-1999,150,0,Tono de cierre positivo,y_tono_positivo,149,0.7112,0.5651,0.8235,44.2753
+popular,1990-1999,150,0,Protagonista sobrevive,y_sobrevive,149,0.8317,0.6956,0.9145,43.8804
+popular,1990-1999,150,0,Objetivo logrado,y_objetivo,143,0.6577,0.5069,0.7821,42.2610
+popular,1990-1999,150,0,Justicia narrativa,y_justicia,134,0.5689,0.4144,0.7110,39.0519
+popular,1990-1999,150,0,Vínculos fortalecidos,y_relaciones,142,0.6455,0.4940,0.7725,41.8546
+popular,1990-1999,150,0,Visión de la vida (−2 a +2),vision_vida,150,0.7187,0.4159,1.0215,
+popular,2000-2009,150,0,Final feliz,y_feliz,150,0.5289,0.4294,0.6262,95.0318
+popular,2000-2009,150,0,Final agridulce,y_agridulce,150,0.2975,0.2149,0.3958,95.0318
+popular,2000-2009,150,0,Final ambiguo,y_ambiguo,150,0.1133,0.0641,0.1926,95.0318
+popular,2000-2009,150,0,Final trágico,y_tragico,150,0.0603,0.0274,0.1273,95.0318
+popular,2000-2009,150,0,Feliz o agridulce,y_resolucion_positiva,150,0.8264,0.7380,0.8895,95.0318
+popular,2000-2009,150,0,Tono de cierre positivo,y_tono_positivo,148,0.6798,0.5796,0.7657,93.2811
+popular,2000-2009,150,0,Protagonista sobrevive,y_sobrevive,147,0.8149,0.7238,0.8810,92.4020
+popular,2000-2009,150,0,Objetivo logrado,y_objetivo,143,0.7442,0.6453,0.8230,89.9772
+popular,2000-2009,150,0,Justicia narrativa,y_justicia,120,0.5410,0.4281,0.6498,73.8103
+popular,2000-2009,150,0,Vínculos fortalecidos,y_relaciones,145,0.5028,0.4029,0.6025,92.5779
+popular,2000-2009,150,0,Visión de la vida (−2 a +2),vision_vida,150,0.7970,0.5847,1.0092,
+popular,2010-2019,150,0,Final feliz,y_feliz,150,0.5305,0.4319,0.6267,97.0397
+popular,2010-2019,150,0,Final agridulce,y_agridulce,150,0.2887,0.2080,0.3856,97.0397
+popular,2010-2019,150,0,Final ambiguo,y_ambiguo,150,0.1054,0.0587,0.1822,97.0397
+popular,2010-2019,150,0,Final trágico,y_tragico,150,0.0754,0.0376,0.1455,97.0397
+popular,2010-2019,150,0,Feliz o agridulce,y_resolucion_positiva,150,0.8192,0.7310,0.8831,97.0397
+popular,2010-2019,150,0,Tono de cierre positivo,y_tono_positivo,147,0.7523,0.6568,0.8282,94.9170
+popular,2010-2019,150,0,Protagonista sobrevive,y_sobrevive,148,0.8539,0.7692,0.9111,95.1270
+popular,2010-2019,150,0,Objetivo logrado,y_objetivo,147,0.7469,0.6509,0.8237,94.6960
+popular,2010-2019,150,0,Justicia narrativa,y_justicia,126,0.6277,0.5171,0.7265,78.2916
+popular,2010-2019,150,0,Vínculos fortalecidos,y_relaciones,142,0.6088,0.5066,0.7024,91.7662
+popular,2010-2019,150,0,Visión de la vida (−2 a +2),vision_vida,150,0.9205,0.7289,1.1121,
+popular,2020-2024,150,1,Final feliz,y_feliz,149,0.5258,0.4280,0.6216,98.4253
+popular,2020-2024,150,1,Final agridulce,y_agridulce,149,0.3218,0.2377,0.4193,98.4253
+popular,2020-2024,150,1,Final ambiguo,y_ambiguo,149,0.0677,0.0326,0.1353,98.4253
+popular,2020-2024,150,1,Final trágico,y_tragico,149,0.0848,0.0442,0.1565,98.4253
+popular,2020-2024,150,1,Feliz o agridulce,y_resolucion_positiva,149,0.8475,0.7636,0.9054,98.4253
+popular,2020-2024,150,1,Tono de cierre positivo,y_tono_positivo,148,0.7410,0.6462,0.8175,97.8359
+popular,2020-2024,150,1,Protagonista sobrevive,y_sobrevive,140,0.8049,0.7131,0.8726,93.1239
+popular,2020-2024,150,1,Objetivo logrado,y_objetivo,140,0.7977,0.7045,0.8670,92.1864
+popular,2020-2024,150,1,Justicia narrativa,y_justicia,120,0.5265,0.4175,0.6330,78.6021
+popular,2020-2024,150,1,Vínculos fortalecidos,y_relaciones,142,0.5363,0.4357,0.6341,93.3267
+popular,2020-2024,150,1,Visión de la vida (−2 a +2),vision_vida,149,0.8237,0.6235,1.0240,

@@ -47,8 +47,7 @@ def load_stage(stage: str) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame | N
 def attach_metadata(df: pd.DataFrame, stage: str) -> pd.DataFrame:
     key = pd.read_csv(INTERIM / "keys" / f"{stage}_key.csv")
     sample = pd.read_csv(DERIVED / f"muestra_{stage}.csv")
-    cat = pd.read_csv(INTERIM / "catalog.csv", usecols=["tconst", "numVotes", "votes_rank_in_year",
-                                                        "votes_pct_in_year"])
+    cat = pd.read_csv(INTERIM / "catalog.csv", usecols=["tconst", "numVotes"])
     out = df.merge(key, on="id", how="left")
     films = sample.drop_duplicates("tconst").drop(columns=["frame", "stratum_pop", "N_stratum",
                                                            "n_stratum", "design_weight"])
@@ -123,17 +122,19 @@ def analytic_dataset(stage: str = "principal") -> pd.DataFrame:
     fin = fin.merge(conf[["id", "confianza_min"]], on="id", how="left")
     # acuerdo original en final
     agree = A[["id", "final"]].merge(B[["id", "final"]], on="id", suffixes=("_A", "_B"))
-    fin = fin.merge(agree.assign(acuerdo_final=agree["final_A"] == agree["final_B"])[["id", "acuerdo_final"]],
-                    on="id", how="left")
+    agree["acuerdo_final"] = agree["final_A"] == agree["final_B"]
+    fin = fin.merge(agree[["id", "acuerdo_final", "final_A", "final_B"]], on="id", how="left")
 
     sample = pd.read_csv(DERIVED / f"muestra_{stage}.csv")
-    cat = pd.read_csv(INTERIM / "catalog.csv", usecols=["tconst", "numVotes", "votes_rank_in_year",
-                                                        "votes_pct_in_year"])
+    # Solo los votos brutos proceden del catálogo (no redistribuible); el rango en el año está en la muestra congelada.
+    cat = pd.read_csv(INTERIM / "catalog.csv", usecols=["tconst", "numVotes"])
     df = sample.merge(fin, on="tconst", how="inner").merge(cat, on="tconst", how="left")
     df["clasificable"] = df["final"].isin(FINALS)
     for f in FINALS:
         df[f"y_{f.lower()}"] = np.where(df["clasificable"], (df["final"] == f).astype(float), np.nan)
     df["y_resolucion_positiva"] = np.where(df["clasificable"], df["final"].isin(["FELIZ", "AGRIDULCE"]).astype(float), np.nan)
+    for who in ("A", "B"):
+        df[f"y_feliz_{who}"] = np.where(df[f"final_{who}"].isin(FINALS), (df[f"final_{who}"] == "FELIZ").astype(float), np.nan)
     df["y_feliz_incl_nc"] = (df["final"] == "FELIZ").astype(float)   # no clasificables cuentan como no felices
     df["y_feliz_estricto"] = np.where(df["clasificable"],
                                       ((df["final"] == "FELIZ") & df["tono_cierre"].isin(POS_TONE)).astype(float), np.nan)
@@ -195,7 +196,7 @@ def adjusted_contrast(df: pd.DataFrame, y: str, binary: bool = True, n_boot: int
 
     Binario: logit ponderado + efecto marginal medio por g-computación con IC bootstrap.
     Continuo: MCO ponderado con errores HC3.
-    Popularidad = percentil de votos dentro del año.
+    Popularidad = log del rango de votos en el año (marco popular) o tramo de popularidad (marco amplio).
     """
     d = df[df[y].notna()].copy()
     d = d[d["periodo"].isin(["1990-1999", "2010-2024"])]
@@ -204,7 +205,14 @@ def adjusted_contrast(df: pd.DataFrame, y: str, binary: bool = True, n_boot: int
     # Géneros con muy pocos casos se agrupan para evitar separación perfecta
     counts = d["genre_main"].value_counts()
     d["genero"] = d["genre_main"].where(d["genre_main"].map(counts) >= 8, "Otros/pequeños")
-    formula = f"{y} ~ recent + C(genero) + votes_pct_in_year"
+    # Control de popularidad comparable entre años (D-019): el percentil de votos dentro del año depende del
+    # tamaño del catálogo anual (mayor en años recientes), así que se usa el rango dentro del año (marco popular,
+    # 1-50) o el tramo de popularidad de diseño (marco amplio, terciles).
+    if d["frame"].iloc[0] == "popular":
+        d["pop_ctrl"] = np.log(d["votes_rank_in_year"])
+        formula = f"{y} ~ recent + C(genero) + pop_ctrl"
+    else:
+        formula = f"{y} ~ recent + C(genero) + C(pop_tier)"
     rng = np.random.default_rng(seed)
 
     def fit_effect(data):
@@ -246,6 +254,9 @@ def sensitivity(df: pd.DataFrame, frame: str = "popular", seed: int = 0) -> pd.D
         ("Ponderado por popularidad (votos IMDb)", d, "y_feliz", "w_votes", "periodo", "2010-2024"),
         ("Incluye no clasificables como no felices", d, "y_feliz_incl_nc", "w_design", "periodo", "2010-2024"),
         ("Excluye películas reconocidas por algún anotador", d[~d["reconocida"].astype(bool)], "y_feliz", "w_design", "periodo", "2010-2024"),
+        ("Excluye películas reconocidas por ambos anotadores", d[~(d["reconocida_A"].astype(bool) & d["reconocida_B"].astype(bool))], "y_feliz", "w_design", "periodo", "2010-2024"),
+        ("Solo etiquetas del anotador A (sin adjudicación)", d, "y_feliz_A", "w_design", "periodo", "2010-2024"),
+        ("Solo etiquetas del anotador B (sin adjudicación)", d, "y_feliz_B", "w_design", "periodo", "2010-2024"),
         ("Solo acuerdo inicial entre anotadores", d[d["acuerdo_final"] == True], "y_feliz", "w_design", "periodo", "2010-2024"),
         ("Solo confianza alta (3) en ambos", d[d["confianza_min"] == 3], "y_feliz", "w_design", "periodo", "2010-2024"),
         ("Solo producciones solo de EE. UU.", d[d["us_only"].astype(bool)], "y_feliz", "w_design", "periodo", "2010-2024"),
@@ -270,22 +281,70 @@ def sensitivity(df: pd.DataFrame, frame: str = "popular", seed: int = 0) -> pd.D
     return pd.DataFrame(rows)
 
 
+def _wmean(d: pd.DataFrame, y: str, w: str = "w_design") -> float:
+    d = d[d[y].notna()]
+    return float(np.average(d[y], weights=d[w])) if len(d) else np.nan
+
+
 def genre_table(df: pd.DataFrame, frame: str = "popular") -> pd.DataFrame:
     d = df[(df["frame"] == frame) & df["periodo"].isin(["1990-1999", "2010-2024"])]
     rows = []
     for g, gd in d.groupby("genre_main"):
         r = st.bootstrap_diff(gd["y_feliz"].values, gd["periodo"].values, "2010-2024", "1990-1999",
                               gd["w_design"].values, n_boot=2000)
-        v = gd.groupby("periodo")["vision_vida"].mean()
+        v = {p: _wmean(gd[gd.periodo == p], "vision_vida") for p in ("1990-1999", "2010-2024")}
         rows.append({"genero": g, "marco": frame, "n_1990s": r["n0"], "n_2010_2024": r["n1"],
-                     "feliz_1990s": gd.loc[gd.periodo == "1990-1999", "y_feliz"].mean(),
-                     "feliz_2010_2024": gd.loc[gd.periodo == "2010-2024", "y_feliz"].mean(),
+                     "feliz_1990s": _wmean(gd[gd.periodo == "1990-1999"], "y_feliz"),
+                     "feliz_2010_2024": _wmean(gd[gd.periodo == "2010-2024"], "y_feliz"),
                      "dif_pp": r["diff"] * 100, "dif_ic95_inf_pp": r["diff_lo"] * 100, "dif_ic95_sup_pp": r["diff_hi"] * 100,
                      "vision_1990s": v.get("1990-1999", np.nan), "vision_2010_2024": v.get("2010-2024", np.nan)})
     return pd.DataFrame(rows).sort_values("n_1990s", ascending=False)
 
 
+def follows_comparison(df: pd.DataFrame) -> pd.DataFrame:
+    """Comparación orientativa con la cifra de acción de Follows (1980-1999 frente a 2010 en adelante).
+
+    Nuestra definición de acción = género principal «Acción/aventura» (prioridad de géneros de IMDb), marco popular.
+    No es una réplica: población, fuente de sinopsis, categorías y clasificador difieren.
+    """
+    rows = []
+    for frame in ("popular", "amplio"):
+        d = df[(df["frame"] == frame) & (df["genre_main"] == "Acción/aventura") & df["y_feliz"].notna()].copy()
+        d["grupo"] = np.where(d["cohort"].isin(["1980-1989", "1990-1999"]), "1980-1999",
+                              np.where(d["cohort"].isin(RECENT), "2010-2024", "2000-2009"))
+        for g, gd in d.groupby("grupo"):
+            p, lo, hi, n_eff = st.weighted_prop_ci(gd["y_feliz"], gd["w_design"])
+            rows.append({"marco": frame, "grupo": g, "n": len(gd), "feliz": p, "ic95_inf": lo, "ic95_sup": hi})
+        r = st.bootstrap_diff(d["y_feliz"].values, d["grupo"].values, "2010-2024", "1980-1999", d["w_design"].values)
+        rows.append({"marco": frame, "grupo": "diferencia 2010-2024 − 1980-1999", "n": r["n1"] + r["n0"],
+                     "feliz": r["diff"], "ic95_inf": r["diff_lo"], "ic95_sup": r["diff_hi"]})
+    return pd.DataFrame(rows)
+
+
+def adjudication_stats(stage: str) -> pd.DataFrame:
+    """¿Con qué frecuencia coincide el adjudicador con A (mismo modelo) o con B? Riesgo de sesgo hacia A."""
+    A, B, adj, _ = load_stage(stage)
+    if adj is None:
+        return pd.DataFrame()
+    m = adj.merge(A, on="id", suffixes=("", "_A")).merge(B, on="id", suffixes=("", "_B"))
+    rows = []
+    for k in list(an.CATS) + an.ITEMS:
+        if k not in adj.columns:
+            continue
+        sub = m[m[k].notna()]
+        if k in an.CATS:
+            sub = sub[sub[f"{k}_A"] != sub[f"{k}_B"]]
+        else:
+            sub = sub[(sub[f"{k}_A"] - sub[f"{k}_B"]).abs() >= 3]
+        if sub.empty:
+            continue
+        rows.append({"campo": k, "n_adjudicados": len(sub), "elige_A": float((sub[k] == sub[f"{k}_A"]).mean()),
+                     "elige_B": float((sub[k] == sub[f"{k}_B"]).mean())})
+    return pd.DataFrame(rows)
+
+
 def run(stage: str = "principal") -> dict:
+    warnings.filterwarnings("ignore", category=RuntimeWarning)
     cfg = load()
     seed = cfg["project"]["seed"]
     agreement_report(stage)
@@ -327,6 +386,19 @@ def run(stage: str = "principal") -> dict:
     pd.concat([genre_table(df, "popular"), genre_table(df, "amplio")]).to_csv(
         TABLES / "genero_contrastes.csv", index=False, float_format="%.3f")
 
+    comp = (df[df["periodo"].isin(["1990-1999", "2010-2024"])].groupby(["frame", "periodo"])["genre_main"]
+            .value_counts(normalize=True).unstack(fill_value=0))
+    comp.to_csv(TABLES / "composicion_generos.csv", float_format="%.4f")
+    follows_comparison(df).to_csv(TABLES / "comparacion_follows_accion.csv", index=False, float_format="%.4f")
+    adjudication_stats(stage).to_csv(TABLES / "adjudicacion_resumen.csv", index=False, float_format="%.3f")
+    rec = df.drop_duplicates("tconst").assign(rec_A=lambda x: x["reconocida_A"].astype(bool),
+                                               rec_B=lambda x: x["reconocida_B"].astype(bool))
+    rec.groupby("cohort").agg(n=("tconst", "size"), reconocida_A=("rec_A", "mean"), reconocida_B=("rec_B", "mean"),
+                              reconocida_alguno=("reconocida", "mean")).to_csv(
+        TABLES / "reconocimiento_por_cohorte.csv", float_format="%.3f")
+    missing = df.groupby(["frame", "cohort"]).agg(n=("tconst", "size"), no_clasificables=("clasificable", lambda x: int((~x).sum())))
+    missing.to_csv(TABLES / "no_clasificables_por_cohorte.csv")
+
     # Relación entre dimensiones: final frente a visión de la vida
     cross = df.drop_duplicates("tconst").groupby("final").agg(
         n=("tconst", "size"), vision_media=("vision_vida", "mean"),
@@ -338,4 +410,8 @@ def run(stage: str = "principal") -> dict:
 
 if __name__ == "__main__":
     import sys
-    run(sys.argv[1] if len(sys.argv) > 1 else "principal")
+    stage = sys.argv[1] if len(sys.argv) > 1 else "principal"
+    if stage == "piloto":
+        agreement_report("piloto")   # el piloto solo sirve para acuerdo y tamaño muestral
+    else:
+        run(stage)

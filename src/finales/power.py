@@ -59,6 +59,30 @@ def table(mdr_pp=(10, 15, 20), n_cap_popular: int = 150, n_cap_amplio: int = 50)
     return out
 
 
+def survey_table(pairs_per_person: int = 8, icc: float = 0.10) -> pd.DataFrame:
+    """Potencia para la encuesta/experimento (fase no ejecutada). Supuestos explícitos en la tabla."""
+    from scipy import stats as sst
+    za, zb = sst.norm.ppf(0.975), sst.norm.ppf(0.8)
+    deff = 1 + (pairs_per_person - 1) * icc
+    rows = []
+    for d in (0.05, 0.075, 0.10):
+        n_trials = int(np.ceil(((za * 0.5 + zb * np.sqrt((0.5 + d) * (0.5 - d))) / d) ** 2))
+        rows.append({"hipotesis": "H1: preferencia por el cierre optimista ≠ 50 % (pares emparejados)",
+                     "efecto_minimo": f"{d * 100:.1f} pp", "ensayos_necesarios": n_trials,
+                     "participantes_necesarios": int(np.ceil(n_trials * deff / pairs_per_person)),
+                     "supuestos": f"{pairs_per_person} pares/persona, ICC={icc}, efecto de diseño={deff:.2f}, alfa=0,05, potencia=0,8"})
+    for d in (0.10, 0.15):
+        n1, _ = st.n_two_proportions(0.55, 0.55 + d)
+        rows.append({"hipotesis": "H2: diferencia de preferencia entre quienes crecieron con el cine de los noventa y menores de 30",
+                     "efecto_minimo": f"{d * 100:.0f} pp", "ensayos_necesarios": n1 * 2,
+                     "participantes_necesarios": int(np.ceil(n1 * deff / pairs_per_person)) * 2,
+                     "supuestos": f"proporción base 0,55; {pairs_per_person} pares/persona; ICC={icc}"})
+    out = pd.DataFrame(rows)
+    out.to_csv(TABLES / "potencia_encuesta.csv", index=False)
+    return out
+
+
 if __name__ == "__main__":
+    print(survey_table().to_string())
     print(pilot_parameters())
     print(table().to_string())

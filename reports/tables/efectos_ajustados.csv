@@ -1,0 +1,9 @@
+variable,efecto_ajustado,ic95_inf,ic95_sup,n,modelo,marco
+y_feliz,-0.0767,-0.1768,0.0150,449,logit + EMM (bootstrap),popular
+y_tragico,0.0090,-0.0441,0.0564,449,logit + EMM (bootstrap),popular
+y_tono_positivo,-0.0297,-0.1139,0.0547,444,logit + EMM (bootstrap),popular
+vision_vida,0.0288,-0.1472,0.2048,449,MCO ponderado (HC3),popular
+y_feliz,-0.1153,-0.2760,0.0135,137,logit + EMM (bootstrap),amplio
+y_tragico,0.1136,-0.0319,0.2095,137,logit + EMM (bootstrap),amplio
+y_tono_positivo,-0.0934,-0.2373,0.0668,136,logit + EMM (bootstrap),amplio
+vision_vida,-0.4247,-0.7687,-0.0807,138,MCO ponderado (HC3),amplio

@@ -250,3 +250,43 @@ def validate_adjudication(path: Path, batch_path: Path) -> list[str]:
     for i in set(need) - seen:
         errs.append(f"{i}: sin adjudicar")
     return errs
+
+
+def human_validation_kit(stage: str = "principal", n_per_cohort: int = 20, seed: int = 20260929) -> pd.DataFrame:
+    """Prepara (no ejecuta) la validación humana: muestra estratificada por cohorte y género, cegada.
+
+    Escribe annotation/validacion_humana/{muestra.jsonl, plantilla_anotador_1.csv, plantilla_anotador_2.csv}.
+    La muestra se estratifica por cohorte y, dentro de ella, proporcionalmente por género principal,
+    sobrerrepresentando los desacuerdos entre modelos (la mitad de cada cohorte, si hay suficientes).
+    """
+    key = pd.read_csv(KEY_DIR / f"{stage}_key.csv")
+    sample = pd.read_csv(Path(str(INTERIM).replace("interim", "derived")) / f"muestra_{stage}.csv").drop_duplicates("tconst")
+    A, _ = load_labels(sorted((ANNOT / "labels" / stage / "A").glob("*.jsonl")), "A")
+    B, _ = load_labels(sorted((ANNOT / "labels" / stage / "B").glob("*.jsonl")), "B")
+    dis = set(A.merge(B, on="id").query("final_x != final_y")["id"])
+    df = key.merge(sample[["tconst", "cohort", "genre_main"]], on="tconst")
+    df["desacuerdo_modelos"] = df["id"].isin(dis)
+    rng = np.random.default_rng(seed)
+    picks = []
+    for c, g in df.groupby("cohort"):
+        g = g.sample(frac=1, random_state=int(rng.integers(1e9)))
+        n_dis = min(n_per_cohort // 2, int(g["desacuerdo_modelos"].sum()))
+        part = pd.concat([g[g["desacuerdo_modelos"]].head(n_dis), g[~g["desacuerdo_modelos"]].head(n_per_cohort - n_dis)])
+        picks.append(part)
+    out = pd.concat(picks).sort_values("id")
+    texts = {}
+    for f in (ANNOT / "batches" / stage).glob("*.jsonl"):
+        for line in f.read_text(encoding="utf-8").splitlines():
+            d = json.loads(line)
+            texts[d["id"]] = d["sinopsis"]
+    vdir = ANNOT / "validacion_humana"
+    vdir.mkdir(parents=True, exist_ok=True)
+    with open(vdir / "muestra.jsonl", "w", encoding="utf-8") as fh:
+        for i in out["id"]:
+            fh.write(json.dumps({"id": i, "sinopsis": texts[i]}, ensure_ascii=False) + "\n")
+    cols = ["id"] + list(CATS) + ITEMS + BOOLS + ["confianza", "nota"]
+    for k in (1, 2):
+        pd.DataFrame({"id": out["id"]}).reindex(columns=cols).to_csv(vdir / f"plantilla_anotador_{k}.csv", index=False)
+    # clave con estrato (para ponderar el sobremuestreo de desacuerdos), fuera de la vista de los anotadores
+    out[["id", "cohort", "genre_main", "desacuerdo_modelos"]].to_csv(KEY_DIR / "validacion_humana_key.csv", index=False)
+    return out

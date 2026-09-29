@@ -16,7 +16,7 @@ import pandas as pd
 from . import annotation, clean, ingest, provenance, sampling, wikidump
 from .config import DERIVED, INTERIM, TABLES, ensure_dirs, load
 
-PUBLIC_COLS = ["tconst", "wikidata_ids", "year", "cohort", "genre_main", "genres", "pop_tier",
+PUBLIC_COLS = ["tconst", "wikidata_ids", "year", "cohort", "genre_main", "pop_tier", "votes_rank_in_year",
                "in_popular_universe", "us_only", "n_countries"]
 
 
@@ -39,6 +39,14 @@ def _validator(cat: pd.DataFrame):
 
 
 def draw(stage: str) -> pd.DataFrame:
+    """Extrae la muestra. Si la etapa ya tiene muestra congelada y etiquetas, no hace nada salvo con --force:
+    los votos de IMDb cambian a diario y volver a extraer produciría otra muestra (registro D-021)."""
+    frozen = DERIVED / f"muestra_{stage}.csv"
+    labels_dir = annotation.ANNOT / "labels" / stage
+    if frozen.exists() and labels_dir.exists() and any(labels_dir.rglob("*.jsonl")) and "--force" not in sys.argv:
+        print(f"[aviso] Muestra '{stage}' congelada y ya anotada: se usa {frozen.relative_to(DERIVED.parent.parent)} "
+              "(usa --force para volver a extraerla).")
+        return pd.read_csv(frozen)
     cfg = load()
     cat = _catalog()
     seed = cfg["project"]["seed"]
