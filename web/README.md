@@ -5,3 +5,5 @@ Página estática (sin build): `index.html` + `data.json` (generado con `make we
 Vista local: `cd web && python3 -m http.server 8000`
 
 Despliegue en Vercel desde esta carpeta: `npx vercel --prod` (proyecto `happyend`), después añadir el dominio `happyend.victoriano.me` al proyecto y, en Cloudflare, un registro CNAME `happyend` → `cname.vercel-dns.com` (solo DNS, sin proxy).
+
+**Estado (2026-09-29):** publicada en https://happyend.victoriano.me (proyecto Vercel `happyend`, equipo victorianos-projects; CNAME `happyend` → `cname.vercel-dns.com` en Cloudflare, solo DNS). Ficheros desplegados verificados por SHA-1 contra esta carpeta.
