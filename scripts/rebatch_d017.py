@@ -38,7 +38,7 @@ for j in range(0, len(pending), 50):
             batch_of[i] = name
 key = newdf[["id", "tconst", "palabras_originales", "truncada"]].copy()
 key["batch"] = key.id.map(batch_of)
-key[["id", "tconst", "batch", "palabras_originales", "truncada"]].to_csv("data/interim/keys/principal_key.csv", index=False)
+key[["id", "tconst", "batch", "palabras_originales", "truncada"]].to_csv("annotation/claves/principal_key.csv", index=False)
 log = pd.DataFrame([{"id": i, "lote_v1": old[i][1], "motivo": "texto de sinopsis corregido (D-017): se reanota"} for i in sorted(changed)]
                    + [{"id": i, "lote_v1": old[i][1], "motivo": "fuera de la muestra tras corrección (D-017): etiqueta descartada"} for i in sorted(dropped)])
 log.to_csv("reports/tables/reanotacion_correccion_sinopsis.csv", index=False)

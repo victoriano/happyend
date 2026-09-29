@@ -45,7 +45,7 @@ def load_stage(stage: str) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame | N
 
 
 def attach_metadata(df: pd.DataFrame, stage: str) -> pd.DataFrame:
-    key = pd.read_csv(INTERIM / "keys" / f"{stage}_key.csv")
+    key = pd.read_csv(an.KEY_DIR / f"{stage}_key.csv")
     sample = pd.read_csv(DERIVED / f"muestra_{stage}.csv")
     cat = pd.read_csv(INTERIM / "catalog.csv", usecols=["tconst", "numVotes"])
     out = df.merge(key, on="id", how="left")
@@ -114,7 +114,7 @@ def analytic_dataset(stage: str = "principal") -> pd.DataFrame:
     """Una fila por película × marco (una película puede estar en ambos marcos)."""
     A, B, adj, _ = load_stage(stage)
     fin = an.finalize(an.pair(A, B), adj)
-    key = pd.read_csv(INTERIM / "keys" / f"{stage}_key.csv")
+    key = pd.read_csv(an.KEY_DIR / f"{stage}_key.csv")
     fin = fin.merge(key, on="id", how="left")
     # confianza mínima de los dos anotadores
     conf = A[["id", "confianza"]].merge(B[["id", "confianza"]], on="id", suffixes=("_A", "_B"))

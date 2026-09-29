@@ -22,7 +22,7 @@ CATS = {
 ITEMS = ["agencia", "cambio", "vinculos", "futuro"]
 BOOLS = ["describe_final", "reconocida"]
 ORDINAL_FINAL = ["FELIZ", "AGRIDULCE", "AMBIGUO", "TRAGICO"]  # orden de valencia para kappa ponderada
-KEY_DIR = INTERIM / "keys"
+KEY_DIR = ANNOT / "claves"  # versionado; nunca se entrega a los anotadores (D-022)
 
 
 def load_synopsis(tconst: str) -> dict | None:
@@ -36,7 +36,7 @@ def synopsis_ok(tconst: str, min_words: int) -> bool:
 
 
 def make_batches(films: pd.DataFrame, stage: str, batch_size: int = 40) -> pd.DataFrame:
-    """Crea lotes cegados en annotation/batches/{stage}/ y la clave id→tconst en data/interim/keys/.
+    """Crea lotes cegados en annotation/batches/{stage}/ y la clave id→tconst en annotation/claves/.
 
     `films` necesita columnas tconst, primaryTitle, originalTitle, enwiki_url.
     """

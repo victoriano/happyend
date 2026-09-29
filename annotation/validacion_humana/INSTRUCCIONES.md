@@ -4,7 +4,7 @@
 
 **Material.**
 
-* `muestra.jsonl`: 100 sinopsis cegadas (20 por cohorte). La mitad de cada cohorte son películas en las que los dos modelos discreparon en el final (sobremuestreo deliberado; el análisis debe ponderar por estrato con `data/interim/keys/validacion_humana_key.csv`).
+* `muestra.jsonl`: 100 sinopsis cegadas (20 por cohorte). La mitad de cada cohorte son películas en las que los dos modelos discreparon en el final (sobremuestreo deliberado; el análisis debe ponderar por estrato con `annotation/claves/validacion_humana_key.csv`).
 * `plantilla_anotador_1.csv` y `plantilla_anotador_2.csv`: una fila por `id` para rellenar.
 
 **Procedimiento.**

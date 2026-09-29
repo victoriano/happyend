@@ -53,6 +53,7 @@ data/raw, data/interim    descargas e intermedios (no versionados)
 data/derived              muestras con procedencia (versionadas; sin votos ni texto)
 annotation/batches        sinopsis cegadas (CC BY-SA 4.0, derivadas de Wikipedia)
 annotation/labels         etiquetas A, B y adjudicación (versionadas)
+annotation/claves         claves id cegado → tconst (versionadas; nunca se entregan a los anotadores)
 annotation/validacion_humana  kit de validación humana (pendiente)
 docs/                     manual, instrucciones, decisiones, diccionario, encuesta, plantillas
 reports/                  informe, resumen, tablas y figuras generados

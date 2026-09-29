@@ -1,0 +1,101 @@
+id,cohort,genre_main,desacuerdo_modelos
+F02748BB7,2000-2009,Terror,False
+F0AC936BD,1990-1999,Drama,True
+F0BDD5A64,1980-1989,Comedia,False
+F0CD7F243,1980-1989,Thriller/crimen,True
+F0D50DF50,2010-2019,Drama,True
+F0D90BC11,2000-2009,Animación,False
+F1461760C,1980-1989,Acción/aventura,False
+F151F90D3,1990-1999,Comedia,False
+F177F79A6,2020-2024,Acción/aventura,True
+F19291F07,1980-1989,Thriller/crimen,True
+F1D32E529,2020-2024,Acción/aventura,False
+F225324B2,2010-2019,Comedia,True
+F22EC8383,2010-2019,Thriller/crimen,True
+F2350072A,1990-1999,Drama,True
+F24E23A62,1990-1999,Acción/aventura,False
+F254CF2BC,2010-2019,Terror,False
+F25FE158F,2010-2019,Romance,False
+F289F0A6B,1990-1999,Thriller/crimen,True
+F2A8F1ACD,1980-1989,Thriller/crimen,True
+F2A985F10,2000-2009,Comedia,True
+F2B28EB27,2010-2019,Thriller/crimen,False
+F2DD719AE,2020-2024,Thriller/crimen,True
+F3301096E,2000-2009,Comedia,True
+F378D2F65,1980-1989,Acción/aventura,False
+F391DC13C,1980-1989,Comedia,False
+F3A549CD5,2000-2009,Acción/aventura,True
+F3BF7A5A4,1990-1999,Acción/aventura,True
+F3C61F151,1990-1999,Acción/aventura,False
+F3C945BCE,2010-2019,Acción/aventura,False
+F3CB2C4C2,2020-2024,Comedia,False
+F3D8C51E0,1990-1999,Comedia,False
+F3E699E68,2010-2019,Acción/aventura,True
+F3F061146,1980-1989,Comedia,False
+F41500DCF,2000-2009,Acción/aventura,False
+F41F8A016,1990-1999,Ciencia ficción/fantasía,True
+F44333B44,2020-2024,Comedia,False
+F46022CA5,2010-2019,Acción/aventura,False
+F47156EA5,2010-2019,Ciencia ficción/fantasía,False
+F487DD551,2000-2009,Acción/aventura,True
+F4A1B731E,2000-2009,Terror,True
+F4A3C8BEC,2000-2009,Comedia,False
+F4B4B03D4,1980-1989,Terror,True
+F4F6D1467,2010-2019,Comedia,True
+F52C067F0,2020-2024,Acción/aventura,False
+F57C63C8C,2020-2024,Comedia,False
+F58B7D164,2000-2009,Ciencia ficción/fantasía,False
+F5E97FD12,2010-2019,Acción/aventura,True
+F6040CC9F,1990-1999,Terror,True
+F6A883C94,1980-1989,Terror,False
+F6C6F4181,1990-1999,Terror,False
+F6E953FE0,1990-1999,Acción/aventura,False
+F715DAA72,2020-2024,Drama,True
+F775F0C49,2000-2009,Ciencia ficción/fantasía,False
+F7D6CF9DA,2020-2024,Drama,True
+F7F9D9C00,1990-1999,Ciencia ficción/fantasía,False
+F85AB87A2,1990-1999,Ciencia ficción/fantasía,True
+F870DABA8,1980-1989,Drama,True
+F8FE3BE9B,1980-1989,Acción/aventura,True
+F950A4EBD,2000-2009,Thriller/crimen,True
+F9A5F8B85,2000-2009,Thriller/crimen,True
+F9BAB60FC,2010-2019,Acción/aventura,False
+F9C15BCA2,2020-2024,Comedia,True
+F9C760985,1990-1999,Acción/aventura,False
+F9CFF9B4A,2020-2024,Terror,False
+F9DECE69D,2000-2009,Acción/aventura,False
+FA11E6339,1980-1989,Terror,False
+FA4B6A7AF,1980-1989,Terror,True
+FA5863E5D,1990-1999,Comedia,True
+FA706748E,1980-1989,Ciencia ficción/fantasía,False
+FA8D289DE,1990-1999,Acción/aventura,False
+FABBF5245,1990-1999,Comedia,True
+FB5E395DE,1990-1999,Acción/aventura,True
+FB6A82FEE,2000-2009,Acción/aventura,True
+FB7B22554,2000-2009,Drama,True
+FBAC23508,1980-1989,Acción/aventura,False
+FBDD3200F,2020-2024,Terror,False
+FC16145CD,2010-2019,Animación,True
+FC5C280BA,1980-1989,Terror,True
+FC8A86B46,2010-2019,Acción/aventura,True
+FC8BB802C,2020-2024,Thriller/crimen,True
+FC93F58AB,2020-2024,Acción/aventura,False
+FC962CF31,2010-2019,Acción/aventura,True
+FCC82FCC6,2020-2024,Thriller/crimen,True
+FCEBD4B19,2020-2024,Acción/aventura,True
+FCEF5842F,2000-2009,Acción/aventura,True
+FD2CEF180,2020-2024,Acción/aventura,False
+FD730D8B1,2000-2009,Ciencia ficción/fantasía,False
+FD8DA237F,2010-2019,Animación,False
+FD9CC48A8,2020-2024,Acción/aventura,True
+FDA7A8E55,2010-2019,Terror,False
+FE152037F,1990-1999,Acción/aventura,False
+FE212217F,2000-2009,Ciencia ficción/fantasía,False
+FE301861F,2010-2019,Acción/aventura,True
+FE6DF5248,2010-2019,Thriller/crimen,False
+FF656319E,1980-1989,Comedia,False
+FFAA209D5,1980-1989,Terror,True
+FFAFF6F56,1980-1989,Terror,True
+FFB6577ED,2020-2024,Terror,True
+FFDCAE2FF,2000-2009,Acción/aventura,False
+FFF41725D,2020-2024,Comedia,False

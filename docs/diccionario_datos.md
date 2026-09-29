@@ -42,6 +42,10 @@ Una línea por película anotada, con los campos definidos en la sección 7 de `
 
 `id` y `sinopsis` cegada (título → `[TÍTULO]`, años → `[AÑO]`, truncado si pasa de 1.100 palabras). Texto derivado de Wikipedia, CC BY-SA 4.0; la atribución por película está en `muestra_*.csv`. Los lotes de adjudicación añaden `etiqueta_X`, `etiqueta_Y` y `campos_en_desacuerdo`.
 
+## `annotation/claves/*_key.csv` (versionado)
+
+Correspondencia `id` cegado → `tconst`, lote, palabras originales y si la sinopsis se truncó. En la adjudicación, si X/Y se intercambiaron. **No se entrega a los anotadores**; se versiona porque sin ella no se pueden unir etiquetas y películas (D-022).
+
 ## Ficheros intermedios (no versionados; se regeneran)
 
 | Fichero | Contenido |
@@ -50,7 +54,6 @@ Una línea por película anotada, con los campos definidos en la sección 7 de `
 | `data/interim/exclusions.csv` | `tconst`, año, cohorte y motivo de exclusión |
 | `data/interim/wikidata_us_films.csv` | Resultado de las consultas SPARQL (ítem, tconst, artículo, país, fecha) |
 | `data/interim/synopses/{tconst}.json` | Sección argumental extraída, revisión, id de página y estado |
-| `data/interim/keys/*_key.csv` | Correspondencia `id` cegado → `tconst`, lote y truncado (**no se entrega a los anotadores**) |
 | `data/interim/analitico_principal.csv` | Conjunto analítico: muestra + etiquetas finales + variables de resultado |
 
 ## Variables de resultado (en `analitico_principal.csv`)
