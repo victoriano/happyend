@@ -76,7 +76,11 @@ def draw(stage: str) -> pd.DataFrame:
     out.to_csv(DERIVED / f"muestra_{stage}.csv", index=False)
 
     films = meta.loc[sample["tconst"].unique(), ["primaryTitle", "originalTitle", "enwiki_url"]].reset_index()
-    annotation.make_batches(films, stage, batch_size=50)
+    labels_dir = annotation.ANNOT / "labels" / stage
+    if labels_dir.exists() and any(labels_dir.rglob("*.jsonl")) and "--force" not in sys.argv:
+        print(f"[aviso] Ya hay etiquetas para '{stage}': no se regeneran los lotes (usa --force para forzarlo).")
+    else:
+        annotation.make_batches(films, stage, batch_size=50)
     return out
 
 

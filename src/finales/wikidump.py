@@ -110,28 +110,34 @@ def find_page(block: str, title: str) -> dict | None:
     return None
 
 
+H2_RE = re.compile(r"^==(?!=)\s*(.*?)\s*==(?!=)\s*(?:<!--.*?-->\s*)*$", re.M)
+
+
 def plot_from_wikitext(wikitext: str) -> tuple[str | None, str | None]:
-    """Devuelve (encabezado, texto plano) de la primera sección de nivel 2 argumental."""
-    code = mwparserfromhell.parse(wikitext)
-    for sec in code.get_sections(levels=[2], include_lead=False):
-        heads = sec.filter_headings()
-        if not heads:
+    """Devuelve (encabezado, texto plano) de la primera sección de nivel 2 argumental.
+
+    Las secciones se delimitan con una expresión regular sobre líneas «== Título ==» antes de analizar el
+    marcado: así una etiqueta o plantilla sin cerrar dentro de la sección no arrastra el resto del artículo.
+    """
+    heads = list(H2_RE.finditer(wikitext))
+    for i, h in enumerate(heads):
+        heading = mwparserfromhell.parse(h.group(1)).strip_code().strip()
+        if heading.lower() not in PLOT_HEADINGS:
             continue
-        heading = heads[0].title.strip_code().strip()
-        if heading.lower() in PLOT_HEADINGS:
-            body = mwparserfromhell.parse(str(sec)[len(str(heads[0])):])
-            for tag in body.filter_tags(recursive=True):
-                if str(tag.tag).lower() in ("ref", "gallery"):
-                    try:
-                        body.remove(tag)
-                    except ValueError:
-                        pass
-            text = body.strip_code(normalize=True, collapse=True)
-            text = re.sub(r"^=+.*?=+\s*$", "", text, flags=re.M)      # subencabezados
-            text = re.sub(r"\[\[(File|Image):[^\]]*\]\]", "", text)
-            text = re.sub(r"[ \t]+", " ", text)
-            text = re.sub(r"\n\s*\n+", "\n", text).strip()
-            return heading, (text or None)
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(wikitext)
+        body = mwparserfromhell.parse(wikitext[h.end():end])
+        for tag in body.filter_tags(recursive=True):
+            if str(tag.tag).lower() in ("ref", "gallery"):
+                try:
+                    body.remove(tag)
+                except ValueError:
+                    pass
+        text = body.strip_code(normalize=True, collapse=True)
+        text = re.sub(r"^=+.*?=+\s*$", "", text, flags=re.M)      # subencabezados de nivel 3+
+        text = re.sub(r"\[\[(File|Image):[^\]]*\]\]", "", text)
+        text = re.sub(r"[ \t]+", " ", text)
+        text = re.sub(r"\n\s*\n+", "\n", text).strip()
+        return heading, (text or None)
     return None, None
 
 
