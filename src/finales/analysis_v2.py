@@ -255,6 +255,19 @@ def run() -> dict:
     agg.to_csv(TABLES / "imdb_agregado.csv", index=False, float_format="%.3f")
     mod.to_csv(TABLES / "imdb_modelos.csv", index=False, float_format="%.4f")
     out["imdb_agregado"], out["imdb_modelos"] = agg, mod
+    S = story(d)
+
+    def conv(o):
+        if isinstance(o, dict):
+            return {k: conv(v) for k, v in o.items()}
+        if isinstance(o, (list, tuple)):
+            return [conv(x) for x in o]
+        if isinstance(o, (float, np.floating)):
+            return None if np.isnan(o) else round(float(o), 4)
+        if isinstance(o, np.integer):
+            return int(o)
+        return o
+    (TABLES / "historia_web.json").write_text(json.dumps(conv(S), ensure_ascii=False, indent=0), encoding="utf-8")
     return out
 
 
@@ -269,3 +282,118 @@ if __name__ == "__main__":
     print(o["ajustados"].round(3).to_string())
     print(o["final_vs_animo"].round(2).to_string())
     print(o["imdb_modelos"].round(3).to_string())
+
+
+# ------------------------------------------------------------------ agregados para la historia de la web (estudio unificado)
+POS_TONE = ["ESPERANZA", "ALIVIO", "CONEXION"]
+PERIODS = {"1990-1999": ["1990-1999"], "2010-2024": RECIENTE}
+
+
+def _prep_story(d: pd.DataFrame) -> pd.DataFrame:
+    d = d.copy()
+    cl = d.clasificable
+    d["y_amplia"] = d.final.isin(["FELIZ", "AGRIDULCE"]).astype(float).where(cl)
+    d["y_estricta"] = ((d.final == "FELIZ") & d.tono_cierre.isin(POS_TONE)).astype(float).where(cl)
+    d["y_incl_nc"] = (d.final == "FELIZ").astype(float)
+    d["y_tono_positivo"] = d.tono_cierre.isin(POS_TONE).astype(float).where(d.tono_cierre != "NO_CLARO")
+    d["periodo"] = np.where(d.cohort == "1990-1999", "1990-1999", np.where(d.cohort.isin(RECIENTE), "2010-2024", "otro"))
+    return d
+
+
+def _est(g: pd.DataFrame, y: str) -> list:
+    x = g[y].dropna().astype(float).values
+    if len(x) == 0:
+        return [np.nan, np.nan, np.nan, 0]
+    if set(np.unique(x)) <= {0.0, 1.0}:
+        p, lo, hi = st.wilson(int(x.sum()), len(x))
+    else:
+        p, lo, hi = st.mean_ci(x)
+    return [p, lo, hi, len(x)]
+
+
+def _wboot(d1, d0, y, w, n_boot=2000, seed=0):
+    a, b = d1.dropna(subset=[y]), d0.dropna(subset=[y])
+    rng = np.random.default_rng(seed)
+    f = lambda g: np.average(g[y], weights=g[w])
+    est = f(a) - f(b)
+    bs = []
+    for _ in range(n_boot):
+        bs.append(f(a.iloc[rng.integers(0, len(a), len(a))]) - f(b.iloc[rng.integers(0, len(b), len(b))]))
+    return est, *np.percentile(bs, [2.5, 97.5])
+
+
+def _ame_boot(g: pd.DataFrame, extra: str = "", n_boot: int = 200, seed: int = 0):
+    g = g[g.clasificable].copy()
+    for v in ("clase_social", "momento_vital", "genero_protagonista", "humor", "genre_main"):
+        vc = g[v].value_counts()
+        rare = g[v].map(vc) < 30
+        g[v] = g[v].where(~rare, "OTRO" if rare.sum() >= 30 else vc.index[0])
+    g = g[g.periodo != "otro"].copy()
+    g["reciente"] = (g.periodo == "2010-2024").astype(int)
+    f = "y_feliz ~ reciente + C(genre_main) + log_rank" + extra
+
+    def ame(data):
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            m = smf.logit(f, data=data).fit(disp=0, maxiter=200)
+        return m.predict(data.assign(reciente=1)).mean() - m.predict(data.assign(reciente=0)).mean()
+    est = ame(g)
+    rng = np.random.default_rng(seed)
+    bs = []
+    for _ in range(n_boot):
+        try:
+            bs.append(ame(g.iloc[rng.integers(0, len(g), len(g))]))
+        except Exception:
+            pass
+    return est, *np.percentile(bs, [2.5, 97.5])
+
+
+def story(d: pd.DataFrame) -> dict:
+    d = _prep_story(d)
+    out = {"cohortes": {}, "periodos": {}, "sens": {}, "genero": {}, "accion": {}}
+    ys = ["y_feliz", "y_agridulce", "y_ambiguo", "y_tragico", "y_tono_positivo", "vision_vida",
+          "optimismo_personajes", "tono_general", "y_nf_opt"]
+    for cf, g in d.groupby("country_frame"):
+        out["cohortes"][cf] = {y: [_est(g[g.cohort == c], y) for c in COHORTS] for y in ys}
+        out["periodos"][cf] = {y: {p: _est(g[g.periodo == p], y) for p in PERIODS} for y in ys}
+        g0, g1 = g[g.periodo == "1990-1999"], g[g.periodo == "2010-2024"]
+
+        def diff(y, a=g1, b=g0):
+            return list(_boot_diff(a[y].astype(float).values, b[y].astype(float).values, seed=0))
+        top = 20 if cf == "US" else 10
+        rows = [("Análisis principal", diff("y_feliz")),
+                ("Feliz o agridulce", diff("y_amplia")),
+                ("Feliz y con cierre positivo", diff("y_estricta")),
+                ("Contando los no clasificables", diff("y_incl_nc")),
+                ("Pesando más las más votadas", list(_wboot(g1, g0, "y_feliz", "numVotes"))),
+                ("Solo el anotador A", diff("y_feliz_A")),
+                ("Solo el anotador B", diff("y_feliz_B")),
+                ("Solo si ambos coinciden", diff("y_feliz", g1[g1.final_A == g1.final_B], g0[g0.final_A == g0.final_B])),
+                ("Solo casos muy claros", diff("y_feliz", g1[g1.confianza_min == 3], g0[g0.confianza_min == 3])),
+                (f"Solo las {top} más votadas/año", diff("y_feliz", g1[g1.votes_rank_in_year <= top], g0[g0.votes_rank_in_year <= top])),
+                ("Ajustado por género y popularidad", list(_ame_boot(g)))]
+        if cf == "US":
+            rows.insert(10, ("Sin coproducciones", diff("y_feliz", g1[g1.us_only == True], g0[g0.us_only == True])))
+            rows.append(("Ajustado + protagonista y trama", list(_ame_boot(
+                g, " + especulativa_si + contemporanea + C(clase_social) + C(momento_vital) + C(genero_protagonista) + C(humor)"))))
+        else:
+            rows.insert(10, ("Solo sinopsis en inglés", diff("y_feliz", g1[g1.sinopsis_idioma == "en"], g0[g0.sinopsis_idioma == "en"])))
+            rows.insert(11, ("Solo sinopsis en español", diff("y_feliz", g1[g1.sinopsis_idioma == "es"], g0[g0.sinopsis_idioma == "es"])))
+        out["sens"][cf] = [[k] + [None if pd.isna(x) else float(x) for x in v] for k, v in rows]
+        comp = {}
+        for p in PERIODS:
+            gp = g[g.periodo == p]
+            comp[p] = gp.genre_main.value_counts(normalize=True).to_dict()
+        gen = []
+        for ge, gg in g.groupby("genre_main"):
+            a, b = gg[gg.periodo == "2010-2024"], gg[gg.periodo == "1990-1999"]
+            if b.y_feliz.notna().sum() >= 10 and a.y_feliz.notna().sum() >= 10:
+                dd = _boot_diff(a.y_feliz.values, b.y_feliz.values, seed=0)
+                gen.append([ge, int(b.y_feliz.notna().sum()), int(a.y_feliz.notna().sum()), b.y_feliz.mean(), a.y_feliz.mean(), *dd])
+        out["genero"][cf] = {"composicion": comp, "felices": gen}
+        ac = g[g.genre_main == "Acción/aventura"]
+        grp = {"1980-1999": ac[ac.cohort.isin(["1980-1989", "1990-1999"])], "1980-1989": ac[ac.cohort == "1980-1989"],
+               "1990-1999": ac[ac.cohort == "1990-1999"], "2010-2024": ac[ac.periodo == "2010-2024"]}
+        out["accion"][cf] = {k: _est(v, "y_feliz") for k, v in grp.items()}
+    return out

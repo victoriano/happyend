@@ -267,6 +267,8 @@ def final_labels_v2() -> pd.DataFrame:
                 d[f"rel_{rel.lower()}"] = ((rel in r["relaciones_centrales_A"]) + (rel in r["relaciones_centrales_B"])) / 2
             d["reconocida_b"] = bool(r["reconocida_A"]) or bool(r["reconocida_B"])
             if full:
+                d["confianza_min"] = min(r["confianza_A"], r["confianza_B"])
+            if full:
                 d["reconocida"] = d["reconocida_b"]
                 d["describe_final"] = bool(r["describe_final_A"]) and bool(r["describe_final_B"])
             recs.append(d)
@@ -280,7 +282,7 @@ def final_labels_v2() -> pd.DataFrame:
     lab["final_es_original"] = lab.tconst.map(orig)
     # núcleo v1 para las películas del estudio v1 (manual 1.0, adjudicación completa del núcleo)
     v1 = pd.read_csv(INTERIM / "analitico_principal.csv").drop_duplicates("tconst")
-    core = list(an.CATS) + an.ITEMS + ["final_A", "final_B", "reconocida", "describe_final"] + \
+    core = list(an.CATS) + an.ITEMS + ["final_A", "final_B", "reconocida", "describe_final", "confianza_min"] + \
         [f"{k}_fuente" for k in an.CATS]
     v1 = v1[["tconst"] + core].set_index("tconst")
     isv1 = lab.etapa_v2 == "v2_modb"

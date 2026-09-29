@@ -12,6 +12,7 @@ import pandas as pd
 
 from . import annotation as an
 from .config import DERIVED, INTERIM, ROOT, TABLES
+from .annotation import KEY_DIR as ANNOT_KEYS
 
 COH = ["1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2024"]
 FIN = ["FELIZ", "AGRIDULCE", "AMBIGUO", "TRAGICO", "NO_CLASIFICABLE"]
@@ -87,9 +88,8 @@ def build() -> dict:
 def main() -> None:
     out = ROOT / "web" / "data.json"
     out.parent.mkdir(exist_ok=True)
-    out.write_text(json.dumps(build(), ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(out, out.stat().st_size)
     main_v2()
+    main_fichas()
 
 
 
@@ -135,11 +135,11 @@ def build_films_v2() -> dict:
             *[EXPL[k].index(r[k]) for k in EXPL], rels, ps,
             (tm.poster_path.get(tc) if tc in tm.index and isinstance(tm.poster_path.get(tc), str) else ""),
             int(tm.tmdb_id.get(tc)) if tc in tm.index and pd.notna(tm.tmdb_id.get(tc)) else 0,
-            TONE.index(r.tono_cierre) if r.tono_cierre in TONE else 5,
+            TONE.index(r.tono_cierre) if r.tono_cierre in TONE else 5, tc,
         ])
     rows.sort(key=lambda x: (x[2], x[0]))
     cols = ["titulo", "original", "anio", "pais", "genero", "final", "optimismo", "tono"] + list(EXPL) + \
-           ["relaciones", "paises_trama", "poster", "tmdb", "tono_cierre"]
+           ["relaciones", "paises_trama", "poster", "tmdb", "tono_cierre", "tconst"]
     return {"cols": cols, "genres": genres, "finals": FIN, "tones": TONE, "cats": EXPL,
             "relaciones": an.RELACIONES, "paises": top_paises, "films": rows}
 
@@ -178,7 +178,13 @@ def build_v2() -> dict:
     rec = d.groupby("country_frame").reconocida.mean()
     cv = t("covariables.csv")
     cov = [[r.variable, r.country_frame, COH.index(r.cohort), str(r.valor), r4(r.prop)] for r in cv.itertuples()]
-    return {"cohortes": coh, "anual": year, "contrastes": contr, "subgrupos": sub, "final_animo": fvm,
+    hist = json.loads((V2 / "historia_web.json").read_text(encoding="utf-8"))
+    u = d.drop_duplicates("tconst")
+    both = u[u.final_A.notna() & u.final_B.notna()]
+    agr = {"acuerdo_final": r4((both.final_A == both.final_B).mean()),
+           "kappa_final": r4(__import__("finales.agreement", fromlist=["x"]).cohen_kappa(both.final_A, both.final_B)),
+           "n_adj": int((u.final_fuente == "adjudicado").sum())}
+    return {"historia": hist, "acuerdo_censo": agr, "cohortes": coh, "anual": year, "contrastes": contr, "subgrupos": sub, "final_animo": fvm,
             "matriz": {"filas": FIN[:4], "cols": [int(x) for x in mat.columns], "n": mat.values.tolist()},
             "imdb": imdb, "sensibilidad": sens, "ajustados": adj, "acuerdo": acu, "covariables": cov,
             "reconocidas": {k: r4(v) for k, v in rec.items()},
@@ -187,12 +193,69 @@ def build_v2() -> dict:
 
 
 def main_v2() -> None:
-    data = json.loads((ROOT / "web" / "data.json").read_text(encoding="utf-8"))
-    data["v2"] = build_v2()
+    # La web presenta un único estudio (censo + España): data.json solo lleva los agregados del censo.
+    cat = pd.read_csv(TABLES / "catalogo_por_cohorte.csv")
+    data = {"v2": build_v2(), "meta": {"catalogo_us": int(cat.catalogo_elegible.sum()),
+                                       "catalogo_es": int(len(pd.read_csv(INTERIM / "catalog_es.csv")))}}
     (ROOT / "web" / "data.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     f = ROOT / "web" / "films.json"
     f.write_text(json.dumps(build_films_v2(), ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print((ROOT / "web" / "data.json").stat().st_size, f.stat().st_size)
+
+
+
+def _notes(stage_dirs: list[str]) -> dict:
+    """id → {"A": (final, nota), "B": (...)} a partir de las etiquetas."""
+    out = {}
+    for sd in stage_dirs:
+        for a in "AB":
+            for f in sorted((ROOT / "annotation" / "labels" / sd / a).glob("*.jsonl")):
+                for line in f.read_text(encoding="utf-8").splitlines():
+                    if line.strip():
+                        r = json.loads(line)
+                        out.setdefault(r["id"], {})[a] = [r.get("final"), r.get("nota")]
+    return out
+
+
+def _adj_notes(dirs: list[str]) -> dict:
+    out = {}
+    for sd in dirs:
+        for f in sorted((ROOT / "annotation" / "labels" / sd).glob("*.jsonl")):
+            for line in f.read_text(encoding="utf-8").splitlines():
+                if line.strip():
+                    r = json.loads(line)
+                    out[r["id"]] = [r.get("final"), r.get("nota")]
+    return out
+
+
+def build_fichas() -> dict[int, dict]:
+    """Fichas por año (carga diferida en la web): sinopsis original de Wikipedia usada (CC BY-SA 4.0, con URL de la
+    revisión) y las notas de los anotadores y del adjudicador sobre el final (D-030)."""
+    from . import v2
+    d = pd.read_csv(INTERIM / "analitico_v2.csv").drop_duplicates("tconst")
+    k1 = pd.read_csv(ANNOT_KEYS / "principal_key.csv").drop_duplicates("tconst").set_index("tconst").id
+    notes = _notes(["principal", "v2_completa", "v2_es_en"])
+    adj = _adj_notes(["principal/adjudicacion", "v2_adjudicacion"])
+    out: dict[int, dict] = {}
+    for r in d.itertuples():
+        i = k1.get(r.tconst) if r.etapa_v2 == "v2_modb" else r.id_v2
+        rec = v2.synopsis_for(r.tconst, r.sinopsis_idioma if isinstance(r.sinopsis_idioma, str) else "en")
+        n = notes.get(i, {})
+        out.setdefault(int(r.year), {})[r.tconst] = {
+            "s": rec["text"] if rec else None, "l": (rec or {}).get("wiki", "en"), "u": (rec or {}).get("revision_url"),
+            "A": n.get("A"), "B": n.get("B"), "J": adj.get(i)}
+    return out
+
+
+def main_fichas() -> None:
+    fd = ROOT / "web" / "fichas"
+    fd.mkdir(parents=True, exist_ok=True)
+    tot = 0
+    for y, recs in build_fichas().items():
+        p = fd / f"{y}.json"
+        p.write_text(json.dumps(recs, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        tot += p.stat().st_size
+    print("fichas", tot)
 
 
 if __name__ == "__main__":
