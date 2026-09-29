@@ -76,7 +76,7 @@ def draw(stage: str) -> pd.DataFrame:
     out.to_csv(DERIVED / f"muestra_{stage}.csv", index=False)
 
     films = meta.loc[sample["tconst"].unique(), ["primaryTitle", "originalTitle", "enwiki_url"]].reset_index()
-    annotation.make_batches(films, stage)
+    annotation.make_batches(films, stage, batch_size=50)
     return out
 
 
