@@ -137,3 +137,57 @@ Una línea JSON por película:
 
 * 0.9 (2026-09-29): borrador inicial para el piloto.
 * 1.0 (2026-09-29): congelada tras el piloto de 50 películas. Cambios (marcados [v1.0]): reglas para poscréditos y avances de secuela, finales alternativos, dos protagonistas, muerte de aliados, historias sin conflicto central, sinopsis confusas, transformación irreversible en `supervivencia`, `objetivo` sin meta central y procedimiento de decisión para `tono_cierre` (kappa del piloto = 0,49). No se cambió ninguna definición de categoría de `final`.
+
+---
+
+# Módulo B (v2): protagonistas, contexto y ánimo
+
+**Versión 2.0-borrador.** Se añade en la versión 2 del estudio. Las secciones 1 a 8 anteriores (versión 1.0) **no cambian**. El módulo B se anota para todas las películas; para las 994 del estudio v1 se anota solo este módulo.
+
+Las sinopsis pueden estar en inglés o en español; se anotan igual. Como los años están enmascarados, la época se deduce de pistas del texto (guerras, tecnología, acontecimientos). Si no hay pistas, `NO_CLARO`.
+
+## B1. Protagonista (quien organiza la trama; si es coral, el grupo)
+
+| Campo | Códigos | Regla |
+|---|---|---|
+| `genero_protagonista` | `HOMBRE`, `MUJER`, `MIXTO`, `NO_HUMANO`, `NO_CLARO` | `MIXTO` si el protagonismo es compartido entre hombres y mujeres; `NO_HUMANO` para animales, robots o criaturas sin género humano claro. |
+| `edad_protagonista` | `NINO` (<13), `ADOLESCENTE` (13-17), `JOVEN` (18-29), `ADULTO` (30-49), `MADURO` (50-64), `MAYOR` (65+), `MIXTO`, `NO_CLARO` | Edad aparente al empezar la historia. Si la sinopsis no la da, dedúcela del contexto (estudia en el instituto → `ADOLESCENTE`; tiene hijos adolescentes → `ADULTO`). |
+| `momento_vital` | `INFANCIA`, `ADOLESCENCIA`, `JUVENTUD`, `CRIANZA`, `MADUREZ`, `CRISIS_VITAL`, `VEJEZ`, `NO_CLARO` | `JUVENTUD`: estudios, primer trabajo, independizarse, primeras relaciones serias. `CRIANZA`: formar familia o criar hijos pequeños. `MADUREZ`: vida adulta asentada (carrera, familia estable). `CRISIS_VITAL`: una ruptura o pérdida que obliga a redefinir la vida adulta (divorcio, duelo, despido, enfermedad). `VEJEZ`: jubilación, final de la vida. |
+| `estado_civil` | `SOLTERO`, `EN_PAREJA`, `CASADO`, `SEPARADO_DIVORCIADO`, `VIUDO`, `NO_CLARO` | Situación al **inicio** de la película. |
+| `clase_social` | `BAJA_MARGINAL`, `TRABAJADORA`, `MEDIA`, `ALTA_ELITE`, `MIXTA`, `NO_CLARO` | Por ocupación, vivienda y recursos. Policías, soldados, profesores → normalmente `TRABAJADORA` o `MEDIA` según el texto; empresarios ricos, aristócratas, estrellas → `ALTA_ELITE`. `MIXTA` si la historia gira sobre protagonistas de clases distintas (p. ej., un romance entre clases). |
+
+## B2. Relaciones y contexto
+
+| Campo | Códigos | Regla |
+|---|---|---|
+| `relaciones_centrales` | lista de 1 a 3 entre `AMISTAD`, `ROMANCE`, `MATRIMONIO`, `DIVORCIO_SEPARACION`, `PADRES_HIJOS`, `HERMANOS`, `FAMILIA_EXTENSA`, `MENTOR_DISCIPULO`, `EQUIPO_COMPANEROS`, `RIVALIDAD`, `COMUNIDAD`; o `["NINGUNA"]` | Solo las relaciones que la trama desarrolla de verdad, ordenadas por importancia. `ROMANCE` = relación amorosa que se forma o se disputa; `MATRIMONIO` = pareja ya casada cuya relación es un tema. |
+| `especulativa` | `NO`, `CIENCIA_FICCION`, `FANTASIA`, `SOBRENATURAL`, `SUPERHEROES` | Elemento especulativo principal. `SOBRENATURAL`: fantasmas, demonios, maldiciones en un mundo por lo demás real. `SUPERHEROES`: personajes con superpoderes en clave de cómic. |
+| `epoca_trama` | `ANTES_1500`, `DE_1500_A_1899`, `DE_1900_A_1945`, `DE_1946_A_1979`, `DE_1980_EN_ADELANTE`, `FUTURO`, `MUNDO_FICTICIO`, `VARIAS`, `NO_CLARO` | Época principal de la acción. Una historia actual sin marcas de época (móviles, internet, ciudad moderna) es `DE_1980_EN_ADELANTE`. `MUNDO_FICTICIO`: mundos inventados sin correspondencia histórica (Tierra Media, galaxias lejanas…). |
+| `paises_trama` | lista de países en español (`"Estados Unidos"`, `"España"`, `"Francia"`…) o `["Espacio"]`, `["Mundo ficticio"]`, `["No claro"]` | Países donde transcurre la acción principal, máximo 4, por orden de importancia. |
+| `humor` | `NINGUNO`, `ALGO`, `CENTRAL` | Peso del humor en la película según la sinopsis. |
+
+## B3. Ánimo (más allá del final)
+
+Dos escalas de −2 a +2 (o `null` si no se puede juzgar), **independientes del tipo de final**:
+
+| Ítem | −2 | 0 | +2 |
+|---|---|---|---|
+| `tono_general` | La película es sombría de principio a fin: violencia, desolación, crueldad dominan. | Mezcla de luz y oscuridad. | Luminosa, cálida o festiva en su mayor parte. |
+| `optimismo_personajes` | Los protagonistas son cínicos, derrotistas, desesperados o amargados. | Mixto o neutro. | Los protagonistas son vitalistas, esperanzados, confían en la vida y en los demás, aunque sufran. |
+
+**Ejemplo guía** (descrito en abstracto): un romance a bordo de un barco que se hunde, en el que la pareja vive con intensidad, se anima a romper convenciones y ella recuerda la experiencia como liberadora, tiene `final` = `TRAGICO` o `AGRIDULCE`, pero `optimismo_personajes` = `+2` y `tono_general` probablemente `0` o `+1`. Un thriller en el que un detective cansado y cínico persigue a un asesino en una ciudad podrida tiene `optimismo_personajes` = `−2` aunque atrape al asesino.
+
+## B4. Formato de salida
+
+Anotación completa (películas nuevas): una línea JSON con **todos** los campos de la sección 7 **más** los del módulo B. Solo módulo B (películas del estudio v1): `id` + campos del módulo B + `reconocida` + `confianza_b` (1-3, confianza global del módulo B).
+
+```json
+{"id":"F1A2B3C4D", "genero_protagonista":"HOMBRE", "edad_protagonista":"ADULTO", "momento_vital":"CRISIS_VITAL",
+ "estado_civil":"SEPARADO_DIVORCIADO", "clase_social":"TRABAJADORA", "relaciones_centrales":["PADRES_HIJOS","AMISTAD"],
+ "especulativa":"NO", "epoca_trama":"DE_1980_EN_ADELANTE", "paises_trama":["Estados Unidos"], "humor":"ALGO",
+ "tono_general":0, "optimismo_personajes":1, "confianza_b":2}
+```
+
+## B5. Adjudicación del módulo B
+
+Igual que en la sección 8: los campos de elección única en desacuerdo y los ítems con 3 o más puntos de diferencia pasan al adjudicador. En las listas (`relaciones_centrales`, `paises_trama`) no se adjudica: el análisis usa las marcadas por ambos anotadores y, como sensibilidad, las marcadas por al menos uno.

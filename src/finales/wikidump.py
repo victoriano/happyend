@@ -32,26 +32,41 @@ PLOT_HEADINGS = {"plot", "plot summary", "synopsis", "story", "summary", "premis
 SYN_DIR = INTERIM / "synopses"
 OFFSETS = INTERIM / f"wikidump_offsets_{DUMP_DATE}.csv"
 
+# v2: soporte de la Wikipedia en español (cine español). Por defecto todo sigue siendo 'en'.
+PLOT_HEADINGS_ES = {"argumento", "sinopsis", "trama", "resumen", "historia", "argumento de la película",
+                    "resumen argumental", "argumento y sinopsis"}
+WIKIS = {
+    "en": {"base": BASE, "dump": DUMP_NAME, "index": INDEX_NAME, "headings": PLOT_HEADINGS,
+           "syn_dir": SYN_DIR, "offsets": OFFSETS, "host": "en.wikipedia.org"},
+    "es": {"base": f"https://dumps.wikimedia.org/eswiki/{DUMP_DATE}/",
+           "dump": f"eswiki-{DUMP_DATE}-pages-articles-multistream.xml.bz2",
+           "index": f"eswiki-{DUMP_DATE}-pages-articles-multistream-index.txt.bz2",
+           "headings": PLOT_HEADINGS_ES, "syn_dir": INTERIM / "synopses_es",
+           "offsets": INTERIM / f"wikidump_offsets_es_{DUMP_DATE}.csv", "host": "es.wikipedia.org"},
+}
+
 
 def title_from_url(url: str) -> str:
     return unquote(url.rsplit("/wiki/", 1)[-1]).replace("_", " ")
 
 
-def fetch_index(force: bool = False) -> Path:
-    dest = RAW / INDEX_NAME
+def fetch_index(force: bool = False, wiki: str = "en") -> Path:
+    w = WIKIS[wiki]
+    dest = RAW / w["index"]
     if not dest.exists() or force:
         from .ingest import download
-        download(BASE + INDEX_NAME, dest, "wikipedia")
+        download(w["base"] + w["index"], dest, "wikipedia")
     return dest
 
 
-def build_offsets(titles: set[str], force: bool = False) -> pd.DataFrame:
+def build_offsets(titles: set[str], force: bool = False, wiki: str = "en") -> pd.DataFrame:
     """Recorre el índice (offset:page_id:título) y guarda offset inicial/final del bloque de cada título."""
-    if OFFSETS.exists() and not force:
-        df = pd.read_csv(OFFSETS, dtype={"title": str})
+    OFF = WIKIS[wiki]["offsets"]
+    if OFF.exists() and not force:
+        df = pd.read_csv(OFF, dtype={"title": str})
         if titles <= set(df["title"]):
             return df
-    idx = fetch_index()
+    idx = fetch_index(wiki=wiki)
     found, all_offsets = {}, []
     last = None
     with bz2.open(idx, "rt", encoding="utf-8") as fh:
@@ -70,8 +85,8 @@ def build_offsets(titles: set[str], force: bool = False) -> pd.DataFrame:
         i = bisect.bisect_right(all_offsets, off)
         end = all_offsets[i] if i < len(all_offsets) else None
         rows.append({"title": t, "page_id": pid, "offset": off, "end": end})
-    df = pd.DataFrame(rows)
-    df.to_csv(OFFSETS, index=False)
+    df = pd.DataFrame(rows, columns=["title", "page_id", "offset", "end"])
+    df.to_csv(OFF, index=False)
     return df
 
 
@@ -83,11 +98,12 @@ def _unescape(s: str) -> str:
     return html.unescape(s)
 
 
-def read_block(offset: int, end: int | None, session: requests.Session) -> str:
+def read_block(offset: int, end: int | None, session: requests.Session, wiki: str = "en") -> str:
     rng = f"bytes={offset}-{'' if end is None else end - 1}"
+    w = WIKIS[wiki]
     for attempt in range(6):
         try:
-            r = session.get(BASE + DUMP_NAME, headers={"Range": rng}, timeout=120)
+            r = session.get(w["base"] + w["dump"], headers={"Range": rng}, timeout=120)
             if r.status_code == 206:
                 return bz2.decompress(r.content).decode("utf-8")
         except (requests.RequestException, OSError, EOFError):
@@ -113,7 +129,7 @@ def find_page(block: str, title: str) -> dict | None:
 H2_RE = re.compile(r"^==(?!=)\s*(.*?)\s*==(?!=)\s*(?:<!--.*?-->\s*)*$", re.M)
 
 
-def plot_from_wikitext(wikitext: str) -> tuple[str | None, str | None]:
+def plot_from_wikitext(wikitext: str, headings: set[str] | None = None) -> tuple[str | None, str | None]:
     """Devuelve (encabezado, texto plano) de la primera sección de nivel 2 argumental.
 
     Las secciones se delimitan con una expresión regular sobre líneas «== Título ==» antes de analizar el
@@ -122,7 +138,7 @@ def plot_from_wikitext(wikitext: str) -> tuple[str | None, str | None]:
     heads = list(H2_RE.finditer(wikitext))
     for i, h in enumerate(heads):
         heading = mwparserfromhell.parse(h.group(1)).strip_code().strip()
-        if heading.lower() not in PLOT_HEADINGS:
+        if heading.lower() not in (headings or PLOT_HEADINGS):
             continue
         end = heads[i + 1].start() if i + 1 < len(heads) else len(wikitext)
         body = mwparserfromhell.parse(wikitext[h.end():end])
@@ -134,7 +150,7 @@ def plot_from_wikitext(wikitext: str) -> tuple[str | None, str | None]:
                     pass
         text = body.strip_code(normalize=True, collapse=True)
         text = re.sub(r"^=+.*?=+\s*$", "", text, flags=re.M)      # subencabezados de nivel 3+
-        text = re.sub(r"\[\[(File|Image):[^\]]*\]\]", "", text)
+        text = re.sub(r"\[\[(File|Image|Archivo|Imagen):[^\]]*\]\]", "", text)
         text = re.sub(r"[ \t]+", " ", text)
         text = re.sub(r"\n\s*\n+", "\n", text).strip()
         return heading, (text or None)
@@ -142,30 +158,34 @@ def plot_from_wikitext(wikitext: str) -> tuple[str | None, str | None]:
 
 
 def fetch_one(tconst: str, enwiki_url: str, offsets: pd.DataFrame, session: requests.Session,
-              force: bool = False) -> dict:
-    SYN_DIR.mkdir(parents=True, exist_ok=True)
-    out = SYN_DIR / f"{tconst}.json"
+              force: bool = False, wiki: str = "en") -> dict:
+    w = WIKIS[wiki]
+    SD = w["syn_dir"]
+    SD.mkdir(parents=True, exist_ok=True)
+    out = SD / f"{tconst}.json"
     if out.exists() and not force:
         return json.loads(out.read_text(encoding="utf-8"))
     title = title_from_url(enwiki_url)
-    rec = {"tconst": tconst, "enwiki_url": enwiki_url, "title": title, "source": f"enwiki dump {DUMP_DATE}",
-           "dump_url": BASE + DUMP_NAME, "retrieved_at": provenance.now_utc(),
+    rec = {"tconst": tconst, "enwiki_url": enwiki_url, "title": title, "wiki": wiki,
+           "source": f"{wiki}wiki dump {DUMP_DATE}",
+           "dump_url": w["base"] + w["dump"], "retrieved_at": provenance.now_utc(),
            "license": provenance.LICENSES["wikipedia"]}
     row = offsets[offsets["title"] == title]
     if row.empty:
         rec.update({"status": "titulo_no_en_volcado", "text": None})
     else:
         r = row.iloc[0]
-        page = find_page(read_block(int(r["offset"]), None if pd.isna(r["end"]) else int(r["end"]), session), title)
+        page = find_page(read_block(int(r["offset"]), None if pd.isna(r["end"]) else int(r["end"]), session, wiki),
+                         title)
         if page is None:
             rec.update({"status": "pagina_no_encontrada_en_bloque", "text": None})
-        elif page["wikitext"].lstrip().upper().startswith("#REDIRECT"):
+        elif page["wikitext"].lstrip().upper().startswith(("#REDIRECT", "#REDIRECCIÓN")):
             rec.update({"status": "redireccion", "text": None})
         else:
-            heading, text = plot_from_wikitext(page["wikitext"])
+            heading, text = plot_from_wikitext(page["wikitext"], w["headings"])
             rec.update({"page_id": int(r["page_id"]), "revision": page["revision"],
                         "revision_timestamp": page["revision_timestamp"], "heading": heading, "text": text,
-                        "revision_url": f"https://en.wikipedia.org/w/index.php?oldid={page['revision']}",
+                        "revision_url": f"https://{w['host']}/w/index.php?oldid={page['revision']}",
                         "status": "ok" if text else "sin_seccion_argumental"})
     out.write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
     return rec

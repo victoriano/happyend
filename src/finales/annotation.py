@@ -290,3 +290,73 @@ def human_validation_kit(stage: str = "principal", n_per_cohort: int = 20, seed:
     # clave con estrato (para ponderar el sobremuestreo de desacuerdos), fuera de la vista de los anotadores
     out[["id", "cohort", "genre_main", "desacuerdo_modelos"]].to_csv(KEY_DIR / "validacion_humana_key.csv", index=False)
     return out
+
+
+# ------------------------------------------------------------------ módulo B (v2)
+CATS_B = {
+    "genero_protagonista": ["HOMBRE", "MUJER", "MIXTO", "NO_HUMANO", "NO_CLARO"],
+    "edad_protagonista": ["NINO", "ADOLESCENTE", "JOVEN", "ADULTO", "MADURO", "MAYOR", "MIXTO", "NO_CLARO"],
+    "momento_vital": ["INFANCIA", "ADOLESCENCIA", "JUVENTUD", "CRIANZA", "MADUREZ", "CRISIS_VITAL", "VEJEZ", "NO_CLARO"],
+    "estado_civil": ["SOLTERO", "EN_PAREJA", "CASADO", "SEPARADO_DIVORCIADO", "VIUDO", "NO_CLARO"],
+    "clase_social": ["BAJA_MARGINAL", "TRABAJADORA", "MEDIA", "ALTA_ELITE", "MIXTA", "NO_CLARO"],
+    "especulativa": ["NO", "CIENCIA_FICCION", "FANTASIA", "SOBRENATURAL", "SUPERHEROES"],
+    "epoca_trama": ["ANTES_1500", "DE_1500_A_1899", "DE_1900_A_1945", "DE_1946_A_1979", "DE_1980_EN_ADELANTE",
+                    "FUTURO", "MUNDO_FICTICIO", "VARIAS", "NO_CLARO"],
+    "humor": ["NINGUNO", "ALGO", "CENTRAL"],
+}
+RELACIONES = ["AMISTAD", "ROMANCE", "MATRIMONIO", "DIVORCIO_SEPARACION", "PADRES_HIJOS", "HERMANOS",
+              "FAMILIA_EXTENSA", "MENTOR_DISCIPULO", "EQUIPO_COMPANEROS", "RIVALIDAD", "COMUNIDAD", "NINGUNA"]
+ITEMS_B = ["tono_general", "optimismo_personajes"]
+
+
+def validate_record_b(rec: dict, full: bool) -> list[str]:
+    """Valida el módulo B; si full=True, también los campos del núcleo (v1)."""
+    errs = validate_record(rec) if full else []
+    if not full:
+        if not isinstance(rec.get("id"), str):
+            errs.append("id ausente")
+        if not isinstance(rec.get("reconocida"), bool):
+            errs.append("reconocida no booleano")
+        if rec.get("confianza_b") not in (1, 2, 3):
+            errs.append("confianza_b no válida")
+    for k, allowed in CATS_B.items():
+        if rec.get(k) not in allowed:
+            errs.append(f"{k}={rec.get(k)!r} no permitido")
+    for k in ITEMS_B:
+        try:
+            _coerce_item(rec.get(k))
+        except (TypeError, ValueError):
+            errs.append(f"{k}={rec.get(k)!r} fuera de escala")
+    rel = rec.get("relaciones_centrales")
+    if not (isinstance(rel, list) and 1 <= len(rel) <= 3 and all(x in RELACIONES for x in rel)):
+        errs.append(f"relaciones_centrales={rel!r} no válida")
+    pais = rec.get("paises_trama")
+    if not (isinstance(pais, list) and 1 <= len(pais) <= 4 and all(isinstance(x, str) and x for x in pais)):
+        errs.append(f"paises_trama={pais!r} no válida")
+    return errs
+
+
+def load_labels_b(paths: list[Path], annotator: str, full: bool) -> tuple[pd.DataFrame, list[str]]:
+    rows, errors = [], []
+    for p in paths:
+        for ln, line in enumerate(Path(p).read_text(encoding="utf-8").splitlines(), 1):
+            if not line.strip():
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError as e:
+                errors.append(f"{Path(p).name}:{ln} JSON inválido: {e}")
+                continue
+            errs = validate_record_b(rec, full)
+            if errs:
+                errors.append(f"{Path(p).name}:{ln} {rec.get('id')}: {'; '.join(errs)}")
+                continue
+            for k in ITEMS_B + (ITEMS if full else []):
+                rec[k] = _coerce_item(rec.get(k))
+            rec["annotator"] = annotator
+            rows.append(rec)
+    df = pd.DataFrame(rows)
+    if not df.empty and df["id"].duplicated().any():
+        errors.append(f"ids duplicados: {df.loc[df['id'].duplicated(), 'id'].tolist()[:10]}")
+        df = df.drop_duplicates("id", keep="first")
+    return df, errors
