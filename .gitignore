@@ -1,0 +1,8 @@
+# Datos crudos e intermedios: no redistribuibles (IMDb) o regenerables
+data/raw/
+data/interim/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.part
+.venv/

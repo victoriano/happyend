@@ -1,0 +1,59 @@
+# Configuración central del proyecto. Todo parámetro que afecte a resultados vive aquí.
+# Cambiar un valor = volver a ejecutar el flujo (ver README).
+
+project:
+  user_agent: "FinalesCineResearch/0.1 (proyecto de investigación no comercial; contacto: victoriano@graphext.com)"
+  seed: 20260929
+
+periodo:
+  year_min: 1980
+  year_max: 2024
+  cohortes:            # etiqueta: [inicio, fin] ambos incluidos
+    "1980-1989": [1980, 1989]
+    "1990-1999": [1990, 1999]
+    "2000-2009": [2000, 2009]
+    "2010-2019": [2010, 2019]
+    "2020-2024": [2020, 2024]
+  cohorte_referencia: "1990-1999"
+
+filtros_catalogo:
+  title_type: movie
+  runtime_min: 60             # largometraje (criterio práctico; AMPAS usa >40 min)
+  excluir_generos_imdb: [Documentary, Reality-TV, Talk-Show, News, Game-Show, Adult]
+  min_votos_catalogo: 1000    # mínimo para entrar en el catálogo analizable (ver registro de decisiones D-006)
+  max_desfase_anio_wikidata: 1  # años de diferencia tolerados entre IMDb y Wikidata
+
+# Orden de prioridad para asignar un género principal a partir de los géneros de IMDb (hasta 3).
+genero_principal_prioridad:
+  - [Animation, Animación]
+  - [Horror, Terror]
+  - [Action, Acción/aventura]
+  - [Adventure, Acción/aventura]
+  - [Sci-Fi, Ciencia ficción/fantasía]
+  - [Fantasy, Ciencia ficción/fantasía]
+  - [Comedy, Comedia]
+  - [Romance, Romance]
+  - [Thriller, Thriller/crimen]
+  - [Crime, Thriller/crimen]
+  - [Mystery, Thriller/crimen]
+  - [Drama, Drama]
+genero_resto: Otros
+
+marcos:
+  popular:
+    top_por_anio: 50          # universo popular = 50 títulos con más votos IMDb de cada año
+  amplio:
+    n_tramos_popularidad: 3   # terciles de votos dentro de cada año
+
+piloto:
+  n_por_cohorte_popular: 6
+  n_por_cohorte_amplio: 4
+
+principal:
+  # Se fija tras el piloto (ver docs/registro_decisiones.md, D-012). No cambiar sin registrar.
+  n_por_cohorte_popular: 80
+  n_por_cohorte_amplio: 50
+
+sinopsis:
+  min_palabras: 120
+  max_palabras_anotacion: 1100   # se trunca para anotar; se registra el truncado

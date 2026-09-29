@@ -1,0 +1,167 @@
+frame,cohort,stratum_pop,genre_main,N_universe,n_target,n_drawn,n_skipped_no_synopsis
+popular,1980-1989,top,Acción/aventura,145,2,2,0
+popular,1980-1989,top,Animación,13,0,0,0
+popular,1980-1989,top,Ciencia ficción/fantasía,26,0,0,0
+popular,1980-1989,top,Comedia,119,2,2,0
+popular,1980-1989,top,Drama,39,1,1,0
+popular,1980-1989,top,Romance,26,0,0,0
+popular,1980-1989,top,Terror,98,1,1,0
+popular,1980-1989,top,Thriller/crimen,34,0,0,0
+popular,1990-1999,top,Acción/aventura,172,2,2,0
+popular,1990-1999,top,Animación,24,0,0,0
+popular,1990-1999,top,Ciencia ficción/fantasía,42,1,1,0
+popular,1990-1999,top,Comedia,100,1,1,0
+popular,1990-1999,top,Drama,33,0,0,0
+popular,1990-1999,top,Romance,21,0,0,0
+popular,1990-1999,top,Terror,43,1,1,0
+popular,1990-1999,top,Thriller/crimen,65,1,1,0
+popular,2000-2009,top,Acción/aventura,185,2,2,0
+popular,2000-2009,top,Animación,40,1,1,0
+popular,2000-2009,top,Ciencia ficción/fantasía,34,0,0,0
+popular,2000-2009,top,Comedia,90,1,1,0
+popular,2000-2009,top,Drama,28,0,0,0
+popular,2000-2009,top,Romance,15,0,0,0
+popular,2000-2009,top,Terror,42,1,1,0
+popular,2000-2009,top,Thriller/crimen,66,1,1,0
+popular,2010-2019,top,Acción/aventura,250,3,3,0
+popular,2010-2019,top,Animación,49,1,1,0
+popular,2010-2019,top,Ciencia ficción/fantasía,15,0,0,0
+popular,2010-2019,top,Comedia,56,1,1,0
+popular,2010-2019,top,Drama,36,0,0,0
+popular,2010-2019,top,Romance,14,0,0,0
+popular,2010-2019,top,Terror,42,1,1,0
+popular,2010-2019,top,Thriller/crimen,38,0,0,0
+popular,2020-2024,top,Acción/aventura,120,3,3,0
+popular,2020-2024,top,Animación,16,0,0,0
+popular,2020-2024,top,Ciencia ficción/fantasía,3,0,0,0
+popular,2020-2024,top,Comedia,28,1,1,0
+popular,2020-2024,top,Drama,18,0,0,0
+popular,2020-2024,top,Romance,3,0,0,0
+popular,2020-2024,top,Terror,39,1,1,0
+popular,2020-2024,top,Thriller/crimen,23,1,1,0
+amplio,1980-1989,T1,Acción/aventura,135,1,1,0
+amplio,1980-1989,T1,Animación,18,0,0,0
+amplio,1980-1989,T1,Ciencia ficción/fantasía,40,0,0,0
+amplio,1980-1989,T1,Comedia,131,0,0,0
+amplio,1980-1989,T1,Drama,63,0,0,0
+amplio,1980-1989,T1,Otros,1,0,0,0
+amplio,1980-1989,T1,Romance,37,0,0,0
+amplio,1980-1989,T1,Terror,144,1,1,1
+amplio,1980-1989,T1,Thriller/crimen,32,0,0,0
+amplio,1980-1989,T2,Acción/aventura,165,1,1,0
+amplio,1980-1989,T2,Animación,9,0,0,0
+amplio,1980-1989,T2,Ciencia ficción/fantasía,40,0,0,0
+amplio,1980-1989,T2,Comedia,147,0,0,0
+amplio,1980-1989,T2,Drama,43,0,0,0
+amplio,1980-1989,T2,Romance,29,0,0,0
+amplio,1980-1989,T2,Terror,129,0,0,0
+amplio,1980-1989,T2,Thriller/crimen,44,0,0,0
+amplio,1980-1989,T3,Acción/aventura,167,1,1,0
+amplio,1980-1989,T3,Animación,14,0,0,0
+amplio,1980-1989,T3,Ciencia ficción/fantasía,31,0,0,0
+amplio,1980-1989,T3,Comedia,151,0,0,0
+amplio,1980-1989,T3,Drama,45,0,0,0
+amplio,1980-1989,T3,Romance,31,0,0,0
+amplio,1980-1989,T3,Terror,127,0,0,0
+amplio,1980-1989,T3,Thriller/crimen,44,0,0,0
+amplio,1990-1999,T1,Acción/aventura,174,1,1,0
+amplio,1990-1999,T1,Animación,12,0,0,0
+amplio,1990-1999,T1,Ciencia ficción/fantasía,21,0,0,0
+amplio,1990-1999,T1,Comedia,240,1,1,0
+amplio,1990-1999,T1,Drama,76,0,0,0
+amplio,1990-1999,T1,Romance,68,0,0,0
+amplio,1990-1999,T1,Terror,91,0,0,0
+amplio,1990-1999,T1,Thriller/crimen,104,0,0,0
+amplio,1990-1999,T2,Acción/aventura,182,0,0,0
+amplio,1990-1999,T2,Animación,13,0,0,0
+amplio,1990-1999,T2,Ciencia ficción/fantasía,34,0,0,0
+amplio,1990-1999,T2,Comedia,265,1,1,0
+amplio,1990-1999,T2,Drama,54,0,0,0
+amplio,1990-1999,T2,Romance,69,0,0,0
+amplio,1990-1999,T2,Terror,82,0,0,0
+amplio,1990-1999,T2,Thriller/crimen,91,0,0,0
+amplio,1990-1999,T3,Acción/aventura,250,1,1,0
+amplio,1990-1999,T3,Animación,31,0,0,0
+amplio,1990-1999,T3,Ciencia ficción/fantasía,58,0,0,0
+amplio,1990-1999,T3,Comedia,193,0,0,0
+amplio,1990-1999,T3,Drama,59,0,0,0
+amplio,1990-1999,T3,Romance,38,0,0,0
+amplio,1990-1999,T3,Terror,73,0,0,0
+amplio,1990-1999,T3,Thriller/crimen,90,0,0,0
+amplio,2000-2009,T1,Acción/aventura,123,0,0,0
+amplio,2000-2009,T1,Animación,23,0,0,0
+amplio,2000-2009,T1,Ciencia ficción/fantasía,34,0,0,0
+amplio,2000-2009,T1,Comedia,347,1,1,0
+amplio,2000-2009,T1,Drama,159,0,0,0
+amplio,2000-2009,T1,Otros,1,0,0,0
+amplio,2000-2009,T1,Romance,90,0,0,0
+amplio,2000-2009,T1,Terror,215,1,1,0
+amplio,2000-2009,T1,Thriller/crimen,116,0,0,0
+amplio,2000-2009,T2,Acción/aventura,172,0,0,0
+amplio,2000-2009,T2,Animación,32,0,0,0
+amplio,2000-2009,T2,Ciencia ficción/fantasía,40,0,0,0
+amplio,2000-2009,T2,Comedia,385,1,1,0
+amplio,2000-2009,T2,Drama,100,0,0,0
+amplio,2000-2009,T2,Otros,1,0,0,0
+amplio,2000-2009,T2,Romance,98,0,0,0
+amplio,2000-2009,T2,Terror,160,0,0,0
+amplio,2000-2009,T2,Thriller/crimen,123,0,0,0
+amplio,2000-2009,T3,Acción/aventura,358,1,1,0
+amplio,2000-2009,T3,Animación,66,0,0,0
+amplio,2000-2009,T3,Ciencia ficción/fantasía,74,0,0,0
+amplio,2000-2009,T3,Comedia,242,0,0,0
+amplio,2000-2009,T3,Drama,74,0,0,0
+amplio,2000-2009,T3,Romance,45,0,0,0
+amplio,2000-2009,T3,Terror,118,0,0,0
+amplio,2000-2009,T3,Thriller/crimen,136,0,0,0
+amplio,2010-2019,T1,Acción/aventura,198,0,0,0
+amplio,2010-2019,T1,Animación,32,0,0,0
+amplio,2010-2019,T1,Ciencia ficción/fantasía,66,0,0,0
+amplio,2010-2019,T1,Comedia,346,1,1,0
+amplio,2010-2019,T1,Drama,246,0,0,0
+amplio,2010-2019,T1,Otros,2,0,0,0
+amplio,2010-2019,T1,Romance,86,0,0,0
+amplio,2010-2019,T1,Terror,339,1,1,1
+amplio,2010-2019,T1,Thriller/crimen,183,0,0,0
+amplio,2010-2019,T2,Acción/aventura,273,0,0,0
+amplio,2010-2019,T2,Animación,54,0,0,0
+amplio,2010-2019,T2,Ciencia ficción/fantasía,63,0,0,0
+amplio,2010-2019,T2,Comedia,365,1,1,0
+amplio,2010-2019,T2,Drama,180,0,0,0
+amplio,2010-2019,T2,Otros,2,0,0,0
+amplio,2010-2019,T2,Romance,83,0,0,0
+amplio,2010-2019,T2,Terror,310,0,0,0
+amplio,2010-2019,T2,Thriller/crimen,171,0,0,0
+amplio,2010-2019,T3,Acción/aventura,535,1,1,0
+amplio,2010-2019,T3,Animación,100,0,0,0
+amplio,2010-2019,T3,Ciencia ficción/fantasía,69,0,0,0
+amplio,2010-2019,T3,Comedia,279,0,0,0
+amplio,2010-2019,T3,Drama,114,0,0,0
+amplio,2010-2019,T3,Romance,66,0,0,0
+amplio,2010-2019,T3,Terror,207,0,0,0
+amplio,2010-2019,T3,Thriller/crimen,134,0,0,0
+amplio,2020-2024,T1,Acción/aventura,112,0,0,0
+amplio,2020-2024,T1,Animación,30,0,0,0
+amplio,2020-2024,T1,Ciencia ficción/fantasía,34,0,0,0
+amplio,2020-2024,T1,Comedia,139,1,1,1
+amplio,2020-2024,T1,Drama,109,0,0,0
+amplio,2020-2024,T1,Otros,2,0,0,0
+amplio,2020-2024,T1,Romance,25,0,0,0
+amplio,2020-2024,T1,Terror,130,1,1,0
+amplio,2020-2024,T1,Thriller/crimen,60,0,0,0
+amplio,2020-2024,T2,Acción/aventura,119,0,0,0
+amplio,2020-2024,T2,Animación,45,0,0,0
+amplio,2020-2024,T2,Ciencia ficción/fantasía,39,0,0,0
+amplio,2020-2024,T2,Comedia,143,1,1,0
+amplio,2020-2024,T2,Drama,75,0,0,0
+amplio,2020-2024,T2,Romance,31,0,0,0
+amplio,2020-2024,T2,Terror,139,0,0,0
+amplio,2020-2024,T2,Thriller/crimen,53,0,0,0
+amplio,2020-2024,T3,Acción/aventura,220,1,1,0
+amplio,2020-2024,T3,Animación,53,0,0,0
+amplio,2020-2024,T3,Ciencia ficción/fantasía,26,0,0,0
+amplio,2020-2024,T3,Comedia,92,0,0,0
+amplio,2020-2024,T3,Drama,58,0,0,0
+amplio,2020-2024,T3,Romance,16,0,0,0
+amplio,2020-2024,T3,Terror,111,0,0,0
+amplio,2020-2024,T3,Thriller/crimen,69,0,0,0
