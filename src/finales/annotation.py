@@ -215,3 +215,38 @@ def finalize(pr: pd.DataFrame, adj: pd.DataFrame | None) -> pd.DataFrame:
     out["describe_final"] = both["describe_final_A"].values & both["describe_final_B"].values
     out["vision_vida"] = vision_score(out)
     return out
+
+
+def validate_adjudication(path: Path, batch_path: Path) -> list[str]:
+    """Comprueba que cada línea resuelve exactamente los campos en desacuerdo con valores permitidos."""
+    need = {}
+    for line in Path(batch_path).read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            d = json.loads(line)
+            need[d["id"]] = set(d["campos_en_desacuerdo"])
+    errs, seen = [], set()
+    for ln, line in enumerate(Path(path).read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            d = json.loads(line)
+        except json.JSONDecodeError as e:
+            errs.append(f"línea {ln}: JSON inválido ({e})")
+            continue
+        i = d.get("id")
+        if i not in need:
+            errs.append(f"línea {ln}: id desconocido {i}")
+            continue
+        seen.add(i)
+        missing = need[i] - set(d)
+        if missing:
+            errs.append(f"{i}: faltan {sorted(missing)}")
+        for k in need[i] & set(d):
+            v = d[k]
+            if k in CATS and v not in CATS[k]:
+                errs.append(f"{i}: {k}={v!r} no permitido")
+            if k in ITEMS and v is not None and v not in (-2, -1, 0, 1, 2):
+                errs.append(f"{i}: {k}={v!r} fuera de escala")
+    for i in set(need) - seen:
+        errs.append(f"{i}: sin adjudicar")
+    return errs

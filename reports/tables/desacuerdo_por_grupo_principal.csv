@@ -1,0 +1,14 @@
+dimension,grupo,n,desacuerdo_final,desacuerdo_feliz
+cohort,1980-1989,198,0.121,0.081
+cohort,1990-1999,199,0.085,0.070
+cohort,2000-2009,200,0.075,0.030
+cohort,2010-2019,200,0.115,0.070
+cohort,2020-2024,197,0.086,0.041
+genre_main,Acción/aventura,355,0.093,0.065
+genre_main,Animación,54,0.056,0.037
+genre_main,Ciencia ficción/fantasía,51,0.039,0.039
+genre_main,Comedia,188,0.064,0.032
+genre_main,Drama,78,0.192,0.103
+genre_main,Romance,39,0.077,0.051
+genre_main,Terror,132,0.098,0.045
+genre_main,Thriller/crimen,97,0.155,0.093
