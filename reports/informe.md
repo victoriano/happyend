@@ -21,7 +21,7 @@
 Estos límites aparecen antes de los resultados a propósito: ninguna conclusión de este informe debe leerse sin ellos.
 
 1. **Las etiquetas las han puesto modelos de lenguaje, no personas.** Dos modelos distintos anotaron cada sinopsis de forma independiente y a ciegas, y un tercer proceso adjudicó los desacuerdos. **No se ha hecho la validación humana**: el material para hacerla está preparado en `annotation/validacion_humana/` (100 películas estratificadas por cohorte). Un acuerdo alto entre dos modelos no garantiza que acierten: pueden compartir sesgos.
-2. **El cegado es incompleto.** Se retiraron título y años, pero los anotadores dijeron reconocer la película en el 90 % (anotador A) y el 86 % (anotador B) de los casos; por cohorte, entre el 89 % y el 95 % fue reconocido por al menos uno. Pudieron usar lo que «saben» de la película o de su época. La prueba de sensibilidad que excluye las películas reconocidas no es evaluable en el marco popular (quedan 3/5 películas).
+2. **El cegado apenas funcionó en el cine popular.** Se retiraron título y años, pero los anotadores dijeron reconocer la película en el 90 % (anotador A) y el 86 % (anotador B) de los casos. En el marco popular, **al menos uno reconoció el 100 % de las películas en todas las cohortes** y ambos, el 98 %. En el marco amplio, entre el 58 % y el 80 %, según la cohorte. Los anotadores pudieron usar lo que «saben» de la película o de su época. Por eso la sensibilidad que excluye las películas reconocidas no es evaluable en el marco popular: quedan 0 películas si se excluyen las reconocidas por alguno y 3/5 (90s/2010-2024) si se excluyen las reconocidas por ambos.
 3. **Las sinopsis son de Wikipedia y están escritas hoy.** Es una ventaja (todas las décadas se describen con las mismas convenciones y en la misma época) y un riesgo (lo que los editores eligen contar puede variar según la película sea antigua o reciente, o más o menos conocida). El análisis mide los finales **tal como los resume Wikipedia**, no las películas.
 4. **La popularidad se mide con votos actuales de IMDb.** Los votos son retrospectivos: las películas de los noventa que hoy tienen muchos votos son las que se siguen recordando, lo que introduce un sesgo de supervivencia que puede diferir por década. La taquilla de Wikidata es escasa y no está ajustada por inflación, así que no se usó.
 5. **La muestra es pequeña para diferencias moderadas.** Con 150 películas por cohorte en el marco popular, la diferencia mínima detectable (potencia del 80 %) entre los noventa y 2010-2024 es de unos 13,8 pp. Para detectar 10 puntos harían falta unas 293 películas por cohorte. En el marco amplio (50 por cohorte) la diferencia mínima detectable es de 23,9 pp. **El análisis es exploratorio, no representativo en sentido estricto.**
@@ -124,30 +124,30 @@ El **manual** (`docs/manual_anotacion.md`) define cinco dimensiones que se miden
 
 ### 5.2 Comparación de los noventa con 2010-2024
 
-**Marco popular.** La proporción de finales felices pasa del 66,0 % en los noventa al 57,7 % [51,7 %; 63,4 %] en 2010-2024: **−8,3 pp [−17,9 pp; +1,2 pp]**, una razón de 0,87 [0,75; 1,02]. El intervalo incluye el cero. Por cohorte: 2010-2019 −7,3 pp [−18,7 pp; +3,3 pp] y 2020-2024 −10,3 pp [−21,0 pp; +0,4 pp].
+**Marco popular.** La proporción de finales felices pasa del 66,0 % en los noventa al 57,7 % [51,7 %; 63,4 %] en 2010-2024: **−8,3 pp [−17,7 pp; +1,2 pp]**, una razón de 0,87 [0,75; 1,02]. El intervalo incluye el cero. Por cohorte: 2010-2019 −7,3 pp [−18,7 pp; +3,3 pp] y 2020-2024 −10,3 pp [−21,0 pp; +0,4 pp].
 
-Los noventa destacan también frente a las demás cohortes: la diferencia de los ochenta respecto a los noventa es de −9,3 pp [−20,0 pp; +2,0 pp] y la de los dos mil, de −8,7 pp. Es decir, **los noventa aparecen como un pico, no como el final de una época más feliz que empieza a caer en 2010**.
+Los noventa también tienen la proporción más alta frente a las demás cohortes: la diferencia de los ochenta respecto a los noventa es de −9,3 pp [−20,0 pp; +2,0 pp] y la de los dos mil, de −8,7 pp. Estos intervalos también incluyen el cero. El patrón **sugiere** que los noventa fueron un pico más que el final de una época feliz que se rompe en 2010, pero no lo demuestra.
 
 En los demás tipos de final (2010-2024 frente a los noventa):
 
-* Agridulces: +4,3 pp [−4,7 pp; +13,2 pp].
-* Ambiguos: +5,1 pp [+1,2 pp; +9,0 pp]. Es el único cambio cuyo intervalo excluye el cero, pero parte de una base muy baja en los noventa (2,0 %).
-* Trágicos: −1,1 pp [−6,3 pp; +3,7 pp]. Sin indicios de más finales trágicos en el cine popular reciente.
+* Agridulces: +4,3 pp [−4,4 pp; +13,0 pp].
+* Ambiguos: +5,1 pp [+1,3 pp; +8,9 pp]. De los contrastes del marco popular entre 2010-2024 y los noventa, solo excluyen el cero los de estas variables: ambiguos. Además, parte de una base muy baja en los noventa (2,0 %).
+* Trágicos: −1,1 pp [−6,2 pp; +3,8 pp]. Sin indicios de más finales trágicos en el cine popular reciente.
 
-**Efecto ajustado** por género y popularidad: −7,7 pp [−17,7 pp; +1,5 pp] en finales felices.
+**Efecto ajustado** por género y popularidad: −7,7 pp [−18,0 pp; +2,3 pp] en finales felices.
 
-**Marco amplio.** La caída aparente es mayor pero mucho más incierta: finales felices −16,7 pp [−34,3 pp; +0,8 pp] (ajustado: −11,5 pp [−27,6 pp; +1,4 pp]) y trágicos +12,2 pp [+0,4 pp; +24,1 pp]. La diferencia se concentra en 2010-2019 (trágicos +16,0 pp [+2,0 pp; +30,1 pp]), no en 2020-2024. Con 50 películas por cohorte y más no clasificables en los noventa, este resultado es frágil: si los no clasificables se cuentan como no felices, la diferencia baja a −8,9 pp [−26,2 pp; +8,3 pp].
+**Marco amplio.** La caída aparente es mayor pero mucho más incierta: finales felices −16,7 pp [−33,8 pp; +0,9 pp] (ajustado: −11,5 pp [−26,9 pp; +4,0 pp]) y trágicos +12,2 pp [+0,4 pp; +23,5 pp], un intervalo que roza el cero. La diferencia procede sobre todo de 2010-2019 (trágicos +16,0 pp [+2,4 pp; +29,9 pp]); en 2020-2024 es de +3,3 pp [−7,9 pp; +14,6 pp]. Con 50 películas por cohorte y más no clasificables en los noventa, el resultado es frágil y la sensibilidad apunta en ambos sentidos. Si los no clasificables se cuentan como no felices, la diferencia baja a −8,9 pp [−25,2 pp; +7,5 pp]. En cambio, con otras definiciones de final feliz el intervalo excluye el cero: «Definición amplia: feliz o agridulce»; «Definición estricta: feliz y tono de cierre positivo». En los contrastes del marco amplio excluyen el cero: ambiguos, trágicos, visión de la vida.
 
 ### 5.3 Tono del cierre, visión de la vida y protagonistas
 
 ![Visión y tono](figures/fig3_vision_y_tono_ic.png)
 
-* **Tono del cierre positivo** (esperanza, alivio o conexión), marco popular: 78,5 % en los noventa; diferencia en 2010-2024: −1,6 pp [−9,9 pp; +6,8 pp]. Marco amplio: −11,7 pp [−27,1 pp; +4,4 pp].
-* **Visión de la vida** (−2 a +2), marco popular: 0,88 [0,74; 1,03] en los noventa; diferencia de +0,06 [−0,11; +0,24] en 2010-2024 (ajustada: +0,03). Los ochenta puntúan más bajo (0,61 [0,45; 0,78]). **En el cine popular no hay indicios de una visión de la vida menos optimista desde 2010.**
-* Marco amplio: visión de la vida −0,51 [−0,88; −0,13] (ajustada: −0,42 [−0,77; −0,08]), concentrada en 2010-2019 (−0,66 [−1,14; −0,22]). Es la señal más clara de menor optimismo, pero procede de la muestra pequeña y está sujeta a las reservas del apartado anterior.
+* **Tono del cierre positivo** (esperanza, alivio o conexión), marco popular: 78,5 % en los noventa; diferencia en 2010-2024: −1,6 pp [−9,9 pp; +6,5 pp]. Marco amplio: −11,7 pp [−26,6 pp; +4,4 pp].
+* **Visión de la vida** (−2 a +2), marco popular: 0,88 [0,74; 1,03] en los noventa; diferencia de +0,06 [−0,12; +0,24] en 2010-2024 (ajustada: +0,03). Ochenta: 0,61 [0,45; 0,78]. **En el cine popular no se observa una visión de la vida menos optimista desde 2010**; el intervalo descarta caídas de más de 0,12 puntos.
+* Marco amplio: visión de la vida −0,51 [−0,88; −0,13] (ajustada: −0,42 [−0,77; −0,08]), concentrada en 2010-2019 (−0,66 [−1,09; −0,23]). Es la señal más clara de menor optimismo, pero procede de la muestra pequeña y está sujeta a las reservas del apartado anterior.
 * **Protagonistas**, marco popular (noventa frente a 2010-2019): el protagonista sobrevive en el 81,9 % frente al 83,8 %, logra su objetivo en el 79,0 % frente al 75,5 % y hay justicia narrativa en el 66,4 % frente al 62,7 %. Son valores similares; los IC están en `descriptivos_marco_cohorte.csv`.
 
-**Las dimensiones no son lo mismo.** La visión de la vida media es de 1,32 en los finales felices, 0,48 en los agridulces, −0,18 en los ambiguos y −1,30 en los trágicos: están muy relacionadas, pero dentro de cada tipo de final hay mucha dispersión (figura 6). Parte de esa relación puede deberse a que los mismos anotadores puntúan ambas dimensiones.
+**Las dimensiones no son lo mismo.** La visión de la vida media (descriptiva, sin ponderar, ambos marcos juntos) es de 1,32 en los finales felices, 0,48 en los agridulces, −0,18 en los ambiguos y −1,30 en los trágicos. Están muy relacionadas, pero dentro de cada tipo de final hay mucha dispersión (figura 6). Parte de esa relación puede deberse a que los mismos anotadores puntúan ambas dimensiones.
 
 ![Final frente a visión](figures/fig6_final_vs_vision.png)
 
@@ -157,12 +157,12 @@ En los demás tipos de final (2010-2024 frente a los noventa):
 
 | Género | n (90s/2010-24) | Feliz 90s | Feliz 2010-24 | Diferencia [IC 95 %] |
 |---|---|---|---|---|
-| Acción/aventura | 52/146 | 71 % | 60 % | −11,0 pp [−24,8 pp; +4,0 pp] |
-| Comedia | 30/34 | 87 % | 67 % | −20,0 pp [−40,1 pp; +1,3 pp] |
-| Terror | 13/36 | 46 % | 41 % | −5,3 pp [−36,5 pp; +27,2 pp] |
-| Thriller/crimen | 19/25 | 37 % | 36 % | −0,7 pp [−30,2 pp; +27,8 pp] |
+| Acción/aventura | 52/146 | 71 % | 60 % | −11,0 pp [−25,0 pp; +3,8 pp] |
+| Comedia | 30/34 | 87 % | 67 % | −20,0 pp [−41,0 pp; +0,4 pp] |
+| Terror | 13/36 | 46 % | 41 % | −5,3 pp [−36,6 pp; +25,9 pp] |
+| Thriller/crimen | 19/25 | 37 % | 36 % | −0,7 pp [−30,4 pp; +28,9 pp] |
 
-En ningún género el intervalo excluye el cero. La composición por géneros también cambió: en el marco popular, la acción/aventura pasa del 35 % al 49 %, la animación del 5 % al 8 % y la comedia del 20 % al 11 % (`composicion_generos.csv`; tabla por género en `genero_contrastes.csv`).
+Por género, en ningún género el intervalo excluye el cero. La mayor caída puntual es la de Comedia (−20,0 pp). La composición por géneros también cambió: en el marco popular, la acción/aventura pasa del 35 % al 49 %, la animación del 5 % al 8 % y la comedia del 20 % al 11 % (`composicion_generos.csv`; tabla por género en `genero_contrastes.csv`).
 
 ### 5.5 Pruebas de sensibilidad (marco popular, finales felices, 2010-2024 − 1990-1999)
 
@@ -170,26 +170,26 @@ En ningún género el intervalo excluye el cero. La composición por géneros ta
 
 | Especificación | Diferencia [IC 95 %] |
 |---|---|
-| Principal | −8,3 pp [−17,9 pp; +1,2 pp] |
-| Feliz o agridulce | −4,0 pp [−10,0 pp; +2,3 pp] |
-| Feliz con tono positivo | −7,9 pp [−17,7 pp; +1,7 pp] |
-| Ponderado por votos de IMDb | +1,9 pp [−15,5 pp; +17,8 pp] |
-| No clasificables como no felices | −8,4 pp [−17,8 pp; +1,3 pp] |
-| Solo etiquetas de A | −10,5 pp [−20,2 pp; −0,9 pp] |
+| Principal | −8,3 pp [−17,7 pp; +1,2 pp] |
+| Feliz o agridulce | −4,0 pp [−10,1 pp; +2,2 pp] |
+| Feliz con tono positivo | −7,9 pp [−17,2 pp; +1,7 pp] |
+| Ponderado por votos de IMDb | +1,9 pp [−15,8 pp; +17,7 pp] |
+| No clasificables como no felices | −8,4 pp [−18,2 pp; +1,3 pp] |
+| Solo etiquetas de A | −10,5 pp [−19,9 pp; −1,0 pp] |
 | Solo etiquetas de B | −7,0 pp [−16,6 pp; +2,5 pp] |
-| Solo acuerdo inicial | −7,5 pp [−17,5 pp; +2,6 pp] |
-| Solo confianza alta | −8,1 pp [−16,7 pp; +0,8 pp] |
-| Solo producciones exclusivamente estadounidenses | −4,9 pp [−15,3 pp; +6,1 pp] |
-| Umbral más estricto (20 más votadas/año) | −7,4 pp [−23,8 pp; +8,7 pp] |
+| Solo acuerdo inicial | −7,5 pp [−17,2 pp; +2,4 pp] |
+| Solo confianza alta | −8,1 pp [−16,9 pp; +0,8 pp] |
+| Solo producciones exclusivamente estadounidenses | −4,9 pp [−15,8 pp; +5,9 pp] |
+| Umbral más estricto (20 más votadas/año) | −7,4 pp [−23,6 pp; +8,9 pp] |
 
-La dirección se mantiene (menos finales felices después de los noventa) en 10 de las 11 especificaciones alternativas de «final feliz» evaluables, pero sin ponderar por votos el tamaño varía entre 4,9 pp y 10,5 pp, y solo en 1 el intervalo excluye el cero (Solo etiquetas del anotador A (sin adjudicación)). **Al ponderar por votos, la diferencia desaparece** (+1,9 pp): las películas de los noventa más votadas hoy tienen, en proporción, menos finales felices (51,0 %) que el conjunto de las 50 más votadas de cada año. Un resultado tan dependiente de la ponderación no permite hablar de un cambio robusto.
+De las 10 especificaciones alternativas de la tabla (sin contar la principal), 9 mantienen la dirección (menos finales felices después de los noventa). Sin la ponderación por votos, el tamaño varía entre 4,0 pp y 10,5 pp, y solo en 1 el intervalo excluye el cero: «Solo etiquetas del anotador A (sin adjudicación)». **Al ponderar por votos, el resultado se vuelve indeterminado** (+1,9 pp [−15,8 pp; +17,7 pp]; el tamaño efectivo de los noventa baja a unas 45 películas). Las películas de los noventa más votadas hoy tienen, en proporción, menos finales felices (51,0 %) que el conjunto de las 50 más votadas de cada año. Además, ponderar por votos actuales acentúa el sesgo de supervivencia. La variante «solo confianza alta» selecciona los casos más claros y cambia la base (los noventa pasan al 92,4 %), así que se interpreta con cautela. Un resultado tan dependiente de la especificación no permite hablar de un cambio robusto.
 
 ### 5.6 Calidad de la medición
 
 * Acuerdo entre A y B en el final: 90 %, kappa de Cohen 0,84 (kappa ponderada ordinal: 0,90); final feliz sí/no: kappa 0,88.
 * Tono del cierre: kappa 0,73; supervivencia 0,83; objetivo 0,75; vínculos 0,77; justicia narrativa 0,76.
 * Visión de la vida: alfa de Krippendorff (intervalo) 0,95 para la puntuación media y entre 0,88 y 0,91 por ítem.
-* El desacuerdo sobre «final feliz» va del 3,0 % al 8,1 % según la cohorte, sin una tendencia clara por época (`desacuerdo_por_grupo_principal.csv`). Es más alto en drama y thriller.
+* El desacuerdo sobre «final feliz» va del 3,0 % al 8,1 % según la cohorte (`desacuerdo_por_grupo_principal.csv`). Por género, el desacuerdo sobre el final es mayor en drama (19 %) y thriller/crimen (16 %).
 
 ---
 
@@ -199,7 +199,7 @@ Follows (*Has Hollywood given up on the happy ending?*) examinó 7.384 película
 
 **Lo que no se puede comprobar.** El artículo no publica los datos, no detalla cómo se seleccionaron las películas ni qué países incluye (menciona películas estadounidenses, francesas e indias) y no nombra la fuente de las sinopsis. Por eso no es replicable exactamente y sus cifras no se usan aquí como resultado.
 
-**Comparación orientativa.** Con nuestra definición de acción (género principal Acción/aventura, marco popular), los finales felices pasan del 73,7 % [64,0 %; 81,5 %] en 1980-1999 (n=95) al 60,2 % [51,6 %; 68,1 %] en 2010-2024 (n=146): −13,5 pp [−25,4 pp; −1,1 pp]. La dirección y el orden de magnitud coinciden con los de Follows, con clasificadores, fuentes y poblaciones distintos. Pero en nuestra muestra la acción es el caso más favorable a la hipótesis: para el conjunto de géneros la diferencia es menor e incierta y, fuera de la acción, los ochenta se parecen más al cine actual que a los noventa.
+**Comparación orientativa.** Con nuestra definición de acción (género principal Acción/aventura, marco popular), los finales felices pasan del 73,7 % [64,0 %; 81,5 %] en 1980-1999 (n=95) al 60,2 % [51,6 %; 68,1 %] en 2010-2024 (n=146): −13,5 pp [−25,2 pp; −1,3 pp]. La dirección y el orden de magnitud coinciden con los de Follows, aunque los clasificadores, las fuentes y las poblaciones son distintos. Dos matices: agrupar los ochenta con los noventa, como hace Follows, favorece el contraste, porque la acción de los ochenta tuvo más finales felices (76,7 %) que la de los noventa (71,2 %). Y para el conjunto de géneros la diferencia es menor e incierta; la mayor caída puntual por género es la de Comedia, no la de la acción.
 
 ---
 
@@ -209,19 +209,21 @@ Follows (*Has Hollywood given up on the happy ending?*) examinó 7.384 película
 
 ### Lo que los datos sostienen
 
-* En esta muestra de cine popular estadounidense, la proporción de finales felices fue **algo mayor en los noventa (66,0 %) que en 2010-2024 (57,7 %)**, aunque la diferencia (−8,3 pp, IC [−17,9 pp; +1,2 pp]) es compatible con cero y con una caída de hasta 17,9 pp.
-* **No hay más finales trágicos** en el cine popular reciente (−1,1 pp), ni un tono de cierre menos positivo (−1,6 pp), ni una visión de la vida menos optimista (+0,06 en una escala de −2 a +2).
-* Los finales **ambiguos** son algo más frecuentes que en los noventa (+5,1 pp), pero los noventa son la excepción: los ochenta y los dos mil tienen niveles parecidos a los actuales.
+Siempre con las etiquetas de modelos y las limitaciones de la sección 2:
+
+* **En el cine popular no se observa un cambio grande hacia lo sombrío desde los noventa.** Los intervalos descartan una caída de los finales felices mayor de 17,7 pp, un aumento de los trágicos mayor de 3,8 pp, una caída del tono de cierre positivo mayor de 9,9 pp y una caída de la visión de la vida mayor de 0,12 puntos (escala de −2 a +2). No haber encontrado diferencias no demuestra que no existan: diferencias moderadas siguen siendo compatibles con los datos.
+* Los finales **ambiguos** son algo más frecuentes que en los noventa (+5,1 pp [+1,3 pp; +8,9 pp]), pero los noventa son la excepción: los ochenta y los dos mil tienen niveles parecidos a los actuales.
 
 ### Lo que los datos sugieren, sin confirmarlo
 
+* La proporción de finales felices en el cine popular fue **algo mayor en los noventa (66,0 %) que en 2010-2024 (57,7 %)**: −8,3 pp, IC [−17,7 pp; +1,2 pp], ajustado −7,7 pp [−18,0 pp; +2,3 pp]. El intervalo incluye el cero.
 * Los noventa parecen un **pico** de finales felices dentro de 1980-2024, más que el final de una edad dorada. Los ochenta tienen una proporción parecida a la actual.
-* En el cine de acción la caída es mayor (−13,5 pp) y coincide con lo que describe Follows.
+* En el cine de acción la caída es mayor (−13,5 pp) y coincide con lo que describe Follows, aunque la comedia cae incluso más (−20,0 pp).
 * En el marco amplio (cine menos visible) hay indicios de menos finales felices y una visión de la vida más sombría en 2010-2019, pero con una muestra pequeña y problemas de cobertura.
 
 ### Lo que los datos no permiten afirmar
 
-* Que el cine de los noventa fuera **claramente** más optimista: la diferencia no es robusta a la ponderación por popularidad y depende de qué anotador se tome como referencia.
+* Que el cine de los noventa fuera **claramente** más optimista: la diferencia se vuelve indeterminada al ponderar por popularidad y solo excluye el cero con las etiquetas de uno de los dos anotadores.
 * Que hubiera una **prohibición** o presión de la industria para no hacer películas pesimistas: los datos de estrenos no pueden mostrarlo.
 * Que el público **eche de menos** ese optimismo: no se ha hecho ninguna encuesta ni experimento. Las taquillas, los votos o los comentarios en redes no permiten inferir nostalgia.
 * Nada sobre **causas**: se trata de asociaciones temporales.

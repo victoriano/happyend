@@ -43,3 +43,22 @@ def test_sample_size_formulas():
 def test_mean_ci_simple():
     m, lo, hi = stats.mean_ci(np.array([1.0, 2.0, 3.0, np.nan]))
     assert m == 2.0 and lo < 2 < hi
+
+
+def test_bootstrap_with_strata_keeps_stratum_sizes_and_reports_neff():
+    rng = np.random.default_rng(3)
+    y = rng.binomial(1, 0.5, 200).astype(float)
+    g = np.r_[["a"] * 100, ["b"] * 100]
+    strata = np.tile(["s1", "s2"], 100)
+    w = np.where(strata == "s1", 1.0, 3.0)
+    r = stats.bootstrap_diff(y, g, "a", "b", w, n_boot=500, seed=1, strata=strata)
+    assert r["diff_lo"] <= r["diff"] <= r["diff_hi"]
+    assert r["n_ef1"] < 100 and r["n_ef0"] < 100
+
+
+def test_bootstrap_single_stratum_equals_unstratified():
+    y = np.r_[np.ones(30), np.zeros(30), np.ones(20), np.zeros(40)]
+    g = np.r_[["a"] * 60, ["b"] * 60]
+    r1 = stats.bootstrap_diff(y, g, "a", "b", n_boot=300, seed=5)
+    r2 = stats.bootstrap_diff(y, g, "a", "b", n_boot=300, seed=5, strata=np.zeros(120))
+    assert r1["diff_lo"] == r2["diff_lo"] and r1["diff_hi"] == r2["diff_hi"]

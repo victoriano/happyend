@@ -185,7 +185,7 @@ def finalize(pr: pd.DataFrame, adj: pd.DataFrame | None) -> pd.DataFrame:
         vals, s = [], []
         for r in both.itertuples(index=False):
             a, b = getattr(r, f"{k}_A"), getattr(r, f"{k}_B")
-            if a == b:
+            if a == b or (pd.isna(a) and pd.isna(b)):
                 vals.append(a)
                 s.append("acuerdo")
             elif r.id in adj.index and k in adj.columns and pd.notna(adj.at[r.id, k]):

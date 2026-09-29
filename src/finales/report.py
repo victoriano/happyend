@@ -175,7 +175,7 @@ def values() -> dict:
         "Definición amplia: feliz o agridulce": "def_amplia", "Definición estricta: feliz y tono de cierre positivo": "def_estricta",
         "Ponderado por popularidad (votos IMDb)": "votos", "Incluye no clasificables como no felices": "incl_nc",
         "Solo etiquetas del anotador A (sin adjudicación)": "soloA", "Solo etiquetas del anotador B (sin adjudicación)": "soloB",
-        "Solo acuerdo inicial entre anotadores": "acuerdo", "Solo confianza alta (3) en ambos": "conf3",
+        "Solo acuerdo inicial entre anotadores": "acuerdo", "Solo confianza alta (3) en ambos (selecciona casos claros)": "conf3",
         "Solo producciones solo de EE. UU.": "usonly", "Umbral de popularidad más estricto (top 20/año)": "top20",
         "Excluye películas reconocidas por ambos anotadores": "norec",
         "Visión de la vida ponderada por votos": "vision_votos",
@@ -192,16 +192,37 @@ def values() -> dict:
             V[f"{fk}_s_{k}_n"] = f"{int(r.n0)}/{int(r.n1)}"
             V[f"{fk}_s_{k}_v0"], V[f"{fk}_s_{k}_v1"] = pct(r.valor_1990s), pct(r.valor_comparado)
 
-    pops = sn[(sn.marco == "popular") & (sn.variable.str.startswith("y_feliz"))
-              & ~sn.especificacion.str.startswith("Principal") & (sn.n0 >= 20) & (sn.n1 >= 20)]
-    pops_nv = pops[~pops.especificacion.str.contains("votos")]
-    V["sens_n"] = str(len(pops))
-    V["sens_n_neg"] = str(int((pops["diff"] < 0).sum()))
-    V["sens_min_abs"] = pp(pops_nv["diff"].abs().min()).lstrip("+")
-    V["sens_max_abs"] = pp(pops_nv["diff"].abs().max()).lstrip("+")
-    excl0 = pops[(pops.diff_lo > 0) | (pops.diff_hi < 0)]
-    V["sens_n_excl0"] = str(len(excl0))
-    V["sens_excl0_nombres"] = "; ".join(excl0["especificacion"]) or "ninguna"
+    ALT = ["Definición amplia: feliz o agridulce", "Definición estricta: feliz y tono de cierre positivo",
+           "Ponderado por popularidad (votos IMDb)", "Incluye no clasificables como no felices",
+           "Solo etiquetas del anotador A (sin adjudicación)", "Solo etiquetas del anotador B (sin adjudicación)",
+           "Solo acuerdo inicial entre anotadores", "Solo confianza alta (3) en ambos (selecciona casos claros)",
+           "Solo producciones solo de EE. UU.", "Umbral de popularidad más estricto (top 20/año)"]
+    for f, fk in fr.items():
+        alt = sn[(sn.marco == f) & sn.especificacion.isin(ALT) & (sn.n0 >= 20) & (sn.n1 >= 20)]
+        alt_nv = alt[~alt.especificacion.str.contains("votos")]
+        V[f"{fk}_sens_n"] = str(len(alt))
+        V[f"{fk}_sens_n_neg"] = str(int((alt["diff"] < 0).sum()))
+        V[f"{fk}_sens_min_abs"] = pp(alt_nv["diff"].abs().min()).lstrip("+")
+        V[f"{fk}_sens_max_abs"] = pp(alt_nv["diff"].abs().max()).lstrip("+")
+        ex0 = alt[(alt.diff_lo > 0) | (alt.diff_hi < 0)]
+        V[f"{fk}_sens_n_excl0"] = str(len(ex0))
+        V[f"{fk}_sens_excl0_nombres"] = "; ".join(f"«{x}»" for x in ex0["especificacion"]) or "ninguna"
+    rv = sn[(sn.marco == "popular") & (sn.especificacion == "Ponderado por popularidad (votos IMDb)")].iloc[0]
+    V["pop_s_votos_neff0"] = str(int(round(rv.n_ef0)))
+    # qué contrastes del marco popular (2010-2024 − 90s) excluyen el cero
+    names = {"y_feliz": "finales felices", "y_agridulce": "agridulces", "y_ambiguo": "ambiguos", "y_tragico": "trágicos",
+             "y_tono_positivo": "tono positivo", "vision_vida": "visión de la vida"}
+    for f, fk in fr.items():
+        cc = cs[(cs.marco == f) & (cs.comparacion == "2010-2024 − 1990-1999")]
+        ex = cc[(cc.diff_lo > 0) | (cc.diff_hi < 0)]
+        V[f"{fk}_excl0_vars"] = ", ".join(names[v] for v in ex.variable) or "ninguno"
+        V[f"{fk}_excl0_n"] = str(len(ex))
+    for var, vk in [("y_tragico", "trag"), ("y_tono_positivo", "tono")]:
+        r = cs[(cs.marco == "popular") & (cs.variable == var) & (cs.comparacion == "2010-2024 − 1990-1999")].iloc[0]
+        V[f"pop_d_{vk}_rec_hi_abs"] = pp(abs(r.diff_hi)).lstrip("+")
+        V[f"pop_d_{vk}_rec_lo_abs"] = pp(abs(r.diff_lo)).lstrip("+")
+    r = cs[(cs.marco == "popular") & (cs.variable == "vision_vida") & (cs.comparacion == "2010-2024 − 1990-1999")].iloc[0]
+    V["pop_d_vision_rec_lo_abs"] = num(abs(r.diff_lo))
     r0 = cs[(cs.marco == "popular") & (cs.variable == "y_feliz") & (cs.comparacion == "2010-2024 − 1990-1999")].iloc[0]
     V["pop_d_feliz_rec_lo_abs"] = pp(abs(r0.diff_lo)).lstrip("+")
     cg = t("composicion_generos.csv").set_index(["frame", "periodo"])
@@ -217,6 +238,7 @@ def values() -> dict:
     dr = p.loc["diferencia 2010-2024 − 1980-1999"]
     V["fol_diff"], V["fol_diff_ci"] = pp(dr.feliz), ci_pp(dr.ic95_inf, dr.ic95_sup)
     V["fol_n_8099"], V["fol_n_1024"] = str(int(p.loc["1980-1999", "n"])), str(int(p.loc["2010-2024", "n"]))
+    V["fol_80"], V["fol_90"] = pct(p.loc["1980-1989", "feliz"]), pct(p.loc["1990-1999", "feliz"])
 
     g = t("genero_contrastes.csv")
     gp = g[g.marco == "popular"].set_index("genero")
@@ -225,6 +247,23 @@ def values() -> dict:
         V[f"g_{gk}_d"] = pp(gp.loc[gen, "dif_pp"] / 100)
         V[f"g_{gk}_ci"] = ci_pp(gp.loc[gen, "dif_ic95_inf_pp"] / 100, gp.loc[gen, "dif_ic95_sup_pp"] / 100)
         V[f"g_{gk}_n"] = f"{int(gp.loc[gen, 'n_1990s'])}/{int(gp.loc[gen, 'n_2010_2024'])}"
+
+    gex = gp[(gp.dif_ic95_inf_pp > 0) | (gp.dif_ic95_sup_pp < 0)]
+    V["g_excl0_n"] = str(len(gex))
+    V["g_excl0_texto"] = ("en ningún género el intervalo excluye el cero" if gex.empty
+                          else "el intervalo excluye el cero en: " + ", ".join(gex.index))
+    gmin = gp["dif_pp"].idxmin()
+    V["g_mayor_caida"], V["g_mayor_caida_d"] = gmin, pp(gp.loc[gmin, "dif_pp"] / 100)
+    dgg = dg[dg.dimension == "genre_main"].set_index("grupo")
+    dgg = dgg[dgg.n >= 30].sort_values("desacuerdo_final", ascending=False)
+    V["dis_top_generos"] = " y ".join(f"{g_.lower()} ({pct(r_.desacuerdo_final, 0)})" for g_, r_ in dgg.head(2).iterrows())
+    rf = t("reconocimiento_por_marco.csv").set_index(["frame", "cohort"])
+    V["rec_pop_any_min"] = pct(rf.xs("popular")["reconocida_alguno"].min(), 0)
+    V["rec_pop_any_max"] = pct(rf.xs("popular")["reconocida_alguno"].max(), 0)
+    V["rec_amp_any_min"] = pct(rf.xs("amplio")["reconocida_alguno"].min(), 0)
+    V["rec_amp_any_max"] = pct(rf.xs("amplio")["reconocida_alguno"].max(), 0)
+    V["rec_pop_ambos"] = pct((rf.xs("popular")["reconocida_ambos"] * rf.xs("popular")["n"]).sum() / rf.xs("popular")["n"].sum(), 0)
+    V["pop_s_noreca_n"] = f"{int(sn[(sn.marco == 'popular') & sn.especificacion.str.startswith('Excluye películas reconocidas por algún')].iloc[0].n0 + sn[(sn.marco == 'popular') & sn.especificacion.str.startswith('Excluye películas reconocidas por algún')].iloc[0].n1)}"
 
     fv = t("final_vs_vision.csv").set_index("final")
     for c, k in [("FELIZ", "feliz"), ("AGRIDULCE", "agri"), ("AMBIGUO", "amb"), ("TRAGICO", "trag")]:

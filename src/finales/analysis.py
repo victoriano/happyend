@@ -148,6 +148,7 @@ def analytic_dataset(stage: str = "principal") -> pd.DataFrame:
                                   (df["relaciones"] == "FORTALECIDAS").astype(float))
     df["periodo"] = np.where(df["cohort"].isin(RECENT), "2010-2024", df["cohort"])
     df["w_design"] = df["design_weight"]
+    df["estrato"] = df["frame"] + "|" + df["cohort"] + "|" + df["stratum_pop"]
     df["w_votes"] = df["design_weight"] * df["numVotes"]
     df.to_csv(INTERIM / f"analitico_{stage}.csv", index=False)
     return df
@@ -180,12 +181,12 @@ def descriptives(df: pd.DataFrame, by: list[str], weight: str = "w_design") -> p
 
 
 def contrasts(df: pd.DataFrame, y: str, weight: str = "w_design", ref: str = "1990-1999",
-              group_col: str = "cohort", seed: int = 0, n_boot: int = 4000) -> pd.DataFrame:
+              group_col: str = "cohort", seed: int = 0, n_boot: int = 10000) -> pd.DataFrame:
     rows = []
     groups = [c for c in sorted(df[group_col].dropna().unique()) if c != ref]
     for g in groups:
         r = st.bootstrap_diff(df[y].values, df[group_col].values, g, ref, df[weight].values,
-                              n_boot=n_boot, seed=seed)
+                              n_boot=n_boot, seed=seed, strata=df["estrato"].values)
         rows.append({"comparacion": f"{g} − {ref}", "variable": y, **r})
     return pd.DataFrame(rows)
 
@@ -220,7 +221,7 @@ def adjusted_contrast(df: pd.DataFrame, y: str, binary: bool = True, n_boot: int
             warnings.simplefilter("ignore")
             if binary:
                 import statsmodels.api as sm
-                m = smf.glm(formula, data, family=sm.families.Binomial(), freq_weights=data["w"]).fit()
+                m = smf.glm(formula, data, family=sm.families.Binomial(), var_weights=data["w"]).fit()
                 d1, d0 = data.assign(recent=1), data.assign(recent=0)
                 return float(np.average(m.predict(d1) - m.predict(d0), weights=data["w"])), m
             m = smf.wls(formula, data, weights=data["w"]).fit(cov_type="HC3")
@@ -228,20 +229,21 @@ def adjusted_contrast(df: pd.DataFrame, y: str, binary: bool = True, n_boot: int
 
     est, model = fit_effect(d)
     if binary:
-        boots = []
-        idx1, idx0 = np.where(d["recent"] == 1)[0], np.where(d["recent"] == 0)[0]
+        boots, failed = [], 0
+        cells = [np.where(d["estrato"] == s_)[0] for s_ in d["estrato"].unique()]
         for _ in range(n_boot):
-            s = d.iloc[np.r_[rng.choice(idx1, len(idx1)), rng.choice(idx0, len(idx0))]]
+            s = d.iloc[np.concatenate([rng.choice(c, len(c)) for c in cells])]
             try:
                 boots.append(fit_effect(s)[0])
-            except Exception:  # separación en una réplica
-                continue
+            except Exception:  # separación u otro fallo de ajuste en una réplica
+                failed += 1
         lo, hi = np.quantile(boots, [0.025, 0.975])
     else:
         ci = model.conf_int().loc["recent"]
         lo, hi = float(ci[0]), float(ci[1])
     return {"variable": y, "efecto_ajustado": est, "ic95_inf": lo, "ic95_sup": hi, "n": len(d),
-            "modelo": "logit + EMM (bootstrap)" if binary else "MCO ponderado (HC3)"}
+            "modelo": "logit + EMM (bootstrap)" if binary else "MCO ponderado (HC3)",
+            "replicas_fallidas": failed if binary else 0}
 
 
 def sensitivity(df: pd.DataFrame, frame: str = "popular", seed: int = 0) -> pd.DataFrame:
@@ -258,7 +260,7 @@ def sensitivity(df: pd.DataFrame, frame: str = "popular", seed: int = 0) -> pd.D
         ("Solo etiquetas del anotador A (sin adjudicación)", d, "y_feliz_A", "w_design", "periodo", "2010-2024"),
         ("Solo etiquetas del anotador B (sin adjudicación)", d, "y_feliz_B", "w_design", "periodo", "2010-2024"),
         ("Solo acuerdo inicial entre anotadores", d[d["acuerdo_final"] == True], "y_feliz", "w_design", "periodo", "2010-2024"),
-        ("Solo confianza alta (3) en ambos", d[d["confianza_min"] == 3], "y_feliz", "w_design", "periodo", "2010-2024"),
+        ("Solo confianza alta (3) en ambos (selecciona casos claros)", d[d["confianza_min"] == 3], "y_feliz", "w_design", "periodo", "2010-2024"),
         ("Solo producciones solo de EE. UU.", d[d["us_only"].astype(bool)], "y_feliz", "w_design", "periodo", "2010-2024"),
         ("Umbral de popularidad más estricto (top 20/año)", d[d["votes_rank_in_year"] <= 20], "y_feliz", "w_design", "periodo", "2010-2024"),
         ("Solo década completa 2010-2019", d, "y_feliz", "w_design", "cohort", "2010-2019"),
@@ -271,7 +273,7 @@ def sensitivity(df: pd.DataFrame, frame: str = "popular", seed: int = 0) -> pd.D
     rows = []
     for name, data, y, w, gcol, g1 in specs:
         r = st.bootstrap_diff(data[y].values, data[gcol].values, g1, "1990-1999", data[w].values,
-                              n_boot=3000, seed=seed)
+                              n_boot=10000, seed=seed, strata=data["estrato"].values)
         p0 = data.loc[(data[gcol] == "1990-1999") & data[y].notna()]
         p1 = data.loc[(data[gcol] == g1) & data[y].notna()]
         rows.append({"especificacion": name, "marco": frame, "variable": y,
@@ -291,7 +293,7 @@ def genre_table(df: pd.DataFrame, frame: str = "popular") -> pd.DataFrame:
     rows = []
     for g, gd in d.groupby("genre_main"):
         r = st.bootstrap_diff(gd["y_feliz"].values, gd["periodo"].values, "2010-2024", "1990-1999",
-                              gd["w_design"].values, n_boot=2000)
+                              gd["w_design"].values, n_boot=4000, strata=gd["estrato"].values)
         v = {p: _wmean(gd[gd.periodo == p], "vision_vida") for p in ("1990-1999", "2010-2024")}
         rows.append({"genero": g, "marco": frame, "n_1990s": r["n0"], "n_2010_2024": r["n1"],
                      "feliz_1990s": _wmean(gd[gd.periodo == "1990-1999"], "y_feliz"),
@@ -312,10 +314,11 @@ def follows_comparison(df: pd.DataFrame) -> pd.DataFrame:
         d = df[(df["frame"] == frame) & (df["genre_main"] == "Acción/aventura") & df["y_feliz"].notna()].copy()
         d["grupo"] = np.where(d["cohort"].isin(["1980-1989", "1990-1999"]), "1980-1999",
                               np.where(d["cohort"].isin(RECENT), "2010-2024", "2000-2009"))
-        for g, gd in d.groupby("grupo"):
+        for g, gd in list(d.groupby("grupo")) + list(d[d.cohort.isin(["1980-1989", "1990-1999"])].groupby("cohort")):
             p, lo, hi, n_eff = st.weighted_prop_ci(gd["y_feliz"], gd["w_design"])
             rows.append({"marco": frame, "grupo": g, "n": len(gd), "feliz": p, "ic95_inf": lo, "ic95_sup": hi})
-        r = st.bootstrap_diff(d["y_feliz"].values, d["grupo"].values, "2010-2024", "1980-1999", d["w_design"].values)
+        r = st.bootstrap_diff(d["y_feliz"].values, d["grupo"].values, "2010-2024", "1980-1999", d["w_design"].values,
+                              n_boot=10000, strata=d["estrato"].values)
         rows.append({"marco": frame, "grupo": "diferencia 2010-2024 − 1980-1999", "n": r["n1"] + r["n0"],
                      "feliz": r["diff"], "ic95_inf": r["diff_lo"], "ic95_sup": r["diff_hi"]})
     return pd.DataFrame(rows)
@@ -396,6 +399,12 @@ def run(stage: str = "principal") -> dict:
     rec.groupby("cohort").agg(n=("tconst", "size"), reconocida_A=("rec_A", "mean"), reconocida_B=("rec_B", "mean"),
                               reconocida_alguno=("reconocida", "mean")).to_csv(
         TABLES / "reconocimiento_por_cohorte.csv", float_format="%.3f")
+    recf = df.assign(rec_A=df["reconocida_A"].astype(bool), rec_B=df["reconocida_B"].astype(bool),
+                     rec_any=df["reconocida"].astype(bool))
+    recf.groupby(["frame", "cohort"]).agg(n=("tconst", "size"), reconocida_A=("rec_A", "mean"),
+                                          reconocida_B=("rec_B", "mean"), reconocida_alguno=("rec_any", "mean"),
+                                          reconocida_ambos=("rec_A", lambda x: float((x & recf.loc[x.index, "rec_B"]).mean()))
+                                          ).to_csv(TABLES / "reconocimiento_por_marco.csv", float_format="%.3f")
     missing = df.groupby(["frame", "cohort"]).agg(n=("tconst", "size"), no_clasificables=("clasificable", lambda x: int((~x).sum())))
     missing.to_csv(TABLES / "no_clasificables_por_cohorte.csv")
 
