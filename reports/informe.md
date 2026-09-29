@@ -243,16 +243,109 @@ Hasta que se haga, **la parte «se echa de menos» de la afirmación queda sin p
 
 ---
 
-## 9. Reproducibilidad
+---
 
-Todo el flujo se ejecuta desde el `README.md`: descarga, catálogo, cobertura, muestra, lotes cegados, análisis, gráficos e informe. Se comprobó clonando el repositorio en un entorno limpio: el resultado fue idéntico (ver `README.md`). Las etiquetas de anotación están versionadas en `annotation/labels/`. Las decisiones y sus motivos están en `docs/registro_decisiones.md` y el diccionario de datos, en `docs/diccionario_datos.md`.
+## 9. Segunda parte (v2): censo del cine popular, cine español y ánimo de los personajes
 
-## 10. Fuentes
+La primera parte usaba una muestra aleatoria (150 películas populares por cohorte), y películas muy conocidas como *Titanic* no salieron en el sorteo. En esta segunda parte se anota el **universo completo** del marco popular estadounidense y se añade el cine español. Además, se miden características de los protagonistas y de la trama, y dos dimensiones de ánimo distintas del final: el **tono general** de la película y el **optimismo de los personajes**.
+
+### 9.1 Límites específicos de la segunda parte
+
+* **Sigue sin haber validación humana.** Todas las etiquetas son de dos modelos de lenguaje y un adjudicador.
+* **El cegado no funciona en el cine popular.** Al menos un modelo dijo reconocer el 99,6 % de las películas estadounidenses (y el 60 % de las españolas). La sensibilidad que excluye las películas reconocidas no puede calcularse en EE. UU.
+* **Adjudicación parcial (D-026).** Solo se adjudicaron `final` y los ítems de −2 a 2 con diferencia ≥3. En las demás categóricas en desacuerdo manda el anotador A, así que las covariables del módulo B tienen más error de medición que el núcleo v1.
+* **El cine español se lee peor.** La Wikipedia en español a menudo no cuenta el desenlace. Tras volver a anotar 90 películas con la sinopsis inglesa (D-027), el 18 % de las españolas sigue sin final clasificable (antes, el 30 %). Ese porcentaje varía por cohorte (del 7 % en 2010-2019 al 27 % en los noventa), así que las comparaciones españolas se hacen sobre las clasificables, con riesgo de selección. Hay además 15 películas por año, pocas, con umbral de votos distinto del estadounidense (200 frente a 1.000) y dos idiomas de sinopsis.
+* **Un censo de lo que hoy se vota.** «Las 50 más votadas de cada año» se mide con votos actuales, con sesgo de supervivencia. Los intervalos miden la variabilidad del proceso que genera las películas (superpoblación), no un error de muestreo (D-029).
+* **Tono y optimismo son juicios más subjetivos** que el tipo de final, aunque el acuerdo fue alto (α 0,92 y 0,83). Además, el optimismo de los personajes se infiere de un resumen, no de la película.
+* **Muchas comparaciones por subgrupo.** De 34 contrastes de finales felices por subgrupo, 9 excluyen el cero. Con tantas pruebas, alguno lo hará por azar. Se presentan como exploratorios.
+* **IMDb solo en agregado.** La relación con la nota de IMDb es asociativa: mide la opinión de quien vota en IMDb, no la del público general, y no dice nada de la nostalgia.
+
+### 9.2 Datos y método
+
+* **Universo estadounidense:** las 50 películas estadounidenses con más votos de cada año, 1980-2024, con sinopsis utilizable: **2.245 películas**.
+* **Universo español:** las 15 películas con país de origen España (Wikidata) más votadas de cada año con sinopsis: **577 películas** (D-023, D-024). Hay 12 coproducciones que están en ambos universos y cuentan en los dos.
+* **Anotación completa** (núcleo del manual 1.0 más módulo B del manual 2.0) de 2.042 películas con doble anotación ciega. Las 777 películas del universo que ya estaban en la primera parte conservan sus etiquetas del núcleo, adjudicadas por completo, y recibieron solo el módulo B, con el mismo texto cegado.
+* **Módulo B:** género, edad, momento vital, estado civil y clase social del protagonista; relaciones centrales (hasta 3); si la historia es especulativa (ciencia ficción, fantasía, sobrenatural, superhéroes); época y países de la trama; humor; tono general (−2 a +2); optimismo de los personajes (−2 a +2).
+* **Acuerdo A-B** (películas nuevas): final κ = 0,86; tono de cierre κ = 0,74; momento vital κ = 0,76; clase social κ = 0,78; estado civil κ = 0,81; especulativa κ = 0,93; época κ = 0,84; humor κ = 0,81; tono general α = 0,92; optimismo de los personajes α = 0,83; relaciones (Jaccard) 0,76; países (Jaccard) 0,92. En las películas de la primera parte, las κ del módulo B van de 0,78 a 0,94. Tablas: `reports/tables/acuerdo_v2_completa.csv` y `acuerdo_v2_modb.csv`.
+* **Adjudicación:** 193 finales adjudicados por un tercer modelo que no sabía qué anotador había dicho qué.
+* **Análisis** (`src/finales/analysis_v2.py`): proporciones con intervalo de Wilson y medias con IC t; contrastes entre 2010-2024 y los noventa con bootstrap por película (2.000 réplicas); modelos ajustados en EE. UU. (logit con efecto marginal medio por g-computación para final feliz; MCO con errores HC3 para el optimismo), controlando género, log del rango de votos en el año y, en una segunda especificación, especulativa, época contemporánea, clase social, momento vital, género del protagonista y humor. Relación con IMDb: MCO de la nota media y del log de los votos sobre final feliz, optimismo o tono, con efectos fijos de año y género.
+
+### 9.3 Resultados
+
+**Tipos de final y ánimo por cohorte** (finales sobre películas clasificables):
+
+| País | Cohorte | n | No clasif. | Feliz [IC 95 %] | Agridulce | Ambiguo | Trágico | Optimismo personajes | Tono general | Personajes optimistas en finales no felices |
+|---|---|---|---|---|---|---|---|---|---|---|
+| EE. UU. | 1980-1989 | 498 | 0 % | 61,9 % [57,5 %; 66,0 %] | 22,3 % | 5,8 % | 10,0 % | +0,38 | −0,14 | 27 % |
+| EE. UU. | 1990-1999 | 499 | 0 % | 67,3 % [63,0 %; 71,2 %] | 23,1 % | 2,2 % | 7,4 % | +0,45 | −0,05 | 35 % |
+| EE. UU. | 2000-2009 | 499 | 0 % | 60,9 % [56,6 %; 65,1 %] | 26,9 % | 4,2 % | 8,0 % | +0,42 | −0,13 | 30 % |
+| EE. UU. | 2010-2019 | 500 | 0 % | 63,2 % [58,9 %; 67,3 %] | 26,8 % | 4,4 % | 5,6 % | +0,53 | −0,18 | 40 % |
+| EE. UU. | 2020-2024 | 249 | 0 % | 56,5 % [50,2 %; 62,5 %] | 25,8 % | 8,9 % | 8,9 % | +0,30 | −0,43 | 29 % |
+| España | 1980-1989 | 95 | 19 % | 22,1 % [14,3 %; 32,5 %] | 26,0 % | 16,9 % | 35,1 % | −0,32 | −0,83 | 10 % |
+| España | 1990-1999 | 114 | 27 % | 25,3 % [17,2 %; 35,6 %] | 38,6 % | 8,4 % | 27,7 % | +0,00 | −0,49 | 34 % |
+| España | 2000-2009 | 150 | 23 % | 27,6 % [20,3 %; 36,3 %] | 38,8 % | 6,9 % | 26,7 % | +0,01 | −0,62 | 24 % |
+| España | 2010-2019 | 150 | 7 % | 37,9 % [30,2 %; 46,1 %] | 35,0 % | 7,9 % | 19,3 % | −0,05 | −0,72 | 24 % |
+| España | 2020-2024 | 68 | 18 % | 35,7 % [24,5 %; 48,8 %] | 33,9 % | 14,3 % | 16,1 % | −0,06 | −0,80 | 25 % |
+
+**EE. UU.: el censo confirma una caída pequeña de los finales felices, concentrada en 2020-2024.** En los noventa acababa bien el 67,3 % [63,0 %; 71,2 %] de las películas populares; en 2010-2024, el 61,0 %. La diferencia es de −6,3 pp [−11,5 pp; −0,9 pp]. Por cohortes: 2010-2019 −4,1 pp [−9,9 pp; +1,7 pp] y 2020-2024 −10,8 pp [−18,3 pp; −3,6 pp]. Los ochenta (61,9 %) y los dos mil (60,9 %) también quedan por debajo de los noventa, que vuelven a parecer un pico. Ajustado por género y popularidad, la diferencia es de −7,4 pp en 2010-2019 y −11,0 pp en 2020-2024. Si se ajusta también por protagonista y trama, queda en −3,9 pp y −9,0 pp: parte de la caída se explica por el tipo de historias. Los finales trágicos no aumentan (−0,8 pp [−3,7 pp; +2,2 pp]).
+
+**El optimismo de los personajes no ha bajado, salvo en 2020-2024.** La media del cine popular estadounidense va de +0,38 en los ochenta a +0,45 en los noventa y +0,53 en 2010-2019. En 2020-2024 cae a +0,30 (−0,15 [−0,30; −0,01] frente a los noventa). El **tono general** sí se oscurece algo: −0,21 [−0,35; −0,08] entre los noventa y 2010-2024.
+
+**Final y ánimo son cosas distintas.** Entre los finales felices, el 77 % tiene personajes optimistas; entre los agridulces, el 41 %; entre los ambiguos, el 26 %; y entre los trágicos, 1 de cada 10 (10 %). *Titanic* se clasifica como final agridulce, con optimismo de los personajes +2: es el caso típico de desenlace con pérdida y personajes vitalistas. Las «tragedias vitalistas» en sentido estricto (final trágico y personajes optimistas) son raras: el 1,0 % de las películas. La proporción de finales no felices con personajes optimistas no cambia de forma clara entre los noventa y 2010-2024 (+2,5 pp [−1,2 pp; +6,1 pp]).
+
+**¿Dónde cayó el final feliz? (EE. UU., exploratorio).** Los subgrupos en los que la caída entre los noventa y 2010-2024 excluye el cero son: protagonista en crisis vital (−29,2 pp, IC [−48,3 pp; −8,2 pp], n = 32/75); protagonista en pareja (−18,2 pp, IC [−35,3 pp; −1,2 pp], n = 58/59); ciencia ficción (−17,5 pp, IC [−30,3 pp; −4,9 pp], n = 68/151); protagonista mujer (−15,6 pp, IC [−28,6 pp; −2,3 pp], n = 63/175); comedia (−15,5 pp, IC [−28,2 pp; −2,9 pp], n = 99/84); acción/aventura (−11,6 pp, IC [−19,2 pp; −4,0 pp], n = 172/370); clase trabajadora (−10,9 pp, IC [−20,6 pp; −0,9 pp], n = 147/207); historias no especulativas (−9,5 pp, IC [−16,4 pp; −2,5 pp], n = 335/375); historias contemporáneas (−8,9 pp, IC [−14,9 pp; −2,6 pp], n = 354/470). En la comedia baja además el optimismo de los personajes (−0,46 [−0,71; −0,22] puntos). Las diferencias por clase alta, drama o historias de época tienen signo positivo, pero con intervalos amplios.
+
+**España va al revés.** El cine español popular es mucho menos feliz y mucho más sombrío que el estadounidense: el tono general medio es −0,68, frente a −0,16. Pero sus finales felices **suben**: del 25,3 % [17,2 %; 35,6 %] en los noventa al 37,2 % en 2010-2024 (+11,9 pp [+0,5 pp; +23,1 pp]; el intervalo apenas excluye el cero), y los trágicos bajan (−9,3 pp [−20,5 pp; +1,8 pp]). El optimismo de los personajes no cambia (−0,06 [−0,27; +0,16]). Con 15 películas al año, cambios en la proporción de no clasificables y dos idiomas de sinopsis, este resultado es frágil (ver sensibilidad).
+
+**IMDb (asociación, en agregado).** Entre películas del mismo año y género, las de final feliz tienen una nota media de IMDb −0,33 puntos distinta [−0,40; −0,27] en EE. UU. y −0,35 [−0,56; −0,14] en España. Cada punto de optimismo de los personajes se asocia con −0,09 [−0,12; −0,05] puntos de nota en EE. UU. Los finales felices también acumulan algo menos de votos (log de votos −0,16 [−0,23; −0,09]). Quien vota en IMDb puntúa algo mejor las películas menos felices; eso no dice nada de si el público echa de menos el optimismo.
+
+### 9.4 Sensibilidad (2010-2024 − 1990-1999)
+
+| Análisis | País | 2010-2024 − 1990-1999 | IC 95 % | n películas |
+|---|---|---|---|---|
+| Principal | España | +11,9 pp | [+0,5 pp; +23,1 pp] | 577 |
+| Principal | EE. UU. | −6,3 pp | [−11,5 pp; −0,9 pp] | 2245 |
+| Solo anotador A | España | +13,2 pp | [+1,7 pp; +24,0 pp] | 577 |
+| Solo anotador A | EE. UU. | −5,8 pp | [−11,2 pp; −0,6 pp] | 2245 |
+| Solo anotador B | España | +8,8 pp | [−2,9 pp; +20,4 pp] | 577 |
+| Solo anotador B | EE. UU. | −6,4 pp | [−11,7 pp; −1,0 pp] | 2245 |
+| Excluye películas reconocidas | España | +7,9 pp | [−12,1 pp; +27,2 pp] | 228 |
+| Solo producciones solo de EE. UU. | España | +11,9 pp | [+0,5 pp; +23,1 pp] | 577 |
+| Solo producciones solo de EE. UU. | EE. UU. | −6,0 pp | [−11,9 pp; −0,1 pp] | 1672 |
+| Excluye películas del estudio v1 | España | +12,3 pp | [+0,5 pp; +23,7 pp] | 573 |
+| Excluye películas del estudio v1 | EE. UU. | −3,8 pp | [−10,1 pp; +2,9 pp] | 1469 |
+| ES: solo sinopsis en inglés | España | +13,2 pp | [−2,0 pp; +27,2 pp] | 337 |
+| ES: solo sinopsis en español | España | +10,6 pp | [−8,7 pp; +28,6 pp] | 240 |
+| ES: sin la reanotación D-027 | España | +13,9 pp | [+1,6 pp; +26,0 pp] | 577 |
+| Principal (optimismo) | España | −0,06 | [−0,27; +0,16] | 577 |
+| Principal (optimismo) | EE. UU. | −0,00 | [−0,11; +0,11] | 2245 |
+| Solo anotador A (optimismo) | España | +0,01 | [−0,21; +0,22] | 577 |
+| Solo anotador A (optimismo) | EE. UU. | +0,00 | [−0,10; +0,11] | 2245 |
+| Solo anotador B (optimismo) | España | −0,11 | [−0,34; +0,11] | 577 |
+| Solo anotador B (optimismo) | EE. UU. | −0,00 | [−0,12; +0,11] | 2245 |
+
+En EE. UU., la caída de finales felices se mantiene con las etiquetas de un solo anotador y, en el límite, sin coproducciones. En cambio, pierde nitidez al excluir las películas que ya estaban en la primera parte: con solo las películas nuevas del censo, el intervalo incluye el cero. En España, el aumento se sostiene con el anotador A y sin la reanotación D-027, pero no con el anotador B ni al separar por idioma de la sinopsis. En los dos países, el optimismo de los personajes no cambia con ningún anotador.
+
+### 9.5 ¿Qué añade la segunda parte a la conclusión?
+
+**Lo que los datos sostienen.** Con el censo completo del cine popular estadounidense, los noventa tienen más finales felices que 2010-2024 (−6,3 pp [−11,5 pp; −0,9 pp]), sobre todo por 2020-2024. Pero no hay más tragedias y el optimismo de los personajes no baja hasta 2020. Final y ánimo son dimensiones distintas: muchos finales agridulces, como el de *Titanic*, tienen personajes optimistas.
+
+**Lo que sugieren, sin confirmarlo.** La caída se concentra en la ciencia ficción, la comedia, la acción, las historias con protagonista femenina y las de personajes en crisis vital. El tono general es algo más oscuro que en los noventa. En el cine español la tendencia es la contraria, con más finales felices en 2010-2024. Y las notas de IMDb son algo más bajas para los finales felices.
+
+**Lo que no permiten afirmar.** Que hubiera una prohibición de películas pesimistas en los noventa; que el público eche de menos ese optimismo (la encuesta sigue sin hacerse); las causas de ninguno de estos cambios. Tampoco que las diferencias entre subgrupos sean robustas, dado el número de comparaciones.
+
+## 10. Reproducibilidad
+
+Todo el flujo se ejecuta desde el `README.md`: descarga, catálogo, cobertura, muestra, lotes cegados, análisis, gráficos e informe. Se comprobó clonando el repositorio en un entorno limpio: el resultado fue idéntico (ver `README.md`). Las etiquetas de anotación están versionadas en `annotation/labels/`. La segunda parte se regenera con `python -m finales.v2`-`analytic_v2()`, `python -m finales.analysis_v2`, `python -m finales.web` y `python -m finales.report` (ver `README.md`). Las decisiones y sus motivos están en `docs/registro_decisiones.md` y el diccionario de datos, en `docs/diccionario_datos.md`.
+
+## 11. Fuentes
 
 * Follows, S. (2026). *Has Hollywood given up on the happy ending?* https://stephenfollows.com/p/has-hollywood-given-up-on-the-happy-ending (consultado el 2026-09-29).
 * IMDb Non-Commercial Datasets. https://developer.imdb.com/non-commercial-datasets/ y condiciones en https://help.imdb.com/article/imdb/general-information/can-i-use-imdb-data-in-my-software/G5JTRESSHJBBHTGX. *Information courtesy of IMDb (https://www.imdb.com). Used with permission.*
 * Wikidata Query Service. https://query.wikidata.org/ (CC0).
 * Wikipedia en inglés, volcado del 1 de septiembre de 2026. https://dumps.wikimedia.org/enwiki/20260901/ (CC BY-SA 4.0). Cada sinopsis se atribuye con la URL de su revisión en `data/derived/muestra_principal.csv`.
+* Wikipedia en español, volcado del 1 de septiembre de 2026. https://dumps.wikimedia.org/eswiki/20260901/ (CC BY-SA 4.0). Usada para el cine español (segunda parte).
+* The Movie Database (TMDB), API v3 (`/find` por id de IMDb), para carátulas y títulos en español de la web. *This product uses the TMDB API but is not endorsed or certified by TMDB.*
 * Bamman, D., O'Connor, B. y Smith, N. A. (2013). *Learning Latent Personas of Film Characters*. ACL. CMU Movie Summary Corpus: https://www.cs.cmu.edu/~ark/personas/ (CC BY-SA).
 * Del Vecchio, M., Kharlamov, A., Parry, G. y Pogrebna, G. (2018). *The Data Science of Hollywood: Using Emotional Arcs of Movies to Drive Business Model Innovation in Entertainment Industries*. arXiv:1807.02221. https://arxiv.org/abs/1807.02221
 * Chun, J. (2024). *MultiSentimentArcs: a novel method to measure coherence in multimodal sentiment analysis for long-form narratives in film*. Frontiers in Computer Science. https://doi.org/10.3389/fcomp.2024.1444549

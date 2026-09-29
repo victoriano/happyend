@@ -282,10 +282,19 @@ def render(name: str, V: dict | None = None) -> str:
 
 
 def main() -> None:
+    from . import report_v2
     V = values()
-    for name in ("informe", "resumen_ejecutivo"):
-        (ROOT / "reports" / f"{name}.md").write_text(render(name, V), encoding="utf-8")
-    (TABLES / "valores_informe.json").write_text(json.dumps(V, ensure_ascii=False, indent=1), encoding="utf-8")
+    inf2, res2, V2 = report_v2.main()
+    inf = render("informe", V)
+    # la segunda parte se inserta antes de la sección de reproducibilidad y fuentes
+    cut = inf.index("\n## 10. Reproducibilidad")
+    inf = inf[:cut] + inf2 + inf[cut:]
+    res = render("resumen_ejecutivo", V)
+    cut = res.index("## Veredicto provisional")
+    res = res[:cut] + res2 + "\n" + res[cut:]
+    (ROOT / "reports" / "informe.md").write_text(inf, encoding="utf-8")
+    (ROOT / "reports" / "resumen_ejecutivo.md").write_text(res, encoding="utf-8")
+    (TABLES / "valores_informe.json").write_text(json.dumps({**V, **V2}, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
 if __name__ == "__main__":

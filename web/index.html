@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>¿Se acabaron los finales felices?</title>
-<meta name="description" content="Analizamos 994 películas estadounidenses de 1980 a 2024 para comprobar si el cine de los noventa era más optimista que el de ahora.">
+<meta name="description" content="Leímos cómo terminan 2.810 películas populares, estadounidenses y españolas, de 1980 a 2024, para comprobar si el cine de los noventa era más optimista que el de ahora.">
 <meta property="og:title" content="¿Se acabaron los finales felices?">
-<meta property="og:description" content="994 películas, dos anotadores artificiales y una pregunta: ¿era más optimista el cine de los noventa?">
+<meta property="og:description" content="2.810 películas, dos anotadores artificiales y una pregunta: ¿era más optimista el cine de los noventa?">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -122,6 +122,57 @@ svg .grid line{stroke:var(--rule)}
 footer{padding:48px 0 80px;border-top:1px solid var(--rule);font-size:14px;color:var(--ink2)}
 footer li{margin-bottom:6px}
 .theme{position:fixed;top:12px;right:12px;z-index:60;background:var(--paper);color:var(--ink);border:1px solid var(--rule);padding:6px 10px;font-size:13px}
+
+/* v2 */
+.part{text-align:center;padding:90px 0 40px}
+.part .big{font-size:clamp(40px,8vw,84px)}
+.pair{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin:8px 0}
+.pair span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;background:var(--c)}
+:root{--us:#2a78d6;--es:#e0a100}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
+.seg button{border-radius:0;background:transparent;color:var(--ink);padding:7px 14px;font-size:14px}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+/* explorer */
+.xbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);padding:12px 0;border-bottom:1px solid var(--rule)}
+.xrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.xrow select,.xrow input[type=search]{font:15px "Public Sans";padding:8px 10px;border-radius:9px;border:1.5px solid var(--rule);background:var(--paper);color:var(--ink);max-width:100%}
+.xrow input[type=search]{flex:1 1 200px;min-width:0}
+.fchips{display:flex;flex-wrap:wrap;gap:6px}
+.fchips button{padding:6px 11px;font-size:13px;background:transparent;color:var(--ink);border:1.5px solid var(--rule)}
+.fchips button[aria-pressed=true]{border-color:var(--c);background:var(--c);color:#fff}
+details.more{margin-top:8px}
+details.more summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--ink2)}
+details.more .xrow{margin-top:8px}
+.xstat{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;margin:14px 0 6px;font-size:15px}
+.xdist{display:flex;height:10px;border-radius:5px;overflow:hidden;flex:1 1 220px;min-width:160px;background:var(--nc)}
+.xdist i{display:block;height:100%}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px 12px;margin-top:14px}
+@media(min-width:760px){.grid{grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}}
+.film{all:unset;cursor:pointer;display:block;min-width:0}
+.film .pw{position:relative;aspect-ratio:2/3;border-radius:8px;overflow:hidden;background:var(--nc);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.film img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.film:hover img,.film:focus-visible img{transform:scale(1.04)}
+.film:focus-visible .pw{outline:3px solid var(--mark)}
+.film .fb{position:absolute;left:0;right:0;bottom:0;height:6px}
+.film .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:8px;text-align:center;font:700 13px Fraunces;color:var(--ink2)}
+.film .t{font-size:13px;font-weight:700;line-height:1.25;margin-top:6px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.film .y{font-size:12px;color:var(--muted)}
+.flag{position:absolute;top:6px;left:6px;font:700 10px "Public Sans";background:rgba(0,0,0,.65);color:#fff;border-radius:4px;padding:1px 5px;letter-spacing:.04em}
+dialog{border:0;border-radius:16px;padding:0;max-width:min(760px,94vw);width:100%;background:var(--paper);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(10,10,8,.55)}
+.dl{display:grid;grid-template-columns:1fr;gap:18px;padding:22px}
+@media(min-width:620px){.dl{grid-template-columns:200px 1fr}}
+.dl img{width:100%;border-radius:10px;display:block}
+.dl dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin:12px 0 0}
+.dl dt{color:var(--muted)}
+.dl dd{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.meter{display:flex;gap:3px;margin-top:2px}
+.meter i{width:22px;height:8px;border-radius:2px;background:var(--nc)}
+.x{position:absolute;top:10px;right:12px;background:transparent;color:var(--ink);font-size:22px;padding:4px 10px}
+#more{display:block;margin:24px auto 0}
+.xrow select{flex:1 1 150px}
+@media(max-width:759px){.xbar{position:static}}
+.heat text{font-size:12px}
 </style>
 </head>
 <body>
@@ -133,8 +184,8 @@ footer li{margin-bottom:6px}
   <div class="wide">
     <div class="kicker">Cine · datos · nostalgia</div>
     <h1>¿Se acabaron los <span class="strike">finales felices</span>?</h1>
-    <p class="dek">Dicen que en los noventa todas las películas acababan bien y que ahora el cine es más oscuro. Leímos cómo terminan <b data-k="nFilms">994</b> películas estadounidenses, de 1980 a 2024, para comprobarlo.</p>
-    <p class="byline">Por Victoriano Izquierdo · Septiembre de 2026 · Lectura de 8 minutos</p>
+    <p class="dek">Dicen que en los noventa todas las películas acababan bien y que ahora el cine es más oscuro. Leímos cómo terminan <b>2.810</b> películas populares, estadounidenses y españolas, de 1980 a 2024, para comprobarlo.</p>
+    <p class="byline">Por Victoriano Izquierdo · Septiembre de 2026 · Lectura de 12 minutos · <a href="#explorador">Ir al explorador</a></p>
     <p class="scrollcue">↓ Desliza</p>
   </div>
 </header>
@@ -161,7 +212,7 @@ footer li{margin-bottom:6px}
 
 <section style="padding-bottom:0">
   <div class="wrap">
-    <div class="kicker">Capítulo 1</div>
+    <div class="kicker">Primera parte · Capítulo 1</div>
     <h2>Mil películas, una por una</h2>
     <p>Tomamos las 50 películas estadounidenses con más votos en IMDb de cada año entre 1980 y 2024 y, de cada década, elegimos 150 al azar. Leímos el resumen de su argumento en Wikipedia <b>sin título ni año</b> y clasificamos su final en cuatro tipos:</p>
     <p><span class="chip feliz">Feliz</span> el conflicto se resuelve bien · <span class="chip agri">Agridulce</span> se gana algo importante y se pierde algo importante · <span class="chip amb">Ambiguo</span> la película deja el desenlace abierto · <span class="chip trag">Trágico</span> todo acaba mal, sin compensación.</p>
@@ -244,6 +295,73 @@ footer li{margin-bottom:6px}
   </div>
 </section>
 
+
+<section class="part" id="censo">
+  <div class="wrap">
+    <div class="kicker">Segunda parte</div>
+    <p class="big">¿Y Titanic?</p>
+    <p class="dek" style="margin:0 auto">Nos lo preguntasteis. <i>Titanic</i> no estaba porque la primera parte usaba una muestra al azar de 150 películas por década. Así que las leímos <b>todas</b>: las <b data-k2="nUS">2.245</b> películas estadounidenses más votadas de cada año desde 1980 y, para comparar, las <b data-k2="nES">577</b> españolas más votadas.</p>
+  </div>
+</section>
+
+<section style="padding-top:24px">
+  <div class="wrap">
+    <div class="kicker">Capítulo 6</div>
+    <h2>Con todas las películas, la foto se parece</h2>
+    <p>Ahora no hay sorteo: son todas las 50 más votadas de cada año. En los noventa acababa bien el <b data-k2="us90">67 %</b>; entre 2010 y 2024, el <b data-k2="usrec">61 %</b>. Son <b data-k2="usdiff">6 puntos</b> menos (intervalo del 95 %: <span data-k2="usci"></span>). La bajada se concentra sobre todo en los últimos cinco años.</p>
+    <div class="pair"><span style="--c:var(--us)">EE. UU. (media móvil de 5 años)</span><span style="--c:var(--es)">España</span></div>
+    <svg id="yearly" class="chart" role="img" aria-label="Porcentaje de finales felices por año en el cine popular estadounidense y español"></svg>
+    <p class="note">Puntos claros: cada año (50 películas en EE. UU.; 15 en España, con mucho más ruido). Línea: media móvil centrada de 5 años. Solo películas con final clasificable.</p>
+  </div>
+</section>
+
+<section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+  <div class="wrap">
+    <div class="kicker">Capítulo 7</div>
+    <h2>Titanic acaba mal y, aun así, es optimista</h2>
+    <p>Rose sobrevive y Jack no: para nuestro manual, un final <span class="chip agri">Agridulce</span>. Pero los personajes de <i>Titanic</i> son vitalistas hasta el final. Por eso, en esta segunda parte medimos también dos cosas distintas del desenlace: el <b>tono general</b> de la película y el <b>optimismo de sus personajes</b>, en una escala de −2 a +2.</p>
+    <p>Los dos anotadores dieron a <i>Titanic</i> un <b>+2</b> en optimismo de los personajes. No es un caso raro: <mark><b data-k2="agriopt">41 %</b> de los finales agridulces tienen personajes optimistas</mark>. En las tragedias, en cambio, solo pasa en <b data-k2="tragopt">1 de cada 10</b>.</p>
+    <svg id="heat" class="chart heat" role="img" aria-label="Matriz de películas por tipo de final y optimismo de los personajes"></svg>
+    <p class="note">Número de películas (EE. UU. y España, finales clasificables) según su final y el optimismo medio de sus personajes, redondeado. Pasa el cursor por las celdas.</p>
+    <p>¿Ha bajado el optimismo de los personajes? En el cine popular estadounidense, <b>no hasta 2020</b>: la media está en torno a +0,4 o +0,5 en todas las décadas, y en 2020-2024 cae a <b data-k2="opt20">+0,3</b>. El <b>tono general</b> sí se ha oscurecido algo: <b data-k2="tonediff"></b> puntos entre los noventa y 2010-2024.</p>
+    <svg id="mood" class="chart" role="img" aria-label="Optimismo de los personajes y tono general por década"></svg>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Capítulo 8</div>
+    <h2>España va al revés</h2>
+    <p>El cine español popular es mucho menos feliz que el estadounidense: acaban bien entre una cuarta y una tercera parte de sus películas, frente a unos dos tercios en EE. UU. Y la tendencia es la contraria: <mark>en España los finales felices han subido</mark>, del <b data-k2="es90">25 %</b> en los noventa al <b data-k2="esrec">37 %</b> en 2010-2024 (<span data-k2="esci"></span>).</p>
+    <svg id="esus" class="chart" role="img" aria-label="Finales felices por década, España frente a EE. UU."></svg>
+    <p class="note">Barras: intervalo de confianza del 95 %. España: 15 películas por año (95 en los ochenta, 68 en 2020-2024). Solo películas con final clasificable.</p>
+    <p class="small"><b>Ojo:</b> la Wikipedia en español a menudo no cuenta el final. Cuando existía, usamos el resumen en inglés; aun así, en el <b data-k2="esnc">18 %</b> de las películas españolas no pudimos clasificar el final, y ese porcentaje cambia de una década a otra.</p>
+  </div>
+</section>
+
+<section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+  <div class="wrap">
+    <div class="kicker">Capítulo 9</div>
+    <h2>¿Dónde se perdió el final feliz?</h2>
+    <p>Anotamos también quién protagoniza cada película y en qué mundo vive. Así podemos ver en qué tipo de historias cambió más el final. En el cine estadounidense, la caída entre los noventa y 2010-2024 se concentra en la <b>ciencia ficción</b>, la <b>comedia</b>, la <b>acción</b>, las historias con <b>protagonista femenina</b> y las de personajes en <b>crisis vital</b>. En la comedia baja además el optimismo de los personajes.</p>
+    <div class="seg" role="group" aria-label="Medida"><button aria-pressed="true" data-sg="feliz">Finales felices</button><button aria-pressed="false" data-sg="optimismo">Optimismo de los personajes</button></div>
+    <svg id="subg" class="chart" role="img" aria-label="Cambio entre los noventa y 2010-2024 por tipo de película"></svg>
+    <p class="note">Diferencia 2010-2024 menos 1990-1999 dentro de cada grupo, con intervalo bootstrap del 95 %. Solo grupos con al menos 25 películas en cada periodo. Son muchas comparaciones a la vez: alguna saldrá «significativa» por azar.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Capítulo 10</div>
+    <h2>El público puntúa peor los finales felices</h2>
+    <p>No podemos saber si la gente echa de menos el optimismo de los noventa; eso requiere una encuesta. Pero sí podemos mirar las notas de IMDb. Entre películas del mismo año y género, <mark>las que acaban bien tienen de media <b data-k2="imdbfel"></b> puntos menos</mark> en IMDb, y las de personajes más optimistas también puntúan algo peor.</p>
+    <div class="duo">
+      <div class="stat"><div class="small">Final feliz frente a no feliz (EE. UU.)</div><div class="num" data-k2="imdbfel2"></div><div class="small">puntos de nota media en IMDb, mismo año y género. IC 95 %: <span data-k2="imdbfelci"></span></div></div>
+      <div class="stat"><div class="small">Final feliz frente a no feliz (España)</div><div class="num" data-k2="imdbfeles"></div><div class="small">IC 95 %: <span data-k2="imdbfelesci"></span></div></div>
+    </div>
+    <p class="note" style="margin-top:14px">Solo resultados agregados: no mostramos notas ni votos por película. La nota de IMDb mide la opinión de quien vota en IMDb, no la de todo el público, y no dice nada de la nostalgia.</p>
+  </div>
+</section>
 <section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
   <div class="wide">
     <div class="wrap" style="padding:0">
@@ -264,28 +382,55 @@ footer li{margin-bottom:6px}
     </div>
     <div class="caveats">
       <div class="caveat"><h3>No las ha revisado ninguna persona</h3><p class="small">Todas las etiquetas son de modelos de lenguaje. El material para validarlas con anotadores humanos está preparado, pero aún no se ha usado.</p></div>
-      <div class="caveat"><h3>Las reconocieron todas</h3><p class="small">Borramos títulos y años, pero los modelos dijeron reconocer el <b data-k="recpop"></b> de las películas populares. Pudieron usar lo que ya «sabían» de ellas.</p></div>
+      <div class="caveat"><h3>Las reconocieron todas</h3><p class="small">Borramos títulos y años, pero los modelos dijeron reconocer el <b data-k2="recUS"></b> de las películas estadounidenses del censo (y el <b data-k2="recES"></b> de las españolas). Pudieron usar lo que ya «sabían» de ellas.</p></div>
+      <div class="caveat"><h3>España cuenta menos el final</h3><p class="small">Muchos resúmenes de la Wikipedia en español no explican cómo acaba la película. Aunque recurrimos al inglés cuando se podía, un 18 % de las españolas no tiene final clasificable.</p></div>
+      <div class="caveat"><h3>Optimismo no es final</h3><p class="small">El tono y el optimismo de los personajes son juicios más subjetivos que el tipo de final, aunque los dos anotadores coincidieron mucho (α de Krippendorff 0,92 y 0,83).</p></div>
       <div class="caveat"><h3>Los votos son memoria</h3><p class="small">La popularidad se mide con votos actuales de IMDb: las películas de los noventa que siguen votándose son las que recordamos. Es un sesgo de supervivencia.</p></div>
-      <div class="caveat"><h3>La muestra es pequeña</h3><p class="small">Con 150 películas por década solo se detectan con seguridad diferencias de unos 14 puntos o más. Es un estudio exploratorio.</p></div>
+      <div class="caveat"><h3>Censo, pero de lo que recordamos</h3><p class="small">La segunda parte no es una muestra: son todas las más votadas de cada año. Aun así, «las más votadas hoy» no son lo que se vio en su día, y los intervalos miden la variabilidad del proceso, no un error de encuesta.</p></div>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="kicker">Juega</div>
-    <h2>Busca tu película</h2>
-    <p>¿Cómo clasificamos tu favorita? Solo están las 750 películas del grupo popular.</p>
-    <input id="search" type="search" placeholder="Escribe un título en inglés: The Lion King, Inception, Barbie…" autocomplete="off" aria-label="Buscar película">
-    <ul id="results" aria-live="polite"></ul>
-    <p class="note">Títulos tal como aparecen en la Wikipedia en inglés. ¿No estás de acuerdo con una etiqueta? Es posible: las puso una máquina leyendo un resumen.</p>
+<section id="explorador">
+  <div class="wide">
+    <div class="kicker">Explora</div>
+    <h2>Todas las películas, una por una</h2>
+    <p style="max-width:680px">Las <b data-k2="nTot">2.810</b> películas del censo, ordenadas por fecha de estreno. Filtra por década, año, país, género, final o cualquier otra cosa que hayamos anotado. Pulsa una carátula para ver todas sus etiquetas.</p>
+    <div class="xbar">
+      <div class="xrow">
+        <input id="xq" type="search" placeholder="Busca un título: Titanic, Mar adentro, Barbie…" aria-label="Buscar título">
+        <select id="xdec" aria-label="Década"><option value="">Todas las décadas</option></select>
+        <select id="xyear" aria-label="Año"><option value="">Todos los años</option></select>
+        <select id="xpais" aria-label="País"><option value="">EE. UU. y España</option><option value="US">EE. UU.</option><option value="ES">España</option></select>
+        <select id="xgen" aria-label="Género"><option value="">Todos los géneros</option></select>
+        <select id="xsort" aria-label="Orden"><option value="asc">Más antiguas primero</option><option value="desc">Más recientes primero</option><option value="opt">Más optimistas primero</option><option value="pes">Más pesimistas primero</option></select>
+      </div>
+      <div class="xrow" style="margin-top:8px"><div class="fchips" id="xfin" role="group" aria-label="Tipo de final"></div></div>
+      <details class="more"><summary>Más filtros</summary>
+        <div class="xrow">
+          <select id="xopt" aria-label="Optimismo de los personajes"><option value="">Personajes: todos</option><option value="pos">Personajes optimistas</option><option value="neu">Personajes neutros</option><option value="neg">Personajes pesimistas</option></select>
+          <select id="xesp" aria-label="Especulativa"></select>
+          <select id="xclase" aria-label="Clase social"></select>
+          <select id="xmom" aria-label="Momento vital"></select>
+          <select id="xepoca" aria-label="Época de la trama"></select>
+          <select id="xprot" aria-label="Protagonista"></select>
+          <select id="xrel" aria-label="Relación central"></select>
+        </div>
+      </details>
+    </div>
+    <div class="xstat" aria-live="polite"><span id="xcount"></span><div class="xdist" id="xdist"></div><span id="xhappy" class="small"></span></div>
+    <div class="grid" id="xgrid"></div>
+    <button class="ghost" id="more" hidden>Ver más</button>
+    <p class="note">Carátulas y títulos en español de <a href="https://www.themoviedb.org">TMDB</a>. Etiquetas puestas por modelos de lenguaje a partir del resumen de Wikipedia, sin título ni año: pueden equivocarse. No mostramos notas ni votos de IMDb.</p>
   </div>
+  <dialog id="xd" aria-label="Ficha de la película"><button class="x" id="xclose" aria-label="Cerrar">×</button><div id="xdbody"></div></dialog>
 </section>
 
 <section style="padding-top:24px">
   <div class="wrap">
     <div class="kicker">Veredicto</div>
     <p class="verdict">El final feliz no ha muerto. Los noventa fueron un poco más felices, y quizá por eso los recordamos así.</p>
+    <p>Con el censo completo, la conclusión se sostiene y se afina. El cine popular estadounidense de 2010-2024 tiene <b data-k2="usdiff"></b> menos de finales felices que el de los noventa, sobre todo por los últimos cinco años. Pero sus personajes no son menos optimistas (salvo, de nuevo, desde 2020). En España pasa lo contrario: los finales felices han ganado terreno.</p>
     <p>Lo que los datos <b>sostienen</b>: en el cine popular no se ve un giro grande hacia lo sombrío. No hay más tragedias, las escenas finales no son más tristes y la visión de la vida no empeora. Sí hay algo más de ambigüedad.</p>
     <p>Lo que <b>sugieren</b>: los noventa tuvieron algo más de finales felices que cualquier otra década, sobre todo en acción y comedia. Pero la diferencia es pequeña y no resiste todas las pruebas.</p>
     <p>Lo que <b>no pueden decir</b>: que en los noventa «estuviera prohibido» hacer películas pesimistas (con estrenos no se puede probar lo que no se estrenó) ni que el público eche de menos aquel optimismo. Para eso haría falta preguntar a la gente, y esa encuesta está diseñada pero no hecha.</p>
@@ -298,12 +443,13 @@ footer li{margin-bottom:6px}
     <ul>
       <li>Datos de IMDb Non-Commercial Datasets (uso no comercial). <i>Information courtesy of IMDb (https://www.imdb.com). Used with permission.</i> Esta página no incluye votos ni puntuaciones de IMDb.</li>
       <li>País de origen y enlaces: <a href="https://www.wikidata.org">Wikidata</a> (CC0).</li>
-      <li>Resúmenes argumentales: <a href="https://dumps.wikimedia.org/enwiki/20260901/">Wikipedia en inglés, volcado del 1 de septiembre de 2026</a> (CC BY-SA 4.0). Títulos de películas según Wikipedia.</li>
+      <li>Resúmenes argumentales: <a href="https://dumps.wikimedia.org/enwiki/20260901/">Wikipedia en inglés</a> y <a href="https://dumps.wikimedia.org/eswiki/20260901/">en español</a>, volcados del 1 de septiembre de 2026 (CC BY-SA 4.0).</li>
+      <li>Carátulas y títulos en español: <a href="https://www.themoviedb.org">TMDB</a>. <i>This product uses the TMDB API but is not endorsed or certified by TMDB.</i></li>
       <li>Referencia: Stephen Follows (2026), <a href="https://stephenfollows.com/p/has-hollywood-given-up-on-the-happy-ending"><i>Has Hollywood given up on the happy ending?</i></a> Sus datos no son públicos; la comparación es orientativa.</li>
       <li>Análisis: intervalos de Wilson y bootstrap estratificado; comparaciones entre 1990-1999 y 2010-2024; modelos ajustados por género y popularidad; más de diez pruebas de sensibilidad. El informe completo, el manual de anotación y el código reproducible acompañan a este proyecto.</li>
       <li>Etiquetas generadas por modelos de lenguaje, sin validación humana todavía. Resultados exploratorios.</li>
     </ul>
-    <p class="small">Datos: <a href="data.json">data.json</a> (agregados y etiquetas por película).</p>
+    <p class="small">Datos: <a href="data.json">data.json</a> (agregados) y <a href="films.json">films.json</a> (etiquetas por película, sin datos de IMDb).</p>
   </div>
 </footer>
 
@@ -496,17 +642,190 @@ function drawSlope(){
   g.on('mousemove',(e,d)=>showTip(e,`<b>${d[0]}</b><br>${pct(d[4])} → ${pct(d[5])}<br>Diferencia ${pp(d[6])} (IC ${pp(d[7])} a ${pp(d[8])})`)).on('mouseleave',hideTip);
 }
 
-// ---- search
-const S=$('#search'),R=$('#results');
-const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-const CL=['feliz','agri','amb','trag','amb'];
-S.oninput=()=>{const q=norm(S.value.trim());R.innerHTML='';if(q.length<2)return;
-  const hits=D.films.filter(f=>norm(f[0]).includes(q)).slice(0,10);
-  if(!hits.length){R.innerHTML='<li class="small">No está entre las 750 películas populares de la muestra.</li>';return}
-  hits.forEach(f=>{const li=document.createElement('li');li.innerHTML=`<span><b>${f[0]}</b> <span class="small">(${f[1]}) · ${D.meta.genres[f[3]]}</span></span><span class="chip ${CL[f[4]]}">${FIN_LAB[f[4]]}</span>`;R.appendChild(li)});
-};
 
-function redraw(){drawWaffle();drawCI();drawForest();drawSM('#sm1','y_tragico',[0,.25],fp);drawSM('#sm2','y_tono_positivo',[.5,1],fp);drawSM('#sm3','vision_vida',[0,1.4],fv);drawCompo();drawSlope()}
+// =================================================================== v2
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const V=D.v2, U=V.cohortes.US, E=V.cohortes.ES, F=await (await fetch('films.json')).json();
+const nf=(x,d=1)=>(x<0?'−':'+')+Math.abs(x).toFixed(d).replace('.',',');
+const ppi=(a,b)=>`${pp(a)} a ${pp(b)}`;
+const cU=V.contrastes['US|2010-2024|feliz'], cE=V.contrastes['ES|2010-2024|feliz'], cT=V.contrastes['US|2010-2024|tono'];
+const fa=Object.fromEntries(V.final_animo.filter(r=>r[0]==='US').map(r=>[r[1],r]));
+const imU=V.imdb['US|averageRating|y_feliz'], imE=V.imdb['ES|averageRating|y_feliz'];
+const recRate=(d,c)=>{const n=[3,4].map(i=>d.n_clasificable[i]);return (d.feliz[3]*n[0]+d.feliz[4]*n[1])/(n[0]+n[1])};
+const esNC=(()=>{let a=0,b=0;E.n.forEach((n,i)=>{a+=n*E.pct_no_clasificable[i];b+=n});return a/b})();
+const nnum=x=>String(x).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const fill2={nUS:nnum(V.n.US),nES:nnum(V.n.ES),nTot:nnum(V.n.total),us90:pct(U.feliz[1]),usrec:pct(recRate(U)),
+  usdiff:Math.abs(cU[0]*100).toFixed(0)+' puntos',usci:ppi(cU[1],cU[2]),
+  agriopt:pct(fa.AGRIDULCE[4]),tragopt:'1 de cada '+Math.round(1/fa.TRAGICO[4]),opt20:nf(U.optimismo[4]),tonediff:nf(cT[0],2),
+  es90:pct(E.feliz[1]),esrec:pct(recRate(E)),esci:`${pp(cE[0])}; IC 95 %: ${ppi(cE[1],cE[2])}`,esnc:pct(esNC),
+  imdbfel:Math.abs(imU[0]).toFixed(1).replace('.',','),imdbfel2:nf(imU[0],2),imdbfelci:`${nf(imU[1],2)} a ${nf(imU[2],2)}`,
+  imdbfeles:nf(imE[0],2),imdbfelesci:`${nf(imE[1],2)} a ${nf(imE[2],2)}`,recUS:pct(V.reconocidas.US),recES:pct(V.reconocidas.ES)};
+$$('[data-k2]').forEach(el=>{if(fill2[el.dataset.k2]!==undefined)el.textContent=fill2[el.dataset.k2]});
+
+function axisY(svg,y,W,m,fmt,n=4){svg.append('g').attr('class','grid').selectAll('line').data(y.ticks(n)).join('line').attr('x1',m.l).attr('x2',W-m.r).attr('y1',y).attr('y2',y);
+  svg.append('g').selectAll('text').data(y.ticks(n)).join('text').attr('x',m.l-6).attr('y',d=>y(d)+4).attr('text-anchor','end').style('font-size','12px').text(fmt)}
+function drawYearly(){
+  const svg=d3.select('#yearly'),W=svg.node().clientWidth||640,H=320,m={t:16,r:16,b:30,l:44};
+  svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
+  const x=d3.scaleLinear().domain([1980,2024]).range([m.l,W-m.r]),y=d3.scaleLinear().domain([0,1]).range([H-m.b,m.t]);
+  axisY(svg,y,W,m,d=>d*100+' %');
+  svg.append('g').selectAll('text').data([1980,1990,2000,2010,2020]).join('text').attr('x',x).attr('y',H-8).attr('text-anchor','middle').style('font-size','12px').text(d=>d);
+  svg.append('rect').attr('x',x(1990)).attr('width',x(2000)-x(1990)).attr('y',m.t).attr('height',H-m.b-m.t).attr('fill','var(--mark)').attr('opacity',.18);
+  [['US','--us'],['ES','--es']].forEach(([cf,cv])=>{
+    const rows=V.anual[cf].filter(r=>r[2]!=null), c=css(cv);
+    const roll=rows.map((r,i)=>{const w=rows.filter(q=>Math.abs(q[0]-r[0])<=2);return [r[0],d3.mean(w,q=>q[2])]});
+    svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx',r=>x(r[0])).attr('cy',r=>y(r[2])).attr('r',cf==='US'?3.5:2.8).attr('fill',c).attr('opacity',.35)
+      .on('mousemove',(e,r)=>showTip(e,`<b>${r[0]} · ${cf==='US'?'EE. UU.':'España'}</b><br>${pct(r[2])} finales felices`)).on('mouseleave',hideTip);
+    svg.append('path').datum(roll).attr('fill','none').attr('stroke',c).attr('stroke-width',3).attr('d',d3.line().curve(d3.curveMonotoneX).x(r=>x(r[0])).y(r=>y(r[1])));
+  });
+  svg.append('text').attr('x',x(1995)).attr('y',m.t+14).attr('text-anchor','middle').style('font-size','12px').style('font-weight',700).text('los noventa');
+  const ti=F.films.find(f=>f[0]==='Titanic'&&f[2]===1997);
+  if(ti){svg.append('text').attr('x',x(1997)).attr('y',y(.97)).attr('text-anchor','middle').style('font-size','11px').text('1997: Titanic')}
+}
+function drawHeat(){
+  const svg=d3.select('#heat'),W=svg.node().clientWidth||640,H=260,m={t:30,r:10,b:36,l:92};
+  svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
+  const M=V.matriz,x=d3.scaleBand().domain(M.cols).range([m.l,W-m.r]).padding(.06),y=d3.scaleBand().domain(M.filas).range([m.t,H-m.b]).padding(.06);
+  const mx=d3.max(M.n.flat()), col=COLS(), fi=[0,1,2,3];
+  M.filas.forEach((f,i)=>M.cols.forEach((c,j)=>{const n=M.n[i][j];
+    svg.append('rect').attr('x',x(c)).attr('y',y(f)).attr('width',x.bandwidth()).attr('height',y.bandwidth()).attr('rx',5).attr('fill',col[i]).attr('opacity',.12+.88*Math.sqrt(n/mx))
+      .on('mousemove',e=>showTip(e,`<b>${n} películas</b><br>Final ${FIN_LAB[i].toLowerCase()} · personajes ${nf(c,0)}`)).on('mouseleave',hideTip);
+    svg.append('text').attr('x',x(c)+x.bandwidth()/2).attr('y',y(f)+y.bandwidth()/2+4).attr('text-anchor','middle').style('font-weight',700).style('fill',n/mx>.35?'#fff':'var(--ink)').style('pointer-events','none').text(n)}));
+  svg.append('g').selectAll('text').data(M.filas).join('text').attr('x',m.l-8).attr('y',f=>y(f)+y.bandwidth()/2+4).attr('text-anchor','end').style('font-weight',700).style('fill','var(--ink)').text((f,i)=>FIN_LAB[i]);
+  svg.append('g').selectAll('text').data(M.cols).join('text').attr('x',c=>x(c)+x.bandwidth()/2).attr('y',H-14).attr('text-anchor','middle').style('font-size','12px').text(c=>({'-2':'−2 muy pesimistas','-1':'−1','0':'0','1':'+1','2':'+2 muy optimistas'})[c]);
+  svg.append('text').attr('x',(m.l+W-m.r)/2).attr('y',14).attr('text-anchor','middle').style('font-size','12px').text('Optimismo de los personajes →');
+  const tx=x(2)+x.bandwidth()/2, ty=y('AGRIDULCE');
+  svg.append('circle').attr('cx',tx).attr('cy',ty+y.bandwidth()/2).attr('r',Math.min(x.bandwidth(),y.bandwidth())/2-2).attr('fill','none').attr('stroke','var(--mark)').attr('stroke-width',3);
+  svg.append('text').attr('x',tx).attr('y',ty+y.bandwidth()-4).attr('text-anchor','middle').style('font-size','11px').style('font-weight',700).style('fill','var(--ink)').text('Titanic');
+}
+function panel(svg,x0,w,H,title,key,dom,fmt){
+  const m={t:28,b:28,l:40},y=d3.scaleLinear().domain(dom).range([H-m.b,m.t]),x=d3.scalePoint().domain(d3.range(5)).range([x0+m.l+10,x0+w-14]);
+  const g=svg.append('g');
+  g.append('text').attr('x',x0+m.l).attr('y',14).style('font-weight',700).style('fill','var(--ink)').style('font-size','14px').text(title);
+  g.append('g').attr('class','grid').selectAll('line').data(y.ticks(4)).join('line').attr('x1',x0+m.l).attr('x2',x0+w-6).attr('y1',y).attr('y2',y);
+  g.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x',x0+m.l-6).attr('y',d=>y(d)+4).attr('text-anchor','end').style('font-size','11px').text(fmt);
+  g.append('g').selectAll('text').data(d3.range(5)).join('text').attr('x',x).attr('y',H-8).attr('text-anchor','middle').style('font-size','11px').text(i=>COH_LAB[i].slice(0,4)+'s');
+  [['US',U,'--us',-4],['ES',E,'--es',4]].forEach(([cf,S,cv,off])=>{const c=css(cv);
+    g.append('path').datum(d3.range(5)).attr('fill','none').attr('stroke',c).attr('stroke-width',2).attr('d',d3.line().x(i=>x(i)+off).y(i=>y(S[key][i])));
+    g.append('g').selectAll('line').data(d3.range(5)).join('line').attr('x1',i=>x(i)+off).attr('x2',i=>x(i)+off).attr('y1',i=>y(S[key+'_lo'][i])).attr('y2',i=>y(S[key+'_hi'][i])).attr('stroke',c).attr('stroke-width',4).attr('opacity',.3);
+    g.append('g').selectAll('circle').data(d3.range(5)).join('circle').attr('cx',i=>x(i)+off).attr('cy',i=>y(S[key][i])).attr('r',4.5).attr('fill',c)
+      .on('mousemove',(e,i)=>showTip(e,`<b>${cf==='US'?'EE. UU.':'España'} · ${COH_LAB[i]}</b><br>${fmt(S[key][i])} (IC ${fmt(S[key+'_lo'][i])} a ${fmt(S[key+'_hi'][i])})`)).on('mouseleave',hideTip)});
+}
+function drawMood(){
+  const svg=d3.select('#mood'),W=svg.node().clientWidth||640,narrow=W<560,H=narrow?460:240;
+  svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
+  const f=d=>nf(d,1);
+  if(narrow){panel(svg,0,W,230,'Optimismo de los personajes','optimismo',[-1,1],f);panel(svg.append('g').attr('transform','translate(0,230)'),0,W,230,'Tono general','tono',[-1.2,.6],f)}
+  else{panel(svg,0,W/2,H,'Optimismo de los personajes','optimismo',[-1,1],f);panel(svg,W/2,W/2,H,'Tono general','tono',[-1.2,.6],f)}
+}
+function drawEsUs(){
+  const svg=d3.select('#esus'),W=svg.node().clientWidth||640,H=300,m={t:16,r:16,b:32,l:44};
+  svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
+  const x=d3.scalePoint().domain(d3.range(5)).range([m.l+30,W-m.r-30]),y=d3.scaleLinear().domain([0,.9]).range([H-m.b,m.t]);
+  axisY(svg,y,W,m,d=>Math.round(d*100)+' %');
+  svg.append('g').selectAll('text').data(d3.range(5)).join('text').attr('x',x).attr('y',H-10).attr('text-anchor','middle').style('font-size','13px').text(i=>COH_LAB[i]);
+  [['EE. UU.',U,'--us',-9],['España',E,'--es',9]].forEach(([lab,S,cv,off])=>{const c=css(cv);
+    const g=svg.append('g').selectAll('g').data(d3.range(5)).join('g');
+    g.append('line').attr('x1',i=>x(i)+off).attr('x2',i=>x(i)+off).attr('y1',i=>y(S.feliz_lo[i])).attr('y2',i=>y(S.feliz_hi[i])).attr('stroke',c).attr('stroke-width',7).attr('stroke-linecap','round').attr('opacity',.35);
+    g.append('circle').attr('cx',i=>x(i)+off).attr('cy',i=>y(S.feliz[i])).attr('r',7).attr('fill',c).attr('stroke','var(--bg)').attr('stroke-width',2)
+      .on('mousemove',(e,i)=>showTip(e,`<b>${lab} · ${COH_LAB[i]}</b><br>${pct(S.feliz[i],1)} finales felices<br>IC 95 %: ${pct(S.feliz_lo[i])}–${pct(S.feliz_hi[i])} · n=${S.n_clasificable[i]}`)).on('mouseleave',hideTip);
+    svg.append('text').attr('x',x(4)+off+12).attr('y',y(S.feliz[4])+4).style('font-weight',700).style('fill',c).style('font-size','13px').text(lab);
+  });
+}
+const LAB={CIENCIA_FICCION:'Ciencia ficción',FANTASIA:'Fantasía',SOBRENATURAL:'Sobrenatural',SUPERHEROES:'Superhéroes',NO:'No especulativa',
+  BAJA_MARGINAL:'Clase baja o marginal',TRABAJADORA:'Clase trabajadora',MEDIA:'Clase media',ALTA_ELITE:'Clase alta o élite',MIXTA:'Clases mezcladas',NO_CLARO:'No está claro',
+  INFANCIA:'Infancia',ADOLESCENCIA:'Adolescencia',JUVENTUD:'Juventud',CRIANZA:'Criando hijos',MADUREZ:'Madurez',CRISIS_VITAL:'Crisis vital',VEJEZ:'Vejez',
+  ANTES_1500:'Antes de 1500',DE_1500_A_1899:'1500-1899',DE_1900_A_1945:'1900-1945',DE_1946_A_1979:'1946-1979',DE_1980_EN_ADELANTE:'De 1980 en adelante',FUTURO:'Futuro',MUNDO_FICTICIO:'Mundo inventado',VARIAS:'Varias épocas',
+  HOMBRE:'Protagonista hombre',MUJER:'Protagonista mujer',MIXTO:'Protagonismo mixto',NO_HUMANO:'Protagonista no humano',
+  SOLTERO:'Soltero/a',EN_PAREJA:'En pareja',CASADO:'Casado/a',SEPARADO_DIVORCIADO:'Separado/a o divorciado/a',VIUDO:'Viudo/a',
+  NINO:'Niño/a',ADOLESCENTE:'Adolescente',JOVEN:'Joven',ADULTO:'Adulto/a',MADURO:'Maduro/a',MAYOR:'Mayor',
+  NINGUNO:'Sin humor',ALGO:'Algo de humor',CENTRAL:'Comedia central',
+  AMISTAD:'Amistad',ROMANCE:'Romance',MATRIMONIO:'Matrimonio',DIVORCIO_SEPARACION:'Divorcio o separación',PADRES_HIJOS:'Padres e hijos',HERMANOS:'Hermanos',FAMILIA_EXTENSA:'Familia extensa',MENTOR_DISCIPULO:'Mentor y discípulo',EQUIPO_COMPANEROS:'Equipo o compañeros',RIVALIDAD:'Rivalidad',COMUNIDAD:'Comunidad',NINGUNA:'Ninguna'};
+const SGVARS={genre_main:'Género',especulativa:'Tipo',genero_protagonista:'Protagonista',momento_vital:'Momento vital',clase_social:'Clase',estado_civil:'Estado civil',humor:'Humor',contemporanea:'Época'};
+let sgSel='feliz';
+$$('[data-sg]').forEach(b=>b.onclick=()=>{sgSel=b.dataset.sg;$$('[data-sg]').forEach(x=>x.setAttribute('aria-pressed',x===b));drawSub()});
+function drawSub(){
+  const rows=V.subgrupos.filter(r=>r[2]===sgSel&&SGVARS[r[0]]&&r[1]!=='NO_CLARO'&&r[1]!=='OTRO').sort((a,b)=>a[7]-b[7]);
+  const svg=d3.select('#subg'),W=svg.node().clientWidth||640,rh=26,m={t:10,r:24,b:30,l:Math.min(230,W*.46)},H=m.t+m.b+rh*rows.length;
+  svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
+  const isP=sgSel==='feliz',x=d3.scaleLinear().domain(isP?[-.5,.35]:[-.9,.9]).range([m.l,W-m.r]);
+  svg.append('g').attr('class','grid').selectAll('line').data(x.ticks(5)).join('line').attr('x1',x).attr('x2',x).attr('y1',m.t).attr('y2',H-m.b);
+  svg.append('line').attr('x1',x(0)).attr('x2',x(0)).attr('y1',m.t).attr('y2',H-m.b).attr('stroke','var(--ink)').attr('stroke-width',1.5);
+  const fm=isP?(d=>(d>0?'+':d<0?'−':'')+Math.round(Math.abs(d*100))+' pp'):(d=>nf(d,1));
+  svg.append('g').selectAll('text').data(x.ticks(5)).join('text').attr('x',x).attr('y',H-8).attr('text-anchor','middle').style('font-size','12px').text(fm);
+  const g=svg.append('g').selectAll('g').data(rows).join('g').attr('transform',(d,i)=>`translate(0,${m.t+i*rh+rh/2})`);
+  const name=d=>d[0]==='genre_main'?d[1]:(LAB[d[1]]||d[1]);
+  g.append('text').attr('x',m.l-10).attr('y',4).attr('text-anchor','end').style('font-size','13px').style('fill','var(--ink)').text(name);
+  const sig=d=>d[8]>0||d[9]<0;
+  g.append('line').attr('x1',d=>x(Math.max(d[8],x.domain()[0]))).attr('x2',d=>x(Math.min(d[9],x.domain()[1]))).attr('stroke',d=>d[7]<0?css('--trag'):css('--feliz')).attr('stroke-width',5).attr('stroke-linecap','round').attr('opacity',d=>sig(d)?.5:.2);
+  g.append('circle').attr('cx',d=>x(d[7])).attr('r',6).attr('fill',d=>sig(d)?(d[7]<0?css('--trag'):css('--feliz')):'var(--paper)').attr('stroke',d=>d[7]<0?css('--trag'):css('--feliz')).attr('stroke-width',2)
+    .on('mousemove',(e,d)=>showTip(e,`<b>${name(d)}</b><br>${isP?pct(d[5]):nf(d[5],2)} → ${isP?pct(d[6]):nf(d[6],2)}<br>Cambio ${fm(d[7])} (IC ${fm(d[8])} a ${fm(d[9])})<br>n = ${d[3]} / ${d[4]}`)).on('mouseleave',hideTip);
+}
+
+// ---- explorer
+const FC=F.cols.reduce((o,c,i)=>(o[c]=i,o),{});
+const PAIS=['EE. UU.','España','EE. UU. y España'];
+const FILTERS={xesp:['especulativa','Especulativa: todas'],xclase:['clase_social','Clase social: todas'],xmom:['momento_vital','Momento vital: todos'],xepoca:['epoca_trama','Época de la trama: todas'],xprot:['genero_protagonista','Protagonista: todos']};
+for(const [id,[k,lab]] of Object.entries(FILTERS)){const el=$('#'+id);el.innerHTML=`<option value="">${lab}</option>`+F.cats[k].map((v,i)=>`<option value="${i}">${LAB[v]||v}</option>`).join('')}
+$('#xrel').innerHTML='<option value="">Relación central: todas</option>'+F.relaciones.map((v,i)=>`<option value="${i}">${LAB[v]||v}</option>`).join('');
+$('#xgen').innerHTML+=F.genres.map((g,i)=>`<option value="${i}">${g}</option>`).join('');
+$('#xdec').innerHTML+=[1980,1990,2000,2010,2020].map(d=>`<option value="${d}">Años ${String(d).slice(2)}${d===2020?' (2020-2024)':''}</option>`).join('');
+function years(){const d=$('#xdec').value;const ys=d?d3.range(+d,Math.min(+d+10,2025)):d3.range(1980,2025);$('#xyear').innerHTML='<option value="">Todos los años</option>'+ys.map(y=>`<option>${y}</option>`).join('')}
+years();$('#xdec').onchange=()=>{years();run()};
+const finSel=new Set();const FCOL=['--feliz','--agri','--amb','--trag','--muted'];
+$('#xfin').innerHTML=FIN_LAB.map((l,i)=>`<button aria-pressed="false" data-f="${i}" style="--c:var(${FCOL[i]})">${l}</button>`).join('');
+$$('#xfin button').forEach(b=>b.onclick=()=>{const f=+b.dataset.f;finSel.has(f)?finSel.delete(f):finSel.add(f);b.setAttribute('aria-pressed',finSel.has(f));run()});
+['#xyear','#xpais','#xgen','#xsort','#xopt','#xesp','#xclase','#xmom','#xepoca','#xprot','#xrel'].forEach(s=>$(s).onchange=run);
+let qt;$('#xq').oninput=()=>{clearTimeout(qt);qt=setTimeout(run,120)};
+let cur=[],shown=0;const PAGE=120;
+function run(){
+  const q=norm($('#xq').value.trim()),dec=$('#xdec').value,yr=$('#xyear').value,pa=$('#xpais').value,ge=$('#xgen').value,op=$('#xopt').value,rel=$('#xrel').value;
+  const sel=Object.fromEntries(Object.entries(FILTERS).map(([id,[k]])=>[k,$('#'+id).value]));
+  cur=F.films.filter(f=>{
+    if(q&&!norm(f[0]+' '+f[1]).includes(q))return false;
+    if(dec&&(f[2]<+dec||f[2]>=+dec+10))return false; if(yr&&f[2]!==+yr)return false;
+    if(pa==='US'&&f[3]===1)return false; if(pa==='ES'&&f[3]===0)return false;
+    if(ge!==''&&f[4]!==+ge)return false; if(finSel.size&&!finSel.has(f[5]))return false;
+    if(op==='pos'&&!(f[6]>0))return false; if(op==='neg'&&!(f[6]<0))return false; if(op==='neu'&&f[6]!==0)return false;
+    for(const k in sel)if(sel[k]!==''&&f[FC[k]]!==+sel[k])return false;
+    if(rel!==''&&!f[FC.relaciones].includes(+rel))return false;
+    return true});
+  const so=$('#xsort').value;
+  if(so==='desc')cur.sort((a,b)=>b[2]-a[2]||a[0].localeCompare(b[0]));else if(so==='opt')cur.sort((a,b)=>(b[6]??-9)-(a[6]??-9)||a[2]-b[2]);else if(so==='pes')cur.sort((a,b)=>(a[6]??9)-(b[6]??9)||a[2]-b[2]);else cur.sort((a,b)=>a[2]-b[2]||a[0].localeCompare(b[0]));
+  const cnt=[0,0,0,0,0];cur.forEach(f=>cnt[f[5]]++);const cl=cnt[0]+cnt[1]+cnt[2]+cnt[3];
+  $('#xcount').innerHTML=`<b>${nnum(cur.length)}</b> películas`;
+  $('#xdist').innerHTML=cur.length?cnt.map((n,i)=>`<i style="width:${n/cur.length*100}%;background:var(${FCOL[i]})" title="${FIN_LAB[i]}: ${n}"></i>`).join(''):'';
+  $('#xhappy').textContent=cl?`${pct(cnt[0]/cl)} con final feliz · ${pct(cnt[3]/cl)} trágico`:'';
+  $('#xgrid').innerHTML='';shown=0;more();
+}
+function card(f){
+  const b=document.createElement('button');b.className='film';b.setAttribute('aria-label',`${f[0]} (${f[2]}), final ${FIN_LAB[f[5]].toLowerCase()}`);
+  b.innerHTML=`<div class="pw">${f[FC.poster]?`<img loading="lazy" decoding="async" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:`<div class="ph">${f[0]}</div>`}${f[3]?`<span class="flag">${f[3]===1?'ES':'US·ES'}</span>`:''}<i class="fb" style="background:var(${FCOL[f[5]]})"></i></div><div class="t">${f[0]}</div><div class="y">${f[2]}</div>`;
+  b.onclick=()=>detail(f);return b}
+function more(){const frag=document.createDocumentFragment();cur.slice(shown,shown+PAGE).forEach(f=>frag.appendChild(card(f)));$('#xgrid').appendChild(frag);shown+=PAGE;$('#more').hidden=shown>=cur.length}
+$('#more').onclick=more;
+new IntersectionObserver(es=>{if(es[0].isIntersecting&&!$('#more').hidden)more()},{rootMargin:'600px'}).observe($('#more'));
+function meter(v){if(v==null)return '<span class="small">sin dato</span>';const i=Math.round(v)+2;return `<span class="meter">${[0,1,2,3,4].map(k=>`<i style="${k===i?`background:var(${v>0?'--feliz':v<0?'--trag':'--amb'})`:''}"></i>`).join('')}</span> <span class="small">${nf(v,1)}</span>`}
+const TONO_LAB={ESPERANZA:'Esperanza',ALIVIO:'Alivio',CONEXION:'Conexión',RESIGNACION:'Resignación',DESESPERANZA:'Desesperanza',NO_CLARO:'No está claro'};
+function detail(f){
+  const c=k=>LAB[F.cats[k][f[FC[k]]]]||F.cats[k][f[FC[k]]];
+  const paises=f[FC.paises_trama].map(i=>i>=0?F.paises[i]:'otro').join(', ')||'—';
+  const rels=f[FC.relaciones].map(i=>LAB[F.relaciones[i]]).join(', ')||'—';
+  $('#xdbody').innerHTML=`<div class="dl"><div>${f[FC.poster]?`<img src="https://image.tmdb.org/t/p/w342${f[FC.poster]}" alt="Carátula de ${f[0]}">`:''}</div><div>
+   <div class="kicker" style="margin-bottom:6px">${f[2]} · ${PAIS[f[3]]} · ${F.genres[f[4]]}</div>
+   <h3 style="font-size:28px;margin-bottom:4px">${f[0]}</h3>${f[1]?`<div class="small">${f[1]}</div>`:''}
+   <p style="margin:12px 0 0"><span class="chip ${['feliz','agri','amb','trag','amb'][f[5]]}">${FIN_LAB[f[5]]}</span> <span class="small">cierre: ${TONO_LAB[F.tones[f[FC.tono_cierre]]]||'—'}</span></p>
+   <dl><dt>Optimismo de los personajes</dt><dd>${meter(f[6])}</dd><dt>Tono general</dt><dd>${meter(f[7])}</dd>
+   <dt>Protagonista</dt><dd>${c('genero_protagonista')} · ${c('edad_protagonista')}</dd><dt>Momento vital</dt><dd>${c('momento_vital')}</dd>
+   <dt>Estado civil</dt><dd>${c('estado_civil')}</dd><dt>Clase social</dt><dd>${c('clase_social')}</dd>
+   <dt>Relaciones</dt><dd>${rels}</dd><dt>Especulativa</dt><dd>${c('especulativa')}</dd><dt>Época</dt><dd>${c('epoca_trama')}</dd>
+   <dt>Dónde pasa</dt><dd>${paises}</dd><dt>Humor</dt><dd>${c('humor')}</dd></dl>
+   <p class="note">Etiquetas de dos modelos de lenguaje (desacuerdos en el final resueltos por un tercero). ${f[FC.tmdb]?`<a href="https://www.themoviedb.org/movie/${f[FC.tmdb]}" target="_blank" rel="noopener">Ficha en TMDB</a>`:''}</p></div></div>`;
+  $('#xd').showModal()}
+$('#xclose').onclick=()=>$('#xd').close();$('#xd').onclick=e=>{if(e.target===$('#xd'))$('#xd').close()};
+run();
+
+function redraw(){drawYearly();drawHeat();drawMood();drawEsUs();drawSub();drawWaffle();drawCI();drawForest();drawSM('#sm1','y_tragico',[0,.25],fp);drawSM('#sm2','y_tono_positivo',[.5,1],fp);drawSM('#sm3','vision_vida',[0,1.4],fv);drawCompo();drawSlope()}
 redraw();
 let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,200)});
 })();

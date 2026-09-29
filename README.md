@@ -43,6 +43,20 @@ make test     # pruebas automatizadas
 
 **Empezar un estudio nuevo** (otra muestra): `python -m finales.pipeline pilot --force` y `main --force`. Esto extrae las sinopsis del volcado de Wikipedia `enwiki-20260901` (descarga el índice, 284 MB, y lee por rangos solo los bloques necesarios) y genera lotes cegados nuevos, que habrá que anotar siguiendo `docs/instrucciones_anotador.md`.
 
+### Segunda parte (v2): censo, cine español y web
+
+| Etapa | Comando | Salida |
+|---|---|---|
+| Cine español | `python -m finales.spain` | `data/interim/catalog_es.csv`, `universo_es.csv` (Wikidata P495=Q29, volcado `eswiki-20260901`) |
+| Universo y lotes v2 | `finales.v2.universe()`, `make_batches_v2`, `make_batches_modb`, `make_batches_esen` | `annotation/batches/v2_*` (ya versionados; no hace falta regenerarlos) |
+| Etiquetas finales v2 | `python -m finales.v2` | `data/interim/analitico_v2.csv`, `data/derived/etiquetas_v2.csv` (sin datos de IMDb) |
+| Análisis v2 | `python -m finales.analysis_v2` | `reports/tables/v2/*.csv` |
+| Carátulas | `python -m finales.tmdb` (requiere `TMDB_API_KEY` en el entorno o en `~/.config/finales/secrets.env`) | `data/interim/tmdb_posters.csv` (no versionado) |
+| Web | `python -m finales.web` | `web/data.json`, `web/films.json` |
+| Informe | `python -m finales.report` | añade la sección 9 al informe y un bloque al resumen |
+
+Instrucciones de anotación v2: `docs/instrucciones_anotador_v2.md`; adjudicación: `docs/instrucciones_adjudicador_v2.md`. Decisiones D-023 a D-029.
+
 ## Estructura
 
 ```

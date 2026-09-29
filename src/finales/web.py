@@ -89,6 +89,110 @@ def main() -> None:
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(build(), ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(out, out.stat().st_size)
+    main_v2()
+
+
+
+
+# ------------------------------------------------------------------ v2: censo, España y explorador
+V2 = ROOT / "reports" / "tables" / "v2"
+EXPL = {
+    "especulativa": ["NO", "CIENCIA_FICCION", "FANTASIA", "SOBRENATURAL", "SUPERHEROES"],
+    "clase_social": ["BAJA_MARGINAL", "TRABAJADORA", "MEDIA", "ALTA_ELITE", "MIXTA", "NO_CLARO"],
+    "momento_vital": ["INFANCIA", "ADOLESCENCIA", "JUVENTUD", "CRIANZA", "MADUREZ", "CRISIS_VITAL", "VEJEZ", "NO_CLARO"],
+    "epoca_trama": ["ANTES_1500", "DE_1500_A_1899", "DE_1900_A_1945", "DE_1946_A_1979", "DE_1980_EN_ADELANTE",
+                    "FUTURO", "MUNDO_FICTICIO", "VARIAS", "NO_CLARO"],
+    "genero_protagonista": ["HOMBRE", "MUJER", "MIXTO", "NO_HUMANO", "NO_CLARO"],
+    "estado_civil": ["SOLTERO", "EN_PAREJA", "CASADO", "SEPARADO_DIVORCIADO", "VIUDO", "NO_CLARO"],
+    "edad_protagonista": ["NINO", "ADOLESCENTE", "JOVEN", "ADULTO", "MADURO", "MAYOR", "MIXTO", "NO_CLARO"],
+    "humor": ["NINGUNO", "ALGO", "CENTRAL"],
+}
+
+
+def _num(x, d=2):
+    return None if pd.isna(x) else round(float(x), d)
+
+
+def build_films_v2() -> dict:
+    """Una fila por película del universo v2 (sin votos ni notas de IMDb)."""
+    d = pd.read_csv(INTERIM / "analitico_v2.csv")
+    tm = pd.read_csv(INTERIM / "tmdb_posters.csv").drop_duplicates("tconst").set_index("tconst")
+    genres = sorted(d.genre_main.dropna().unique())
+    paises = d.paises_trama_A.fillna("").str.split("|").explode()
+    top_paises = [p for p in paises.value_counts().index if p][:40]
+    rows = []
+    for tc, g in d.groupby("tconst", sort=False):
+        r = g.iloc[0]
+        cf = "+".join(sorted(g.country_frame.unique(), reverse=True))  # "US", "ES" o "US+ES"
+        t_es = tm.titulo_es.get(tc) if tc in tm.index else None
+        title = t_es if isinstance(t_es, str) and t_es else r.primaryTitle
+        orig = r.primaryTitle if r.primaryTitle != title else (r.originalTitle if r.originalTitle != title else "")
+        rels = [i for i, rel in enumerate(an.RELACIONES) if r[f"rel_{rel.lower()}"] >= 0.5]
+        ps = [top_paises.index(p) if p in top_paises else -1 for p in str(r.paises_trama_A).split("|") if p]
+        rows.append([
+            title, orig or "", int(r.year), ["US", "ES", "US+ES"].index(cf), genres.index(r.genre_main),
+            FIN.index(r.final), _num(r.optimismo_personajes, 1), _num(r.tono_general, 1),
+            *[EXPL[k].index(r[k]) for k in EXPL], rels, ps,
+            (tm.poster_path.get(tc) if tc in tm.index and isinstance(tm.poster_path.get(tc), str) else ""),
+            int(tm.tmdb_id.get(tc)) if tc in tm.index and pd.notna(tm.tmdb_id.get(tc)) else 0,
+            TONE.index(r.tono_cierre) if r.tono_cierre in TONE else 5,
+        ])
+    rows.sort(key=lambda x: (x[2], x[0]))
+    cols = ["titulo", "original", "anio", "pais", "genero", "final", "optimismo", "tono"] + list(EXPL) + \
+           ["relaciones", "paises_trama", "poster", "tmdb", "tono_cierre"]
+    return {"cols": cols, "genres": genres, "finals": FIN, "tones": TONE, "cats": EXPL,
+            "relaciones": an.RELACIONES, "paises": top_paises, "films": rows}
+
+
+def build_v2() -> dict:
+    t = lambda n: pd.read_csv(V2 / n)
+    pc = t("por_cohorte.csv")
+    coh = {cf: {c: [r4(x) for x in pc[pc.country_frame == cf].set_index("cohort").reindex(COH)[c]]
+                for c in pc.columns if c not in ("country_frame", "cohort")} for cf in ("US", "ES")}
+    py = t("por_anio.csv")
+    year = {cf: [[int(r.year), int(r.n), r4(r.feliz), r4(r.optimismo), r4(r.tono)]
+                 for r in py[py.country_frame == cf].itertuples()] for cf in ("US", "ES")}
+    cs = t("contrastes.csv")
+    contr = {f"{r.country_frame}|{r.cohorte}|{r.variable}": [r4(r.diferencia), r4(r.lo), r4(r.hi)]
+             for r in cs.itertuples()}
+    sg = t("subgrupos.csv")
+    sub = [[r.variable, str(r.valor), r.medida, int(r.n_1990s), int(r.n_2010_24), r4(r.nivel_1990s),
+            r4(r.nivel_2010_24), r4(r.diferencia), r4(r.lo), r4(r.hi)] for r in sg.itertuples()]
+    fm = t("final_vs_animo.csv")
+    fvm = [[r.country_frame, r.final, int(r.n), r4(r.optimismo), r4(r.pct_optimistas), r4(r.tono)] for r in fm.itertuples()]
+    d = pd.read_csv(INTERIM / "analitico_v2.csv")
+    c = d[d.clasificable & d.optimismo_personajes.notna()]
+    mat = pd.crosstab(c.final, c.optimismo_personajes.round().clip(-2, 2)).reindex(FIN[:4]).fillna(0).astype(int)
+    im = t("imdb_modelos.csv")
+    imdb = {f"{r.country_frame}|{r.resultado}|{r.predictor}": [r4(r.coef), r4(r.lo), r4(r.hi), int(r.n)]
+            for r in im.itertuples()}
+    se = t("sensibilidad.csv")
+    sens = [[r.analisis, r.country_frame, r.medida, r4(r.diferencia_2010_24_vs_1990s), r4(r.lo), r4(r.hi), int(r.n)]
+            for r in se.itertuples() if pd.notna(r.diferencia_2010_24_vs_1990s)]
+    aj = t("ajustados.csv")
+    adj = {f"{r.modelo}|{r.resultado}|{r.cohorte}": [r4(r.estimacion), r4(r.coef_lo), r4(r.coef_hi)] for r in aj.itertuples()}
+    ac = pd.concat([t("../acuerdo_v2_completa.csv").assign(etapa="v2_completa"),
+                    t("../acuerdo_v2_modb.csv").assign(etapa="v2_modb")])
+    acu = {f"{r.etapa}|{r.variable}": r4(r.kappa if pd.notna(r.kappa) else (r.alfa_intervalo if pd.notna(r.alfa_intervalo)
+                                                                                 else r.jaccard)) for r in ac.itertuples()}
+    rec = d.groupby("country_frame").reconocida.mean()
+    cv = t("covariables.csv")
+    cov = [[r.variable, r.country_frame, COH.index(r.cohort), str(r.valor), r4(r.prop)] for r in cv.itertuples()]
+    return {"cohortes": coh, "anual": year, "contrastes": contr, "subgrupos": sub, "final_animo": fvm,
+            "matriz": {"filas": FIN[:4], "cols": [int(x) for x in mat.columns], "n": mat.values.tolist()},
+            "imdb": imdb, "sensibilidad": sens, "ajustados": adj, "acuerdo": acu, "covariables": cov,
+            "reconocidas": {k: r4(v) for k, v in rec.items()},
+            "n": {"US": int((d.country_frame == "US").sum()), "ES": int((d.country_frame == "ES").sum()),
+                  "total": int(d.tconst.nunique())}}
+
+
+def main_v2() -> None:
+    data = json.loads((ROOT / "web" / "data.json").read_text(encoding="utf-8"))
+    data["v2"] = build_v2()
+    (ROOT / "web" / "data.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    f = ROOT / "web" / "films.json"
+    f.write_text(json.dumps(build_films_v2(), ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print((ROOT / "web" / "data.json").stat().st_size, f.stat().st_size)
 
 
 if __name__ == "__main__":

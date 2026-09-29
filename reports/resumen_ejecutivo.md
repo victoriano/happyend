@@ -34,6 +34,24 @@ Se compararon **994 largometrajes de ficción estadounidenses** (1980-2024) en d
 * Que **el público eche de menos** ese optimismo: no se ha hecho ninguna encuesta ni experimento. Está diseñada, con unos 167 participantes para detectar una preferencia de 5 puntos.
 * Nada sobre **causas**.
 
+## Segunda parte: censo completo, cine español y ánimo de los personajes
+
+Se anotaron **todas** las películas del marco popular estadounidense (**2.245**, las 50 más votadas de cada año) y las **577** españolas más votadas (15 por año). Además del final, se anotaron el protagonista (edad, momento vital, estado civil, clase social), las relaciones centrales, si la historia es especulativa, la época y los países de la trama, el humor, el **tono general** y el **optimismo de los personajes**. El acuerdo entre anotadores fue alto: final κ = 0,86; optimismo de los personajes α = 0,83.
+
+Antes de las conclusiones, los límites de esta parte:
+
+* Los modelos reconocieron el 99,6 % de las películas estadounidenses.
+* Solo se adjudicó el final.
+* El 18 % de las españolas no tiene final clasificable porque la Wikipedia en español a menudo no lo cuenta.
+* Son muchas comparaciones por subgrupo.
+
+* **EE. UU.:** los finales felices bajan del 67,3 % en los noventa al 61,0 % en 2010-2024 (−6,3 pp [−11,5 pp; −0,9 pp]), sobre todo por 2020-2024 (56,5 %). No hay más tragedias.
+* **Optimismo de los personajes:** estable (+0,45 en los noventa, +0,53 en 2010-2019) salvo en 2020-2024 (+0,30). El tono general se oscurece algo (−0,21 puntos).
+* **Final y ánimo son distintos:** el 41 % de los finales agridulces tiene personajes optimistas. *Titanic* es el ejemplo: final agridulce, optimismo +2.
+* **Dónde cae el final feliz** (exploratorio): ciencia ficción, comedia, acción, protagonista femenina y personajes en crisis vital.
+* **España va al revés:** más sombría en general, pero con más finales felices en 2010-2024 que en los noventa (+11,9 pp [+0,5 pp; +23,1 pp]). Es un resultado frágil.
+* **IMDb:** a igualdad de año y género, los finales felices tienen una nota media −0,33 puntos distinta. Es una asociación y no mide nostalgia.
+
 ## Veredicto provisional
 
 La afirmación queda **matizada**. Hay una ligera ventaja de los noventa en finales felices, pero es incierta y no se traslada a más tragedia, a un tono más oscuro ni a una visión de la vida más pesimista en el cine popular actual. La parte de que «se echa de menos» **sigue sin probar**.

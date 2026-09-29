@@ -84,3 +84,41 @@ Cada tabla la genera el módulo indicado. Las cifras del informe se leen de ella
 | `descriptivos_*.csv`, `contrastes_vs_1990s.csv`, `efectos_ajustados.csv`, `sensibilidad.csv`, `genero_contrastes.csv`, `composicion_generos.csv`, `comparacion_follows_accion.csv`, `adjudicacion_resumen.csv`, `reconocimiento_por_cohorte.csv`, `no_clasificables_por_cohorte.csv`, `final_vs_vision.csv`, `distribucion_*_recuentos.csv` | `analysis.run` |
 | `potencia_piloto.csv`, `parametros_piloto.csv`, `potencia_encuesta.csv` | `power` |
 | `reanotacion_correccion_sinopsis.csv` | `scripts/rebatch_d017.py` |
+
+## Segunda parte (v2)
+
+### `data/derived/universo_v2.csv` (versionado)
+
+Una fila por película y universo (`country_frame` = `US` o `ES`; 12 coproducciones aparecen en ambos). Columnas: `tconst`, `year`, `cohort`, `genre_main`, `country_frame`, `votes_rank_in_year` (rango de votos de IMDb dentro del año y el universo; no se publican los votos), `in_v1` (ya anotada en la primera parte), `has_synopsis`, `us_only`, `synopsis_wiki` (`en`/`es`).
+
+### `data/derived/etiquetas_v2.csv` (versionado; sin votos, notas ni títulos de IMDb)
+
+Una fila por película y universo con las etiquetas finales v2 (reglas en D-026 y D-027):
+
+| Columna | Descripción |
+|---|---|
+| `id_v2`, `etapa_v2` | Id cegado y etapa de la etiqueta: `v2_completa` (anotación completa), `v2_modb` (núcleo de la primera parte + módulo B), `v2_es_en` (reanotación con la sinopsis inglesa, D-027) |
+| `sinopsis_idioma` | Idioma de la sinopsis anotada |
+| núcleo: `final`, `supervivencia`, `objetivo`, `relaciones`, `justicia_narrativa`, `tono_cierre`, `agencia`, `cambio`, `vinculos`, `futuro`, `vision_vida` | Como en la primera parte. `*_fuente`: `acuerdo`, `adjudicado` o `regla_A` (desacuerdo no adjudicado, se toma A) |
+| módulo B: `genero_protagonista`, `edad_protagonista`, `momento_vital`, `estado_civil`, `clase_social`, `especulativa`, `epoca_trama`, `humor` | Categorías del manual 2.0 (módulo B). `*_A`, `*_B`: etiquetas de cada anotador; `*_fuente` |
+| `tono_general`, `optimismo_personajes` | −2 a +2. Media de A y B si difieren <3; adjudicado si difieren ≥3; vacío si falta uno de los dos (`*_fuente`) |
+| `relaciones_centrales_A/B`, `paises_trama_A/B` | Listas separadas por `|` |
+| `rel_<relación>` | 0, 0,5 o 1: proporción de anotadores que marcan esa relación como central |
+| `reconocida_b` | Algún anotador dijo reconocer la película en el módulo B |
+| `final_es_original` | Etiqueta del final con la sinopsis española antes de la reanotación D-027 |
+| `clasificable`, `y_feliz`, `y_agridulce`, `y_ambiguo`, `y_tragico` | Indicadores sobre finales clasificables |
+| `y_feliz_A`, `y_feliz_B` | Final feliz según cada anotador (sensibilidad) |
+| `y_optimistas`, `y_tono_pos` | Optimismo de los personajes > 0; tono general > 0 |
+| `tragedia_vitalista` | Final trágico con personajes optimistas |
+
+### `reports/tables/v2/` (versionado)
+
+`por_cohorte.csv` (proporciones y medias por país y cohorte con IC), `por_anio.csv`, `contrastes.csv` (diferencias frente a 1990-1999 con bootstrap), `covariables.csv` (composición del módulo B por cohorte), `subgrupos.csv` (cambio 2010-2024 − 1990-1999 dentro de cada subgrupo, EE. UU.), `final_vs_animo.csv`, `ajustados.csv` (AME logit y MCO), `sensibilidad.csv`, `genero.csv`, `imdb_agregado.csv` y `imdb_modelos.csv` (solo agregados).
+
+### `web/films.json` (versionado)
+
+Una fila por película (título en español de TMDB, título original, año, país, género, final, optimismo, tono, módulo B, relaciones, países, `poster_path` y id de TMDB). No contiene datos de IMDb.
+
+### No versionados
+
+`data/interim/analitico_v2.csv` (contiene votos y notas de IMDb), `tmdb_posters.csv` y `es_nc_en_fallback.csv`.

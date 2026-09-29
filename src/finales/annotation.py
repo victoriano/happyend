@@ -245,7 +245,7 @@ def validate_adjudication(path: Path, batch_path: Path) -> list[str]:
             v = d[k]
             if k in CATS and v not in CATS[k]:
                 errs.append(f"{i}: {k}={v!r} no permitido")
-            if k in ITEMS and v is not None and v not in (-2, -1, 0, 1, 2):
+            if k in ITEMS + ITEMS_B and v is not None and v not in (-2, -1, 0, 1, 2):
                 errs.append(f"{i}: {k}={v!r} fuera de escala")
     for i in set(need) - seen:
         errs.append(f"{i}: sin adjudicar")
