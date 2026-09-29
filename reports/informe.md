@@ -131,12 +131,12 @@ Los noventa también tienen la proporción más alta frente a las demás cohorte
 En los demás tipos de final (2010-2024 frente a los noventa):
 
 * Agridulces: +4,3 pp [−4,4 pp; +13,0 pp].
-* Ambiguos: +5,1 pp [+1,3 pp; +8,9 pp]. De los contrastes del marco popular entre 2010-2024 y los noventa, solo excluyen el cero los de estas variables: ambiguos. Además, parte de una base muy baja en los noventa (2,0 %).
+* Ambiguos: +5,1 pp [+1,3 pp; +8,9 pp]. Contrastes del marco popular (2010-2024 frente a los noventa) cuyo intervalo excluye el cero: ambiguos. Este parte de una base muy baja en los noventa (2,0 %).
 * Trágicos: −1,1 pp [−6,2 pp; +3,8 pp]. Sin indicios de más finales trágicos en el cine popular reciente.
 
 **Efecto ajustado** por género y popularidad: −7,7 pp [−18,0 pp; +2,3 pp] en finales felices.
 
-**Marco amplio.** La caída aparente es mayor pero mucho más incierta: finales felices −16,7 pp [−33,8 pp; +0,9 pp] (ajustado: −11,5 pp [−26,9 pp; +4,0 pp]) y trágicos +12,2 pp [+0,4 pp; +23,5 pp], un intervalo que roza el cero. La diferencia procede sobre todo de 2010-2019 (trágicos +16,0 pp [+2,4 pp; +29,9 pp]); en 2020-2024 es de +3,3 pp [−7,9 pp; +14,6 pp]. Con 50 películas por cohorte y más no clasificables en los noventa, el resultado es frágil y la sensibilidad apunta en ambos sentidos. Si los no clasificables se cuentan como no felices, la diferencia baja a −8,9 pp [−25,2 pp; +7,5 pp]. En cambio, con otras definiciones de final feliz el intervalo excluye el cero: «Definición amplia: feliz o agridulce»; «Definición estricta: feliz y tono de cierre positivo». En los contrastes del marco amplio excluyen el cero: ambiguos, trágicos, visión de la vida.
+**Marco amplio.** La caída aparente es mayor pero mucho más incierta: finales felices −16,7 pp [−33,8 pp; +0,9 pp] (ajustado: −11,5 pp [−26,9 pp; +4,0 pp]) y trágicos +12,2 pp [+0,4 pp; +23,5 pp], un intervalo que roza el cero. La diferencia procede sobre todo de 2010-2019 (trágicos +16,0 pp [+2,4 pp; +29,9 pp]); en 2020-2024 es de +3,3 pp [−7,9 pp; +14,6 pp]. Con 50 películas por cohorte y más no clasificables en los noventa, el resultado es frágil y la sensibilidad apunta en ambos sentidos. Si los no clasificables se cuentan como no felices, la diferencia baja a −8,9 pp [−25,2 pp; +7,5 pp]. En cambio, con otras definiciones de final feliz el intervalo excluye el cero: «Definición amplia: feliz o agridulce»; «Definición estricta: feliz y tono de cierre positivo». Contrastes del marco amplio cuyo intervalo excluye el cero: ambiguos, trágicos, visión de la vida.
 
 ### 5.3 Tono del cierre, visión de la vida y protagonistas
 
@@ -162,7 +162,7 @@ En los demás tipos de final (2010-2024 frente a los noventa):
 | Terror | 13/36 | 46 % | 41 % | −5,3 pp [−36,6 pp; +25,9 pp] |
 | Thriller/crimen | 19/25 | 37 % | 36 % | −0,7 pp [−30,4 pp; +28,9 pp] |
 
-Por género, en ningún género el intervalo excluye el cero. La mayor caída puntual es la de Comedia (−20,0 pp). La composición por géneros también cambió: en el marco popular, la acción/aventura pasa del 35 % al 49 %, la animación del 5 % al 8 % y la comedia del 20 % al 11 % (`composicion_generos.csv`; tabla por género en `genero_contrastes.csv`).
+En ningún género el intervalo excluye el cero. La mayor caída puntual es la de comedia (−20,0 pp). La composición por géneros también cambió: en el marco popular, la acción/aventura pasa del 35 % al 49 %, la animación del 5 % al 8 % y la comedia del 20 % al 11 % (`composicion_generos.csv`; tabla por género en `genero_contrastes.csv`).
 
 ### 5.5 Pruebas de sensibilidad (marco popular, finales felices, 2010-2024 − 1990-1999)
 
@@ -199,7 +199,7 @@ Follows (*Has Hollywood given up on the happy ending?*) examinó 7.384 película
 
 **Lo que no se puede comprobar.** El artículo no publica los datos, no detalla cómo se seleccionaron las películas ni qué países incluye (menciona películas estadounidenses, francesas e indias) y no nombra la fuente de las sinopsis. Por eso no es replicable exactamente y sus cifras no se usan aquí como resultado.
 
-**Comparación orientativa.** Con nuestra definición de acción (género principal Acción/aventura, marco popular), los finales felices pasan del 73,7 % [64,0 %; 81,5 %] en 1980-1999 (n=95) al 60,2 % [51,6 %; 68,1 %] en 2010-2024 (n=146): −13,5 pp [−25,2 pp; −1,3 pp]. La dirección y el orden de magnitud coinciden con los de Follows, aunque los clasificadores, las fuentes y las poblaciones son distintos. Dos matices: agrupar los ochenta con los noventa, como hace Follows, favorece el contraste, porque la acción de los ochenta tuvo más finales felices (76,7 %) que la de los noventa (71,2 %). Y para el conjunto de géneros la diferencia es menor e incierta; la mayor caída puntual por género es la de Comedia, no la de la acción.
+**Comparación orientativa.** Con nuestra definición de acción (género principal Acción/aventura, marco popular), los finales felices pasan del 73,7 % [64,0 %; 81,5 %] en 1980-1999 (n=95) al 60,2 % [51,6 %; 68,1 %] en 2010-2024 (n=146): −13,5 pp [−25,2 pp; −1,3 pp]. La dirección y el orden de magnitud coinciden con los de Follows, aunque los clasificadores, las fuentes y las poblaciones son distintos. Dos matices: agrupar los ochenta con los noventa, como hace Follows, favorece el contraste, porque la acción de los ochenta tuvo más finales felices (76,7 %) que la de los noventa (71,2 %). Y para el conjunto de géneros la diferencia es menor e incierta; la mayor caída puntual por género es la de comedia, no la de la acción.
 
 ---
 

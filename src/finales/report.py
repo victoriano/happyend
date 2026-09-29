@@ -250,10 +250,10 @@ def values() -> dict:
 
     gex = gp[(gp.dif_ic95_inf_pp > 0) | (gp.dif_ic95_sup_pp < 0)]
     V["g_excl0_n"] = str(len(gex))
-    V["g_excl0_texto"] = ("en ningún género el intervalo excluye el cero" if gex.empty
-                          else "el intervalo excluye el cero en: " + ", ".join(gex.index))
+    V["g_excl0_texto"] = ("En ningún género el intervalo excluye el cero" if gex.empty
+                          else "El intervalo excluye el cero en: " + ", ".join(g_.lower() for g_ in gex.index))
     gmin = gp["dif_pp"].idxmin()
-    V["g_mayor_caida"], V["g_mayor_caida_d"] = gmin, pp(gp.loc[gmin, "dif_pp"] / 100)
+    V["g_mayor_caida"], V["g_mayor_caida_d"] = gmin.lower(), pp(gp.loc[gmin, "dif_pp"] / 100)
     dgg = dg[dg.dimension == "genre_main"].set_index("grupo")
     dgg = dgg[dgg.n >= 30].sort_values("desacuerdo_final", ascending=False)
     V["dis_top_generos"] = " y ".join(f"{g_.lower()} ({pct(r_.desacuerdo_final, 0)})" for g_, r_ in dgg.head(2).iterrows())

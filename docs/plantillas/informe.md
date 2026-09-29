@@ -131,12 +131,12 @@ Los noventa también tienen la proporción más alta frente a las demás cohorte
 En los demás tipos de final (2010-2024 frente a los noventa):
 
 * Agridulces: {pop_d_agri_rec} {pop_d_agri_rec_ci}.
-* Ambiguos: {pop_d_amb_rec} {pop_d_amb_rec_ci}. De los contrastes del marco popular entre 2010-2024 y los noventa, solo excluyen el cero los de estas variables: {pop_excl0_vars}. Además, parte de una base muy baja en los noventa ({pop_amb_90}).
+* Ambiguos: {pop_d_amb_rec} {pop_d_amb_rec_ci}. Contrastes del marco popular (2010-2024 frente a los noventa) cuyo intervalo excluye el cero: {pop_excl0_vars}. Este parte de una base muy baja en los noventa ({pop_amb_90}).
 * Trágicos: {pop_d_trag_rec} {pop_d_trag_rec_ci}. Sin indicios de más finales trágicos en el cine popular reciente.
 
 **Efecto ajustado** por género y popularidad: {pop_adj_feliz} {pop_adj_feliz_ci} en finales felices.
 
-**Marco amplio.** La caída aparente es mayor pero mucho más incierta: finales felices {amp_d_feliz_rec} {amp_d_feliz_rec_ci} (ajustado: {amp_adj_feliz} {amp_adj_feliz_ci}) y trágicos {amp_d_trag_rec} {amp_d_trag_rec_ci}, un intervalo que roza el cero. La diferencia procede sobre todo de 2010-2019 (trágicos {amp_d_trag_10} {amp_d_trag_10_ci}); en 2020-2024 es de {amp_d_trag_20} {amp_d_trag_20_ci}. Con 50 películas por cohorte y más no clasificables en los noventa, el resultado es frágil y la sensibilidad apunta en ambos sentidos. Si los no clasificables se cuentan como no felices, la diferencia baja a {amp_s_incl_nc} {amp_s_incl_nc_ci}. En cambio, con otras definiciones de final feliz el intervalo excluye el cero: {amp_sens_excl0_nombres}. En los contrastes del marco amplio excluyen el cero: {amp_excl0_vars}.
+**Marco amplio.** La caída aparente es mayor pero mucho más incierta: finales felices {amp_d_feliz_rec} {amp_d_feliz_rec_ci} (ajustado: {amp_adj_feliz} {amp_adj_feliz_ci}) y trágicos {amp_d_trag_rec} {amp_d_trag_rec_ci}, un intervalo que roza el cero. La diferencia procede sobre todo de 2010-2019 (trágicos {amp_d_trag_10} {amp_d_trag_10_ci}); en 2020-2024 es de {amp_d_trag_20} {amp_d_trag_20_ci}. Con 50 películas por cohorte y más no clasificables en los noventa, el resultado es frágil y la sensibilidad apunta en ambos sentidos. Si los no clasificables se cuentan como no felices, la diferencia baja a {amp_s_incl_nc} {amp_s_incl_nc_ci}. En cambio, con otras definiciones de final feliz el intervalo excluye el cero: {amp_sens_excl0_nombres}. Contrastes del marco amplio cuyo intervalo excluye el cero: {amp_excl0_vars}.
 
 ### 5.3 Tono del cierre, visión de la vida y protagonistas
 
@@ -162,7 +162,7 @@ En los demás tipos de final (2010-2024 frente a los noventa):
 | Terror | {g_terror_n} | {g_terror_90} | {g_terror_rec} | {g_terror_d} {g_terror_ci} |
 | Thriller/crimen | {g_thriller_n} | {g_thriller_90} | {g_thriller_rec} | {g_thriller_d} {g_thriller_ci} |
 
-Por género, {g_excl0_texto}. La mayor caída puntual es la de {g_mayor_caida} ({g_mayor_caida_d}). La composición por géneros también cambió: en el marco popular, la acción/aventura pasa del {comp_accion_90} al {comp_accion_rec}, la animación del {comp_anim_90} al {comp_anim_rec} y la comedia del {comp_comedia_90} al {comp_comedia_rec} (`composicion_generos.csv`; tabla por género en `genero_contrastes.csv`).
+{g_excl0_texto}. La mayor caída puntual es la de {g_mayor_caida} ({g_mayor_caida_d}). La composición por géneros también cambió: en el marco popular, la acción/aventura pasa del {comp_accion_90} al {comp_accion_rec}, la animación del {comp_anim_90} al {comp_anim_rec} y la comedia del {comp_comedia_90} al {comp_comedia_rec} (`composicion_generos.csv`; tabla por género en `genero_contrastes.csv`).
 
 ### 5.5 Pruebas de sensibilidad (marco popular, finales felices, 2010-2024 − 1990-1999)
 
