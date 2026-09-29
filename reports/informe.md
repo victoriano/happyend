@@ -245,7 +245,7 @@ Hasta que se haga, **la parte «se echa de menos» de la afirmación queda sin p
 
 ## 9. Reproducibilidad
 
-Todo el flujo se ejecuta desde el `README.md`: descarga, catálogo, cobertura, muestra, lotes cegados, análisis, gráficos e informe. Las etiquetas de anotación están versionadas en `annotation/labels/`. Las decisiones y sus motivos están en `docs/registro_decisiones.md` y el diccionario de datos, en `docs/diccionario_datos.md`.
+Todo el flujo se ejecuta desde el `README.md`: descarga, catálogo, cobertura, muestra, lotes cegados, análisis, gráficos e informe. Se comprobó clonando el repositorio en un entorno limpio: el resultado fue idéntico (ver `README.md`). Las etiquetas de anotación están versionadas en `annotation/labels/`. Las decisiones y sus motivos están en `docs/registro_decisiones.md` y el diccionario de datos, en `docs/diccionario_datos.md`.
 
 ## 10. Fuentes
 

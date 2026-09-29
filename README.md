@@ -39,6 +39,8 @@ make test     # pruebas automatizadas
 
 **Qué se reproduce exactamente.** Las muestras (`data/derived/`), los lotes cegados (`annotation/batches/`) y todas las etiquetas (`annotation/labels/`) están versionados, así que las tablas, los gráficos y el informe se regeneran igual. La excepción es lo que depende de los votos brutos de IMDb del día de la descarga: IMDb actualiza a diario y no guarda instantáneas, así que la sensibilidad «ponderado por votos» puede variar ligeramente.
 
+**Verificación realizada.** El 2026-09-29 se clonó el repositorio en un directorio y un entorno virtual nuevos, y se ejecutaron `make all` (con descargas propias de IMDb, CMU y Wikidata) y `make test`. Las tablas, las figuras y el informe resultantes fueron idénticos a los versionados (con la misma descarga diaria de IMDb) y las 48 pruebas pasaron. Esa prueba detectó dos fallos, ya corregidos: una dependencia que faltaba y las claves de cegado sin versionar (D-022).
+
 **Empezar un estudio nuevo** (otra muestra): `python -m finales.pipeline pilot --force` y `main --force`. Esto extrae las sinopsis del volcado de Wikipedia `enwiki-20260901` (descarga el índice, 284 MB, y lee por rangos solo los bloques necesarios) y genera lotes cegados nuevos, que habrá que anotar siguiendo `docs/instrucciones_anotador.md`.
 
 ## Estructura
