@@ -136,34 +136,40 @@ Una línea JSON por película:
 ## Historial de versiones
 
 * 0.9 (2026-09-29): borrador inicial para el piloto.
+* 2.0 (2026-09-29): se añade el módulo B, congelado tras un piloto de 30 películas (15 de EE. UU. y 15 de España). Kappa del piloto: momento vital 0,54 y clase social 0,49; se añaden un orden de decisión para el momento vital, una tabla de ocupaciones para la clase social y reglas para edad en historias largas, zombis y países. El núcleo (secciones 1-8) no cambia.
 * 1.0 (2026-09-29): congelada tras el piloto de 50 películas. Cambios (marcados [v1.0]): reglas para poscréditos y avances de secuela, finales alternativos, dos protagonistas, muerte de aliados, historias sin conflicto central, sinopsis confusas, transformación irreversible en `supervivencia`, `objetivo` sin meta central y procedimiento de decisión para `tono_cierre` (kappa del piloto = 0,49). No se cambió ninguna definición de categoría de `final`.
 
 ---
 
 # Módulo B (v2): protagonistas, contexto y ánimo
 
-**Versión 2.0-borrador.** Se añade en la versión 2 del estudio. Las secciones 1 a 8 anteriores (versión 1.0) **no cambian**. El módulo B se anota para todas las películas; para las 994 del estudio v1 se anota solo este módulo.
+**Versión 2.0 (congelada el 2026-09-29 tras un piloto de 30 películas).** Se añade en la versión 2 del estudio. Las secciones 1 a 8 anteriores (versión 1.0) **no cambian**. El módulo B se anota para todas las películas; para las 994 del estudio v1 se anota solo este módulo.
 
 Las sinopsis pueden estar en inglés o en español; se anotan igual. Como los años están enmascarados, la época se deduce de pistas del texto (guerras, tecnología, acontecimientos). Si no hay pistas, `NO_CLARO`.
 
 ## B1. Protagonista (quien organiza la trama; si es coral, el grupo)
 
+**[v2.0] Reglas generales del bloque B1** (el piloto mostró poco acuerdo en `momento_vital` y `clase_social`):
+* Se describe al protagonista **durante el cuerpo principal de la historia**, no en un prólogo o epílogo. Si la historia abarca décadas, cuenta la etapa que ocupa más espacio en la sinopsis.
+* En repartos corales, se describe al personaje o subgrupo con más peso en la sinopsis.
+* `estado_civil` y `clase_social` se refieren al **inicio del cuerpo principal**; un ascenso o una boda durante la trama no cambian el código.
+
 | Campo | Códigos | Regla |
 |---|---|---|
 | `genero_protagonista` | `HOMBRE`, `MUJER`, `MIXTO`, `NO_HUMANO`, `NO_CLARO` | `MIXTO` si el protagonismo es compartido entre hombres y mujeres; `NO_HUMANO` para animales, robots o criaturas sin género humano claro. |
 | `edad_protagonista` | `NINO` (<13), `ADOLESCENTE` (13-17), `JOVEN` (18-29), `ADULTO` (30-49), `MADURO` (50-64), `MAYOR` (65+), `MIXTO`, `NO_CLARO` | Edad aparente al empezar la historia. Si la sinopsis no la da, dedúcela del contexto (estudia en el instituto → `ADOLESCENTE`; tiene hijos adolescentes → `ADULTO`). |
-| `momento_vital` | `INFANCIA`, `ADOLESCENCIA`, `JUVENTUD`, `CRIANZA`, `MADUREZ`, `CRISIS_VITAL`, `VEJEZ`, `NO_CLARO` | `JUVENTUD`: estudios, primer trabajo, independizarse, primeras relaciones serias. `CRIANZA`: formar familia o criar hijos pequeños. `MADUREZ`: vida adulta asentada (carrera, familia estable). `CRISIS_VITAL`: una ruptura o pérdida que obliga a redefinir la vida adulta (divorcio, duelo, despido, enfermedad). `VEJEZ`: jubilación, final de la vida. |
+| `momento_vital` | `INFANCIA`, `ADOLESCENCIA`, `JUVENTUD`, `CRIANZA`, `MADUREZ`, `CRISIS_VITAL`, `VEJEZ`, `NO_CLARO` | **[v2.0] Aplica en este orden y quédate con el primero que encaje:** (1) menor de 13 → `INFANCIA`; 13-17 → `ADOLESCENCIA`. (2) Si el conflicto central es una ruptura o pérdida de la vida adulta que obliga a redefinirla (divorcio, duelo, despido, enfermedad) → `CRISIS_VITAL`. (3) 65 o más, o jubilación → `VEJEZ`. (4) Criar hijos pequeños es un tema de la trama → `CRIANZA`. (5) 18-29 sin familia propia (estudios, primer trabajo, independizarse) → `JUVENTUD`. (6) Resto de adultos → `MADUREZ`. |
 | `estado_civil` | `SOLTERO`, `EN_PAREJA`, `CASADO`, `SEPARADO_DIVORCIADO`, `VIUDO`, `NO_CLARO` | Situación al **inicio** de la película. |
-| `clase_social` | `BAJA_MARGINAL`, `TRABAJADORA`, `MEDIA`, `ALTA_ELITE`, `MIXTA`, `NO_CLARO` | Por ocupación, vivienda y recursos. Policías, soldados, profesores → normalmente `TRABAJADORA` o `MEDIA` según el texto; empresarios ricos, aristócratas, estrellas → `ALTA_ELITE`. `MIXTA` si la historia gira sobre protagonistas de clases distintas (p. ej., un romance entre clases). |
+| `clase_social` | `BAJA_MARGINAL`, `TRABAJADORA`, `MEDIA`, `ALTA_ELITE`, `MIXTA`, `NO_CLARO` | **[v2.0] Tabla de referencia por ocupación:** sin techo, delincuencia de subsistencia, pobreza extrema → `BAJA_MARGINAL`; policías, soldados, bomberos, obreros, camareros, dependientes, agricultores → `TRABAJADORA`; profesionales con estudios (médicos, abogados, periodistas, científicos, profesores, oficinistas, pequeños empresarios) → `MEDIA`; realeza, aristocracia, grandes empresarios, estrellas, políticos de primer nivel → `ALTA_ELITE`. `MIXTA` solo si la trama contrapone explícitamente a protagonistas de clases distintas. Héroes, alienígenas, animales o figuras sin información de clase → `NO_CLARO`. |
 
 ## B2. Relaciones y contexto
 
 | Campo | Códigos | Regla |
 |---|---|---|
 | `relaciones_centrales` | lista de 1 a 3 entre `AMISTAD`, `ROMANCE`, `MATRIMONIO`, `DIVORCIO_SEPARACION`, `PADRES_HIJOS`, `HERMANOS`, `FAMILIA_EXTENSA`, `MENTOR_DISCIPULO`, `EQUIPO_COMPANEROS`, `RIVALIDAD`, `COMUNIDAD`; o `["NINGUNA"]` | Solo las relaciones que la trama desarrolla de verdad, ordenadas por importancia. `ROMANCE` = relación amorosa que se forma o se disputa; `MATRIMONIO` = pareja ya casada cuya relación es un tema. |
-| `especulativa` | `NO`, `CIENCIA_FICCION`, `FANTASIA`, `SOBRENATURAL`, `SUPERHEROES` | Elemento especulativo principal. `SOBRENATURAL`: fantasmas, demonios, maldiciones en un mundo por lo demás real. `SUPERHEROES`: personajes con superpoderes en clave de cómic. |
+| `especulativa` | `NO`, `CIENCIA_FICCION`, `FANTASIA`, `SOBRENATURAL`, `SUPERHEROES` | Elemento especulativo principal. `SOBRENATURAL`: fantasmas, demonios, maldiciones en un mundo por lo demás real. `SUPERHEROES`: personajes con superpoderes en clave de cómic. [v2.0] Zombis → `SOBRENATURAL`, salvo que el texto los explique por un virus o un experimento (→ `CIENCIA_FICCION`); sirenas, magia, criaturas mitológicas → `FANTASIA`; mundos alternativos basados en tecnología → `CIENCIA_FICCION`. |
 | `epoca_trama` | `ANTES_1500`, `DE_1500_A_1899`, `DE_1900_A_1945`, `DE_1946_A_1979`, `DE_1980_EN_ADELANTE`, `FUTURO`, `MUNDO_FICTICIO`, `VARIAS`, `NO_CLARO` | Época principal de la acción. Una historia actual sin marcas de época (móviles, internet, ciudad moderna) es `DE_1980_EN_ADELANTE`. `MUNDO_FICTICIO`: mundos inventados sin correspondencia histórica (Tierra Media, galaxias lejanas…). |
-| `paises_trama` | lista de países en español (`"Estados Unidos"`, `"España"`, `"Francia"`…) o `["Espacio"]`, `["Mundo ficticio"]`, `["No claro"]` | Países donde transcurre la acción principal, máximo 4, por orden de importancia. |
+| `paises_trama` | lista de países en español (`"Estados Unidos"`, `"España"`, `"Francia"`…) o `["Espacio"]`, `["Mundo ficticio"]`, `["No claro"]` | Países donde transcurre la acción principal, máximo 4, por orden de importancia. [v2.0] Una ciudad o región citada identifica el país (Nueva York → Estados Unidos; Sevilla → España). Los nombres de personajes solos no bastan. Estados históricos → país actual equivalente (Persia → Irán). `Espacio` puede combinarse con países. |
 | `humor` | `NINGUNO`, `ALGO`, `CENTRAL` | Peso del humor en la película según la sinopsis. |
 
 ## B3. Ánimo (más allá del final)

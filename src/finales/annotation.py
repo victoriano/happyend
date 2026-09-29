@@ -360,3 +360,25 @@ def load_labels_b(paths: list[Path], annotator: str, full: bool) -> tuple[pd.Dat
         errors.append(f"ids duplicados: {df.loc[df['id'].duplicated(), 'id'].tolist()[:10]}")
         df = df.drop_duplicates("id", keep="first")
     return df, errors
+
+
+def agreement_b(A: pd.DataFrame, B: pd.DataFrame, full: bool = True) -> pd.DataFrame:
+    """Acuerdo A-B para el módulo B (y el núcleo si full)."""
+    from . import agreement as ag
+    m = A.merge(B, on="id", suffixes=("_A", "_B"))
+    rows = []
+    cats = dict(CATS_B)
+    if full:
+        cats = {**CATS, **cats}
+    for k in cats:
+        rows.append({"variable": k, "n": len(m), "acuerdo_pct": ag.percent_agreement(m[f"{k}_A"], m[f"{k}_B"]),
+                     "kappa": ag.cohen_kappa(m[f"{k}_A"], m[f"{k}_B"]), "alfa_intervalo": np.nan, "jaccard": np.nan})
+    for k in ITEMS_B + (ITEMS if full else []):
+        rows.append({"variable": k, "n": int((m[f"{k}_A"].notna() & m[f"{k}_B"].notna()).sum()), "acuerdo_pct": np.nan,
+                     "kappa": np.nan, "alfa_intervalo": ag.krippendorff_alpha(m[[f"{k}_A", f"{k}_B"]].values.tolist(), "interval"),
+                     "jaccard": np.nan})
+    for k in ("relaciones_centrales", "paises_trama"):
+        j = [len(set(a) & set(b)) / len(set(a) | set(b)) for a, b in zip(m[f"{k}_A"], m[f"{k}_B"])]
+        rows.append({"variable": k, "n": len(m), "acuerdo_pct": np.nan, "kappa": np.nan, "alfa_intervalo": np.nan,
+                     "jaccard": float(np.mean(j))})
+    return pd.DataFrame(rows)
