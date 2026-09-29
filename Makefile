@@ -1,7 +1,7 @@
 # Flujo completo: make all   |   Pruebas: make test
 PY ?= python3
 
-.PHONY: all ingest catalog coverage sample analysis figures report test clean-derived
+.PHONY: all ingest catalog coverage sample analysis figures report web test clean-derived
 
 all: ingest catalog coverage sample analysis figures report
 
@@ -31,3 +31,6 @@ report:        ## Rellena las plantillas de docs/plantillas con las tablas
 
 test:
 	$(PY) -m pytest -q
+
+web:           ## Datos de la web divulgativa (web/data.json); la página es web/index.html
+	$(PY) -m finales.web
