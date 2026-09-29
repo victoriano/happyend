@@ -1,6 +1,6 @@
 # Manual de anotación de finales y optimismo
 
-**Versión 0.9 (borrador para piloto).** Las versiones y cambios se registran al final del documento y en `docs/registro_decisiones.md`. La versión que se congele tras el piloto es la única válida para la muestra principal.
+**Versión 1.0 (congelada el 2026-09-29 tras el piloto; válida para la muestra principal).** Las versiones y cambios se registran al final del documento y en `docs/registro_decisiones.md`. La versión que se congele tras el piloto es la única válida para la muestra principal.
 
 ## 0. Qué se anota y con qué información
 
@@ -36,6 +36,12 @@ Protagonista = el personaje o grupo cuyo objetivo organiza la trama. En historia
 * *Romance sin pareja final*: si los dos terminan mejor pero separados y la narración lo presenta como correcto → `AGRIDULCE`; si terminan juntos → `FELIZ`; si la ruptura es dolorosa y sin crecimiento → `TRAGICO`.
 * *Epílogos*: si hay un salto temporal final, cuenta el estado que muestra el epílogo.
 * *Giros finales*: cuenta la situación tras el último giro.
+* *[v1.0] Escenas poscréditos, avances de secuela y «el mal regresa» en un epílogo*: se ignoran para `final` y `tono_cierre` **si no cambian el destino de los protagonistas** (p. ej., el villano sigue vivo en otro lugar). Si amenazan directamente a los protagonistas → `AMBIGUO`.
+* *[v1.0] Finales alternativos*: si la sinopsis describe varios finales (versión de estreno y alternativos), se anota el que presenta como final de la versión estrenada; si no lo indica, el primero descrito.
+* *[v1.0] Dos protagonistas de peso similar y uno muere*: si el otro logra el objetivo → `AGRIDULCE`; `TRAGICO` solo si el superviviente también fracasa o el cierre es de pérdida sin compensación.
+* *[v1.0] Muerte de aliados secundarios* (compañeros, mentores) sin que el cierre la subraye: no rebaja el final (`FELIZ` si lo demás es favorable). Si el cierre se centra en el duelo → `AGRIDULCE`.
+* *[v1.0] Historias sin conflicto central* (crónicas vitales, retratos): se compara el estado final del protagonista con el inicial. Claramente mejor → `FELIZ`; mezcla de ganancias y pérdidas → `AGRIDULCE`; peor → `TRAGICO`. `objetivo` = `NO_CLARO`.
+* *[v1.0] Sinopsis confusa que sí describe la escena final*: `describe_final = true`; `AMBIGUO` solo si la obra deja el desenlace abierto, no porque la sinopsis esté mal escrita. Si falta el desenlace → `NO_CLASIFICABLE` y `describe_final = false`.
 
 **Ejemplos ilustrativos** (descritos en abstracto; no son etiquetas de la muestra):
 
@@ -50,8 +56,8 @@ Protagonista = el personaje o grupo cuyo objetivo organiza la trama. En historia
 
 | Campo | Códigos | Regla |
 |---|---|---|
-| `supervivencia` | `SOBREVIVE`, `MUERE`, `MIXTO`, `NO_CLARO` | `MIXTO` solo con varios protagonistas de los que unos mueren y otros no. |
-| `objetivo` | `LOGRADO`, `PARCIAL`, `NO_LOGRADO`, `NO_CLARO` | Objetivo central tal como lo plantea la trama. Si el protagonista cambia de objetivo, cuenta el objetivo final. |
+| `supervivencia` | `SOBREVIVE`, `MUERE`, `MIXTO`, `NO_CLARO` | `MIXTO` solo con varios protagonistas de los que unos mueren y otros no; la muerte de aliados secundarios no cuenta. [v1.0] Transformación irreversible (poseído, convertido en monstruo) = `MUERE`; encarcelado = `SOBREVIVE`. |
+| `objetivo` | `LOGRADO`, `PARCIAL`, `NO_LOGRADO`, `NO_CLARO` | Objetivo central tal como lo plantea la trama. Si el protagonista cambia de objetivo, cuenta el objetivo final. [v1.0] Sin objetivo central identificable → `NO_CLARO`. |
 | `relaciones` | `FORTALECIDAS`, `MIXTAS`, `ROTAS`, `NO_APLICA`, `NO_CLARO` | Estado de los vínculos principales (pareja, familia, amistad) al cierre respecto al inicio. |
 | `justicia_narrativa` | `SI`, `PARCIAL`, `NO`, `NO_APLICA`, `NO_CLARO` | `SI`: quien causa daño sufre consecuencias y quien obra bien no es castigado. `NO`: el daño queda impune o los inocentes pagan. |
 
@@ -70,7 +76,14 @@ Emoción dominante de la **última parte de la sinopsis** (aprox. el último pá
 | `DESESPERANZA` | Desolación, amenaza persistente, pérdida sin consuelo. | negativa |
 | `NO_CLARO` | La sinopsis no permite identificar el tono del cierre. | — |
 
-Si concurren dos, elegir la que ocupa la **última frase o escena**. Esperanza frente a alivio: ¿mira hacia el futuro (esperanza) o hacia lo que se deja atrás (alivio)?
+**[v1.0] Procedimiento de decisión** (el piloto mostró poco acuerdo en esta dimensión):
+
+1. Identifica la última escena que afecta a la historia principal de los protagonistas (se ignoran avances de secuela y poscréditos, como en la sección 1).
+2. Decide primero la **valencia**: ¿el cierre invita a sentir algo positivo o negativo? Si no se puede decidir → `NO_CLARO`.
+3. Si es positiva: `CONEXION` si la escena se centra en una relación (reencuentro, beso, familia reunida, reconciliación); si no, `ESPERANZA` si mira explícitamente al futuro (planes, nuevo comienzo, viaje); si no, `ALIVIO` (amenaza superada, vuelta a la normalidad).
+4. Si es negativa: `DESESPERANZA` si hay amenaza persistente, muerte o pérdida sin consuelo, o vacío; `RESIGNACION` si hay aceptación serena de una pérdida o de un orden que no cambia.
+
+El análisis principal usa la **valencia** (positiva/negativa); la subcategoría es secundaria.
 
 ---
 
@@ -123,3 +136,4 @@ Una línea JSON por película:
 ## Historial de versiones
 
 * 0.9 (2026-09-29): borrador inicial para el piloto.
+* 1.0 (2026-09-29): congelada tras el piloto de 50 películas. Cambios (marcados [v1.0]): reglas para poscréditos y avances de secuela, finales alternativos, dos protagonistas, muerte de aliados, historias sin conflicto central, sinopsis confusas, transformación irreversible en `supervivencia`, `objetivo` sin meta central y procedimiento de decisión para `tono_cierre` (kappa del piloto = 0,49). No se cambió ninguna definición de categoría de `final`.

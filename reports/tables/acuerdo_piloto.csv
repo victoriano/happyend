@@ -1,0 +1,14 @@
+variable,n,acuerdo_pct,kappa_cohen,alfa_krippendorff
+final,50,0.920,0.867,0.868
+supervivencia,50,0.920,0.810,0.812
+objetivo,50,0.940,0.868,0.870
+relaciones,50,0.920,0.868,0.869
+justicia_narrativa,50,0.800,0.732,0.734
+tono_cierre,50,0.600,0.485,0.478
+"final (ordinal 4 cat., kappa cuadrática)",49,,0.889,
+final feliz (sí/no),50,0.940,0.878,
+agencia,50,0.640,,0.865
+cambio,49,0.551,,0.884
+vinculos,50,0.760,,0.934
+futuro,49,0.653,,0.892
+vision_vida (media ítems),49,,,0.950

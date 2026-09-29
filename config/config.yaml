@@ -51,7 +51,7 @@ piloto:
 
 principal:
   # Se fija tras el piloto (ver docs/registro_decisiones.md, D-012). No cambiar sin registrar.
-  n_por_cohorte_popular: 80
+  n_por_cohorte_popular: 150
   n_por_cohorte_amplio: 50
 
 sinopsis:
