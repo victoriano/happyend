@@ -1,22 +1,22 @@
 analisis,country_frame,medida,diferencia_2010_24_vs_1990s,lo,hi,n
-Principal,ES,y_feliz,0.1226,0.0038,0.2342,587
+Principal,ES,y_feliz,0.1349,0.0093,0.2590,558
 Principal,US,y_feliz,-0.0599,-0.1126,-0.0065,2295
-Solo anotador A,ES,y_feliz_A,0.1354,0.0247,0.2451,587
+Solo anotador A,ES,y_feliz_A,0.1464,0.0256,0.2683,558
 Solo anotador A,US,y_feliz_A,-0.0538,-0.1072,-0.0012,2295
-Solo anotador B,ES,y_feliz_B,0.0828,-0.0324,0.1948,587
+Solo anotador B,ES,y_feliz_B,0.1046,-0.0216,0.2273,558
 Solo anotador B,US,y_feliz_B,-0.0621,-0.1157,-0.0086,2295
-Excluye películas reconocidas,ES,y_feliz,0.1011,-0.1033,0.2945,233
+Excluye películas reconocidas,ES,y_feliz,0.1161,-0.0816,0.2984,291
 Excluye películas reconocidas,US,y_feliz,,,,13
-Solo producciones solo de EE. UU.,ES,y_feliz,0.1226,0.0038,0.2342,587
+Solo producciones solo de EE. UU.,ES,y_feliz,0.1349,0.0093,0.2590,558
 Solo producciones solo de EE. UU.,US,y_feliz,-0.0534,-0.1132,0.0043,1711
-Excluye películas del estudio v1,ES,y_feliz,0.1263,0.0097,0.2380,583
+Excluye películas del estudio v1,ES,y_feliz,0.1370,0.0072,0.2625,556
 Excluye películas del estudio v1,US,y_feliz,-0.0359,-0.1029,0.0322,1519
-ES: solo sinopsis en inglés,ES,y_feliz,0.1324,-0.0198,0.2785,345
-ES: solo sinopsis en español,ES,y_feliz,0.1141,-0.0781,0.2928,242
-ES: sin la reanotación D-027,ES,y_feliz,0.1430,0.0212,0.2624,587
-Principal (optimismo),ES,optimismo_personajes,-0.0513,-0.2650,0.1606,587
+ES: solo sinopsis en inglés,ES,y_feliz,0.1479,-0.0271,0.3104,289
+ES: solo sinopsis en español,ES,y_feliz,0.1453,-0.0481,0.3387,269
+ES: sin la reanotación D-027,ES,y_feliz,0.1265,-0.0053,0.2590,558
+Principal (optimismo),ES,optimismo_personajes,0.0585,-0.1573,0.2826,558
 Principal (optimismo),US,optimismo_personajes,-0.0082,-0.1116,0.0995,2295
-Solo anotador A (optimismo),ES,optimismo_personajes_A,0.0093,-0.2008,0.2193,587
+Solo anotador A (optimismo),ES,optimismo_personajes_A,0.0944,-0.1274,0.3209,558
 Solo anotador A (optimismo),US,optimismo_personajes_A,-0.0067,-0.1076,0.0963,2295
-Solo anotador B (optimismo),ES,optimismo_personajes_B,-0.0997,-0.3232,0.1284,587
+Solo anotador B (optimismo),ES,optimismo_personajes_B,0.0406,-0.1832,0.2709,558
 Solo anotador B (optimismo),US,optimismo_personajes_B,-0.0098,-0.1243,0.1092,2295

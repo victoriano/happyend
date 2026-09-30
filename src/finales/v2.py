@@ -236,7 +236,8 @@ def final_labels_v2() -> pd.DataFrame:
     from . import annotation as an
     adj = _adj_v2()
     out = []
-    for stage, full in (("v2_completa", True), ("v2_modb", False), ("v2_es_en", True), ("v2_ext", True)):
+    for stage, full in (("v2_completa", True), ("v2_modb", False), ("v2_es_en", True), ("v2_ext", True),
+                        ("v2_es3", True), ("v2_es3_en", True)):
         A, B = _labels(stage, full)
         m = A.merge(B, on="id", suffixes=("_A", "_B"))
         key = pd.read_csv(KEY_DIR / f"{stage}_key.csv")
@@ -276,9 +277,10 @@ def final_labels_v2() -> pd.DataFrame:
     lab = pd.concat(out, ignore_index=True)
     # D-027: si la sinopsis española no describía el final y se reanotó con la inglesa, manda la reanotación;
     # la etiqueta original se conserva como sensibilidad (final_es_original).
-    esen = set(lab.loc[lab.etapa_v2 == "v2_es_en", "tconst"])
-    orig = lab[(lab.etapa_v2 == "v2_completa") & lab.tconst.isin(esen)].set_index("tconst")["final"]
-    lab = lab[~((lab.etapa_v2 == "v2_completa") & lab.tconst.isin(esen))].copy()
+    esen = set(lab.loc[lab.etapa_v2.isin(["v2_es_en", "v2_es3_en"]), "tconst"])
+    base = lab.etapa_v2.isin(["v2_completa", "v2_es3"])
+    orig = lab[base & lab.tconst.isin(esen)].set_index("tconst")["final"]
+    lab = lab[~(base & lab.tconst.isin(esen))].copy()
     lab["final_es_original"] = lab.tconst.map(orig)
     # núcleo v1 para las películas del estudio v1 (manual 1.0, adjudicación completa del núcleo)
     v1 = pd.read_csv(INTERIM / "analitico_principal.csv").drop_duplicates("tconst")
@@ -300,7 +302,11 @@ def analytic_v2() -> pd.DataFrame:
     u = u[u.has_synopsis]
     # D-031: ampliación a 2025 (análisis) y 2026 (año en curso, solo explorador)
     ext = pd.read_csv(INTERIM / "universo_ext.csv").assign(in_v1=False, has_synopsis=True)
-    u = pd.concat([u.assign(anio_en_curso=False), ext], ignore_index=True)
+    # D-033: el universo español se sustituye por el que excluye coproducciones extranjeras (spain_filtro)
+    es3 = pd.read_csv(INTERIM / "universo_es_v3.csv").assign(has_synopsis=True)
+    es3["in_v1"] = False
+    u = pd.concat([u[u.country_frame == "US"].assign(anio_en_curso=False), ext[ext.country_frame == "US"], es3],
+                  ignore_index=True)
     u["cohort"] = np.where(u.year >= 2026, "2026 (en curso)", np.where(u.year >= 2020, "2020-2025", u.cohort))
     lab = final_labels_v2()
     df = u.merge(lab, on="tconst", how="left")

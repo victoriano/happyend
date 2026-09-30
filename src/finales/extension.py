@@ -52,6 +52,7 @@ def build() -> pd.DataFrame:
     ces["eswiki_url"] = ces.tconst.map(es_art)
     ces["enwiki_url"] = ces.tconst.map(en_art)
     ces["votes_rank_in_year"] = ces.groupby("year")["numVotes"].rank(method="first", ascending=False).astype(int)
+    ces.to_csv(INTERIM / "catalog_es_ext.csv", index=False)
     # --- sinopsis
     s = w.session()
     off_en = w.build_offsets(set(us.enwiki_url.dropna().map(w.title_from_url)) |
