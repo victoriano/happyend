@@ -77,3 +77,14 @@ Se anota **en todas las películas, sean o no de ciencia ficción**. Una comedia
 
 * `utopia`: entero de 0 a 10, o `null`.
 * `utopia_por_que`: explicación en español de 25 a 50 palabras, parafraseada, sobre qué sociedad muestra la película y hacia dónde va.
+
+## E. ¿Para qué público es? (añadido en 0.4)
+
+`publico`: una de estas categorías, según a quién se dirige principalmente la película por su historia, tono y contenido (no por su clasificación por edades oficial, que no se ve):
+
+* `INFANTIL`: pensada sobre todo para niños (hasta unos 12 años): protagonistas infantiles o animales, conflictos sencillos, sin violencia ni sexo explícitos.
+* `FAMILIAR`: pensada para verse en familia, para niños y adultos a la vez (muchas películas de animación y de aventuras «para todos los públicos»).
+* `JUVENIL`: dirigida sobre todo a adolescentes (comedias de instituto, sagas juveniles).
+* `ADULTO`: dirigida a adultos (violencia, sexo, temas o tratamiento adultos), aunque la puedan ver adolescentes.
+
+Se comprueba con los géneros de IMDb (*Family*, *Animation*) como control, sin sustituir la anotación.

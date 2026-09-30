@@ -6,8 +6,8 @@ Una película del catálogo español (P495 incluye España en Wikidata) cuenta c
      «país principal» de IMDb), o
   c) es coproducción, TMDB no da `origin_country`, y España está entre sus `production_countries` con idioma
      original español, catalán, euskera o gallego.
-Por año se toman las 15 más votadas que cumplan la regla y tengan sinopsis utilizable (española o, si falta,
-inglesa), igual que en D-023/D-024. Se consultan como mucho las 90 más votadas de cada año.
+Por año se toman las 30 más votadas (D-034; antes 15) que cumplan la regla y tengan sinopsis utilizable (española o, si falta,
+inglesa), igual que en D-023/D-024. Se consultan como mucho las 250 más votadas de cada año.
 """
 from __future__ import annotations
 
@@ -19,12 +19,12 @@ import requests
 
 from . import wikidump as w
 from .config import INTERIM
-from .spain import TOP_ES
 from .tmdb import _key
 
 ORIG = INTERIM / "tmdb_origen_es.csv"
 LANGS = {"es", "ca", "eu", "gl"}
-MAX_RANK = 90
+TOP_ES = 30    # D-034: 30 por año (antes 15)
+MAX_RANK = 250
 
 
 def _tmdb_origin(tconsts):

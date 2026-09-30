@@ -237,7 +237,7 @@ def final_labels_v2() -> pd.DataFrame:
     adj = _adj_v2()
     out = []
     for stage, full in (("v2_completa", True), ("v2_modb", False), ("v2_es_en", True), ("v2_ext", True),
-                        ("v2_es3", True), ("v2_es3_en", True)):
+                        ("v2_es3", True), ("v2_es3_en", True), ("v2_es4", True), ("v2_es4_en", True)):
         A, B = _labels(stage, full)
         m = A.merge(B, on="id", suffixes=("_A", "_B"))
         key = pd.read_csv(KEY_DIR / f"{stage}_key.csv")
@@ -277,8 +277,8 @@ def final_labels_v2() -> pd.DataFrame:
     lab = pd.concat(out, ignore_index=True)
     # D-027: si la sinopsis española no describía el final y se reanotó con la inglesa, manda la reanotación;
     # la etiqueta original se conserva como sensibilidad (final_es_original).
-    esen = set(lab.loc[lab.etapa_v2.isin(["v2_es_en", "v2_es3_en"]), "tconst"])
-    base = lab.etapa_v2.isin(["v2_completa", "v2_es3"])
+    esen = set(lab.loc[lab.etapa_v2.isin(["v2_es_en", "v2_es3_en", "v2_es4_en"]), "tconst"])
+    base = lab.etapa_v2.isin(["v2_completa", "v2_es3", "v2_es4"])
     orig = lab[base & lab.tconst.isin(esen)].set_index("tconst")["final"]
     lab = lab[~(base & lab.tconst.isin(esen))].copy()
     lab["final_es_original"] = lab.tconst.map(orig)
