@@ -7,8 +7,8 @@ from .config import INTERIM, ROOT, TABLES
 from .report import ci_pct, ci_pp, num, pct, pp
 
 V2 = TABLES / "v2"
-COHS = ["1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2024"]
-K = {"1980-1989": "80", "1990-1999": "90", "2000-2009": "00", "2010-2019": "10", "2020-2024": "20"}
+COHS = ["1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2025"]
+K = {"1980-1989": "80", "1990-1999": "90", "2000-2009": "00", "2010-2019": "10", "2020-2025": "20"}
 LAB = {"CIENCIA_FICCION": "ciencia ficción", "CRISIS_VITAL": "protagonista en crisis vital", "MUJER": "protagonista mujer",
        "EN_PAREJA": "protagonista en pareja", "TRABAJADORA": "clase trabajadora", "NO": "historias no especulativas",
        "Contemporánea": "historias contemporáneas"}
@@ -73,7 +73,7 @@ def values_v2() -> dict:
 
     cs = t("contrastes.csv").set_index(["country_frame", "cohorte", "variable"])
     for cf in ("US", "ES"):
-        for c, k in (("2010-2024", "rec"), ("2010-2019", "10"), ("2020-2024", "20"), ("1980-1989", "80"), ("2000-2009", "00")):
+        for c, k in (("2010-2025", "rec"), ("2010-2019", "10"), ("2020-2025", "20"), ("1980-1989", "80"), ("2000-2009", "00")):
             for v in ("feliz", "tragico", "optimismo", "tono", "pct_optimistas", "no_feliz_optimista", "vision"):
                 r = cs.loc[(cf, c, v)]
                 p = f"v2_{cf.lower()}_d{k}_{v}"
@@ -84,14 +84,14 @@ def values_v2() -> dict:
                     V[p] = pp(r.diferencia)
                     V[p + "_ci"] = ci_pp(r.lo, r.hi)
     for cf in ("US", "ES"):
-        g = d[(d.country_frame == cf) & d.cohort.isin(["2010-2019", "2020-2024"])]
+        g = d[(d.country_frame == cf) & d.cohort.isin(["2010-2019", "2020-2025"])]
         V[f"v2_{cf.lower()}_rec_feliz"] = pct(g.y_feliz.mean())
     V["v2_es_tono_all"] = num(es.tono_general.mean(), 2, True)
     V["v2_us_tono_all"] = num(d[d.country_frame == "US"].tono_general.mean(), 2, True)
 
     aj = t("ajustados.csv").set_index(["modelo", "resultado", "cohorte"])
     for m, mk in (("genero+popularidad", "b"), ("+protagonista y trama", "x")):
-        for c in ("2000-2009", "2010-2019", "2020-2024"):
+        for c in ("2000-2009", "2010-2019", "2020-2025"):
             r = aj.loc[(m, "feliz (AME, pp)", c)]
             V[f"v2_adj_{mk}_{K[c]}"] = pp(r.estimacion)
             o = aj.loc[(m, "optimismo personajes (puntos)", c)]
@@ -131,7 +131,7 @@ def values_v2() -> dict:
         f = (lambda x: num(x, 2, True)) if "optimismo" in r.medida else pp
         rows.append(f"| {r.analisis} | {'EE. UU.' if r.country_frame == 'US' else 'España'} | {f(r.diferencia_2010_24_vs_1990s)} "
                     f"| [{f(r.lo)}; {f(r.hi)}] | {r.n} |")
-    V["v2_tabla_sens"] = "\n".join(["| Análisis | País | 2010-2024 − 1990-1999 | IC 95 % | n películas |", "|---|---|---|---|---|"] + rows)
+    V["v2_tabla_sens"] = "\n".join(["| Análisis | País | 2010-2025 − 1990-1999 | IC 95 % | n películas |", "|---|---|---|---|---|"] + rows)
     return V
 
 

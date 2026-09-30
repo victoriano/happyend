@@ -15,10 +15,10 @@ genero_protagonista,ES,2000-2009,NO_CLARO,0.0067
 genero_protagonista,ES,2010-2019,HOMBRE,0.6067
 genero_protagonista,ES,2010-2019,MUJER,0.2267
 genero_protagonista,ES,2010-2019,MIXTO,0.1667
-genero_protagonista,ES,2020-2024,HOMBRE,0.4118
-genero_protagonista,ES,2020-2024,MUJER,0.3971
-genero_protagonista,ES,2020-2024,MIXTO,0.1618
-genero_protagonista,ES,2020-2024,NO_HUMANO,0.0294
+genero_protagonista,ES,2020-2025,HOMBRE,0.4231
+genero_protagonista,ES,2020-2025,MUJER,0.3974
+genero_protagonista,ES,2020-2025,MIXTO,0.1538
+genero_protagonista,ES,2020-2025,NO_HUMANO,0.0256
 genero_protagonista,US,1980-1989,HOMBRE,0.6847
 genero_protagonista,US,1980-1989,MUJER,0.1486
 genero_protagonista,US,1980-1989,MIXTO,0.1345
@@ -36,10 +36,10 @@ genero_protagonista,US,2010-2019,HOMBRE,0.6240
 genero_protagonista,US,2010-2019,MUJER,0.1880
 genero_protagonista,US,2010-2019,MIXTO,0.1440
 genero_protagonista,US,2010-2019,NO_HUMANO,0.0440
-genero_protagonista,US,2020-2024,HOMBRE,0.5181
-genero_protagonista,US,2020-2024,MUJER,0.3253
-genero_protagonista,US,2020-2024,MIXTO,0.1245
-genero_protagonista,US,2020-2024,NO_HUMANO,0.0321
+genero_protagonista,US,2020-2025,HOMBRE,0.5251
+genero_protagonista,US,2020-2025,MUJER,0.3077
+genero_protagonista,US,2020-2025,MIXTO,0.1338
+genero_protagonista,US,2020-2025,NO_HUMANO,0.0334
 edad_protagonista,ES,1980-1989,ADULTO,0.3263
 edad_protagonista,ES,1980-1989,JOVEN,0.3158
 edad_protagonista,ES,1980-1989,NO_CLARO,0.1263
@@ -72,14 +72,14 @@ edad_protagonista,ES,2010-2019,NINO,0.0467
 edad_protagonista,ES,2010-2019,NO_CLARO,0.0467
 edad_protagonista,ES,2010-2019,ADOLESCENTE,0.0333
 edad_protagonista,ES,2010-2019,MAYOR,0.0333
-edad_protagonista,ES,2020-2024,ADULTO,0.4412
-edad_protagonista,ES,2020-2024,JOVEN,0.2647
-edad_protagonista,ES,2020-2024,ADOLESCENTE,0.0882
-edad_protagonista,ES,2020-2024,NINO,0.0588
-edad_protagonista,ES,2020-2024,NO_CLARO,0.0588
-edad_protagonista,ES,2020-2024,MAYOR,0.0294
-edad_protagonista,ES,2020-2024,MIXTO,0.0294
-edad_protagonista,ES,2020-2024,MADURO,0.0294
+edad_protagonista,ES,2020-2025,ADULTO,0.4231
+edad_protagonista,ES,2020-2025,JOVEN,0.2692
+edad_protagonista,ES,2020-2025,ADOLESCENTE,0.0897
+edad_protagonista,ES,2020-2025,NO_CLARO,0.0897
+edad_protagonista,ES,2020-2025,NINO,0.0513
+edad_protagonista,ES,2020-2025,MAYOR,0.0256
+edad_protagonista,ES,2020-2025,MIXTO,0.0256
+edad_protagonista,ES,2020-2025,MADURO,0.0256
 edad_protagonista,US,1980-1989,ADULTO,0.5060
 edad_protagonista,US,1980-1989,JOVEN,0.2088
 edad_protagonista,US,1980-1989,ADOLESCENTE,0.1305
@@ -112,14 +112,14 @@ edad_protagonista,US,2010-2019,MIXTO,0.0420
 edad_protagonista,US,2010-2019,MADURO,0.0300
 edad_protagonista,US,2010-2019,NINO,0.0300
 edad_protagonista,US,2010-2019,MAYOR,0.0080
-edad_protagonista,US,2020-2024,ADULTO,0.5060
-edad_protagonista,US,2020-2024,JOVEN,0.2570
-edad_protagonista,US,2020-2024,ADOLESCENTE,0.0884
-edad_protagonista,US,2020-2024,MADURO,0.0562
-edad_protagonista,US,2020-2024,NO_CLARO,0.0482
-edad_protagonista,US,2020-2024,MIXTO,0.0201
-edad_protagonista,US,2020-2024,NINO,0.0161
-edad_protagonista,US,2020-2024,MAYOR,0.0080
+edad_protagonista,US,2020-2025,ADULTO,0.5084
+edad_protagonista,US,2020-2025,JOVEN,0.2508
+edad_protagonista,US,2020-2025,ADOLESCENTE,0.0803
+edad_protagonista,US,2020-2025,MADURO,0.0602
+edad_protagonista,US,2020-2025,NO_CLARO,0.0468
+edad_protagonista,US,2020-2025,MIXTO,0.0234
+edad_protagonista,US,2020-2025,NINO,0.0201
+edad_protagonista,US,2020-2025,MAYOR,0.0100
 momento_vital,ES,1980-1989,MADUREZ,0.3474
 momento_vital,ES,1980-1989,JUVENTUD,0.2842
 momento_vital,ES,1980-1989,NO_CLARO,0.1895
@@ -152,13 +152,13 @@ momento_vital,ES,2010-2019,CRIANZA,0.0667
 momento_vital,ES,2010-2019,INFANCIA,0.0467
 momento_vital,ES,2010-2019,ADOLESCENCIA,0.0333
 momento_vital,ES,2010-2019,VEJEZ,0.0267
-momento_vital,ES,2020-2024,MADUREZ,0.3235
-momento_vital,ES,2020-2024,JUVENTUD,0.2500
-momento_vital,ES,2020-2024,CRISIS_VITAL,0.1765
-momento_vital,ES,2020-2024,ADOLESCENCIA,0.0882
-momento_vital,ES,2020-2024,CRIANZA,0.0588
-momento_vital,ES,2020-2024,INFANCIA,0.0588
-momento_vital,ES,2020-2024,NO_CLARO,0.0441
+momento_vital,ES,2020-2025,MADUREZ,0.3333
+momento_vital,ES,2020-2025,JUVENTUD,0.2436
+momento_vital,ES,2020-2025,CRISIS_VITAL,0.1923
+momento_vital,ES,2020-2025,ADOLESCENCIA,0.0897
+momento_vital,ES,2020-2025,CRIANZA,0.0513
+momento_vital,ES,2020-2025,INFANCIA,0.0513
+momento_vital,ES,2020-2025,NO_CLARO,0.0385
 momento_vital,US,1980-1989,MADUREZ,0.4799
 momento_vital,US,1980-1989,JUVENTUD,0.1988
 momento_vital,US,1980-1989,ADOLESCENCIA,0.1365
@@ -191,14 +191,14 @@ momento_vital,US,2010-2019,NO_CLARO,0.0560
 momento_vital,US,2010-2019,CRIANZA,0.0540
 momento_vital,US,2010-2019,INFANCIA,0.0300
 momento_vital,US,2010-2019,VEJEZ,0.0100
-momento_vital,US,2020-2024,MADUREZ,0.4418
-momento_vital,US,2020-2024,JUVENTUD,0.2289
-momento_vital,US,2020-2024,CRISIS_VITAL,0.1165
-momento_vital,US,2020-2024,ADOLESCENCIA,0.0924
-momento_vital,US,2020-2024,CRIANZA,0.0562
-momento_vital,US,2020-2024,NO_CLARO,0.0361
-momento_vital,US,2020-2024,INFANCIA,0.0161
-momento_vital,US,2020-2024,VEJEZ,0.0120
+momento_vital,US,2020-2025,MADUREZ,0.4448
+momento_vital,US,2020-2025,JUVENTUD,0.2241
+momento_vital,US,2020-2025,CRISIS_VITAL,0.1137
+momento_vital,US,2020-2025,ADOLESCENCIA,0.0836
+momento_vital,US,2020-2025,CRIANZA,0.0602
+momento_vital,US,2020-2025,NO_CLARO,0.0401
+momento_vital,US,2020-2025,INFANCIA,0.0201
+momento_vital,US,2020-2025,VEJEZ,0.0134
 estado_civil,ES,1980-1989,SOLTERO,0.3579
 estado_civil,ES,1980-1989,NO_CLARO,0.2737
 estado_civil,ES,1980-1989,CASADO,0.1789
@@ -222,11 +222,11 @@ estado_civil,ES,2010-2019,CASADO,0.2200
 estado_civil,ES,2010-2019,EN_PAREJA,0.1133
 estado_civil,ES,2010-2019,VIUDO,0.0533
 estado_civil,ES,2010-2019,SEPARADO_DIVORCIADO,0.0267
-estado_civil,ES,2020-2024,SOLTERO,0.4265
-estado_civil,ES,2020-2024,NO_CLARO,0.2353
-estado_civil,ES,2020-2024,CASADO,0.1765
-estado_civil,ES,2020-2024,EN_PAREJA,0.1324
-estado_civil,ES,2020-2024,VIUDO,0.0294
+estado_civil,ES,2020-2025,SOLTERO,0.4359
+estado_civil,ES,2020-2025,NO_CLARO,0.2692
+estado_civil,ES,2020-2025,CASADO,0.1538
+estado_civil,ES,2020-2025,EN_PAREJA,0.1154
+estado_civil,ES,2020-2025,VIUDO,0.0256
 estado_civil,US,1980-1989,SOLTERO,0.4920
 estado_civil,US,1980-1989,NO_CLARO,0.1827
 estado_civil,US,1980-1989,CASADO,0.1265
@@ -251,12 +251,12 @@ estado_civil,US,2010-2019,CASADO,0.1540
 estado_civil,US,2010-2019,EN_PAREJA,0.0840
 estado_civil,US,2010-2019,SEPARADO_DIVORCIADO,0.0460
 estado_civil,US,2010-2019,VIUDO,0.0380
-estado_civil,US,2020-2024,SOLTERO,0.5100
-estado_civil,US,2020-2024,NO_CLARO,0.2008
-estado_civil,US,2020-2024,CASADO,0.1124
-estado_civil,US,2020-2024,VIUDO,0.0683
-estado_civil,US,2020-2024,EN_PAREJA,0.0683
-estado_civil,US,2020-2024,SEPARADO_DIVORCIADO,0.0402
+estado_civil,US,2020-2025,SOLTERO,0.5017
+estado_civil,US,2020-2025,NO_CLARO,0.2040
+estado_civil,US,2020-2025,CASADO,0.1171
+estado_civil,US,2020-2025,EN_PAREJA,0.0702
+estado_civil,US,2020-2025,VIUDO,0.0635
+estado_civil,US,2020-2025,SEPARADO_DIVORCIADO,0.0435
 clase_social,ES,1980-1989,NO_CLARO,0.2737
 clase_social,ES,1980-1989,MEDIA,0.2526
 clase_social,ES,1980-1989,TRABAJADORA,0.1789
@@ -281,12 +281,12 @@ clase_social,ES,2010-2019,NO_CLARO,0.2200
 clase_social,ES,2010-2019,ALTA_ELITE,0.0600
 clase_social,ES,2010-2019,BAJA_MARGINAL,0.0333
 clase_social,ES,2010-2019,MIXTA,0.0333
-clase_social,ES,2020-2024,MEDIA,0.3382
-clase_social,ES,2020-2024,NO_CLARO,0.3235
-clase_social,ES,2020-2024,TRABAJADORA,0.2206
-clase_social,ES,2020-2024,BAJA_MARGINAL,0.0735
-clase_social,ES,2020-2024,MIXTA,0.0294
-clase_social,ES,2020-2024,ALTA_ELITE,0.0147
+clase_social,ES,2020-2025,MEDIA,0.3462
+clase_social,ES,2020-2025,NO_CLARO,0.3205
+clase_social,ES,2020-2025,TRABAJADORA,0.2308
+clase_social,ES,2020-2025,BAJA_MARGINAL,0.0641
+clase_social,ES,2020-2025,MIXTA,0.0256
+clase_social,ES,2020-2025,ALTA_ELITE,0.0128
 clase_social,US,1980-1989,TRABAJADORA,0.3353
 clase_social,US,1980-1989,NO_CLARO,0.2751
 clase_social,US,1980-1989,MEDIA,0.2651
@@ -311,12 +311,12 @@ clase_social,US,2010-2019,MEDIA,0.2400
 clase_social,US,2010-2019,ALTA_ELITE,0.0920
 clase_social,US,2010-2019,BAJA_MARGINAL,0.0320
 clase_social,US,2010-2019,MIXTA,0.0200
-clase_social,US,2020-2024,TRABAJADORA,0.3133
-clase_social,US,2020-2024,NO_CLARO,0.3012
-clase_social,US,2020-2024,MEDIA,0.2570
-clase_social,US,2020-2024,ALTA_ELITE,0.0924
-clase_social,US,2020-2024,BAJA_MARGINAL,0.0281
-clase_social,US,2020-2024,MIXTA,0.0080
+clase_social,US,2020-2025,TRABAJADORA,0.3144
+clase_social,US,2020-2025,NO_CLARO,0.3110
+clase_social,US,2020-2025,MEDIA,0.2475
+clase_social,US,2020-2025,ALTA_ELITE,0.0903
+clase_social,US,2020-2025,BAJA_MARGINAL,0.0268
+clase_social,US,2020-2025,MIXTA,0.0100
 especulativa,ES,1980-1989,NO,0.7474
 especulativa,ES,1980-1989,SOBRENATURAL,0.1474
 especulativa,ES,1980-1989,CIENCIA_FICCION,0.0632
@@ -335,10 +335,10 @@ especulativa,ES,2010-2019,SOBRENATURAL,0.1467
 especulativa,ES,2010-2019,CIENCIA_FICCION,0.1067
 especulativa,ES,2010-2019,FANTASIA,0.0733
 especulativa,ES,2010-2019,SUPERHEROES,0.0067
-especulativa,ES,2020-2024,NO,0.7500
-especulativa,ES,2020-2024,SOBRENATURAL,0.1324
-especulativa,ES,2020-2024,CIENCIA_FICCION,0.0735
-especulativa,ES,2020-2024,FANTASIA,0.0441
+especulativa,ES,2020-2025,NO,0.7821
+especulativa,ES,2020-2025,SOBRENATURAL,0.1154
+especulativa,ES,2020-2025,CIENCIA_FICCION,0.0641
+especulativa,ES,2020-2025,FANTASIA,0.0385
 especulativa,US,1980-1989,NO,0.6365
 especulativa,US,1980-1989,CIENCIA_FICCION,0.1446
 especulativa,US,1980-1989,SOBRENATURAL,0.1345
@@ -359,11 +359,11 @@ especulativa,US,2010-2019,CIENCIA_FICCION,0.2160
 especulativa,US,2010-2019,FANTASIA,0.1280
 especulativa,US,2010-2019,SUPERHEROES,0.0960
 especulativa,US,2010-2019,SOBRENATURAL,0.0660
-especulativa,US,2020-2024,NO,0.5141
-especulativa,US,2020-2024,CIENCIA_FICCION,0.1727
-especulativa,US,2020-2024,FANTASIA,0.1205
-especulativa,US,2020-2024,SUPERHEROES,0.1124
-especulativa,US,2020-2024,SOBRENATURAL,0.0803
+especulativa,US,2020-2025,NO,0.4950
+especulativa,US,2020-2025,CIENCIA_FICCION,0.1906
+especulativa,US,2020-2025,FANTASIA,0.1137
+especulativa,US,2020-2025,SUPERHEROES,0.1070
+especulativa,US,2020-2025,SOBRENATURAL,0.0936
 epoca_trama,ES,1980-1989,DE_1980_EN_ADELANTE,0.3895
 epoca_trama,ES,1980-1989,NO_CLARO,0.2421
 epoca_trama,ES,1980-1989,DE_1946_A_1979,0.1474
@@ -397,14 +397,14 @@ epoca_trama,ES,2010-2019,FUTURO,0.0200
 epoca_trama,ES,2010-2019,DE_1500_A_1899,0.0200
 epoca_trama,ES,2010-2019,MUNDO_FICTICIO,0.0067
 epoca_trama,ES,2010-2019,ANTES_1500,0.0067
-epoca_trama,ES,2020-2024,DE_1980_EN_ADELANTE,0.6765
-epoca_trama,ES,2020-2024,NO_CLARO,0.0882
-epoca_trama,ES,2020-2024,DE_1946_A_1979,0.0735
-epoca_trama,ES,2020-2024,DE_1500_A_1899,0.0588
-epoca_trama,ES,2020-2024,DE_1900_A_1945,0.0441
-epoca_trama,ES,2020-2024,MUNDO_FICTICIO,0.0294
-epoca_trama,ES,2020-2024,FUTURO,0.0147
-epoca_trama,ES,2020-2024,ANTES_1500,0.0147
+epoca_trama,ES,2020-2025,DE_1980_EN_ADELANTE,0.6795
+epoca_trama,ES,2020-2025,DE_1946_A_1979,0.0769
+epoca_trama,ES,2020-2025,NO_CLARO,0.0769
+epoca_trama,ES,2020-2025,DE_1500_A_1899,0.0641
+epoca_trama,ES,2020-2025,DE_1900_A_1945,0.0513
+epoca_trama,ES,2020-2025,MUNDO_FICTICIO,0.0256
+epoca_trama,ES,2020-2025,FUTURO,0.0128
+epoca_trama,ES,2020-2025,ANTES_1500,0.0128
 epoca_trama,US,1980-1989,DE_1980_EN_ADELANTE,0.6687
 epoca_trama,US,1980-1989,DE_1946_A_1979,0.0803
 epoca_trama,US,1980-1989,NO_CLARO,0.0582
@@ -441,15 +441,15 @@ epoca_trama,US,2010-2019,DE_1900_A_1945,0.0340
 epoca_trama,US,2010-2019,VARIAS,0.0240
 epoca_trama,US,2010-2019,ANTES_1500,0.0220
 epoca_trama,US,2010-2019,NO_CLARO,0.0220
-epoca_trama,US,2020-2024,DE_1980_EN_ADELANTE,0.6305
-epoca_trama,US,2020-2024,DE_1946_A_1979,0.0843
-epoca_trama,US,2020-2024,MUNDO_FICTICIO,0.0643
-epoca_trama,US,2020-2024,DE_1900_A_1945,0.0602
-epoca_trama,US,2020-2024,FUTURO,0.0562
-epoca_trama,US,2020-2024,DE_1500_A_1899,0.0442
-epoca_trama,US,2020-2024,NO_CLARO,0.0241
-epoca_trama,US,2020-2024,ANTES_1500,0.0201
-epoca_trama,US,2020-2024,VARIAS,0.0161
+epoca_trama,US,2020-2025,DE_1980_EN_ADELANTE,0.6355
+epoca_trama,US,2020-2025,DE_1946_A_1979,0.0736
+epoca_trama,US,2020-2025,MUNDO_FICTICIO,0.0702
+epoca_trama,US,2020-2025,FUTURO,0.0635
+epoca_trama,US,2020-2025,DE_1900_A_1945,0.0602
+epoca_trama,US,2020-2025,DE_1500_A_1899,0.0435
+epoca_trama,US,2020-2025,NO_CLARO,0.0234
+epoca_trama,US,2020-2025,ANTES_1500,0.0167
+epoca_trama,US,2020-2025,VARIAS,0.0134
 humor,ES,1980-1989,NINGUNO,0.6316
 humor,ES,1980-1989,CENTRAL,0.2000
 humor,ES,1980-1989,ALGO,0.1684
@@ -462,9 +462,9 @@ humor,ES,2000-2009,CENTRAL,0.1333
 humor,ES,2010-2019,NINGUNO,0.6133
 humor,ES,2010-2019,ALGO,0.2333
 humor,ES,2010-2019,CENTRAL,0.1533
-humor,ES,2020-2024,NINGUNO,0.6765
-humor,ES,2020-2024,ALGO,0.2500
-humor,ES,2020-2024,CENTRAL,0.0735
+humor,ES,2020-2025,NINGUNO,0.6795
+humor,ES,2020-2025,ALGO,0.2436
+humor,ES,2020-2025,CENTRAL,0.0769
 humor,US,1980-1989,NINGUNO,0.3815
 humor,US,1980-1989,ALGO,0.3414
 humor,US,1980-1989,CENTRAL,0.2771
@@ -477,9 +477,9 @@ humor,US,2000-2009,CENTRAL,0.2565
 humor,US,2010-2019,ALGO,0.4520
 humor,US,2010-2019,NINGUNO,0.3700
 humor,US,2010-2019,CENTRAL,0.1780
-humor,US,2020-2024,ALGO,0.4900
-humor,US,2020-2024,NINGUNO,0.3695
-humor,US,2020-2024,CENTRAL,0.1406
+humor,US,2020-2025,ALGO,0.5117
+humor,US,2020-2025,NINGUNO,0.3579
+humor,US,2020-2025,CENTRAL,0.1304
 relaciones_centrales,ES,1980-1989,AMISTAD,0.3789
 relaciones_centrales,ES,1980-1989,ROMANCE,0.5211
 relaciones_centrales,ES,1980-1989,MATRIMONIO,0.2158
@@ -528,18 +528,18 @@ relaciones_centrales,ES,2010-2019,EQUIPO_COMPANEROS,0.1867
 relaciones_centrales,ES,2010-2019,RIVALIDAD,0.2567
 relaciones_centrales,ES,2010-2019,COMUNIDAD,0.0767
 relaciones_centrales,ES,2010-2019,NINGUNA,0.0133
-relaciones_centrales,ES,2020-2024,AMISTAD,0.3088
-relaciones_centrales,ES,2020-2024,ROMANCE,0.3529
-relaciones_centrales,ES,2020-2024,MATRIMONIO,0.1765
-relaciones_centrales,ES,2020-2024,DIVORCIO_SEPARACION,0.0000
-relaciones_centrales,ES,2020-2024,PADRES_HIJOS,0.3529
-relaciones_centrales,ES,2020-2024,HERMANOS,0.1103
-relaciones_centrales,ES,2020-2024,FAMILIA_EXTENSA,0.1029
-relaciones_centrales,ES,2020-2024,MENTOR_DISCIPULO,0.0588
-relaciones_centrales,ES,2020-2024,EQUIPO_COMPANEROS,0.2500
-relaciones_centrales,ES,2020-2024,RIVALIDAD,0.2794
-relaciones_centrales,ES,2020-2024,COMUNIDAD,0.1691
-relaciones_centrales,ES,2020-2024,NINGUNA,0.0000
+relaciones_centrales,ES,2020-2025,AMISTAD,0.3269
+relaciones_centrales,ES,2020-2025,ROMANCE,0.3462
+relaciones_centrales,ES,2020-2025,MATRIMONIO,0.1731
+relaciones_centrales,ES,2020-2025,DIVORCIO_SEPARACION,0.0000
+relaciones_centrales,ES,2020-2025,PADRES_HIJOS,0.3462
+relaciones_centrales,ES,2020-2025,HERMANOS,0.1090
+relaciones_centrales,ES,2020-2025,FAMILIA_EXTENSA,0.1218
+relaciones_centrales,ES,2020-2025,MENTOR_DISCIPULO,0.0513
+relaciones_centrales,ES,2020-2025,EQUIPO_COMPANEROS,0.2564
+relaciones_centrales,ES,2020-2025,RIVALIDAD,0.2628
+relaciones_centrales,ES,2020-2025,COMUNIDAD,0.1538
+relaciones_centrales,ES,2020-2025,NINGUNA,0.0000
 relaciones_centrales,US,1980-1989,AMISTAD,0.4839
 relaciones_centrales,US,1980-1989,ROMANCE,0.5572
 relaciones_centrales,US,1980-1989,MATRIMONIO,0.1365
@@ -588,18 +588,18 @@ relaciones_centrales,US,2010-2019,EQUIPO_COMPANEROS,0.4370
 relaciones_centrales,US,2010-2019,RIVALIDAD,0.3230
 relaciones_centrales,US,2010-2019,COMUNIDAD,0.0480
 relaciones_centrales,US,2010-2019,NINGUNA,0.0030
-relaciones_centrales,US,2020-2024,AMISTAD,0.4378
-relaciones_centrales,US,2020-2024,ROMANCE,0.3133
-relaciones_centrales,US,2020-2024,MATRIMONIO,0.1386
-relaciones_centrales,US,2020-2024,DIVORCIO_SEPARACION,0.0120
-relaciones_centrales,US,2020-2024,PADRES_HIJOS,0.4498
-relaciones_centrales,US,2020-2024,HERMANOS,0.1767
-relaciones_centrales,US,2020-2024,FAMILIA_EXTENSA,0.0984
-relaciones_centrales,US,2020-2024,MENTOR_DISCIPULO,0.1024
-relaciones_centrales,US,2020-2024,EQUIPO_COMPANEROS,0.3594
-relaciones_centrales,US,2020-2024,RIVALIDAD,0.2912
-relaciones_centrales,US,2020-2024,COMUNIDAD,0.0924
-relaciones_centrales,US,2020-2024,NINGUNA,0.0040
+relaciones_centrales,US,2020-2025,AMISTAD,0.4448
+relaciones_centrales,US,2020-2025,ROMANCE,0.3161
+relaciones_centrales,US,2020-2025,MATRIMONIO,0.1488
+relaciones_centrales,US,2020-2025,DIVORCIO_SEPARACION,0.0100
+relaciones_centrales,US,2020-2025,PADRES_HIJOS,0.4615
+relaciones_centrales,US,2020-2025,HERMANOS,0.1806
+relaciones_centrales,US,2020-2025,FAMILIA_EXTENSA,0.0987
+relaciones_centrales,US,2020-2025,MENTOR_DISCIPULO,0.0970
+relaciones_centrales,US,2020-2025,EQUIPO_COMPANEROS,0.3562
+relaciones_centrales,US,2020-2025,RIVALIDAD,0.2893
+relaciones_centrales,US,2020-2025,COMUNIDAD,0.0953
+relaciones_centrales,US,2020-2025,NINGUNA,0.0033
 paises_trama,ES,1980-1989,España,0.5053
 paises_trama,ES,1980-1989,Estados Unidos,0.1474
 paises_trama,ES,1980-1989,Francia,0.0632
@@ -632,13 +632,14 @@ paises_trama,ES,2010-2019,Estados Unidos,0.1133
 paises_trama,ES,2010-2019,Francia,0.0533
 paises_trama,ES,2010-2019,No claro,0.2533
 paises_trama,ES,2010-2019,Reino Unido,0.0600
-paises_trama,ES,2020-2024,España,0.4853
-paises_trama,ES,2020-2024,Estados Unidos,0.1324
-paises_trama,ES,2020-2024,Francia,0.1029
-paises_trama,ES,2020-2024,Mundo ficticio,0.0294
-paises_trama,ES,2020-2024,México,0.0441
-paises_trama,ES,2020-2024,No claro,0.2353
-paises_trama,ES,2020-2024,Reino Unido,0.0735
+paises_trama,ES,2020-2025,España,0.5128
+paises_trama,ES,2020-2025,Estados Unidos,0.1410
+paises_trama,ES,2020-2025,Filipinas,0.0256
+paises_trama,ES,2020-2025,Francia,0.1026
+paises_trama,ES,2020-2025,Mundo ficticio,0.0256
+paises_trama,ES,2020-2025,México,0.0385
+paises_trama,ES,2020-2025,No claro,0.2051
+paises_trama,ES,2020-2025,Reino Unido,0.0641
 paises_trama,US,1980-1989,Espacio,0.0321
 paises_trama,US,1980-1989,Estados Unidos,0.7369
 paises_trama,US,1980-1989,Francia,0.0321
@@ -672,14 +673,15 @@ paises_trama,US,2010-2019,México,0.0320
 paises_trama,US,2010-2019,No claro,0.0860
 paises_trama,US,2010-2019,Reino Unido,0.1140
 paises_trama,US,2010-2019,Rusia,0.0240
-paises_trama,US,2020-2024,Alemania,0.0241
-paises_trama,US,2020-2024,Espacio,0.0321
-paises_trama,US,2020-2024,España,0.0201
-paises_trama,US,2020-2024,Estados Unidos,0.6064
-paises_trama,US,2020-2024,Francia,0.0482
-paises_trama,US,2020-2024,Italia,0.0683
-paises_trama,US,2020-2024,Japón,0.0201
-paises_trama,US,2020-2024,Mundo ficticio,0.0803
-paises_trama,US,2020-2024,No claro,0.1004
-paises_trama,US,2020-2024,Reino Unido,0.0803
-paises_trama,US,2020-2024,Rusia,0.0361
+paises_trama,US,2020-2025,Alemania,0.0234
+paises_trama,US,2020-2025,Espacio,0.0435
+paises_trama,US,2020-2025,España,0.0201
+paises_trama,US,2020-2025,Estados Unidos,0.6020
+paises_trama,US,2020-2025,Francia,0.0435
+paises_trama,US,2020-2025,Italia,0.0602
+paises_trama,US,2020-2025,Japón,0.0201
+paises_trama,US,2020-2025,Mundo ficticio,0.0803
+paises_trama,US,2020-2025,México,0.0201
+paises_trama,US,2020-2025,No claro,0.1037
+paises_trama,US,2020-2025,Reino Unido,0.0936
+paises_trama,US,2020-2025,Rusia,0.0334

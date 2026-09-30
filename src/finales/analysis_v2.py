@@ -19,13 +19,14 @@ from .config import INTERIM, ROOT
 
 TABLES = ROOT / "reports" / "tables" / "v2"
 REF = "1990-1999"
-RECIENTE = ["2010-2019", "2020-2024"]
-COHORTS = ["1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2024"]
+RECIENTE = ["2010-2019", "2020-2025"]
+COHORTS = ["1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2025"]
 FINALS = ["FELIZ", "AGRIDULCE", "AMBIGUO", "TRAGICO"]
 
 
 def load() -> pd.DataFrame:
     d = pd.read_csv(INTERIM / "analitico_v2.csv")
+    d = d[d.anio_en_curso != True].copy()  # 2026 solo en el explorador (D-031)
     d["reciente"] = d.cohort.isin(RECIENTE)
     d["log_rank"] = np.log(d.votes_rank_in_year)
     d["especulativa_si"] = (d.especulativa != "NO").astype(float)
@@ -72,10 +73,10 @@ def contrasts(d: pd.DataFrame) -> pd.DataFrame:
           "pct_optimistas": "y_optimistas", "vision": "vision_vida", "no_feliz_optimista": "y_nf_opt"}
     for cf, g in d.groupby("country_frame"):
         g0 = g[g.cohort == REF]
-        for c in COHORTS + ["2010-2024"]:
+        for c in COHORTS + ["2010-2025"]:
             if c == REF:
                 continue
-            g1 = g[g.cohort.isin(RECIENTE)] if c == "2010-2024" else g[g.cohort == c]
+            g1 = g[g.cohort.isin(RECIENTE)] if c == "2010-2025" else g[g.cohort == c]
             for name, y in ys.items():
                 est, lo, hi = _boot_diff(g1[y].astype(float).values, g0[y].astype(float).values,
                                          seed=0)
@@ -117,7 +118,7 @@ def covariates(d: pd.DataFrame) -> pd.DataFrame:
 
 
 def subgroups(d: pd.DataFrame) -> pd.DataFrame:
-    """¿Dónde creció o decreció el optimismo? Diferencia 2010-2024 − 1990-1999 dentro de cada subgrupo (EE. UU.)."""
+    """¿Dónde creció o decreció el optimismo? Diferencia 2010-2025 − 1990-1999 dentro de cada subgrupo (EE. UU.)."""
     us = d[d.country_frame == "US"]
     specs = {"genre_main": None, "especulativa": None, "clase_social": None, "momento_vital": None,
              "genero_protagonista": None, "edad_protagonista": None, "estado_civil": None, "humor": None,
@@ -271,22 +272,10 @@ def run() -> dict:
     return out
 
 
-if __name__ == "__main__":
-    o = run()
-    pd.set_option("display.width", 220)
-    print(o["por_cohorte"][["country_frame", "cohort", "n", "pct_no_clasificable", "feliz", "feliz_lo", "feliz_hi",
-                            "tragico", "optimismo", "tono", "tragedia_vitalista"]].round(3).to_string())
-    c = o["contrastes"]
-    print(c[c.cohorte == "2010-2024"].round(3).to_string())
-    print(o["sensibilidad"].round(3).to_string())
-    print(o["ajustados"].round(3).to_string())
-    print(o["final_vs_animo"].round(2).to_string())
-    print(o["imdb_modelos"].round(3).to_string())
-
 
 # ------------------------------------------------------------------ agregados para la historia de la web (estudio unificado)
 POS_TONE = ["ESPERANZA", "ALIVIO", "CONEXION"]
-PERIODS = {"1990-1999": ["1990-1999"], "2010-2024": RECIENTE}
+PERIODS = {"1990-1999": ["1990-1999"], "2010-2025": RECIENTE}
 
 
 def _prep_story(d: pd.DataFrame) -> pd.DataFrame:
@@ -296,7 +285,7 @@ def _prep_story(d: pd.DataFrame) -> pd.DataFrame:
     d["y_estricta"] = ((d.final == "FELIZ") & d.tono_cierre.isin(POS_TONE)).astype(float).where(cl)
     d["y_incl_nc"] = (d.final == "FELIZ").astype(float)
     d["y_tono_positivo"] = d.tono_cierre.isin(POS_TONE).astype(float).where(d.tono_cierre != "NO_CLARO")
-    d["periodo"] = np.where(d.cohort == "1990-1999", "1990-1999", np.where(d.cohort.isin(RECIENTE), "2010-2024", "otro"))
+    d["periodo"] = np.where(d.cohort == "1990-1999", "1990-1999", np.where(d.cohort.isin(RECIENTE), "2010-2025", "otro"))
     return d
 
 
@@ -329,7 +318,7 @@ def _ame_boot(g: pd.DataFrame, extra: str = "", n_boot: int = 200, seed: int = 0
         rare = g[v].map(vc) < 30
         g[v] = g[v].where(~rare, "OTRO" if rare.sum() >= 30 else vc.index[0])
     g = g[g.periodo != "otro"].copy()
-    g["reciente"] = (g.periodo == "2010-2024").astype(int)
+    g["reciente"] = (g.periodo == "2010-2025").astype(int)
     f = "y_feliz ~ reciente + C(genre_main) + log_rank" + extra
 
     def ame(data):
@@ -357,7 +346,7 @@ def story(d: pd.DataFrame) -> dict:
     for cf, g in d.groupby("country_frame"):
         out["cohortes"][cf] = {y: [_est(g[g.cohort == c], y) for c in COHORTS] for y in ys}
         out["periodos"][cf] = {y: {p: _est(g[g.periodo == p], y) for p in PERIODS} for y in ys}
-        g0, g1 = g[g.periodo == "1990-1999"], g[g.periodo == "2010-2024"]
+        g0, g1 = g[g.periodo == "1990-1999"], g[g.periodo == "2010-2025"]
 
         def diff(y, a=g1, b=g0):
             return list(_boot_diff(a[y].astype(float).values, b[y].astype(float).values, seed=0))
@@ -387,13 +376,27 @@ def story(d: pd.DataFrame) -> dict:
             comp[p] = gp.genre_main.value_counts(normalize=True).to_dict()
         gen = []
         for ge, gg in g.groupby("genre_main"):
-            a, b = gg[gg.periodo == "2010-2024"], gg[gg.periodo == "1990-1999"]
+            a, b = gg[gg.periodo == "2010-2025"], gg[gg.periodo == "1990-1999"]
             if b.y_feliz.notna().sum() >= 10 and a.y_feliz.notna().sum() >= 10:
                 dd = _boot_diff(a.y_feliz.values, b.y_feliz.values, seed=0)
                 gen.append([ge, int(b.y_feliz.notna().sum()), int(a.y_feliz.notna().sum()), b.y_feliz.mean(), a.y_feliz.mean(), *dd])
         out["genero"][cf] = {"composicion": comp, "felices": gen}
         ac = g[g.genre_main == "Acción/aventura"]
         grp = {"1980-1999": ac[ac.cohort.isin(["1980-1989", "1990-1999"])], "1980-1989": ac[ac.cohort == "1980-1989"],
-               "1990-1999": ac[ac.cohort == "1990-1999"], "2010-2024": ac[ac.periodo == "2010-2024"]}
+               "1990-1999": ac[ac.cohort == "1990-1999"], "2010-2025": ac[ac.periodo == "2010-2025"]}
         out["accion"][cf] = {k: _est(v, "y_feliz") for k, v in grp.items()}
     return out
+
+
+if __name__ == "__main__":
+    o = run()
+    pd.set_option("display.width", 220)
+    print(o["por_cohorte"][["country_frame", "cohort", "n", "pct_no_clasificable", "feliz", "feliz_lo", "feliz_hi",
+                            "tragico", "optimismo", "tono", "tragedia_vitalista"]].round(3).to_string())
+    c = o["contrastes"]
+    print(c[c.cohorte == "2010-2025"].round(3).to_string())
+    print(o["sensibilidad"].round(3).to_string())
+    print(o["ajustados"].round(3).to_string())
+    print(o["final_vs_animo"].round(2).to_string())
+    print(o["imdb_modelos"].round(3).to_string())
+

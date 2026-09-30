@@ -36,20 +36,20 @@ Se compararon **994 largometrajes de ficción estadounidenses** (1980-2024) en d
 
 ## Segunda parte: censo completo, cine español y ánimo de los personajes
 
-Se anotaron **todas** las películas del marco popular estadounidense (**2.245**, las 50 más votadas de cada año) y las **577** españolas más votadas (15 por año). Además del final, se anotaron el protagonista (edad, momento vital, estado civil, clase social), las relaciones centrales, si la historia es especulativa, la época y los países de la trama, el humor, el **tono general** y el **optimismo de los personajes**. El acuerdo entre anotadores fue alto: final κ = 0,86; optimismo de los personajes α = 0,83.
+Se anotaron **todas** las películas del marco popular estadounidense (**2.343**, las 50 más votadas de cada año) y las **592** españolas más votadas (15 por año). Además del final, se anotaron el protagonista (edad, momento vital, estado civil, clase social), las relaciones centrales, si la historia es especulativa, la época y los países de la trama, el humor, el **tono general** y el **optimismo de los personajes**. El acuerdo entre anotadores fue alto: final κ = 0,86; optimismo de los personajes α = 0,83.
 
 Antes de las conclusiones, los límites de esta parte:
 
-* Los modelos reconocieron el 99,6 % de las películas estadounidenses.
+* Los modelos reconocieron el 98,5 % de las películas estadounidenses.
 * Solo se adjudicó el final.
 * El 18 % de las españolas no tiene final clasificable porque la Wikipedia en español a menudo no lo cuenta.
 * Son muchas comparaciones por subgrupo.
 
-* **EE. UU.:** los finales felices bajan del 67,3 % en los noventa al 61,0 % en 2010-2024 (−6,3 pp [−11,5 pp; −0,9 pp]), sobre todo por 2020-2024 (56,5 %). No hay más tragedias.
-* **Optimismo de los personajes:** estable (+0,45 en los noventa, +0,53 en 2010-2019) salvo en 2020-2024 (+0,30). El tono general se oscurece algo (−0,21 puntos).
-* **Final y ánimo son distintos:** el 41 % de los finales agridulces tiene personajes optimistas. *Titanic* es el ejemplo: final agridulce, optimismo +2.
+* **EE. UU.:** los finales felices bajan del 67,3 % en los noventa al 61,3 % en 2010-2025 (−6,0 pp [−11,3 pp; −0,7 pp]), sobre todo por 2020-2025 (58,1 %). No hay más tragedias.
+* **Optimismo de los personajes:** estable (+0,45 en los noventa, +0,53 en 2010-2019) salvo en 2020-2025 (+0,30). El tono general se oscurece algo (−0,23 puntos).
+* **Final y ánimo son distintos:** el 40 % de los finales agridulces tiene personajes optimistas. *Titanic* es el ejemplo: final agridulce, optimismo +2.
 * **Dónde cae el final feliz** (exploratorio): ciencia ficción, comedia, acción, protagonista femenina y personajes en crisis vital.
-* **España va al revés:** más sombría en general, pero con más finales felices en 2010-2024 que en los noventa (+11,9 pp [+0,5 pp; +23,1 pp]). Es un resultado frágil.
+* **España va al revés:** más sombría en general, pero con más finales felices en 2010-2025 que en los noventa (+12,3 pp [+0,4 pp; +23,4 pp]). Es un resultado frágil.
 * **IMDb:** a igualdad de año y género, los finales felices tienen una nota media −0,33 puntos distinta. Es una asociación y no mide nostalgia.
 
 ## Veredicto provisional

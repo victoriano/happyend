@@ -44,7 +44,7 @@ def _ids(p):
     return [json.loads(l)["id"] for l in Path(p).read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
-@pytest.mark.parametrize("stage", ["v2_completa", "v2_modb", "v2_es_en"])
+@pytest.mark.parametrize("stage", ["v2_completa", "v2_modb", "v2_es_en", "v2_ext"])
 def test_labels_aligned_with_batches(stage):
     bdir = ROOT / "annotation" / "batches" / stage
     if not bdir.exists():
@@ -54,13 +54,14 @@ def test_labels_aligned_with_batches(stage):
             assert _ids(ROOT / "annotation" / "labels" / stage / a / b.name) == _ids(b), (stage, a, b.name)
 
 
-def test_web_has_no_imdb_or_key():
+def test_web_has_no_tmdb_key():
     web = ROOT / "web"
     if not (web / "films.json").exists():
         pytest.skip("web no generada")
     f = json.loads((web / "films.json").read_text(encoding="utf-8"))
-    assert not {"numVotes", "averageRating", "votos", "nota"} & set(f["cols"])
-    assert len(f["films"]) > 2500
+    # D-031: el usuario decidió mostrar nota y votos de IMDb en el explorador (con atribución)
+    assert {"imdb_votos", "imdb_nota"} <= set(f["cols"])
+    assert len(f["films"]) > 2800
     titanic = [r for r in f["films"] if r[0] == "Titanic" and r[2] == 1997]
     assert titanic and titanic[0][f["cols"].index("poster")]
     blob = "".join(p.read_text(encoding="utf-8") for p in web.glob("*.*") if p.suffix in (".html", ".json"))

@@ -14,7 +14,7 @@ from . import annotation as an
 from .config import DERIVED, INTERIM, ROOT, TABLES
 from .annotation import KEY_DIR as ANNOT_KEYS
 
-COH = ["1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2024"]
+COH = ["1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2025"]
 FIN = ["FELIZ", "AGRIDULCE", "AMBIGUO", "TRAGICO", "NO_CLASIFICABLE"]
 TONE = ["ESPERANZA", "ALIVIO", "CONEXION", "RESIGNACION", "DESESPERANZA", "NO_CLARO"]
 
@@ -136,10 +136,13 @@ def build_films_v2() -> dict:
             (tm.poster_path.get(tc) if tc in tm.index and isinstance(tm.poster_path.get(tc), str) else ""),
             int(tm.tmdb_id.get(tc)) if tc in tm.index and pd.notna(tm.tmdb_id.get(tc)) else 0,
             TONE.index(r.tono_cierre) if r.tono_cierre in TONE else 5, tc,
+            int(r.numVotes) if pd.notna(r.numVotes) else None, _num(r.averageRating, 1),
+            int(r.votes_rank_in_year), bool(getattr(r, "anio_en_curso", False) == True),
         ])
     rows.sort(key=lambda x: (x[2], x[0]))
     cols = ["titulo", "original", "anio", "pais", "genero", "final", "optimismo", "tono"] + list(EXPL) + \
-           ["relaciones", "paises_trama", "poster", "tmdb", "tono_cierre", "tconst"]
+           ["relaciones", "paises_trama", "poster", "tmdb", "tono_cierre", "tconst", "imdb_votos", "imdb_nota",
+            "rango_votos_anio", "anio_en_curso"]
     return {"cols": cols, "genres": genres, "finals": FIN, "tones": TONE, "cats": EXPL,
             "relaciones": an.RELACIONES, "paises": top_paises, "films": rows}
 
@@ -160,7 +163,8 @@ def build_v2() -> dict:
             r4(r.nivel_2010_24), r4(r.diferencia), r4(r.lo), r4(r.hi)] for r in sg.itertuples()]
     fm = t("final_vs_animo.csv")
     fvm = [[r.country_frame, r.final, int(r.n), r4(r.optimismo), r4(r.pct_optimistas), r4(r.tono)] for r in fm.itertuples()]
-    d = pd.read_csv(INTERIM / "analitico_v2.csv")
+    d_all = pd.read_csv(INTERIM / "analitico_v2.csv")
+    d = d_all[d_all.anio_en_curso != True]
     c = d[d.clasificable & d.optimismo_personajes.notna()]
     mat = pd.crosstab(c.final, c.optimismo_personajes.round().clip(-2, 2)).reindex(FIN[:4]).fillna(0).astype(int)
     im = t("imdb_modelos.csv")
@@ -189,7 +193,8 @@ def build_v2() -> dict:
             "imdb": imdb, "sensibilidad": sens, "ajustados": adj, "acuerdo": acu, "covariables": cov,
             "reconocidas": {k: r4(v) for k, v in rec.items()},
             "n": {"US": int((d.country_frame == "US").sum()), "ES": int((d.country_frame == "ES").sum()),
-                  "total": int(d.tconst.nunique())}}
+                  "total": int(d.tconst.nunique()), "explorador": int(d_all.tconst.nunique()),
+                  "en_curso": int(d_all[d_all.anio_en_curso == True].tconst.nunique())}}
 
 
 def main_v2() -> None:
@@ -234,7 +239,7 @@ def build_fichas() -> dict[int, dict]:
     from . import v2
     d = pd.read_csv(INTERIM / "analitico_v2.csv").drop_duplicates("tconst")
     k1 = pd.read_csv(ANNOT_KEYS / "principal_key.csv").drop_duplicates("tconst").set_index("tconst").id
-    notes = _notes(["principal", "v2_completa", "v2_es_en"])
+    notes = _notes(["principal", "v2_completa", "v2_es_en", "v2_ext"])
     adj = _adj_notes(["principal/adjudicacion", "v2_adjudicacion"])
     out: dict[int, dict] = {}
     for r in d.itertuples():

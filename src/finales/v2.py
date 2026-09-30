@@ -236,7 +236,7 @@ def final_labels_v2() -> pd.DataFrame:
     from . import annotation as an
     adj = _adj_v2()
     out = []
-    for stage, full in (("v2_completa", True), ("v2_modb", False), ("v2_es_en", True)):
+    for stage, full in (("v2_completa", True), ("v2_modb", False), ("v2_es_en", True), ("v2_ext", True)):
         A, B = _labels(stage, full)
         m = A.merge(B, on="id", suffixes=("_A", "_B"))
         key = pd.read_csv(KEY_DIR / f"{stage}_key.csv")
@@ -298,6 +298,10 @@ def final_labels_v2() -> pd.DataFrame:
 def analytic_v2() -> pd.DataFrame:
     u = pd.read_csv(INTERIM / "universo_v2.csv")
     u = u[u.has_synopsis]
+    # D-031: ampliación a 2025 (análisis) y 2026 (año en curso, solo explorador)
+    ext = pd.read_csv(INTERIM / "universo_ext.csv").assign(in_v1=False, has_synopsis=True)
+    u = pd.concat([u.assign(anio_en_curso=False), ext], ignore_index=True)
+    u["cohort"] = np.where(u.year >= 2026, "2026 (en curso)", np.where(u.year >= 2020, "2020-2025", u.cohort))
     lab = final_labels_v2()
     df = u.merge(lab, on="tconst", how="left")
     miss = df.final.isna().sum()
