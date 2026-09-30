@@ -223,6 +223,8 @@ details.more summary{margin-top:6px}
 .quad{display:grid;grid-template-columns:1fr;gap:10px 18px;margin-top:14px}
 @media(min-width:620px){.quad{grid-template-columns:1fr 1fr}}
 .gfill{background:var(--fg)!important}
+.decgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:8px}
+.lnk{all:unset;cursor:pointer;text-align:left}.lnk:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -302,7 +304,7 @@ details.more summary{margin-top:6px}
     <div class="pair"><span style="--c:var(--fg)">Series</span><span style="--c:var(--ink2)">Películas</span></div>
     <svg id="yearly" class="chart" role="img" aria-label="Nota feel good media por año: series frente a películas"></svg>
     <p class="note">Arriba, media por década de estreno con intervalo del 95 %. Abajo, año a año (puntos) y media móvil de 5 años (línea).</p>
-    <div class="duo" id="cmpEx" style="margin-top:20px"></div>
+    <p class="small" style="margin-top:22px">Las 10 series estadounidenses más votadas de cada década y su nota <i>feel good</i> (pulsa para ver la ficha):</p><div class="decgrid" id="cmpEx"></div>
   </div>
 </section>
 
@@ -651,9 +653,10 @@ function drawYearly(){
   });
   svg.append('text').attr('x',x(1995)).attr('y',m.t+14).attr('text-anchor','middle').style('font-size','12px').style('font-weight',700).text('los noventa');
 }
-(function(){const f=t=>F.films.find(z=>z[FC.tconst]===t);
-  const card=(tit,items)=>`<div class="stat"><div class="small" style="margin-bottom:8px">${tit}</div>${items.map(t=>f(t)).filter(Boolean).map(z=>`<div style="display:flex;justify-content:space-between;gap:8px;font-size:15px;padding:3px 0;border-bottom:1px solid var(--rule)"><span>${z[0]} <span class="small">(${z[2]})</span></span><b style="color:${fgCol(z[FC.feel_good])}">${fgTxt(z[FC.feel_good])}</b></div>`).join('')}</div>`;
-  $('#cmpEx').innerHTML=card('Las series más votadas de los noventa',['tt0108778','tt0149460','tt0165598','tt0106179','tt0141842'])+card('Las series más votadas desde 2010',['tt0944947','tt4574334','tt2861424','tt3581920','tt10986410']);})();
+(function(){const card=(tit,items)=>`<div class="stat" style="padding:14px"><div class="small" style="margin-bottom:6px;font-weight:700">${tit}</div>${items.map(z=>`<div style="display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:3px 0;border-bottom:1px solid var(--rule)"><button class="lnk" data-t="${z[FC.tconst]}">${z[0]} <span class="small">(${z[2]})</span></button><b style="color:${fgCol(z[FC.feel_good])}">${z[FC.feel_good]==null?'—':fgTxt(z[FC.feel_good])}</b></div>`).join('')}</div>`;
+  const top=d=>US_S.filter(z=>Math.min(4,Math.floor((z[2]-1980)/10))===d).sort((a,b)=>(b[FC.imdb_votos]||0)-(a[FC.imdb_votos]||0)).slice(0,10);
+  $('#cmpEx').innerHTML=[0,1,2,3,4].map(d=>{const t=top(d),m=d3.mean(t,z=>z[FC.feel_good]);return card(`Top 10 ${COH_LAB[d]} · media ${n1(m)}`,t)}).join('');
+  $$('#cmpEx .lnk').forEach(b=>b.onclick=()=>detail(F.films.find(z=>z[FC.tconst]===b.dataset.t)));})();
 
 // ---- capítulo 3: forest (series)
 function drawForest(){
