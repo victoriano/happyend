@@ -74,3 +74,23 @@ def test_derived_labels_have_no_imdb():
         pytest.skip("sin etiquetas")
     cols = pd.read_csv(p, nrows=1).columns
     assert "numVotes" not in cols and "averageRating" not in cols
+
+
+# ---- D-036: módulos C/D/E
+def test_validate_record_cde():
+    from finales import annotation as an
+    ok = {"id": "G1", "feel_good": 7, "feel_good_por_que": " ".join(["palabra"] * 40), "confianza_c": 2,
+          "utopia": None, "utopia_por_que": " ".join(["palabra"] * 20), "publico": "FAMILIAR"}
+    assert an.validate_record_cde(ok) == []
+    assert an.validate_record_cde({**ok, "feel_good": 11})
+    assert an.validate_record_cde({**ok, "publico": "TODOS"})
+    assert an.validate_record_cde({**ok, "feel_good_por_que": "corta"})
+
+
+def test_cde_diff_rules():
+    from finales import v2
+    base = {"feel_good_A": 7.0, "feel_good_B": 5.0, "utopia_A": 5.0, "utopia_B": 5.0, "publico_A": "ADULTO", "publico_B": "ADULTO"}
+    assert v2._cde_diff(base) == []
+    assert v2._cde_diff({**base, "feel_good_B": 4.0}) == ["feel_good"]
+    assert v2._cde_diff({**base, "utopia_B": float("nan")}) == ["utopia"]
+    assert v2._cde_diff({**base, "publico_B": "JUVENIL"}) == ["publico"]

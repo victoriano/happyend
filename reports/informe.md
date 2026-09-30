@@ -252,9 +252,9 @@ La primera parte usaba una muestra aleatoria (150 películas populares por cohor
 ### 9.1 Límites específicos de la segunda parte
 
 * **Sigue sin haber validación humana.** Todas las etiquetas son de dos modelos de lenguaje y un adjudicador.
-* **El cegado no funciona en el cine popular.** Al menos un modelo dijo reconocer el 98,5 % de las películas estadounidenses (y el 60 % de las españolas). La sensibilidad que excluye las películas reconocidas no puede calcularse en EE. UU.
+* **El cegado no funciona en el cine popular.** Al menos un modelo dijo reconocer el 98,5 % de las películas estadounidenses (y el 28 % de las españolas). La sensibilidad que excluye las películas reconocidas no puede calcularse en EE. UU.
 * **Adjudicación parcial (D-026).** Solo se adjudicaron `final` y los ítems de −2 a 2 con diferencia ≥3. En las demás categóricas en desacuerdo manda el anotador A, así que las covariables del módulo B tienen más error de medición que el núcleo v1.
-* **El cine español se lee peor.** La Wikipedia en español a menudo no cuenta el desenlace. Tras volver a anotar 90 películas con la sinopsis inglesa (D-027), el 18 % de las españolas sigue sin final clasificable (antes, el 30 %). Ese porcentaje varía por cohorte (del 7 % en 2010-2019 al 27 % en los noventa), así que las comparaciones españolas se hacen sobre las clasificables, con riesgo de selección. Hay además 15 películas por año, pocas, con umbral de votos distinto del estadounidense (200 frente a 1.000) y dos idiomas de sinopsis.
+* **El cine español se lee peor.** La Wikipedia en español a menudo no cuenta el desenlace. Tras volver a anotar 65 películas con la sinopsis inglesa (D-027), el 58 % de las españolas sigue sin final clasificable (antes, el 61 %). Ese porcentaje varía por cohorte (del 48 % en 2010-2019 al 65 % en los noventa), así que las comparaciones españolas se hacen sobre las clasificables, con riesgo de selección. Hay además un umbral de votos distinto del estadounidense (50 frente a 1.000) y sinopsis en varios idiomas o de TMDB (D-035).
 * **Un censo de lo que hoy se vota.** «Las 50 más votadas de cada año» se mide con votos actuales, con sesgo de supervivencia. Los intervalos miden la variabilidad del proceso que genera las películas (superpoblación), no un error de muestreo (D-029).
 * **Tono y optimismo son juicios más subjetivos** que el tipo de final, aunque el acuerdo fue alto (α 0,92 y 0,83). Además, el optimismo de los personajes se infiere de un resumen, no de la película.
 * **Muchas comparaciones por subgrupo.** De 34 contrastes de finales felices por subgrupo, 9 excluyen el cero. Con tantas pruebas, alguno lo hará por azar. Se presentan como exploratorios.
@@ -262,12 +262,12 @@ La primera parte usaba una muestra aleatoria (150 películas populares por cohor
 
 ### 9.2 Datos y método
 
-* **Universo estadounidense:** las 50 películas estadounidenses con más votos de cada año, 1980-2024, con sinopsis utilizable: **2.343 películas**.
-* **Universo español:** las 15 películas con país de origen España (Wikidata) más votadas de cada año con sinopsis: **592 películas** (D-023, D-024). Hay 13 coproducciones que están en ambos universos y cuentan en los dos.
-* **Anotación completa** (núcleo del manual 1.0 más módulo B del manual 2.0) de 2.042 películas con doble anotación ciega. Las 777 películas del universo que ya estaban en la primera parte conservan sus etiquetas del núcleo, adjudicadas por completo, y recibieron solo el módulo B, con el mismo texto cegado.
+* **Universo estadounidense:** las 50 películas estadounidenses con más votos de cada año, 1980-2025, con sinopsis utilizable: **2.343 películas**.
+* **Universo español:** las 30 películas españolas (sin coproducciones mayoritariamente extranjeras) más votadas de cada año con al menos 50 votos: **1.340 películas** (D-023, D-033 a D-035). Hay 2 coproducciones que están en ambos universos y cuentan en los dos.
+* **Anotación completa** (núcleo del manual 1.0 más módulo B del manual 2.0) de 1.892 películas con doble anotación ciega. Las 777 películas del universo que ya estaban en la primera parte conservan sus etiquetas del núcleo, adjudicadas por completo, y recibieron solo el módulo B, con el mismo texto cegado.
 * **Módulo B:** género, edad, momento vital, estado civil y clase social del protagonista; relaciones centrales (hasta 3); si la historia es especulativa (ciencia ficción, fantasía, sobrenatural, superhéroes); época y países de la trama; humor; tono general (−2 a +2); optimismo de los personajes (−2 a +2).
 * **Acuerdo A-B** (películas nuevas): final κ = 0,86; tono de cierre κ = 0,74; momento vital κ = 0,76; clase social κ = 0,78; estado civil κ = 0,81; especulativa κ = 0,93; época κ = 0,84; humor κ = 0,81; tono general α = 0,92; optimismo de los personajes α = 0,83; relaciones (Jaccard) 0,76; países (Jaccard) 0,92. En las películas de la primera parte, las κ del módulo B van de 0,78 a 0,94. Tablas: `reports/tables/acuerdo_v2_completa.csv` y `acuerdo_v2_modb.csv`.
-* **Adjudicación:** 209 finales adjudicados por un tercer modelo que no sabía qué anotador había dicho qué.
+* **Adjudicación:** 244 finales adjudicados por un tercer modelo que no sabía qué anotador había dicho qué.
 * **Análisis** (`src/finales/analysis_v2.py`): proporciones con intervalo de Wilson y medias con IC t; contrastes entre 2010-2025 y los noventa con bootstrap por película (2.000 réplicas); modelos ajustados en EE. UU. (logit con efecto marginal medio por g-computación para final feliz; MCO con errores HC3 para el optimismo), controlando género, log del rango de votos en el año y, en una segunda especificación, especulativa, época contemporánea, clase social, momento vital, género del protagonista y humor. Relación con IMDb: MCO de la nota media y del log de los votos sobre final feliz, optimismo o tono, con efectos fijos de año y género.
 
 ### 9.3 Resultados
@@ -281,47 +281,47 @@ La primera parte usaba una muestra aleatoria (150 películas populares por cohor
 | EE. UU. | 2000-2009 | 499 | 0 % | 60,9 % [56,6 %; 65,1 %] | 26,9 % | 4,2 % | 8,0 % | +0,42 | −0,13 | 30 % |
 | EE. UU. | 2010-2019 | 500 | 0 % | 63,2 % [58,9 %; 67,3 %] | 26,8 % | 4,4 % | 5,6 % | +0,53 | −0,18 | 40 % |
 | EE. UU. | 2020-2025 | 299 | 0 % | 58,1 % [52,4 %; 63,5 %] | 25,2 % | 8,4 % | 8,4 % | +0,30 | −0,44 | 26 % |
-| España | 1980-1989 | 95 | 19 % | 22,1 % [14,3 %; 32,5 %] | 26,0 % | 16,9 % | 35,1 % | −0,32 | −0,83 | 10 % |
-| España | 1990-1999 | 114 | 27 % | 25,3 % [17,2 %; 35,6 %] | 38,6 % | 8,4 % | 27,7 % | +0,00 | −0,49 | 34 % |
-| España | 2000-2009 | 150 | 23 % | 27,6 % [20,3 %; 36,3 %] | 38,8 % | 6,9 % | 26,7 % | +0,01 | −0,62 | 24 % |
-| España | 2010-2019 | 150 | 7 % | 37,9 % [30,2 %; 46,1 %] | 35,0 % | 7,9 % | 19,3 % | −0,05 | −0,72 | 24 % |
-| España | 2020-2025 | 78 | 17 % | 36,9 % [26,2 %; 49,1 %] | 33,9 % | 12,3 % | 16,9 % | −0,05 | −0,78 | 24 % |
+| España | 1980-1989 | 275 | 64 % | 31,3 % [23,0 %; 41,0 %] | 22,2 % | 13,1 % | 33,3 % | +0,03 | −0,31 | 12 % |
+| España | 1990-1999 | 255 | 65 % | 26,1 % [18,1 %; 36,2 %] | 36,4 % | 6,8 % | 30,7 % | +0,06 | −0,30 | 35 % |
+| España | 2000-2009 | 300 | 55 % | 31,3 % [24,1 %; 39,6 %] | 34,3 % | 6,0 % | 28,4 % | +0,16 | −0,33 | 30 % |
+| España | 2010-2019 | 300 | 48 % | 37,8 % [30,6 %; 45,6 %] | 32,7 % | 8,3 % | 21,1 % | +0,07 | −0,41 | 21 % |
+| España | 2020-2025 | 180 | 58 % | 45,3 % [34,6 %; 56,5 %] | 30,7 % | 8,0 % | 16,0 % | +0,24 | −0,27 | 34 % |
 
 **EE. UU.: el censo confirma una caída pequeña de los finales felices, concentrada en 2020-2025.** En los noventa acababa bien el 67,3 % [63,0 %; 71,2 %] de las películas populares; en 2010-2025, el 61,3 %. La diferencia es de −6,0 pp [−11,3 pp; −0,7 pp]. Por cohortes: 2010-2019 −4,1 pp [−9,9 pp; +1,7 pp] y 2020-2025 −9,2 pp [−16,2 pp; −2,2 pp]. Los ochenta (61,9 %) y los dos mil (60,9 %) también quedan por debajo de los noventa, que vuelven a parecer un pico. Ajustado por género y popularidad, la diferencia es de −7,4 pp en 2010-2019 y −9,0 pp en 2020-2025. Si se ajusta también por protagonista y trama, queda en −3,9 pp y −7,2 pp: parte de la caída se explica por el tipo de historias. Los finales trágicos no aumentan (−0,8 pp [−3,8 pp; +2,1 pp]).
 
 **El optimismo de los personajes no ha bajado, salvo en 2020-2025.** La media del cine popular estadounidense va de +0,38 en los ochenta a +0,45 en los noventa y +0,53 en 2010-2019. En 2020-2025 cae a +0,30 (−0,15 [−0,28; −0,01] frente a los noventa). El **tono general** sí se oscurece algo: −0,23 [−0,35; −0,10] entre los noventa y 2010-2025.
 
-**Final y ánimo son cosas distintas.** Entre los finales felices, el 77 % tiene personajes optimistas; entre los agridulces, el 40 %; entre los ambiguos, el 25 %; y entre los trágicos, 1 de cada 11 (9 %). *Titanic* se clasifica como final agridulce, con optimismo de los personajes +2: es el caso típico de desenlace con pérdida y personajes vitalistas. Las «tragedias vitalistas» en sentido estricto (final trágico y personajes optimistas) son raras: el 1,0 % de las películas. La proporción de finales no felices con personajes optimistas no cambia de forma clara entre los noventa y 2010-2025 (+1,7 pp [−2,0 pp; +5,3 pp]).
+**Final y ánimo son cosas distintas.** Entre los finales felices, el 77 % tiene personajes optimistas; entre los agridulces, el 40 %; entre los ambiguos, el 25 %; y entre los trágicos, 1 de cada 11 (9 %). *Titanic* se clasifica como final agridulce, con optimismo de los personajes +2: es el caso típico de desenlace con pérdida y personajes vitalistas. Las «tragedias vitalistas» en sentido estricto (final trágico y personajes optimistas) son raras: el 1,2 % de las películas. La proporción de finales no felices con personajes optimistas no cambia de forma clara entre los noventa y 2010-2025 (+1,7 pp [−2,0 pp; +5,3 pp]).
 
 **¿Dónde cayó el final feliz? (EE. UU., exploratorio).** Los subgrupos en los que la caída entre los noventa y 2010-2025 excluye el cero son: protagonista en crisis vital (−28,7 pp, IC [−48,1 pp; −10,0 pp], n = 32/80); protagonista en pareja (−18,7 pp, IC [−35,0 pp; −2,0 pp], n = 58/63); ciencia ficción (−16,5 pp, IC [−28,3 pp; −3,6 pp], n = 68/165); protagonista mujer (−14,5 pp, IC [−27,8 pp; −0,6 pp], n = 63/186); comedia (−14,2 pp, IC [−27,2 pp; −1,9 pp], n = 99/90); acción/aventura (−10,4 pp, IC [−18,1 pp; −2,9 pp], n = 172/391); clase trabajadora (−10,2 pp, IC [−19,6 pp; −0,2 pp], n = 147/223); historias no especulativas (−9,0 pp, IC [−16,1 pp; −1,9 pp], n = 335/395); historias contemporáneas (−8,8 pp, IC [−15,0 pp; −2,7 pp], n = 354/503). En la comedia baja además el optimismo de los personajes (−0,45 [−0,69; −0,20] puntos). Las diferencias por clase alta, drama o historias de época tienen signo positivo, pero con intervalos amplios.
 
-**España va al revés.** El cine español popular es mucho menos feliz y mucho más sombrío que el estadounidense: el tono general medio es −0,68, frente a −0,17. Pero sus finales felices **suben**: del 25,3 % [17,2 %; 35,6 %] en los noventa al 37,6 % en 2010-2025 (+12,3 pp [+0,4 pp; +23,4 pp]; el intervalo apenas excluye el cero), y los trágicos bajan (−9,2 pp [−20,1 pp; +1,2 pp]). El optimismo de los personajes no cambia (−0,05 [−0,27; +0,16]). Con 15 películas al año, cambios en la proporción de no clasificables y dos idiomas de sinopsis, este resultado es frágil (ver sensibilidad).
+**España va al revés.** El cine español popular es mucho menos feliz y mucho más sombrío que el estadounidense: el tono general medio es −0,33, frente a −0,17. Pero sus finales felices **suben**: del 26,1 % [18,1 %; 36,2 %] en los noventa al 40,3 % en 2010-2025 (+14,1 pp [+3,0 pp; +24,9 pp]; el intervalo apenas excluye el cero), y los trágicos bajan (−11,2 pp [−22,3 pp; −0,4 pp]). El optimismo de los personajes no cambia (+0,07 [−0,07; +0,20]). Con cambios en la proporción de no clasificables y sinopsis de fuentes e idiomas distintos, este resultado es frágil (ver sensibilidad).
 
-**IMDb (asociación, en agregado).** Entre películas del mismo año y género, las de final feliz tienen una nota media de IMDb −0,33 puntos distinta [−0,40; −0,27] en EE. UU. y −0,36 [−0,57; −0,16] en España. Cada punto de optimismo de los personajes se asocia con −0,09 [−0,13; −0,06] puntos de nota en EE. UU. Los finales felices también acumulan algo menos de votos (log de votos −0,15 [−0,22; −0,08]). Quien vota en IMDb puntúa algo mejor las películas menos felices; eso no dice nada de si el público echa de menos el optimismo.
+**IMDb (asociación, en agregado).** Entre películas del mismo año y género, las de final feliz tienen una nota media de IMDb −0,33 puntos distinta [−0,40; −0,27] en EE. UU. y −0,33 [−0,52; −0,14] en España. Cada punto de optimismo de los personajes se asocia con −0,09 [−0,13; −0,06] puntos de nota en EE. UU. Los finales felices también acumulan algo menos de votos (log de votos −0,15 [−0,22; −0,08]). Quien vota en IMDb puntúa algo mejor las películas menos felices; eso no dice nada de si el público echa de menos el optimismo.
 
 ### 9.4 Sensibilidad (2010-2025 − 1990-1999)
 
 | Análisis | País | 2010-2025 − 1990-1999 | IC 95 % | n películas |
 |---|---|---|---|---|
-| Principal | España | +12,3 pp | [+0,4 pp; +23,4 pp] | 587 |
+| Principal | España | +14,1 pp | [+3,0 pp; +24,9 pp] | 1310 |
 | Principal | EE. UU. | −6,0 pp | [−11,3 pp; −0,7 pp] | 2295 |
-| Solo anotador A | España | +13,5 pp | [+2,5 pp; +24,5 pp] | 587 |
+| Solo anotador A | España | +15,3 pp | [+4,3 pp; +26,0 pp] | 1310 |
 | Solo anotador A | EE. UU. | −5,4 pp | [−10,7 pp; −0,1 pp] | 2295 |
-| Solo anotador B | España | +8,3 pp | [−3,2 pp; +19,5 pp] | 587 |
+| Solo anotador B | España | +11,2 pp | [+0,0 pp; +21,8 pp] | 1310 |
 | Solo anotador B | EE. UU. | −6,2 pp | [−11,6 pp; −0,9 pp] | 2295 |
-| Excluye películas reconocidas | España | +10,1 pp | [−10,3 pp; +29,4 pp] | 233 |
-| Solo producciones solo de EE. UU. | España | +12,3 pp | [+0,4 pp; +23,4 pp] | 587 |
+| Excluye películas reconocidas | España | +13,3 pp | [−3,0 pp; +28,6 pp] | 942 |
+| Solo producciones solo de EE. UU. | España | +14,1 pp | [+3,0 pp; +24,9 pp] | 1310 |
 | Solo producciones solo de EE. UU. | EE. UU. | −5,3 pp | [−11,3 pp; +0,4 pp] | 1711 |
-| Excluye películas del estudio v1 | España | +12,6 pp | [+1,0 pp; +23,8 pp] | 583 |
+| Excluye películas del estudio v1 | España | +14,3 pp | [+3,0 pp; +25,4 pp] | 1308 |
 | Excluye películas del estudio v1 | EE. UU. | −3,6 pp | [−10,3 pp; +3,2 pp] | 1519 |
-| ES: solo sinopsis en inglés | España | +13,2 pp | [−2,0 pp; +27,9 pp] | 345 |
-| ES: solo sinopsis en español | España | +11,4 pp | [−7,8 pp; +29,3 pp] | 242 |
-| ES: sin la reanotación D-027 | España | +14,3 pp | [+2,1 pp; +26,2 pp] | 587 |
-| Principal (optimismo) | España | −0,05 | [−0,27; +0,16] | 587 |
+| ES: solo sinopsis en inglés | España | +16,1 pp | [−0,3 pp; +31,8 pp] | 309 |
+| ES: solo sinopsis en español | España | +13,0 pp | [−5,2 pp; +30,8 pp] | 332 |
+| ES: sin la reanotación D-027 | España | +13,8 pp | [+1,8 pp; +25,2 pp] | 1310 |
+| Principal (optimismo) | España | +0,07 | [−0,07; +0,20] | 1310 |
 | Principal (optimismo) | EE. UU. | −0,01 | [−0,11; +0,10] | 2295 |
-| Solo anotador A (optimismo) | España | +0,01 | [−0,20; +0,22] | 587 |
+| Solo anotador A (optimismo) | España | +0,10 | [−0,04; +0,24] | 1310 |
 | Solo anotador A (optimismo) | EE. UU. | −0,01 | [−0,11; +0,10] | 2295 |
-| Solo anotador B (optimismo) | España | −0,10 | [−0,32; +0,13] | 587 |
+| Solo anotador B (optimismo) | España | +0,04 | [−0,10; +0,19] | 1310 |
 | Solo anotador B (optimismo) | EE. UU. | −0,01 | [−0,12; +0,11] | 2295 |
 
 En EE. UU., la caída de finales felices se mantiene con las etiquetas de un solo anotador y, en el límite, sin coproducciones. En cambio, pierde nitidez al excluir las películas que ya estaban en la primera parte: con solo las películas nuevas del censo, el intervalo incluye el cero. En España, el aumento se sostiene con el anotador A y sin la reanotación D-027, pero no con el anotador B ni al separar por idioma de la sinopsis. En los dos países, el optimismo de los personajes no cambia con ningún anotador.
@@ -333,6 +333,32 @@ En EE. UU., la caída de finales felices se mantiene con las etiquetas de un sol
 **Lo que sugieren, sin confirmarlo.** La caída se concentra en la ciencia ficción, la comedia, la acción, las historias con protagonista femenina y las de personajes en crisis vital. El tono general es algo más oscuro que en los noventa. En el cine español la tendencia es la contraria, con más finales felices en 2010-2025. Y las notas de IMDb son algo más bajas para los finales felices.
 
 **Lo que no permiten afirmar.** Que hubiera una prohibición de películas pesimistas en los noventa; que el público eche de menos ese optimismo (la encuesta sigue sin hacerse); las causas de ninguno de estos cambios. Tampoco que las diferencias entre subgrupos sean robustas, dado el número de comparaciones.
+
+### 9.6 Tercera parte: *feel good*, utopía y público (D-035, D-036)
+
+A petición del usuario, la medida principal pasa a ser el ***feel good***: si la película, sobre todo por cómo termina, nos deja con la idea de que los personajes acaban en paz, armonía y amor con los suyos, su comunidad, su país o el universo, y de que hay esperanza en la humanidad. Se puntúa de 0 a 10 con anclajes (manual de los módulos C, D y E, versión 1.0, congelado tras dos pilotos). Se añaden la nota de **utopía o distopía** de la sociedad que muestra la película (0 a 10, en todas las películas) y el **público** al que se dirige (infantil, familiar, juvenil, adulto). El final feliz se mantiene como medida comparada.
+
+**Límites específicos.**
+
+* El *feel good* es un juicio más global que el tipo de final y se hace sobre un resumen, no sobre la película. Los modelos reconocieron casi todas las películas estadounidenses.
+* El universo español cambió (D-035): 30 películas por año con ≥50 votos, sinopsis de Wikipedia en ocho idiomas o, si no había, de TMDB. El 46 % de las españolas no tiene nota *feel good*, sobre todo por sinopsis comerciales que no cuentan el final, y ese porcentaje varía por década y es mucho mayor en las películas menos vistas de cada año.
+* Los intervalos no incluyen el error de medición; la sensibilidad con un solo anotador sí lo aproxima.
+
+**Datos y acuerdo.** 3.138 películas con doble anotación C/D/E. Acuerdo: *feel good* α = 0,96 (el 99 % de las notas a ≤2 puntos); utopía α = 0,92; público κ = 0,80. Árbitro: 207 notas *feel good*, 164 de utopía y los desacuerdos de público. Valor final: media de A y B, o la nota del árbitro.
+
+**Resultados (EE. UU.).** La nota *feel good* media es 5,8 en los ochenta, 6,3 en los noventa, 6,1 en los dos mil, 6,3 en 2010-2019 y 5,7 en 2020-2025. La diferencia entre 2010-2025 y los noventa es de −0,27 puntos (IC 95 %: −0,57 a +0,03): pequeña, con intervalo que roza el cero. La caída clara es la de 2020-2025: −0,64 (IC 95 %: −1,02 a −0,24). Las películas con 7 o más pasan del 55 % en los noventa al 44 % en 2020-2025. Ajustada por género y popularidad, la diferencia 2010-2025 es de −0,37 (IC 95 %: −0,63 a −0,10); sin películas infantiles y familiares, de −0,15 (IC 95 %: −0,48 a +0,18); pesando por votos, −0,03 (IC 95 %: −0,53 a +0,46). Con un solo anotador: A −0,24, B −0,29.
+
+**Feel good y final feliz.** Correlación 0,67 entre la nota y el final feliz. Los finales felices sacan de media 7,4; los trágicos, 1,0. En EE. UU., el final feliz cae ya en 2010-2019 mientras el *feel good* aguanta hasta 2020.
+
+**Utopía.** La media ronda 4,6 en EE. UU. y baja en 2020-2025: −0,36 puntos frente a los noventa (IC 95 %: −0,64 a −0,09). España: 4,0 en los noventa y 4,1 en 2010-2025.
+
+**Público.** Las películas familiares e infantiles sacan 8,6 de media y las de adultos 5,2. Su peso en el cine popular estadounidense pasa del 22 % en los noventa al 18 % en 2020-2025, lo que explica parte de la caída.
+
+**España.** Nota media 4,1 en los noventa y 4,8 en 2010-2025, una diferencia de +0,65 (IC 95 %: +0,14 a +1,19). Solo con sinopsis de Wikipedia: +0,65 (IC 95 %: +0,09 a +1,19).
+
+**IMDb.** Entre películas estadounidenses del mismo año y género, cada punto de *feel good* se asocia con −0,038 (IC 95 %: −0,051 a −0,026) puntos de nota media en IMDb.
+
+**Qué añade.** La hipótesis «los noventa eran más *feel good*» se sostiene solo en parte: los noventa son la década con la nota más alta, pero la diferencia con 2010-2019 es nula y la caída se concentra en 2020-2025. Con las mismas cautelas que antes, no permite afirmar que hubiera una prohibición de películas pesimistas ni que el público eche de menos ese cine.
 
 ## 10. Reproducibilidad
 

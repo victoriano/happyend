@@ -1,6 +1,6 @@
 ## Segunda parte: censo completo, cine español y ánimo de los personajes
 
-Se anotaron **todas** las películas del marco popular estadounidense (**{v2_n_us}**, las 50 más votadas de cada año) y las **{v2_n_es}** españolas más votadas (15 por año). Además del final, se anotaron el protagonista (edad, momento vital, estado civil, clase social), las relaciones centrales, si la historia es especulativa, la época y los países de la trama, el humor, el **tono general** y el **optimismo de los personajes**. El acuerdo entre anotadores fue alto: final κ = {v2_k_final}; optimismo de los personajes α = {v2_a_optimismo_personajes}.
+Se anotaron **todas** las películas del marco popular estadounidense (**{v2_n_us}**, las 50 más votadas de cada año) y las **{v2_n_es}** españolas más votadas (30 por año). Además del final, se anotaron el protagonista (edad, momento vital, estado civil, clase social), las relaciones centrales, si la historia es especulativa, la época y los países de la trama, el humor, el **tono general** y el **optimismo de los personajes**. El acuerdo entre anotadores fue alto: final κ = {v2_k_final}; optimismo de los personajes α = {v2_a_optimismo_personajes}.
 
 Antes de las conclusiones, los límites de esta parte:
 

@@ -36,4 +36,4 @@ Se compararon **{n_peliculas} largometrajes de ficción estadounidenses** (1980-
 
 ## Veredicto provisional
 
-La afirmación queda **matizada**. Hay una ligera ventaja de los noventa en finales felices, pero es incierta y no se traslada a más tragedia, a un tono más oscuro ni a una visión de la vida más pesimista en el cine popular actual. La parte de que «se echa de menos» **sigue sin probar**.
+La afirmación queda **matizada**. Los noventa son la década más *feel good* y con más finales felices del cine popular estadounidense, pero la diferencia con 2010-2019 es pequeña o nula; el cambio claro es la caída de 2020-2025, con parte debida a la composición (menos comedia y menos cine familiar). No hay más tragedias. En España la tendencia es la contraria. La parte de que «se echa de menos» **sigue sin probar**.

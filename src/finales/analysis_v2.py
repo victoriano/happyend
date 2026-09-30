@@ -60,6 +60,8 @@ def by_cohort(d: pd.DataFrame, keys=("country_frame", "cohort")) -> pd.DataFrame
                      "optimismo": o[0], "optimismo_lo": o[1], "optimismo_hi": o[2],
                      "pct_optimistas": g.y_optimistas.mean(),
                      "tono": tg[0], "tono_lo": tg[1], "tono_hi": tg[2], "pct_tono_pos": g.y_tono_pos.mean(),
+                     "feel_good": g.feel_good.mean(), "feel_good_7": g.y_fg7.mean(), "utopia": g.utopia.mean(),
+                     "n_feel_good": int(g.feel_good.notna().sum()),
                      "vision": g.vision_vida.mean(), "tragedia_vitalista": c.tragedia_vitalista.mean(),
                      "no_feliz_optimista": ((c.final != "FELIZ") & (c.optimismo_personajes > 0)).mean(),
                      "optimistas_en_no_felices": (c[c.final != "FELIZ"].optimismo_personajes > 0).mean(),
@@ -70,7 +72,8 @@ def by_cohort(d: pd.DataFrame, keys=("country_frame", "cohort")) -> pd.DataFrame
 def contrasts(d: pd.DataFrame) -> pd.DataFrame:
     rows = []
     ys = {"feliz": "y_feliz", "tragico": "y_tragico", "optimismo": "optimismo_personajes", "tono": "tono_general",
-          "pct_optimistas": "y_optimistas", "vision": "vision_vida", "no_feliz_optimista": "y_nf_opt"}
+          "pct_optimistas": "y_optimistas", "vision": "vision_vida", "no_feliz_optimista": "y_nf_opt",
+          "feel_good": "feel_good", "feel_good_7": "y_fg7", "utopia": "utopia", "distopia": "y_distopia"}
     for cf, g in d.groupby("country_frame"):
         g0 = g[g.cohort == REF]
         for c in COHORTS + ["2010-2025"]:
@@ -88,7 +91,9 @@ def contrasts(d: pd.DataFrame) -> pd.DataFrame:
 def by_year(d: pd.DataFrame) -> pd.DataFrame:
     g = d.groupby(["country_frame", "year"])
     return pd.DataFrame({"n": g.size(), "feliz": g.y_feliz.mean(), "tragico": g.y_tragico.mean(),
-                         "optimismo": g.optimismo_personajes.mean(), "tono": g.tono_general.mean()}).reset_index()
+                         "optimismo": g.optimismo_personajes.mean(), "tono": g.tono_general.mean(),
+                         "feel_good": g.feel_good.mean(), "feel_good_7": g.y_fg7.mean(),
+                         "utopia": g.utopia.mean()}).reset_index()
 
 
 def covariates(d: pd.DataFrame) -> pd.DataFrame:
@@ -129,7 +134,8 @@ def subgroups(d: pd.DataFrame) -> pd.DataFrame:
             g0, g1 = g[g.cohort == REF], g[g.cohort.isin(RECIENTE)]
             if len(g0) < 25 or len(g1) < 25:
                 continue
-            for name, y in (("feliz", "y_feliz"), ("optimismo", "optimismo_personajes"), ("tono", "tono_general")):
+            for name, y in (("feliz", "y_feliz"), ("optimismo", "optimismo_personajes"), ("tono", "tono_general"),
+                            ("feel_good", "feel_good"), ("utopia", "utopia")):
                 est, lo, hi = _boot_diff(g1[y].astype(float).values, g0[y].astype(float).values,
                                          seed=0)
                 rows.append({"variable": var, "valor": lab.get(val, val) if lab else val, "medida": name,
@@ -257,6 +263,7 @@ def run() -> dict:
     mod.to_csv(TABLES / "imdb_modelos.csv", index=False, float_format="%.4f")
     out["imdb_agregado"], out["imdb_modelos"] = agg, mod
     S = story(d)
+    S["fg"] = story_fg(d)
 
     def conv(o):
         if isinstance(o, dict):
@@ -264,7 +271,7 @@ def run() -> dict:
         if isinstance(o, (list, tuple)):
             return [conv(x) for x in o]
         if isinstance(o, (float, np.floating)):
-            return None if np.isnan(o) else round(float(o), 4)
+            return None if not np.isfinite(o) else round(float(o), 4)
         if isinstance(o, np.integer):
             return int(o)
         return o
@@ -385,6 +392,99 @@ def story(d: pd.DataFrame) -> dict:
         grp = {"1980-1999": ac[ac.cohort.isin(["1980-1989", "1990-1999"])], "1980-1989": ac[ac.cohort == "1980-1989"],
                "1990-1999": ac[ac.cohort == "1990-1999"], "2010-2025": ac[ac.periodo == "2010-2025"]}
         out["accion"][cf] = {k: _est(v, "y_feliz") for k, v in grp.items()}
+    return out
+
+
+# ------------------------------------------------------------------ D-036: historia centrada en el feel good
+def _ols_boot(g: pd.DataFrame, y: str, extra: str = "") -> list:
+    """Diferencia ajustada 2010-2025 − 1990s (MCO con errores HC3), controlando género y popularidad."""
+    g = g[(g.periodo != "otro")].dropna(subset=[y]).copy()
+    for v in ("clase_social", "momento_vital", "genero_protagonista", "humor", "genre_main"):
+        vc = g[v].value_counts()
+        rare = g[v].map(vc) < 30
+        g[v] = g[v].where(~rare, "OTRO" if rare.sum() >= 30 else vc.index[0])
+    g["reciente"] = (g.periodo == "2010-2025").astype(int)
+    m = smf.ols(f"{y} ~ reciente + C(genre_main) + log_rank" + extra, data=g).fit(cov_type="HC3")
+    return [m.params["reciente"], *m.conf_int().loc["reciente"].tolist()]
+
+
+def story_fg(d: pd.DataFrame) -> dict:
+    d = _prep_story(d)
+    d["y_feliz_fg_bajo"] = ((d.final == "FELIZ") & (d.feel_good <= 5)).astype(float).where(d.clasificable & d.feel_good.notna())
+    d["y_nofeliz_fg_alto"] = ((d.final != "FELIZ") & (d.feel_good >= 7)).astype(float).where(d.clasificable & d.feel_good.notna())
+    d["wiki"] = d.sinopsis_idioma != "tmdb"
+    out = {"cohortes": {}, "periodos": {}, "diff": {}, "sens": {}, "anual": {}, "hist": {}, "por_final": {},
+           "genero": {}, "publico": {}, "imdb": {}, "cruce": {}}
+    ys = ["feel_good", "y_fg7", "y_fg_bajo", "utopia", "y_distopia", "y_feliz"]
+    for cf, g in d.groupby("country_frame"):
+        out["cohortes"][cf] = {y: [_est(g[g.cohort == c], y) for c in COHORTS] for y in ys}
+        nf = g[~g.infantil_familiar]
+        out["cohortes"][cf]["feel_good_sin_familiar"] = [_est(nf[nf.cohort == c], "feel_good") for c in COHORTS]
+        out["periodos"][cf] = {y: {p: _est(g[g.periodo == p], y) for p in PERIODS} for y in ys}
+        g0, g1 = g[g.periodo == "1990-1999"], g[g.periodo == "2010-2025"]
+
+        def diff(y, a=g1, b=g0):
+            return list(_boot_diff(a[y].astype(float).values, b[y].astype(float).values, seed=0))
+        out["diff"][cf] = {y: diff(y) for y in ys}
+        out["diff"][cf]["por_cohorte"] = {c: {y: list(_boot_diff(g[g.cohort == c][y].astype(float).values,
+                                                                   g0[y].astype(float).values, seed=0))
+                                              for y in ("feel_good", "y_fg7", "utopia", "y_feliz")}
+                                          for c in COHORTS if c != REF}
+        top = 20 if cf == "US" else 10
+        both = lambda x: x[(x.feel_good_A - x.feel_good_B).abs() < 3]
+        rows = [("Análisis principal", diff("feel_good")),
+                ("Solo el anotador A", diff("feel_good_A")),
+                ("Solo el anotador B", diff("feel_good_B")),
+                ("Solo si A y B coinciden (±2)", diff("feel_good", both(g1), both(g0))),
+                ("Solo casos muy claros", diff("feel_good", g1[g1.confianza_c_min == 3], g0[g0.confianza_c_min == 3])),
+                ("Sin películas infantiles y familiares", diff("feel_good", g1[~g1.infantil_familiar], g0[~g0.infantil_familiar])),
+                ("Pesando más las más votadas", list(_wboot(g1, g0, "feel_good", "numVotes"))),
+                (f"Solo las {top} más votadas/año", diff("feel_good", g1[g1.votes_rank_in_year <= top], g0[g0.votes_rank_in_year <= top])),
+                ("Ajustado por género y popularidad", _ols_boot(g, "feel_good")),
+                ("Ajustado + protagonista y trama", _ols_boot(
+                    g, "feel_good", " + especulativa_si + contemporanea + C(clase_social) + C(momento_vital) + C(genero_protagonista) + C(humor)"))]
+        if cf == "US":
+            rows.insert(6, ("Sin coproducciones", diff("feel_good", g1[g1.us_only == True], g0[g0.us_only == True])))
+        else:
+            rows.insert(6, ("Solo sinopsis de Wikipedia", diff("feel_good", g1[g1.wiki], g0[g0.wiki])))
+        out["sens"][cf] = [[k] + [None if pd.isna(x) else float(x) for x in v] for k, v in rows]
+        yy = g.groupby("year").agg(n=("tconst", "size"), fg=("feel_good", "mean"), fg7=("y_fg7", "mean"),
+                                   ut=("utopia", "mean"), feliz=("y_feliz", "mean")).reset_index()
+        out["anual"][cf] = yy.values.tolist()
+        out["hist"][cf] = {p: np.bincount(g[g.periodo == p].feel_good.dropna().round().astype(int), minlength=11).tolist()
+                           for p in PERIODS}
+        c = g[g.clasificable & g.feel_good.notna()]
+        out["por_final"][cf] = {f: [len(c[c.final == f]), c[c.final == f].feel_good.mean(),
+                                    np.bincount(c[c.final == f].feel_good.round().astype(int), minlength=11).tolist()]
+                                for f in FINALS}
+        out["cruce"][cf] = {"corr": float(c.feel_good.corr(c.y_feliz)),
+                            "feliz_fg_bajo": {p: _est(g[g.periodo == p], "y_feliz_fg_bajo") for p in PERIODS},
+                            "nofeliz_fg_alto": {p: _est(g[g.periodo == p], "y_nofeliz_fg_alto") for p in PERIODS},
+                            "fg_en_feliz": {p: _est(g[(g.periodo == p) & (g.final == "FELIZ")], "feel_good") for p in PERIODS},
+                            "fg_en_nofeliz": {p: _est(g[(g.periodo == p) & g.clasificable & (g.final != "FELIZ")], "feel_good")
+                                              for p in PERIODS}}
+        gen = []
+        for ge, gg in g.groupby("genre_main"):
+            a, b = gg[gg.periodo == "2010-2025"], gg[gg.periodo == "1990-1999"]
+            if b.feel_good.notna().sum() >= 10 and a.feel_good.notna().sum() >= 10:
+                dd = _boot_diff(a.feel_good.values, b.feel_good.values, seed=0)
+                gen.append([ge, int(b.feel_good.notna().sum()), int(a.feel_good.notna().sum()),
+                            b.feel_good.mean(), a.feel_good.mean(), *dd])
+        out["genero"][cf] = gen
+        out["publico"][cf] = {"composicion": {p: g[g.periodo == p].publico.value_counts(normalize=True).to_dict() for p in PERIODS},
+                              "por_cohorte": {c2: g[g.cohort == c2].publico.value_counts(normalize=True).to_dict() for c2 in COHORTS},
+                              "fg": {k: _est(g[g.publico == k], "feel_good") for k in ("INFANTIL", "FAMILIAR", "JUVENIL", "ADULTO")}}
+        h = g.dropna(subset=["feel_good", "averageRating"]).copy()
+        h["logv"] = np.log(h.numVotes)
+        im = {}
+        for yv in ("averageRating", "logv"):
+            for x in ("feel_good", "utopia"):
+                hh = h.dropna(subset=[x])
+                m = smf.ols(f"{yv} ~ {x} + C(year) + C(genre_main)", data=hh).fit(cov_type="HC3")
+                im[f"{yv}~{x}"] = [m.params[x], *m.conf_int().loc[x].tolist(), int(m.nobs)]
+        bins = pd.cut(h.feel_good, [-0.1, 3, 6.5, 10], labels=["0-3", "3.5-6", "7-10"])
+        im["nota_por_fg"] = h.groupby(bins, observed=False).averageRating.mean().to_dict()
+        out["imdb"][cf] = im
     return out
 
 

@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import re
 
+import numpy as np
 import pandas as pd
 
 from . import annotation as an
@@ -24,7 +25,7 @@ def clean_title(t: str) -> str:
 
 
 def r4(x):
-    return None if pd.isna(x) else round(float(x), 4)
+    return None if pd.isna(x) or not np.isfinite(float(x)) else round(float(x), 4)
 
 
 def build() -> dict:
@@ -113,6 +114,9 @@ def _num(x, d=2):
     return None if pd.isna(x) else round(float(x), d)
 
 
+PUB = ["INFANTIL", "FAMILIAR", "JUVENIL", "ADULTO"]
+
+
 def build_films_v2() -> dict:
     """Una fila por película del universo v2 (sin votos ni notas de IMDb)."""
     d = pd.read_csv(INTERIM / "analitico_v2.csv")
@@ -121,6 +125,7 @@ def build_films_v2() -> dict:
     paises = d.paises_trama_A.fillna("").str.split("|").explode()
     top_paises = [p for p in paises.value_counts().index if p][:40]
     rows = []
+    d = d[d.final.notna()]  # sin sinopsis utilizable: fuera del explorador
     for tc, g in d.groupby("tconst", sort=False):
         r = g.iloc[0]
         cf = "+".join(sorted(g.country_frame.unique(), reverse=True))  # "US", "ES" o "US+ES"
@@ -138,12 +143,13 @@ def build_films_v2() -> dict:
             TONE.index(r.tono_cierre) if r.tono_cierre in TONE else 5, tc,
             int(r.numVotes) if pd.notna(r.numVotes) else None, _num(r.averageRating, 1),
             int(r.votes_rank_in_year), bool(getattr(r, "anio_en_curso", False) == True),
+            _num(r.feel_good, 1), _num(r.utopia, 1), PUB.index(r.publico) if r.publico in PUB else -1,
         ])
     rows.sort(key=lambda x: (x[2], x[0]))
     cols = ["titulo", "original", "anio", "pais", "genero", "final", "optimismo", "tono"] + list(EXPL) + \
            ["relaciones", "paises_trama", "poster", "tmdb", "tono_cierre", "tconst", "imdb_votos", "imdb_nota",
-            "rango_votos_anio", "anio_en_curso"]
-    return {"cols": cols, "genres": genres, "finals": FIN, "tones": TONE, "cats": EXPL,
+            "rango_votos_anio", "anio_en_curso", "feel_good", "utopia", "publico"]
+    return {"cols": cols, "publicos": PUB, "genres": genres, "finals": FIN, "tones": TONE, "cats": EXPL,
             "relaciones": an.RELACIONES, "paises": top_paises, "films": rows}
 
 
@@ -188,8 +194,26 @@ def build_v2() -> dict:
     agr = {"acuerdo_final": r4((both.final_A == both.final_B).mean()),
            "kappa_final": r4(__import__("finales.agreement", fromlist=["x"]).cohen_kappa(both.final_A, both.final_B)),
            "n_adj": int((u.final_fuente == "adjudicado").sum())}
+    from .agreement import krippendorff_alpha, cohen_kappa
+    cd = u[u.feel_good_A.notna() | u.feel_good_B.notna()]
+    for k in ("feel_good", "utopia"):
+        pr = cd[[f"{k}_A", f"{k}_B"]].dropna()
+        agr[f"alfa_{k}"] = r4(krippendorff_alpha([list(x) for x in zip(pr[f"{k}_A"], pr[f"{k}_B"])], "interval"))
+        agr[f"dentro2_{k}"] = r4(((pr[f"{k}_A"] - pr[f"{k}_B"]).abs() <= 2).mean())
+        agr[f"n_adj_{k}"] = int((u[f"{k}_fuente"] == "adjudicado").sum())
+    pb = u[u.publico_A.notna() & u.publico_B.notna()]
+    agr["kappa_publico"] = r4(cohen_kappa(pb.publico_A, pb.publico_B))
+    agr["acuerdo_publico"] = r4((pb.publico_A == pb.publico_B).mean())
+    agr["n_cde"] = int(len(cd))
+    fgb = pd.cut(d.feel_good, [-0.1, 2.49, 4.49, 6.49, 8.49, 10], labels=[0, 1, 2, 3, 4]).astype(float)
+    cc = d[d.clasificable & fgb.notna()]
+    mfg = pd.crosstab(cc.final, fgb[cc.index]).reindex(index=FIN[:4], columns=[0.0, 1.0, 2.0, 3.0, 4.0]).fillna(0).astype(int)
+    es = d[d.country_frame == "ES"]
+    src_es = es.sinopsis_idioma.fillna("ninguna").value_counts().to_dict()
     return {"historia": hist, "acuerdo_censo": agr, "cohortes": coh, "anual": year, "contrastes": contr, "subgrupos": sub, "final_animo": fvm,
             "matriz": {"filas": FIN[:4], "cols": [int(x) for x in mat.columns], "n": mat.values.tolist()},
+            "matriz_fg": {"filas": FIN[:4], "n": mfg.values.tolist()}, "fuentes_es": src_es,
+            "sin_fg": {cf: r4(g.feel_good.isna().mean()) for cf, g in d.groupby("country_frame")},
             "imdb": imdb, "sensibilidad": sens, "ajustados": adj, "acuerdo": acu, "covariables": cov,
             "reconocidas": {k: r4(v) for k, v in rec.items()},
             "n": {"US": int((d.country_frame == "US").sum()), "ES": int((d.country_frame == "ES").sum()),
@@ -201,7 +225,7 @@ def main_v2() -> None:
     # La web presenta un único estudio (censo + España): data.json solo lleva los agregados del censo.
     cat = pd.read_csv(TABLES / "catalogo_por_cohorte.csv")
     data = {"v2": build_v2(), "meta": {"catalogo_us": int(cat.catalogo_elegible.sum()),
-                                       "catalogo_es": int(len(pd.read_csv(INTERIM / "catalog_es.csv")))}}
+                                       "catalogo_es": int(len(pd.read_csv(INTERIM / "catalog_es_v4.csv")))}}
     (ROOT / "web" / "data.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     f = ROOT / "web" / "films.json"
     f.write_text(json.dumps(build_films_v2(), ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
@@ -239,16 +263,27 @@ def build_fichas() -> dict[int, dict]:
     from . import v2
     d = pd.read_csv(INTERIM / "analitico_v2.csv").drop_duplicates("tconst")
     k1 = pd.read_csv(ANNOT_KEYS / "principal_key.csv").drop_duplicates("tconst").set_index("tconst").id
-    notes = _notes(["principal", "v2_completa", "v2_es_en", "v2_ext"])
+    notes = _notes(["principal", "v2_completa", "v2_es_en", "v2_ext", "v2_es3", "v2_es3_en", "v2_es4", "v2_es4_en",
+                    "v2_es5"])
     adj = _adj_notes(["principal/adjudicacion", "v2_adjudicacion"])
     out: dict[int, dict] = {}
+    txt = lambda v: v if isinstance(v, str) and v else None
     for r in d.itertuples():
+        if pd.isna(r.final):
+            continue
         i = k1.get(r.tconst) if r.etapa_v2 == "v2_modb" else r.id_v2
-        rec = v2.synopsis_for(r.tconst, r.sinopsis_idioma if isinstance(r.sinopsis_idioma, str) else "en")
+        lang = r.sinopsis_idioma if isinstance(r.sinopsis_idioma, str) else "en"
+        rec = v2.synopsis_src(r.tconst, lang) if lang not in ("en", "es") else v2.synopsis_for(r.tconst, lang)
         n = notes.get(i, {})
+        # D-035: las sinopsis de TMDB no se publican, solo se enlazan
+        s = None if lang == "tmdb" else (rec or {}).get("text")
         out.setdefault(int(r.year), {})[r.tconst] = {
-            "s": rec["text"] if rec else None, "l": (rec or {}).get("wiki", "en"), "u": (rec or {}).get("revision_url"),
-            "A": n.get("A"), "B": n.get("B"), "J": adj.get(i)}
+            "s": s, "l": lang if rec else lang, "u": (rec or {}).get("revision_url"),
+            "A": n.get("A"), "B": n.get("B"), "J": adj.get(i),
+            "fA": txt(getattr(r, "feel_good_por_que_A", None)), "fB": txt(getattr(r, "feel_good_por_que_B", None)),
+            "fJ": txt(getattr(r, "feel_good_por_que_J", None)),
+            "uA": txt(getattr(r, "utopia_por_que_A", None)), "uB": txt(getattr(r, "utopia_por_que_B", None)),
+            "uJ": txt(getattr(r, "utopia_por_que_J", None))}
     return out
 
 

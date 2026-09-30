@@ -237,7 +237,8 @@ def final_labels_v2() -> pd.DataFrame:
     adj = _adj_v2()
     out = []
     for stage, full in (("v2_completa", True), ("v2_modb", False), ("v2_es_en", True), ("v2_ext", True),
-                        ("v2_es3", True), ("v2_es3_en", True), ("v2_es4", True), ("v2_es4_en", True)):
+                        ("v2_es3", True), ("v2_es3_en", True), ("v2_es4", True), ("v2_es4_en", True),
+                        ("v2_es5", True)):
         A, B = _labels(stage, full)
         m = A.merge(B, on="id", suffixes=("_A", "_B"))
         key = pd.read_csv(KEY_DIR / f"{stage}_key.csv")
@@ -278,7 +279,7 @@ def final_labels_v2() -> pd.DataFrame:
     # D-027: si la sinopsis española no describía el final y se reanotó con la inglesa, manda la reanotación;
     # la etiqueta original se conserva como sensibilidad (final_es_original).
     esen = set(lab.loc[lab.etapa_v2.isin(["v2_es_en", "v2_es3_en", "v2_es4_en"]), "tconst"])
-    base = lab.etapa_v2.isin(["v2_completa", "v2_es3", "v2_es4"])
+    base = lab.etapa_v2.isin(["v2_completa", "v2_es3", "v2_es4", "v2_es5"])
     orig = lab[base & lab.tconst.isin(esen)].set_index("tconst")["final"]
     lab = lab[~(base & lab.tconst.isin(esen))].copy()
     lab["final_es_original"] = lab.tconst.map(orig)
@@ -303,13 +304,15 @@ def analytic_v2() -> pd.DataFrame:
     # D-031: ampliación a 2025 (análisis) y 2026 (año en curso, solo explorador)
     ext = pd.read_csv(INTERIM / "universo_ext.csv").assign(in_v1=False, has_synopsis=True)
     # D-033: el universo español se sustituye por el que excluye coproducciones extranjeras (spain_filtro)
-    es3 = pd.read_csv(INTERIM / "universo_es_v3.csv").assign(has_synopsis=True)
+    # D-035: universo español v4 (≥50 votos, 30 por año, sinopsis multilingüe o TMDB); sin sinopsis → no clasificable
+    es3 = pd.read_csv(INTERIM / "universo_es_v4.csv")
+    es3["has_synopsis"] = es3.synopsis_wiki.notna()
     es3["in_v1"] = False
     u = pd.concat([u[u.country_frame == "US"].assign(anio_en_curso=False), ext[ext.country_frame == "US"], es3],
                   ignore_index=True)
     u["cohort"] = np.where(u.year >= 2026, "2026 (en curso)", np.where(u.year >= 2020, "2020-2025", u.cohort))
     lab = final_labels_v2()
-    df = u.merge(lab, on="tconst", how="left")
+    df = u.merge(lab, on="tconst", how="left").merge(final_cde(), on="tconst", how="left")
     miss = df.final.isna().sum()
     df["clasificable"] = df.final.isin(["FELIZ", "AGRIDULCE", "AMBIGUO", "TRAGICO"])
     for c in ("FELIZ", "AGRIDULCE", "AMBIGUO", "TRAGICO"):
@@ -320,6 +323,10 @@ def analytic_v2() -> pd.DataFrame:
                                (df.final_B == "FELIZ").astype(float), np.nan)
     df["y_optimistas"] = (df.optimismo_personajes > 0).astype(float).where(df.optimismo_personajes.notna())
     df["y_tono_pos"] = (df.tono_general > 0).astype(float).where(df.tono_general.notna())
+    df["y_fg7"] = (df.feel_good >= 7).astype(float).where(df.feel_good.notna())
+    df["y_fg_bajo"] = (df.feel_good <= 3).astype(float).where(df.feel_good.notna())
+    df["y_distopia"] = (df.utopia <= 3).astype(float).where(df.utopia.notna())
+    df["infantil_familiar"] = df.publico.isin(["INFANTIL", "FAMILIAR"])
     df["tragedia_vitalista"] = ((df.final == "TRAGICO") & (df.optimismo_personajes > 0)).astype(float).where(df.clasificable)
     df.to_csv(INTERIM / "analitico_v2.csv", index=False)
     pub = df.drop(columns=["numVotes", "averageRating", "primaryTitle", "originalTitle", "genres", "countries",
@@ -396,3 +403,141 @@ def make_batches_cde(lab: pd.DataFrame, tconsts: set, stage: str = "cde", batch_
                 fh.write(json.dumps({"id": x.id, "sinopsis": x.sinopsis}, ensure_ascii=False) + "\n")
     df.drop(columns=["sinopsis"]).to_csv(KEY_DIR / f"{stage}_key.csv", index=False)
     return df
+
+
+# ------------------------------------------------------------------ D-036: adjudicación y etiquetas finales C/D/E
+CDE_STAGES = (("cde", False), ("v2_es5", True))
+
+
+def _labels_cde(stage: str, core: bool):
+    from . import annotation as an
+    A, ea = an.load_labels_cde(sorted((ANNOT / "labels" / stage / "A").glob("*.jsonl")), "A", core)
+    B, eb = an.load_labels_cde(sorted((ANNOT / "labels" / stage / "B").glob("*.jsonl")), "B", core)
+    if ea or eb:
+        raise ValueError(f"errores de validación C/D/E en {stage}: {(ea + eb)[:5]}")
+    return A, B
+
+
+def _cde_diff(r) -> list[str]:
+    diff = []
+    for k in ("feel_good", "utopia"):
+        a, b = r[f"{k}_A"], r[f"{k}_B"]
+        if pd.notna(a) != pd.notna(b) or (pd.notna(a) and abs(a - b) >= 3):
+            diff.append(k)
+    if r["publico_A"] != r["publico_B"]:
+        diff.append("publico")
+    return diff
+
+
+def make_adjudication_cde(seed: int = 20260930, batch_size: int = 40, stages=CDE_STAGES,
+                          prefix: str = "cde_adj") -> pd.DataFrame:
+    """D-036: se adjudican feel_good y utopia si difieren ≥3 o solo uno es null, y publico si no coincide."""
+    rng = np.random.default_rng(seed)
+    show = ["feel_good", "feel_good_por_que", "utopia", "utopia_por_que", "publico"]
+    rows = []
+    for stage, _ in stages:
+        A, B = _labels_cde(stage, False)
+        m = A.merge(B, on="id", suffixes=("_A", "_B"))
+        texts = _texts(stage)
+        for r in m.to_dict("records"):
+            diff = _cde_diff(r)
+            if not diff:
+                continue
+            nn = lambda v: None if isinstance(v, float) and pd.isna(v) else (int(v) if isinstance(v, float) else v)
+            la = {k: nn(r[f"{k}_A"]) for k in show}
+            lb = {k: nn(r[f"{k}_B"]) for k in show}
+            swap = bool(rng.integers(0, 2))
+            x, y = (lb, la) if swap else (la, lb)
+            rows.append({"id": r["id"], "sinopsis": texts[r["id"]], "etiqueta_X": x, "etiqueta_Y": y,
+                         "campos_en_desacuerdo": diff, "_swap": swap, "_stage": stage})
+    df = pd.DataFrame(rows).sort_values("id").reset_index(drop=True)
+    df["_batch"] = [f"{prefix}_{i // batch_size + 1:02d}" for i in range(len(df))]
+    out_dir = ANNOT / "batches" / "cde_adjudicacion"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for b, g in df.groupby("_batch"):
+        with open(out_dir / f"{b}.jsonl", "w", encoding="utf-8") as fh:
+            for rec in g.drop(columns=["_swap", "_batch", "_stage"]).to_dict("records"):
+                fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    df[["id", "_swap", "_batch", "_stage"]].to_csv(KEY_DIR / f"{prefix}_key.csv", index=False)
+    return df
+
+
+def validate_adjudication_cde(path: Path, batch_path: Path) -> list[str]:
+    from . import annotation as an
+    need = {}
+    for line in Path(batch_path).read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            d = json.loads(line)
+            need[d["id"]] = set(d["campos_en_desacuerdo"])
+    errs, seen = [], set()
+    for ln, line in enumerate(Path(path).read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            d = json.loads(line)
+        except json.JSONDecodeError as e:
+            errs.append(f"línea {ln}: JSON inválido ({e})")
+            continue
+        i = d.get("id")
+        if i not in need:
+            errs.append(f"línea {ln}: id desconocido {i}")
+            continue
+        seen.add(i)
+        if need[i] - set(d):
+            errs.append(f"{i}: faltan {sorted(need[i] - set(d))}")
+        for k in ("feel_good", "utopia"):
+            if k in need[i] and k in d:
+                v = d[k]
+                if not (v is None or (isinstance(v, int) and not isinstance(v, bool) and 0 <= v <= 10)):
+                    errs.append(f"{i}: {k}={v!r}")
+                if not isinstance(d.get(f"{k}_por_que"), str) or len(d[f"{k}_por_que"].split()) < 10:
+                    errs.append(f"{i}: falta {k}_por_que")
+        if "publico" in need[i] and d.get("publico") not in an.PUBLICO:
+            errs.append(f"{i}: publico={d.get('publico')!r}")
+    if set(need) - seen:
+        errs.append(f"faltan ids: {sorted(set(need) - seen)[:5]}")
+    return errs
+
+
+def final_cde() -> pd.DataFrame:
+    """Etiquetas finales C/D/E por tconst: media de A y B si difieren <3, adjudicado si no; publico por acuerdo o árbitro."""
+    rows = []
+    for f in sorted((ANNOT / "labels" / "cde_adjudicacion").glob("*.jsonl")):
+        rows += [json.loads(l) for l in f.read_text(encoding="utf-8").splitlines() if l.strip()]
+    adj = pd.DataFrame(rows).set_index("id") if rows else pd.DataFrame()
+    out = []
+    for stage, _ in CDE_STAGES:
+        A, B = _labels_cde(stage, False)
+        m = A.merge(B, on="id", suffixes=("_A", "_B"))
+        key = pd.read_csv(KEY_DIR / f"{stage}_key.csv")[["id", "tconst"]]
+        m = m.merge(key, on="id")
+        for r in m.to_dict("records"):
+            i = r["id"]
+            d = {"tconst": r["tconst"], "id_cde": i, "etapa_cde": stage}
+            diff = _cde_diff(r)
+            for k in ("feel_good", "utopia"):
+                a, b = r[f"{k}_A"], r[f"{k}_B"]
+                d[f"{k}_A"], d[f"{k}_B"] = a, b
+                d[f"{k}_por_que_A"], d[f"{k}_por_que_B"] = r[f"{k}_por_que_A"], r[f"{k}_por_que_B"]
+                d[f"{k}_por_que_J"] = None
+                if k not in diff:
+                    d[k], d[f"{k}_fuente"] = ((a + b) / 2 if pd.notna(a) else np.nan), "media"
+                elif i in adj.index and k in adj.columns:
+                    v = adj.at[i, k]
+                    d[k] = float(v) if v is not None and pd.notna(v) else np.nan
+                    d[f"{k}_fuente"] = "adjudicado"
+                    d[f"{k}_por_que_J"] = adj.at[i, f"{k}_por_que"] if f"{k}_por_que" in adj.columns else None
+                else:
+                    d[k], d[f"{k}_fuente"] = np.nan, "sin_resolver"
+            d["publico_A"], d["publico_B"] = r["publico_A"], r["publico_B"]
+            if r["publico_A"] == r["publico_B"]:
+                d["publico"], d["publico_fuente"] = r["publico_A"], "acuerdo"
+            elif i in adj.index and "publico" in adj.columns and isinstance(adj.at[i, "publico"], str):
+                d["publico"], d["publico_fuente"] = adj.at[i, "publico"], "adjudicado"
+            else:
+                d["publico"], d["publico_fuente"] = r["publico_A"], "regla_A"
+            d["confianza_c_min"] = min(r["confianza_c_A"], r["confianza_c_B"])
+            out.append(d)
+    lab = pd.DataFrame(out)
+    # si una película tiene C/D/E en dos etapas, manda la del texto que produjo su final
+    return lab.drop_duplicates("tconst", keep="last")
