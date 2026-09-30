@@ -34,6 +34,16 @@ Se compararon **994 largometrajes de ficción estadounidenses** (1980-2024) en d
 * Que **el público eche de menos** ese optimismo: no se ha hecho ninguna encuesta ni experimento. Está diseñada, con unos 167 participantes para detectar una preferencia de 5 puntos.
 * Nada sobre **causas**.
 
+
+## Resultado principal: las series se han vuelto mucho menos *feel good*
+
+* **Series de EE. UU.:** la nota *feel good* media (0-10) pasa de 6,1 en los noventa a 3,8 en 2020-2025. Diferencia 2010-2025 frente a los noventa: −1,88 (IC 95 %: −2,16 a −1,59). Las series con 7 o más bajan del 44 % al 9 %.
+* **Series de España:** de 6,0 a 3,9; diferencia −1,78 (IC 95 %: −2,31 a −1,24).
+* **El cine apenas cambia:** las películas estadounidenses pasan de 6,3 a 6,1 en 2010-2025: diferencia −0,27 (IC 95 %: −0,57 a +0,03), con un intervalo que incluye el cero. En España el cine sube.
+* **Robustez:** en EE. UU. la caída se mantiene con cada anotador (A −1,75, B −2,02), sin las series de solo premisa (−1,58) y ajustando por género y popularidad (−1,40).
+* **Géneros:** con la mezcla de géneros de los noventa, la media reciente de EE. UU. sería 4,8: la composición explica el 31 % de la caída y el resto ocurre dentro de los géneros. En España la composición explica el 78 % y, ajustando por género, el intervalo incluye el cero.
+* **Cautelas:** se juzga sobre todo la premisa (las series de solo premisa pasan del 15 % al 77 % en EE. UU.); solo vemos las series que siguen votándose hoy; no hay validación humana y los modelos reconocen las series. Los datos no dicen por qué ha ocurrido.
+
 ## Segunda parte: censo completo, cine español y ánimo de los personajes
 
 Se anotaron **todas** las películas del marco popular estadounidense (**2.343**, las 50 más votadas de cada año) y las **1.340** españolas más votadas (30 por año). Además del final, se anotaron el protagonista (edad, momento vital, estado civil, clase social), las relaciones centrales, si la historia es especulativa, la época y los países de la trama, el humor, el **tono general** y el **optimismo de los personajes**. El acuerdo entre anotadores fue alto: final κ = 0,86; optimismo de los personajes α = 0,83.
@@ -65,10 +75,6 @@ Límites: juicio sobre un resumen, no sobre la película; sin validación humana
 * **España va al revés:** menos *feel good* (4,3 frente a 6,1), pero en aumento: +0,65 puntos entre los noventa y 2010-2025 (IC 95 %: +0,14 a +1,19).
 * **IMDb:** cada punto de *feel good* se asocia con −0,038 puntos de nota media (mismo año y género).
 
-## Series: la caída sí es grande
-
-Las series estadounidenses más votadas pasan de un *feel good* medio de 6,1 (noventa) a 3,8 (2020-2025), una diferencia 2010-2025 de −1,88 puntos (IC 95 %: −2,16 a −1,59), robusta a todas las comprobaciones. Las españolas siguen la misma tendencia. Cautela: se juzga sobre todo la premisa de cada serie, no su final.
-
 ## Veredicto provisional
 
-La afirmación queda **matizada**. Los noventa son la década más *feel good* y con más finales felices del cine popular estadounidense, pero la diferencia con 2010-2019 es pequeña o nula; el cambio claro es la caída de 2020-2025, con parte debida a la composición (menos comedia y menos cine familiar). No hay más tragedias. En España la tendencia es la contraria. La parte de que «se echa de menos» **sigue sin probar**.
+La afirmación se sostiene **en las series, no en el cine**. Las series populares de los noventa, en EE. UU. y en España, son mucho más *feel good* que las de 2010-2025: la caída es grande y, en EE. UU., resiste a todas las comprobaciones. En España, casi toda se explica por el cambio de géneros. Cautela: se juzga sobre todo la premisa y solo vemos las series que siguen votándose hoy. En el cine la diferencia es pequeña: los noventa son la década más *feel good* y con más finales felices del cine popular estadounidense, pero el cambio claro se concentra en 2020-2025, con parte debida a la composición (menos comedia y menos cine familiar). No hay más tragedias, y en el cine español la tendencia es la contraria. Los datos no dicen por qué ha ocurrido, y la parte de que «se echa de menos» **sigue sin probar**.

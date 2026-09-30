@@ -360,15 +360,129 @@ A petición del usuario, la medida principal pasa a ser el ***feel good***: si l
 
 **Qué añade.** La hipótesis «los noventa eran más *feel good*» se sostiene solo en parte: los noventa son la década con la nota más alta, pero la diferencia con 2010-2019 es nula y la caída se concentra en 2020-2025. Con las mismas cautelas que antes, no permite afirmar que hubiera una prohibición de películas pesimistas ni que el público eche de menos ese cine.
 
-### 9.7 Series de televisión (D-037)
+### 9.7 Series de televisión: la caída que no se ve en el cine (D-037)
 
-**Universo.** Las 30 series de ficción con más votos en IMDb por año de estreno (1980-2025 en el análisis): 1380 estadounidenses y 600 españolas (menos de 30 por año en España hasta 2019). Se juzga la serie entera con el manual de series 1.0; doble anotación ciega de 1991 series y árbitro (313 series con algún campo adjudicado). Acuerdo: *feel good* α = 0,94; utopía α = 0,92; final κ = 0,70; público κ = 0,81.
+Esta sección es ahora el resultado principal del estudio. Las películas quedan como contraste.
 
-**Límite principal.** Wikipedia describe sobre todo la premisa de las series, no su final: el *feel good* de una serie mide la experiencia que promete (personajes, mundo, tono) más que su desenlace. Solo una minoría de textos llega al final de la serie.
+#### Límites específicos (leer antes que los resultados)
 
-**Resultados.** Nota *feel good* media de las series estadounidenses por década de estreno: 6,0, 6,1, 5,6, 4,5, 3,8 (ochenta a 2020-2025). Diferencia 2010-2025 frente a los noventa: −1,88 (IC 95 %: −2,16 a −1,59). Series con 7 o más: del 44 % en los noventa al 9 % en 2020-2025. La caída se mantiene con un solo anotador (A −1,75, B −2,02), sin las series de solo premisa (−1,58), sin series infantiles y familiares (−1,31) y ajustando por género y popularidad (−1,40). La nota de utopía baja de 5,1 a 3,5. Series españolas: 5,5, 6,0, 5,3, 4,5, 3,9; diferencia −1,78 (IC 95 %: −2,31 a −1,24).
+* **Se juzga sobre todo la premisa, no el final.** Wikipedia resume casi siempre de qué va una serie, no cómo termina. En EE. UU., las series con texto que llega al final (`alcance = FINAL`) son el 24 % en los noventa y el 5 % en 2020-2025; las de solo premisa pasan del 15 % al 77 %. En España, solo premisa: 26 % en los noventa y 92 % en 2020-2025. Así que el *feel good* de una serie mide sobre todo la experiencia que promete (personajes, mundo, tono). Y el tipo de texto cambia con el tiempo: las series recientes siguen en emisión o no tienen aún un resumen completo.
+* **Supervivencia y votos actuales.** El universo son las series más votadas hoy en IMDb. De los noventa quedan las que se siguen viendo y votando; de 2020-2025, las que están de moda ahora. No es una muestra de lo que se emitía en cada época.
+* **Sin validación humana.** Las etiquetas son de dos modelos de lenguaje y un árbitro. Que coincidan mucho no garantiza que acierten: pueden compartir sesgos.
+* **Los modelos reconocen las series.** El manual pide juzgar solo el texto, pero en series tan conocidas los modelos pueden usar lo que ya saben de ellas o de su época.
 
-**Lectura.** A diferencia del cine, donde el cambio es pequeño y reciente, las series populares sí se han vuelto mucho menos *feel good* desde los noventa. Parte puede deberse a qué series se recuerdan y se votan hoy (supervivencia de las comedias de los noventa frente al auge del drama de prestigio) y a que el juicio se hace sobre premisas.
+#### Universo y método
+
+Las 30 series de ficción (series y miniseries de IMDb, sin *reality*, concursos, *talk shows*, noticias ni documentales) con más votos por año de estreno, 1980-2025 en el análisis: 1.380 estadounidenses y 600 españolas. En España no hay 30 por año hasta 2019. Cada serie cuenta una vez, en su año de estreno, y se juzga entera con el manual de series 1.0 (`docs/manual_series.md`). Tienen nota *feel good* 1.314 series estadounidenses y 562 españolas; el final solo es clasificable en 466 y 89, respectivamente.
+
+**Acuerdo.** Doble anotación ciega de 1.991 series y árbitro en 313 (algún campo adjudicado). *Feel good*: α = 0,94, con el 99,8 % de pares a 2 puntos o menos. Utopía: α = 0,92 (99,9 % a 2 puntos o menos). Tipo de final: κ = 0,70. Público: κ = 0,81.
+
+#### Resultados por década
+
+**EE. UU.**
+
+| Década de estreno | Series | *Feel good* medio | Con 7 o más | Utopía | Final feliz (clasificables) |
+|---|---:|---:|---:|---:|---:|
+| ochenta | 300 | 6,0 | 45 % | 5,0 | 71 % (n = 126) |
+| noventa | 300 | 6,1 | 44 % | 5,1 | 68 % (n = 134) |
+| 2000-2009 | 300 | 5,6 | 35 % | 4,7 | 56 % (n = 123) |
+| 2010-2019 | 300 | 4,5 | 18 % | 3,9 | 43 % (n = 72) |
+| 2020-2025 | 180 | 3,8 | 9 % | 3,5 | 45 % (n = 11) |
+
+Diferencia 2010-2025 frente a los noventa: *feel good* −1,88 (IC 95 %: −2,16 a −1,59); series con 7 o más −29 puntos (IC 95 %: −36 a −23); utopía −1,33 (IC 95 %: −1,55 a −1,11); final feliz entre clasificables −25 puntos (IC 95 %: −37 a −11). Solo 2020-2025 frente a los noventa: *feel good* −2,31 (IC 95 %: −2,65 a −1,97).
+
+**España**
+
+| Década de estreno | Series | *Feel good* medio | Con 7 o más | Utopía | Final feliz (clasificables) |
+|---|---:|---:|---:|---:|---:|
+| ochenta | 34 | 5,5 | 38 % | 4,7 | 55 % (n = 11) |
+| noventa | 61 | 6,0 | 38 % | 4,9 | 58 % (n = 19) |
+| 2000-2009 | 119 | 5,3 | 23 % | 4,6 | 64 % (n = 22) |
+| 2010-2019 | 206 | 4,5 | 13 % | 4,1 | 32 % (n = 28) |
+| 2020-2025 | 180 | 3,9 | 6 % | 3,7 | 44 % (n = 9) |
+
+Diferencia 2010-2025 frente a los noventa: *feel good* −1,78 (IC 95 %: −2,31 a −1,24); series con 7 o más −28 puntos (IC 95 %: −41 a −15); utopía −1,01 (IC 95 %: −1,41 a −0,59); final feliz entre clasificables −23 puntos (IC 95 %: −49 a +4). Solo 2020-2025 frente a los noventa: *feel good* −2,10 (IC 95 %: −2,67 a −1,54).
+
+El final feliz entre clasificables se apoya en pocas series en las décadas recientes (véase n en la tabla): es el indicador más frágil.
+
+#### Comparación con las películas
+
+Nota *feel good* media por década de estreno, con el mismo método de puntuación:
+
+| Década de estreno | Series EE. UU. | Películas EE. UU. | Series España | Películas España |
+|---|---:|---:|---:|---:|
+| ochenta | 6,0 | 5,8 | 5,5 | 3,5 |
+| noventa | 6,1 | 6,3 | 6,0 | 4,1 |
+| 2000-2009 | 5,6 | 6,1 | 5,3 | 4,3 |
+| 2010-2019 | 4,5 | 6,3 | 4,5 | 4,7 |
+| 2020-2025 | 3,8 | 5,7 | 3,9 | 5,0 |
+
+En EE. UU., las películas pasan de 6,3 en los noventa a 6,1 en 2010-2025: diferencia −0,27 (IC 95 %: −0,57 a +0,03), con un intervalo que incluye el cero. Las series, de 6,1 a 4,3 (−1,88). La caída de las series es unas 7 veces la del cine. En España el cine va en sentido contrario: sube de 4,1 a 4,8: diferencia +0,65 (IC 95 %: +0,14 a +1,19). Las series españolas, en cambio, bajan 1,78 puntos.
+
+#### Composición por géneros y efecto de composición
+
+La mezcla de géneros cambia mucho. EE. UU., noventa: animación 33 %, comedia 25 %, acción/aventura 19 %, terror 6 %. EE. UU., 2010-2025: acción/aventura 31 %, comedia 20 %, thriller/crimen 17 %, terror 9 %. España, noventa: comedia 49 %, animación 26 %, drama 10 %, acción/aventura 5 %. España, 2010-2025: thriller/crimen 24 %, comedia 24 %, drama 21 %, acción/aventura 15 %. También cae el peso del público infantil y familiar: en EE. UU., del 44 % en los noventa al 7 % en 2020-2025.
+
+**Reponderación.** Si las series de 2010-2025 tuvieran la mezcla de géneros de los noventa, su media sería 4,8 en EE. UU. (en lugar de 4,3) y 5,6 en España (en lugar de 4,2). Por tanto:
+
+* **EE. UU.:** de una caída de 1,88 puntos, 0,58 (31 %) se deben a la composición y 1,30 (69 %) ocurren dentro de los géneros.
+* **España:** de 1,78 puntos, 1,39 (78 %) son composición y solo 0,39 (22 %) ocurren dentro de los géneros.
+
+Dentro de cada género (noventa → 2010-2025; \* = IC 95 % que excluye el cero). EE. UU.: acción/aventura 6,1 → 4,4 (−1,72 \*; n = 51 y 151); animación 6,4 → 5,2 (−1,15 \*; n = 98 y 34); ciencia ficción/fantasía 6,4 → 4,0 (−2,44 \*; n = 10 y 35); comedia 6,8 → 5,9 (−0,90 \*; n = 68 y 92); drama 6,1 → 4,1 (−2,00 \*; n = 13 y 26); romance 5,9 → 4,7 (−1,15; n = 11 y 14); terror 4,4 → 2,9 (−1,58 \*; n = 17 y 41); thriller/crimen 3,8 → 2,4 (−1,34 \*; n = 17 y 78). España (solo géneros con suficientes series): animación 7,0 → 6,8 (−0,16; n = 14 y 13); comedia 6,6 → 5,7 (−0,85 \*; n = 29 y 84).
+
+#### Subgrupos
+
+Diferencia de *feel good* entre 2010-2025 y los noventa dentro de cada subgrupo con suficientes series (\* = IC 95 % que excluye el cero).
+
+**EE. UU.**
+
+| Subgrupo | n noventa | n 2010-2025 | Noventa | 2010-2025 | Diferencia (IC 95 %) |
+|---|---:|---:|---:|---:|---|
+| género: acción/aventura | 51 | 151 | 6,1 | 4,4 | −1,72 (−2,28 a −1,16) \* |
+| género: animación | 98 | 34 | 6,4 | 5,2 | −1,15 (−1,93 a −0,36) \* |
+| género: comedia | 68 | 92 | 6,8 | 5,9 | −0,90 (−1,41 a −0,40) \* |
+| género: drama | 13 | 26 | 6,1 | 4,1 | −2,00 (−3,08 a −0,88) \* |
+| género: terror | 17 | 41 | 4,4 | 2,9 | −1,58 (−2,65 a −0,49) \* |
+| género: thriller/crimen | 17 | 78 | 3,8 | 2,4 | −1,34 (−2,31 a −0,38) \* |
+| alcance: episódica | 155 | 50 | 6,5 | 5,5 | −1,06 (−1,67 a −0,44) \* |
+| alcance: final | 71 | 57 | 6,1 | 5,6 | −0,55 (−1,35 a +0,26) |
+| alcance: parcial | 23 | 101 | 5,1 | 3,9 | −1,15 (−1,96 a −0,35) \* |
+| alcance: premisa | 36 | 263 | 5,1 | 3,9 | −1,24 (−1,87 a −0,57) \* |
+| público: adulto | 126 | 388 | 5,1 | 3,9 | −1,19 (−1,59 a −0,79) \* |
+| público: familiar | 79 | 35 | 7,0 | 6,4 | −0,52 (−1,08 a +0,01) |
+| público: juvenil | 32 | 47 | 6,5 | 5,3 | −1,14 (−1,76 a −0,55) \* |
+| tipo: miniserie | 27 | 68 | 5,8 | 3,5 | −2,29 (−3,25 a −1,26) \* |
+| tipo: serie | 258 | 403 | 6,2 | 4,4 | −1,78 (−2,08 a −1,48) \* |
+
+**España**
+
+| Subgrupo | n noventa | n 2010-2025 | Noventa | 2010-2025 | Diferencia (IC 95 %) |
+|---|---:|---:|---:|---:|---|
+| género: animación | 14 | 13 | 7,0 | 6,8 | −0,16 (−1,24 a +0,97) |
+| género: comedia | 29 | 84 | 6,6 | 5,7 | −0,85 (−1,31 a −0,40) \* |
+| alcance: episódica | 25 | 20 | 6,6 | 6,1 | −0,48 (−1,36 a +0,39) |
+| alcance: final | 14 | 26 | 5,5 | 4,6 | −0,92 (−2,58 a +0,73) |
+| alcance: premisa | 14 | 284 | 5,4 | 4,1 | −1,37 (−2,25 a −0,35) \* |
+| público: adulto | 23 | 313 | 4,6 | 3,9 | −0,76 (−1,59 a +0,13) |
+| público: familiar | 18 | 18 | 6,8 | 6,6 | −0,19 (−0,83 a +0,44) |
+| tipo: serie | 53 | 271 | 6,1 | 4,3 | −1,74 (−2,26 a −1,23) \* |
+
+En EE. UU., 13 de 15 subgrupos excluyen el cero: género: acción/aventura, género: animación, género: comedia, género: drama, género: terror, género: thriller/crimen, alcance: episódica, alcance: parcial, alcance: premisa, público: adulto, público: juvenil, tipo: miniserie, tipo: serie. En España, 3 de 8: género: comedia, alcance: premisa, tipo: serie. Son 23 comparaciones sin corregir por multiplicidad: alguna puede salir por azar, y los subgrupos pequeños tienen intervalos muy anchos. Lo relevante es el patrón: en EE. UU. la nota baja en todos los subgrupos, no solo en las series de solo premisa. En las de final descrito la caída es menor: −0,55 (IC 95 %: −1,35 a +0,26).
+
+#### Sensibilidades (diferencia 2010-2025 frente a los noventa, IC 95 %)
+
+* **EE. UU.** (principal −1,88): solo el anotador A −1,75 (−2,03 a −1,46); solo el anotador B −2,02 (−2,30 a −1,72); solo si A y B coinciden (±2) −1,89 (−2,18 a −1,60); sin las que solo tienen premisa −1,58 (−1,94 a −1,23); solo sinopsis de Wikipedia −1,88 (−2,16 a −1,60); sin series infantiles y familiares −1,31 (−1,67 a −0,96); solo las 10 más votadas/año −2,38 (−2,88 a −1,84); pesando más las más votadas −1,76 (−2,69 a −0,77); ajustado por género y popularidad −1,40 (−1,70 a −1,11).
+* **España** (principal −1,78): solo el anotador A −1,66 (−2,15 a −1,13); solo el anotador B −1,96 (−2,52 a −1,37); solo si A y B coinciden (±2) −1,82 (−2,35 a −1,24); sin las que solo tienen premisa −1,58 (−2,20 a −0,93); solo sinopsis de Wikipedia −1,84 (−2,37 a −1,27); sin series infantiles y familiares −0,86 (−1,63 a −0,07); solo las 10 más votadas/año −2,06 (−2,63 a −1,47); pesando más las más votadas −2,86 (−3,50 a −2,13); ajustado por género y popularidad −0,49 (−1,02 a +0,04) — incluye el cero.
+
+En EE. UU., todas las sensibilidades mantienen una caída clara, también ajustando por género y popularidad. En España, al ajustar por género y popularidad la diferencia baja a −0,49 y el intervalo incluye el cero: la caída española se explica sobre todo por el cambio de géneros.
+
+#### Lo que sostienen / sugieren / no permiten afirmar
+
+**Sostienen:** entre las series populares de hoy, las estrenadas en los noventa tienen una nota *feel good* mucho más alta que las de 2010-2025, en EE. UU. y en España. La diferencia es grande, se ve con cada anotador y es mucho mayor que en el cine. En EE. UU. resiste a todas las comprobaciones, también al ajuste por género y popularidad.
+
+**Sugieren:** en EE. UU., la mayor parte del cambio (69 %) no depende de qué géneros se hacen, sino de cómo se cuentan. En España, casi todo (78 %) es cambio de mezcla: menos comedia y animación, más *thriller* y drama. La utopía, el optimismo de los personajes y el tono bajan en paralelo.
+
+**No permiten afirmar:** que las series de los noventa terminaran mejor (se juzga sobre todo la premisa y hay pocos finales clasificables); que la caída sea igual en lo que se emitía entonces (solo vemos las series que sobreviven en los votos de hoy); ni por qué ha ocurrido, ni que el público eche de menos esas series.
 
 ## 10. Reproducibilidad
 

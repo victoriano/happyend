@@ -235,11 +235,36 @@ def story(d: pd.DataFrame) -> dict:
         out["genero"][cf] = gen
         out["publico"][cf] = {c: g[g.cohort == c].publico.value_counts(normalize=True).to_dict() for c in COHORTS}
         out["alcance"][cf] = {c: g[g.cohort == c].alcance_A.value_counts(normalize=True).to_dict() for c in COHORTS}
+        # composición por género y efecto de composición (2010-2025 reponderado a la mezcla de géneros de los noventa)
+        out.setdefault("composicion", {})[cf] = {p: g[g.periodo == p].genre_main.value_counts(normalize=True).to_dict() for p in (REF, "2010-2025")}
+        w90 = g0.genre_main.value_counts(normalize=True)
+        m1 = g1.groupby("genre_main").feel_good.mean()
+        rew = float(sum(w90.get(k, 0) * m1.get(k, np.nan) for k in w90.index if k in m1.index) / sum(w90.get(k, 0) for k in w90.index if k in m1.index))
+        out.setdefault("reponderado", {})[cf] = {"m90": float(g0.feel_good.mean()), "m_rec": float(g1.feel_good.mean()), "m_rec_mezcla90": rew}
+        # subgrupos
+        sub = []
+        g["tipo_serie"] = np.where(g.titleType == "tvMiniSeries", "Miniserie", "Serie")
+        g0, g1 = g[g.periodo == REF], g[g.periodo == "2010-2025"]
+        for var in ("genre_main", "alcance_A", "publico", "tipo_serie"):
+            for val, gg in g.groupby(var):
+                a0, a1 = gg[gg.periodo == REF], gg[gg.periodo == "2010-2025"]
+                if a0.feel_good.notna().sum() >= 12 and a1.feel_good.notna().sum() >= 12:
+                    sub.append([var, str(val), int(a0.feel_good.notna().sum()), int(a1.feel_good.notna().sum()), a0.feel_good.mean(),
+                                a1.feel_good.mean(), *_boot_diff(a1.feel_good.values, a0.feel_good.values, seed=0)])
+        out.setdefault("subgrupos", {})[cf] = sub
+        # final × feel good
+        fb = pd.cut(g.feel_good, [-0.1, 2.49, 4.49, 6.49, 8.49, 10], labels=[0, 1, 2, 3, 4]).astype(float)
+        cc = g[g.clasificable & fb.notna()]
+        out.setdefault("matriz_fg", {})[cf] = pd.crosstab(cc.final, fb[cc.index]).reindex(index=FIN4, columns=[0.0, 1.0, 2.0, 3.0, 4.0]).fillna(0).astype(int).values.tolist()
+        out.setdefault("hist", {})[cf] = {c: np.bincount(g[g.cohort == c].feel_good.dropna().round().astype(int), minlength=11).tolist() for c in COHORTS}
     # comparación con películas (EE. UU. y España, mismas cohortes)
     f = pd.read_csv(INTERIM / "analitico_v2.csv")
     f = f[f.anio_en_curso != True]
     out["peliculas"] = {cf: {"feel_good": [_est(g[g.cohort == c], "feel_good") for c in COHORTS],
-                             "utopia": [_est(g[g.cohort == c], "utopia") for c in COHORTS]}
+                             "y_fg7": [_est(g[g.cohort == c], "y_fg7") for c in COHORTS],
+                             "y_feliz": [_est(g[g.cohort == c], "y_feliz") for c in COHORTS],
+                             "utopia": [_est(g[g.cohort == c], "utopia") for c in COHORTS],
+                             "anual": g.groupby("year").feel_good.mean().reset_index().values.tolist()}
                         for cf, g in f.groupby("country_frame")}
     return out
 
