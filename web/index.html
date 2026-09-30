@@ -282,7 +282,7 @@ details.more summary{margin-top:6px}
     <p class="note">Cada cuadrado es una serie. Pasa el cursor o toca para ver cuál es y su nota.</p>
   </div></div>
   <div class="steps">
-    <div class="step" data-step="0"><div class="box">Cada columna es una década de estreno y cada cuadrado, una de las 300 series estadounidenses más votadas de esa década (180 en 2020-2025, que abarca seis años).</div></div>
+    <div class="step" data-step="0"><div class="box">Cada columna es una década de estreno y cada cuadrado, una de las 300 series estadounidenses más votadas de esa década (180 en 2020-2025, que abarca seis años; por eso sus cuadrados son más grandes: cada columna ocupa el mismo alto).</div></div>
     <div class="step" data-step="1"><div class="box">En naranja, las claramente <i>feel good</i> (7 o más). En los ochenta y los noventa eran casi la mitad: <i>Los Simpson</i>, <i>Friends</i>, <i>Cosas de marcianos</i>…</div></div>
     <div class="step" data-step="2"><div class="box">Del naranja al gris azulado, el resto de la escala. Abajo del todo, las que no dejan ningún consuelo: <i>Los Soprano</i>, <i>Breaking Bad</i>, <i>The Last of Us</i>…</div></div>
     <div class="step" data-step="3"><div class="box">Los noventa: el <b data-k="s7_90">44 %</b> de las series populares saca un 7 o más. La nota media es un <b data-k="sm90">6,1</b>.</div></div>
@@ -576,19 +576,21 @@ const dec=y=>Math.min(4,Math.floor((y-1980)/10));
 function drawWaffle(){
   const col=FGBIN_COL();
   $('#wlegend').innerHTML=FGB_LAB.map((l,i)=>`<span style="--c:${col[i]}">${l}</span>`).join('')+`<span style="--c:var(--nc)">sin nota</span>`;
-  const W=Math.min(640,innerWidth*.94), cols=5, gap=W*0.035, colW=(W-gap*(cols-1))/cols, per=15, s=colW/per, rows=20, H2=s*rows+70;
+  const W=Math.min(640,innerWidth*.94), cols=5, gap=W*0.035, colW=(W-gap*(cols-1))/cols, s=colW/15, colH=s*20, H2=colH+70;
   wsvg.attr('viewBox',`0 0 ${W} ${H2}`).attr('width',W).attr('height',H2);wsvg.selectAll('*').remove();
   const byC=d3.groups(US_S,f=>dec(f[2])).sort((a,b)=>a[0]-b[0]);
   byC.forEach(([c,fs])=>{
     fs=fs.slice().sort((a,b)=>(b[FC.feel_good]??-1)-(a[FC.feel_good]??-1)||a[2]-b[2]);
+    // cada columna ocupa el 100 % del alto: celdas casi cuadradas ajustadas al número de series de la década
+    const per=Math.max(1,Math.round(15*Math.sqrt(fs.length/300))), rows=Math.ceil(fs.length/per), cw=colW/per, ch=colH/rows;
     const g=wsvg.append('g').attr('class','wcol').attr('data-c',c).attr('transform',`translate(${c*(colW+gap)},30)`);
     const lab=d=>`<b>${d[0]}</b> (${d[2]})<br>Feel good: ${d[FC.feel_good]==null?'sin nota':fgTxt(d[FC.feel_good])}`;
     g.selectAll('rect').data(fs).join('rect').attr('class','sq')
-      .attr('x',(d,i)=>(i%per)*s+.4).attr('y',(d,i)=>(rows-1-Math.floor(i/per))*s+.4).attr('width',Math.max(1,s-.8)).attr('height',Math.max(1,s-.8)).attr('rx',Math.min(1.5,s/5))
+      .attr('x',(d,i)=>(i%per)*cw+.4).attr('y',(d,i)=>(rows-1-Math.floor(i/per))*ch+.4).attr('width',Math.max(1,cw-.8)).attr('height',Math.max(1,ch-.8)).attr('rx',Math.min(1.5,cw/5))
       .on('mousemove',(e,d)=>showTip(e,lab(d))).on('mouseleave',hideTip).on('click',(e,d)=>detail(d))
       .on('touchstart',(e,d)=>showTip(e.touches[0],lab(d)),{passive:true});
     g.append('text').attr('x',colW/2).attr('y',-10).attr('text-anchor','middle').style('font-weight',700).style('font-size','13px').text(COH_LAB[c]);
-    g.append('text').attr('class','wpct').attr('x',colW/2).attr('y',s*rows+26).attr('text-anchor','middle').style('font-family','Fraunces').style('font-weight',900).style('font-size',Math.max(16,Math.min(26,colW/5))+'px').style('fill','var(--ink)');
+    g.append('text').attr('class','wpct').attr('x',colW/2).attr('y',colH+26).attr('text-anchor','middle').style('font-family','Fraunces').style('font-weight',900).style('font-size',Math.max(16,Math.min(26,colW/5))+'px').style('fill','var(--ink)');
   });
   applyStep(wStep,true);
 }
