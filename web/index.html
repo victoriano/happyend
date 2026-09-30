@@ -413,12 +413,12 @@ details.more summary{margin-top:6px}
   <div class="wide">
     <div class="kicker">Explora</div>
     <h2>Todas las películas, una por una</h2>
-    <p style="max-width:680px">Las <b data-k="nExpl">2.922</b> películas, ordenadas por fecha de estreno, incluidas las <span data-k="nCurso">53</span> más votadas de 2026 (un año aún en curso, que dejamos fuera del análisis). Filtra por década, año, país, género, final o cualquier otra cosa que hayamos anotado. Pulsa una carátula para ver sus etiquetas, por qué cada anotador clasificó así el final y el resumen que leyeron.</p>
+    <p style="max-width:680px">Las <b data-k="nExpl">2.922</b> películas, de más a menos votadas en IMDb, incluidas las <span data-k="nCurso">53</span> más votadas de 2026 (un año aún en curso, que dejamos fuera del análisis). Filtra por década, año, país, género, final o cualquier otra cosa que hayamos anotado. Pulsa una carátula para ver sus etiquetas, por qué cada anotador clasificó así el final y el resumen que leyeron.</p>
     <div class="xbar">
       <div class="xrow">
         <input id="xq" type="search" placeholder="Busca un título: Titanic, Mar adentro, Barbie…" aria-label="Buscar título">
         <select id="xyear" aria-label="Año"><option value="">Cualquier año</option></select>
-        <select id="xsort" aria-label="Orden"><option value="asc">Más antiguas primero</option><option value="desc">Más recientes primero</option><option value="opt">Personajes más optimistas primero</option><option value="pes">Personajes más pesimistas primero</option><option value="votos">Más votadas en IMDb</option><option value="nota">Mejor nota en IMDb</option><option value="rango">Más populares de su año (IMDb)</option></select>
+        <select id="xsort" aria-label="Orden"><option value="votos" selected>Más votadas en IMDb</option><option value="asc">Más antiguas primero</option><option value="desc">Más recientes primero</option><option value="opt">Personajes más optimistas primero</option><option value="pes">Personajes más pesimistas primero</option><option value="nota">Mejor nota en IMDb</option><option value="rango">Más populares de su año (IMDb)</option></select>
         <button class="ghost clear" id="xclear" hidden>Quitar filtros</button>
       </div>
       <div id="xfacets" class="facets"></div>
