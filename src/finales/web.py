@@ -320,6 +320,7 @@ def build_fichas() -> dict[int, dict]:
                 "u": (rec or {}).get("revision_url") if rec else (f"https://www.themoviedb.org/tv/{int(r.tmdb_id)}" if pd.notna(r.tmdb_id) else None),
                 "A": [r.final_A, r.nota_final_A], "B": [r.final_B, r.nota_final_B], "J": None,
                 "fA": txt(r.feel_good_por_que_A), "fB": txt(r.feel_good_por_que_B), "fJ": txt(r.feel_good_por_que_J),
+                "fM": txt(getattr(r, "feel_good_por_que_M", None)),
                 "uA": txt(r.utopia_por_que_A), "uB": txt(r.utopia_por_que_B), "uJ": txt(r.utopia_por_que_J)}
     return out
 

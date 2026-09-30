@@ -163,7 +163,16 @@ def labels() -> pd.DataFrame:
         d["reconocida"] = bool(r["reconocida_A"]) or bool(r["reconocida_B"])
         d["confianza_c_min"] = min(r["confianza_c_A"], r["confianza_c_B"])
         out.append(d)
-    return pd.DataFrame(out)
+    lab = pd.DataFrame(out)
+    # D-039: ajustes manuales documentados (fuera del método ciego)
+    aj = ROOT / "annotation" / "ajustes" / "series_manual.csv"
+    if aj.exists():
+        for r in pd.read_csv(aj).itertuples():
+            m = lab.tconst == r.tconst
+            lab.loc[m, "feel_good"] = float(r.feel_good)
+            lab.loc[m, "feel_good_fuente"] = "manual"
+            lab.loc[m, "feel_good_por_que_M"] = r.feel_good_por_que
+    return lab
 
 
 def analytic() -> pd.DataFrame:

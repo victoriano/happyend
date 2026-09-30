@@ -546,7 +546,7 @@ $('#fgscale').innerHTML=[['10','Muy feel good','Todos los vínculos importantes 
   ['2-3','Poco','Algo de consuelo, pero predominan la soledad, la pérdida o la inquietud.',2.5],
   ['0','Nada','Desesperanza, vínculos destruidos o el mal triunfa.',0]].map(([n,t,d,v])=>`<div class="fgs"><span class="fgn" style="background:${fgCol(v)}">${n}</span><div><b>${t}.</b> ${d}</div></div>`).join('');
 const exHTML=ts=>ts.map(t=>F.films.find(f=>f[FC.tconst]===t)).filter(Boolean).map(f=>`<button class="ex" data-t="${f[FC.tconst]}"><div class="pw">${f[FC.poster]?`<img loading="lazy" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:''}<span class="fgb" style="background:${fgCol(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</span></div><div class="t">${f[0]}</div><div class="y">${f[2]}</div></button>`).join('');
-$('#exs').innerHTML=exHTML(['tt0096697','tt0182576','tt0159206','tt1723816','tt10986410','tt2861424','tt7660850','tt0944947','tt0903747','tt3581920','tt0115284','tt0362372','tt0122335','tt7134908']);
+$('#exs').innerHTML=exHTML(['tt0096697','tt0182576','tt0159206','tt1723816','tt10986410','tt2861424','tt7660850','tt0944947','tt0903747','tt3581920','tt0115284','tt0362372','tt0124938','tt0122335','tt7134908']);
 $('#exsF').innerHTML=exHTML(['tt0114709','tt0099785','tt0816692','tt0120338','tt15398776','tt7286456']);
 $$('.ex').forEach(b=>b.onclick=()=>detail(F.films.find(f=>f[FC.tconst]===b.dataset.t)));
 
@@ -911,7 +911,7 @@ async function detail(f){
     const r=(await ficha(f[2]))[f[FC.tconst]];if(!r)throw 0;
     const more=h=>h?`<details class="more2"><summary>Ver la segunda anotación${h.includes('Árbitro')?' y el árbitro':''}</summary>${h}</details>`:'';
     const fn=(lab,t)=>t?`<div class="nota"><span class="who">${lab}</span>${esc(t)}</div>`:'';
-    $('#xfg').innerHTML=(r.fA||r.fB?`<h4 class="nh">¿Por qué es (o no) feel good?</h4>${fn('Anotación',r.fA||r.fB)}${more(fn('Segundo anotador',r.fA?r.fB:null)+fn('Árbitro',r.fJ))}`:'')+
+    $('#xfg').innerHTML=(r.fA||r.fB?`<h4 class="nh">¿Por qué es (o no) feel good?</h4>${r.fM?fn('Nota ajustada a mano (con información externa al resumen)',r.fM)+more(fn('Anotación original',r.fA)+fn('Segundo anotador',r.fB)):fn('Anotación',r.fA||r.fB)+more(fn('Segundo anotador',r.fA?r.fB:null)+fn('Árbitro',r.fJ))}`:'')+
       (r.uA||r.uB?`<details class="syn" style="margin-top:8px"><summary>¿Qué sociedad muestra?</summary>${fn('Anotación',r.uA||r.uB)}${more(fn('Segundo anotador',r.uA?r.uB:null)+fn('Árbitro',r.uJ))}</details>`:'');
     $('#xnotes').innerHTML=`<h4 class="nh">${isS?'¿Cómo acaba (o dónde se queda)?':'¿Por qué este final?'}</h4>${notaHTML('Anotación',r.A&&r.A[1]?r.A:r.B)}${more(notaHTML('Segundo anotador',r.A&&r.A[1]?r.B:null)+notaHTML('Árbitro',r.J))}`;
     if(r.l==='tmdb'){$('#xsyn').innerHTML=`<p class="note" style="margin-top:14px">Para esta película no había resumen del argumento en Wikipedia: los anotadores leyeron la sinopsis comercial de TMDB, que suele ser breve y no contar el final. <a href="${esc(r.u)}" target="_blank" rel="noopener">Leer la sinopsis en TMDB ↗</a></p>`}
