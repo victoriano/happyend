@@ -382,3 +382,51 @@ def agreement_b(A: pd.DataFrame, B: pd.DataFrame, full: bool = True) -> pd.DataF
         rows.append({"variable": k, "n": len(m), "acuerdo_pct": np.nan, "kappa": np.nan, "alfa_intervalo": np.nan,
                      "jaccard": float(np.mean(j))})
     return pd.DataFrame(rows)
+
+
+# ------------------------------------------------------------------ módulos C, D y E (feel good, utopía, público)
+PUBLICO = ["INFANTIL", "FAMILIAR", "JUVENIL", "ADULTO"]
+
+
+def validate_record_cde(rec: dict) -> list[str]:
+    errs = []
+    if not isinstance(rec.get("id"), str):
+        errs.append("id ausente")
+    for k in ("feel_good", "utopia"):
+        v = rec.get(k)
+        if not (v is None or (isinstance(v, int) and not isinstance(v, bool) and 0 <= v <= 10)):
+            errs.append(f"{k}={v!r} fuera de escala")
+        t = rec.get(f"{k}_por_que")
+        lo, hi = (30, 90) if k == "feel_good" else (15, 70)
+        if not isinstance(t, str) or not (lo <= len(t.split()) <= hi):
+            errs.append(f"{k}_por_que ausente o de longitud fuera de rango")
+    if rec.get("publico") not in PUBLICO:
+        errs.append(f"publico={rec.get('publico')!r} no permitido")
+    if rec.get("confianza_c") not in (1, 2, 3):
+        errs.append("confianza_c no válida")
+    return errs
+
+
+def load_labels_cde(paths: list[Path], annotator: str, core: bool = False) -> tuple[pd.DataFrame, list[str]]:
+    """Carga etiquetas C/D/E; con core=True exige además el núcleo y el módulo B (películas nuevas)."""
+    rows, errors = [], []
+    for p in paths:
+        for ln, line in enumerate(Path(p).read_text(encoding="utf-8").splitlines(), 1):
+            if not line.strip():
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError as e:
+                errors.append(f"{Path(p).name}:{ln} JSON inválido: {e}")
+                continue
+            errs = validate_record_cde(rec) + (validate_record_b(rec, True) if core else [])
+            if errs:
+                errors.append(f"{Path(p).name}:{ln} {rec.get('id')}: {'; '.join(errs)}")
+                continue
+            rec["annotator"] = annotator
+            rows.append(rec)
+    df = pd.DataFrame(rows)
+    if not df.empty and df["id"].duplicated().any():
+        errors.append(f"ids duplicados: {df.loc[df['id'].duplicated(), 'id'].tolist()[:10]}")
+        df = df.drop_duplicates("id", keep="first")
+    return df, errors

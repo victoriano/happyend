@@ -331,3 +331,68 @@ def analytic_v2() -> pd.DataFrame:
 
 if __name__ == "__main__":
     analytic_v2()
+
+
+# ------------------------------------------------------------------ D-035/D-036: lotes con sinopsis multilingüe y módulos C/D/E
+def synopsis_src(tconst: str, src: str) -> dict | None:
+    if src == "tmdb":
+        p = INTERIM / "synopses_tmdb" / f"{tconst}.json"
+    else:
+        p = WIKIS[src]["syn_dir"] / f"{tconst}.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
+
+
+def make_batches_src(films: pd.DataFrame, stage: str, batch_size: int) -> pd.DataFrame:
+    """Lotes cegados con la fuente de sinopsis indicada en films.synopsis_wiki (Wikipedia en varios idiomas o TMDB)."""
+    cfg = load()
+    seed, maxw = cfg["project"]["seed"], cfg["sinopsis"]["max_palabras_anotacion"]
+    out_dir = ANNOT / "batches" / stage
+    out_dir.mkdir(parents=True, exist_ok=True)
+    recs = []
+    for r in films.itertuples():
+        syn = synopsis_src(r.tconst, r.synopsis_wiki)
+        if not syn or not syn.get("text"):
+            continue
+        wt = r.wiki_url.rsplit("/wiki/", 1)[-1] if isinstance(getattr(r, "wiki_url", None), str) else None
+        titles = blinding.title_variants(r.primaryTitle, r.originalTitle, wt)
+        text = blinding.mask(syn["text"], titles)
+        text, trunc = blinding.truncate_words(text, maxw)
+        recs.append({"id": blind_id_v2(r.tconst, seed), "tconst": r.tconst, "sinopsis": text,
+                     "idioma": r.synopsis_wiki, "palabras_originales": len(syn["text"].split()), "truncada": trunc,
+                     "revision_url": syn.get("revision_url")})
+    df = pd.DataFrame(recs).sort_values("id").reset_index(drop=True)
+    df["batch"] = [f"{stage}_{i // batch_size + 1:02d}" for i in range(len(df))]
+    for b, g in df.groupby("batch"):
+        with open(out_dir / f"{b}.jsonl", "w", encoding="utf-8") as fh:
+            for x in g.itertuples():
+                fh.write(json.dumps({"id": x.id, "sinopsis": x.sinopsis}, ensure_ascii=False) + "\n")
+    df.drop(columns=["sinopsis"]).to_csv(KEY_DIR / f"{stage}_key.csv", index=False)
+    return df
+
+
+def make_batches_cde(lab: pd.DataFrame, tconsts: set, stage: str = "cde", batch_size: int = 60) -> pd.DataFrame:
+    """Lotes para anotar solo los módulos C/D/E en películas ya etiquetadas, con el mismo texto cegado de su etiqueta."""
+    texts = {}
+    for f in (ANNOT / "batches").glob("*/*.jsonl"):
+        if "adjudicacion" in str(f) or f.parent.name in ("cde", "cde_b", "fg_piloto"):
+            continue
+        for line in f.read_text(encoding="utf-8").splitlines():
+            d = json.loads(line)
+            texts[d["id"]] = d["sinopsis"]
+    k1 = pd.read_csv(KEY_DIR / "principal_key.csv").drop_duplicates("tconst").set_index("tconst").id
+    l = lab[lab.tconst.isin(tconsts)].drop_duplicates("tconst")
+    recs = []
+    for r in l.itertuples():
+        i = k1.get(r.tconst) if r.etapa_v2 == "v2_modb" else r.id_v2
+        if i in texts:
+            recs.append({"id": i, "tconst": r.tconst, "sinopsis": texts[i], "etapa_origen": r.etapa_v2})
+    df = pd.DataFrame(recs).sort_values("id").reset_index(drop=True)
+    df["batch"] = [f"{stage}_{i // batch_size + 1:02d}" for i in range(len(df))]
+    out_dir = ANNOT / "batches" / stage
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for b, g in df.groupby("batch"):
+        with open(out_dir / f"{b}.jsonl", "w", encoding="utf-8") as fh:
+            for x in g.itertuples():
+                fh.write(json.dumps({"id": x.id, "sinopsis": x.sinopsis}, ensure_ascii=False) + "\n")
+    df.drop(columns=["sinopsis"]).to_csv(KEY_DIR / f"{stage}_key.csv", index=False)
+    return df

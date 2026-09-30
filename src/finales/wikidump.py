@@ -45,6 +45,22 @@ WIKIS = {
            "offsets": INTERIM / f"wikidump_offsets_es_{DUMP_DATE}.csv", "host": "es.wikipedia.org"},
 }
 
+# D-035: más idiomas para el cine español (resúmenes que faltan en es/en)
+_EXTRA_HEADINGS = {
+    "ca": {"argument", "sinopsi", "trama", "resum", "història", "argument de la pel·lícula"},
+    "gl": {"argumento", "sinopse", "trama", "resumo", "historia"},
+    "eu": {"argumentua", "sinopsia", "laburpena", "istorioa", "trama"},
+    "fr": {"synopsis", "résumé", "intrigue", "histoire", "scénario"},
+    "it": {"trama", "sinossi", "storia"},
+    "pt": {"sinopse", "enredo", "trama", "resumo", "história"},
+}
+for _w, _h in _EXTRA_HEADINGS.items():
+    WIKIS[_w] = {"base": f"https://dumps.wikimedia.org/{_w}wiki/{DUMP_DATE}/",
+                 "dump": f"{_w}wiki-{DUMP_DATE}-pages-articles-multistream.xml.bz2",
+                 "index": f"{_w}wiki-{DUMP_DATE}-pages-articles-multistream-index.txt.bz2",
+                 "headings": _h, "syn_dir": INTERIM / f"synopses_{_w}",
+                 "offsets": INTERIM / f"wikidump_offsets_{_w}_{DUMP_DATE}.csv", "host": f"{_w}.wikipedia.org"}
+
 
 def title_from_url(url: str) -> str:
     return unquote(url.rsplit("/wiki/", 1)[-1]).replace("_", " ")
