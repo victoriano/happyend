@@ -430,3 +430,50 @@ def load_labels_cde(paths: list[Path], annotator: str, core: bool = False) -> tu
         errors.append(f"ids duplicados: {df.loc[df['id'].duplicated(), 'id'].tolist()[:10]}")
         df = df.drop_duplicates("id", keep="first")
     return df, errors
+
+
+# ---- D-037: series
+ALCANCE = ["FINAL", "PARCIAL", "EPISODICA", "PREMISA"]
+FINALES_S = ["FELIZ", "AGRIDULCE", "AMBIGUO", "TRAGICO", "NO_CLASIFICABLE"]
+
+
+def validate_record_series(rec: dict) -> list[str]:
+    errs = validate_record_cde(rec)
+    if rec.get("alcance") not in ALCANCE:
+        errs.append(f"alcance={rec.get('alcance')!r}")
+    if rec.get("final") not in FINALES_S:
+        errs.append(f"final={rec.get('final')!r}")
+    t = rec.get("nota_final")
+    if not isinstance(t, str) or not (5 <= len(t.split()) <= 45):
+        errs.append("nota_final ausente o de longitud fuera de rango")
+    for k in ("optimismo_personajes", "tono_general"):
+        v = rec.get(k)
+        if not (v is None or (isinstance(v, int) and not isinstance(v, bool) and -2 <= v <= 2)):
+            errs.append(f"{k}={v!r}")
+    if not isinstance(rec.get("reconocida"), bool):
+        errs.append("reconocida no booleano")
+    return errs
+
+
+def load_labels_series(paths, annotator: str):
+    rows, errors = [], []
+    for p in paths:
+        for ln, line in enumerate(Path(p).read_text(encoding="utf-8").splitlines(), 1):
+            if not line.strip():
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError as e:
+                errors.append(f"{Path(p).name}:{ln} JSON inválido: {e}")
+                continue
+            e = validate_record_series(rec)
+            if e:
+                errors.append(f"{Path(p).name}:{ln} {rec.get('id')}: {'; '.join(e)}")
+                continue
+            rec["annotator"] = annotator
+            rows.append(rec)
+    df = pd.DataFrame(rows)
+    if not df.empty and df["id"].duplicated().any():
+        errors.append("ids duplicados")
+        df = df.drop_duplicates("id")
+    return df, errors
