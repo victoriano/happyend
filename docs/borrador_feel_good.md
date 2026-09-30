@@ -1,4 +1,4 @@
-# Módulo C (borrador 0.2, en piloto): ¿es una película *feel good*?
+# Módulos C y D (borrador 0.3, en piloto): ¿es una película *feel good*?
 
 **Estado:** borrador para validar con el usuario sobre 10 películas. No está congelado: puede cambiar tras el piloto.
 
@@ -47,3 +47,33 @@ Reglas añadidas en 0.2:
 * `feel_good`: entero de 0 a 10, o `null`.
 * `feel_good_por_que`: explicación en español de 40 a 70 palabras, parafraseada (sin copiar frases de la sinopsis), que diga qué vínculos quedan en paz o rotos, cómo queda el mundo y si hay esperanza. Puede contener spoilers.
 * `confianza_c`: 1 (baja), 2 (media) o 3 (alta).
+
+## D. Utopía o distopía: ¿hacia dónde va la sociedad según la película? (añadido en 0.3)
+
+### D1. Pregunta central
+
+Más allá de los protagonistas, ¿qué imagen transmite la película sobre **la sociedad y hacia dónde va**? ¿Las instituciones, la comunidad y la gente en general tienden a mejorar, a cuidarse y a resolver sus problemas (utopía), o a degradarse, oprimir, corromperse o destruirse (distopía)?
+
+Se anota **en todas las películas, sean o no de ciencia ficción**. Una comedia romántica en una ciudad amable transmite una sociedad funcional; un thriller sobre policías corruptos transmite una sociedad podrida, aunque pase en el presente.
+
+### D2. Reglas
+
+1. **No es lo mismo que el *feel good*.** Una historia íntima puede acabar muy bien para sus personajes en una sociedad cruel, y al revés: puede haber tragedia personal en una sociedad sana.
+2. **Se mira la sociedad que muestra la película y su trayectoria al final:** instituciones (justicia, policía, gobierno, empresas, ciencia), comunidad, solidaridad entre desconocidos y la relación con la naturaleza o la tecnología. Si al final la sociedad mejora (se libera, se reforma, se une), la nota sube; si empeora o se revela podrida sin remedio, baja.
+3. **Si la película apenas muestra la sociedad** (un drama de cámara, una historia en un lugar aislado), la nota es 5 salvo que haya indicios claros, y se indica en la explicación.
+
+### D3. Nota `utopia` (0 a 10)
+
+| Nota | Significado | Patrón |
+|---|---|---|
+| **10** | Utopía | La sociedad es justa, solidaria y va a mejor; las instituciones funcionan y protegen. |
+| **7-8** | Sociedad sana con problemas | Hay injusticias o amenazas, pero la sociedad reacciona, se corrige o se une. |
+| **5** | Neutral o no se muestra | Sociedad corriente, sin juicio claro, o la película apenas la muestra. |
+| **2-3** | Sociedad enferma | Corrupción, desigualdad, violencia o deshumanización extendidas, con poca salida. |
+| **0** | Distopía | La sociedad oprime, se destruye o ha colapsado, y va a peor. |
+| `null` | No clasificable | La sinopsis no permite juzgarlo. |
+
+### D4. Campos de salida
+
+* `utopia`: entero de 0 a 10, o `null`.
+* `utopia_por_que`: explicación en español de 25 a 50 palabras, parafraseada, sobre qué sociedad muestra la película y hacia dónde va.
