@@ -38,7 +38,7 @@ Se compararon **994 largometrajes de ficción estadounidenses** (1980-2024) en d
 ## Resultado principal: las series se han vuelto mucho menos *feel good*
 
 * **Series de EE. UU.:** la nota *feel good* media (0-10) pasa de 6,1 en los noventa a 3,8 en 2020-2025. Diferencia 2010-2025 frente a los noventa: −1,88 (IC 95 %: −2,16 a −1,59). Las series con 7 o más bajan del 44 % al 9 %.
-* **Series de España:** de 6,0 a 3,9; diferencia −1,78 (IC 95 %: −2,31 a −1,24).
+* **Series de España:** de 5,9 a 3,9; diferencia −1,75 (IC 95 %: −2,28 a −1,18).
 * **El cine apenas cambia:** las películas estadounidenses pasan de 6,3 a 6,1 en 2010-2025: diferencia −0,27 (IC 95 %: −0,57 a +0,03), con un intervalo que incluye el cero. En España el cine sube.
 * **Robustez:** en EE. UU. la caída se mantiene con cada anotador (A −1,75, B −2,02), sin las series de solo premisa (−1,58) y ajustando por género y popularidad (−1,40).
 * **Géneros:** con la mezcla de géneros de los noventa, la media reciente de EE. UU. sería 4,8: la composición explica el 31 % de la caída y el resto ocurre dentro de los géneros. En España la composición explica el 78 % y, ajustando por género, el intervalo incluye el cero.

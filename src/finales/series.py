@@ -257,7 +257,12 @@ def build() -> pd.DataFrame:
     cand = cand.join(tm, on="tconst")
     oc = cand.origin_country.fillna("").str.split("|")
     cand["is_us"] = oc.apply(lambda x: "US" in x)
-    cand["is_es"] = oc.apply(lambda x: "ES" in x) | (cand.origin_country.isna() & cand.tconst.map(lambda t: t in wes and wes[t][1] == "Q29"))
+    # D-038: como en el cine (D-033), fuera las coproducciones de origen mayoritariamente extranjero: España debe ser
+    # el único país de origen en TMDB o, si hay varios, el idioma original debe ser español, catalán, euskera o gallego;
+    # sin datos de TMDB, Wikidata debe dar solo España.
+    ES_LANG = {"es", "ca", "eu", "gl"}
+    cand["is_es"] = [("ES" in o and (o == ["ES"] or lang in ES_LANG)) if isinstance(oc0, str) else (t in wes and wes[t][1] == "Q29")
+                     for o, oc0, lang, t in zip(oc, cand.origin_country, cand.original_language, cand.tconst)]
     us = cand[cand.is_us].sort_values(["year", "numVotes"], ascending=[True, False]).groupby("year").head(TOP).assign(country_frame="US")
     es = cand[cand.is_es].sort_values(["year", "numVotes"], ascending=[True, False]).groupby("year").head(TOP).assign(country_frame="ES")
     sel = pd.concat([us, es], ignore_index=True)
