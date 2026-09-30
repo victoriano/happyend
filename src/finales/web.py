@@ -143,12 +143,31 @@ def build_films_v2() -> dict:
             TONE.index(r.tono_cierre) if r.tono_cierre in TONE else 5, tc,
             int(r.numVotes) if pd.notna(r.numVotes) else None, _num(r.averageRating, 1),
             int(r.votes_rank_in_year), bool(getattr(r, "anio_en_curso", False) == True),
-            _num(r.feel_good, 1), _num(r.utopia, 1), PUB.index(r.publico) if r.publico in PUB else -1,
+            _num(r.feel_good, 1), _num(r.utopia, 1), PUB.index(r.publico) if r.publico in PUB else -1, 0,
         ])
+    # D-037: series (mismas columnas; sin módulo B → -1)
+    sp = ROOT / "data" / "interim" / "series" / "analitico_series.csv"
+    if sp.exists():
+        sd = pd.read_csv(sp)
+        sd = sd[sd.final.notna()]
+        for tc, g in sd.groupby("tconst", sort=False):
+            r = g.iloc[0]
+            cf = "+".join(sorted(g.country_frame.unique(), reverse=True))
+            if r.genre_main not in genres:
+                genres.append(r.genre_main)
+            title = r.titulo_es if isinstance(r.titulo_es, str) and r.titulo_es else r.primaryTitle
+            orig = r.primaryTitle if r.primaryTitle != title else ""
+            rows.append([title, orig, int(r.year), ["US", "ES", "US+ES"].index(cf), genres.index(r.genre_main),
+                         FIN.index(r.final), _num(r.optimismo_personajes, 1), _num(r.tono_general, 1),
+                         *[-1 for _ in EXPL], [], [], r.poster_path if isinstance(r.poster_path, str) else "",
+                         int(r.tmdb_id) if pd.notna(r.tmdb_id) else 0, 5, tc,
+                         int(r.numVotes), _num(r.averageRating, 1), int(r.votes_rank_in_year),
+                         bool(r.anio_en_curso == True), _num(r.feel_good, 1), _num(r.utopia, 1),
+                         PUB.index(r.publico) if r.publico in PUB else -1, 1])
     rows.sort(key=lambda x: (x[2], x[0]))
     cols = ["titulo", "original", "anio", "pais", "genero", "final", "optimismo", "tono"] + list(EXPL) + \
            ["relaciones", "paises_trama", "poster", "tmdb", "tono_cierre", "tconst", "imdb_votos", "imdb_nota",
-            "rango_votos_anio", "anio_en_curso", "feel_good", "utopia", "publico"]
+            "rango_votos_anio", "anio_en_curso", "feel_good", "utopia", "publico", "tipo"]
     return {"cols": cols, "publicos": PUB, "genres": genres, "finals": FIN, "tones": TONE, "cats": EXPL,
             "relaciones": an.RELACIONES, "paises": top_paises, "films": rows}
 
@@ -224,7 +243,10 @@ def build_v2() -> dict:
 def main_v2() -> None:
     # La web presenta un único estudio (censo + España): data.json solo lleva los agregados del censo.
     cat = pd.read_csv(TABLES / "catalogo_por_cohorte.csv")
-    data = {"v2": build_v2(), "meta": {"catalogo_us": int(cat.catalogo_elegible.sum()),
+    sj = ROOT / "reports" / "tables" / "series" / "historia_series.json"
+    data = {"v2": build_v2(), "series": json.loads(sj.read_text(encoding="utf-8")) if sj.exists() else None,
+            "series_acuerdo": json.loads((sj.parent / "acuerdo_series.json").read_text(encoding="utf-8")) if sj.exists() else None,
+            "meta": {"catalogo_us": int(cat.catalogo_elegible.sum()),
                                        "catalogo_es": int(len(pd.read_csv(INTERIM / "catalog_es_v4.csv")))}}
     (ROOT / "web" / "data.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     f = ROOT / "web" / "films.json"
@@ -284,6 +306,21 @@ def build_fichas() -> dict[int, dict]:
             "fJ": txt(getattr(r, "feel_good_por_que_J", None)),
             "uA": txt(getattr(r, "utopia_por_que_A", None)), "uB": txt(getattr(r, "utopia_por_que_B", None)),
             "uJ": txt(getattr(r, "utopia_por_que_J", None))}
+    sp = ROOT / "data" / "interim" / "series" / "analitico_series.csv"
+    if sp.exists():
+        from . import series as se
+        sd = pd.read_csv(sp).drop_duplicates("tconst")
+        for r in sd.itertuples():
+            if pd.isna(r.final):
+                continue
+            src = r.sinopsis_idioma if isinstance(r.sinopsis_idioma, str) else None
+            rec = se.synopsis(r.tconst, src, None) if src and src != "tmdb" else None
+            out.setdefault(int(r.year), {})[r.tconst] = {
+                "s": (rec or {}).get("text"), "l": src or "tmdb",
+                "u": (rec or {}).get("revision_url") if rec else (f"https://www.themoviedb.org/tv/{int(r.tmdb_id)}" if pd.notna(r.tmdb_id) else None),
+                "A": [r.final_A, r.nota_final_A], "B": [r.final_B, r.nota_final_B], "J": None,
+                "fA": txt(r.feel_good_por_que_A), "fB": txt(r.feel_good_por_que_B), "fJ": txt(r.feel_good_por_que_J),
+                "uA": txt(r.utopia_por_que_A), "uB": txt(r.utopia_por_que_B), "uJ": txt(r.utopia_por_que_J)}
     return out
 
 

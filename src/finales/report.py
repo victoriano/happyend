@@ -286,7 +286,8 @@ def main() -> None:
     V = values()
     inf2, res2, V2 = report_v2.main()
     inf3, res3, V3 = report_v3.main()
-    inf2, res2, V2 = inf2 + inf3, res2 + "\n" + res3, {**V2, **V3}
+    infs, ress = report_v3.series_section()
+    inf2, res2, V2 = inf2 + inf3 + infs, res2 + "\n" + res3 + ress, {**V2, **V3}
     inf = render("informe", V)
     # la segunda parte se inserta antes de la sección de reproducibilidad y fuentes
     cut = inf.index("\n## 10. Reproducibilidad")

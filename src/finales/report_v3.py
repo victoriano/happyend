@@ -73,3 +73,32 @@ def main():
     V = values_v3()
     return ((TEMPLATES / "informe_v3.md").read_text(encoding="utf-8").format_map(V),
             (TEMPLATES / "resumen_v3.md").read_text(encoding="utf-8").format_map(V), V)
+
+
+def series_section() -> tuple[str, str]:
+    p = ROOT / "reports" / "tables" / "series"
+    if not (p / "historia_series.json").exists():
+        return "", ""
+    h = json.loads((p / "historia_series.json").read_text(encoding="utf-8"))
+    a = json.loads((p / "acuerdo_series.json").read_text(encoding="utf-8"))
+    U, E = h["cohortes"]["US"], h["cohortes"]["ES"]
+    sU = {r[0]: r[1:] for r in h["sens"]["US"]}
+    dU, dE = h["diff"]["US"]["feel_good"], h["diff"]["ES"]["feel_good"]
+    f = lambda x: _f(x[0]) if x[0] is not None else "—"
+    inf = f"""
+### 9.7 Series de televisión (D-037)
+
+**Universo.** Las 30 series de ficción con más votos en IMDb por año de estreno (1980-2025 en el análisis): {h['n']['US']['total']} estadounidenses y {h['n']['ES']['total']} españolas (menos de 30 por año en España hasta 2019). Se juzga la serie entera con el manual de series 1.0; doble anotación ciega de {a['n']} series y árbitro ({a['n_adj']} series con algún campo adjudicado). Acuerdo: *feel good* α = {_f(a['alfa_feel_good'], 2)}; utopía α = {_f(a['alfa_utopia'], 2)}; final κ = {_f(a['kappa_final'], 2)}; público κ = {_f(a['kappa_publico'], 2)}.
+
+**Límite principal.** Wikipedia describe sobre todo la premisa de las series, no su final: el *feel good* de una serie mide la experiencia que promete (personajes, mundo, tono) más que su desenlace. Solo una minoría de textos llega al final de la serie.
+
+**Resultados.** Nota *feel good* media de las series estadounidenses por década de estreno: {', '.join(f(x) for x in U['feel_good'])} (ochenta a 2020-2025). Diferencia 2010-2025 frente a los noventa: {_s(dU[0])} {_ci(dU[1], dU[2])}. Series con 7 o más: del {_p(U['y_fg7'][1][0])} en los noventa al {_p(U['y_fg7'][4][0])} en 2020-2025. La caída se mantiene con un solo anotador (A {_s(sU['Solo el anotador A'][0])}, B {_s(sU['Solo el anotador B'][0])}), sin las series de solo premisa ({_s(sU['Sin las que solo tienen premisa'][0])}), sin series infantiles y familiares ({_s(sU['Sin series infantiles y familiares'][0])}) y ajustando por género y popularidad ({_s(sU['Ajustado por género y popularidad'][0])}). La nota de utopía baja de {f(U['utopia'][1])} a {f(U['utopia'][4])}. Series españolas: {', '.join(f(x) for x in E['feel_good'])}; diferencia {_s(dE[0])} {_ci(dE[1], dE[2])}.
+
+**Lectura.** A diferencia del cine, donde el cambio es pequeño y reciente, las series populares sí se han vuelto mucho menos *feel good* desde los noventa. Parte puede deberse a qué series se recuerdan y se votan hoy (supervivencia de las comedias de los noventa frente al auge del drama de prestigio) y a que el juicio se hace sobre premisas.
+"""
+    res = f"""
+## Series: la caída sí es grande
+
+Las series estadounidenses más votadas pasan de un *feel good* medio de {f(U['feel_good'][1])} (noventa) a {f(U['feel_good'][4])} (2020-2025), una diferencia 2010-2025 de {_s(dU[0])} puntos {_ci(dU[1], dU[2])}, robusta a todas las comprobaciones. Las españolas siguen la misma tendencia. Cautela: se juzga sobre todo la premisa de cada serie, no su final.
+"""
+    return inf, res

@@ -65,6 +65,10 @@ Límites: juicio sobre un resumen, no sobre la película; sin validación humana
 * **España va al revés:** menos *feel good* (4,3 frente a 6,1), pero en aumento: +0,65 puntos entre los noventa y 2010-2025 (IC 95 %: +0,14 a +1,19).
 * **IMDb:** cada punto de *feel good* se asocia con −0,038 puntos de nota media (mismo año y género).
 
+## Series: la caída sí es grande
+
+Las series estadounidenses más votadas pasan de un *feel good* medio de 6,1 (noventa) a 3,8 (2020-2025), una diferencia 2010-2025 de −1,88 puntos (IC 95 %: −2,16 a −1,59), robusta a todas las comprobaciones. Las españolas siguen la misma tendencia. Cautela: se juzga sobre todo la premisa de cada serie, no su final.
+
 ## Veredicto provisional
 
 La afirmación queda **matizada**. Los noventa son la década más *feel good* y con más finales felices del cine popular estadounidense, pero la diferencia con 2010-2019 es pequeña o nula; el cambio claro es la caída de 2020-2025, con parte debida a la composición (menos comedia y menos cine familiar). No hay más tragedias. En España la tendencia es la contraria. La parte de que «se echa de menos» **sigue sin probar**.

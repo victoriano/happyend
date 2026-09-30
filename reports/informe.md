@@ -360,6 +360,16 @@ A petición del usuario, la medida principal pasa a ser el ***feel good***: si l
 
 **Qué añade.** La hipótesis «los noventa eran más *feel good*» se sostiene solo en parte: los noventa son la década con la nota más alta, pero la diferencia con 2010-2019 es nula y la caída se concentra en 2020-2025. Con las mismas cautelas que antes, no permite afirmar que hubiera una prohibición de películas pesimistas ni que el público eche de menos ese cine.
 
+### 9.7 Series de televisión (D-037)
+
+**Universo.** Las 30 series de ficción con más votos en IMDb por año de estreno (1980-2025 en el análisis): 1380 estadounidenses y 600 españolas (menos de 30 por año en España hasta 2019). Se juzga la serie entera con el manual de series 1.0; doble anotación ciega de 1991 series y árbitro (313 series con algún campo adjudicado). Acuerdo: *feel good* α = 0,94; utopía α = 0,92; final κ = 0,70; público κ = 0,81.
+
+**Límite principal.** Wikipedia describe sobre todo la premisa de las series, no su final: el *feel good* de una serie mide la experiencia que promete (personajes, mundo, tono) más que su desenlace. Solo una minoría de textos llega al final de la serie.
+
+**Resultados.** Nota *feel good* media de las series estadounidenses por década de estreno: 6,0, 6,1, 5,6, 4,5, 3,8 (ochenta a 2020-2025). Diferencia 2010-2025 frente a los noventa: −1,88 (IC 95 %: −2,16 a −1,59). Series con 7 o más: del 44 % en los noventa al 9 % en 2020-2025. La caída se mantiene con un solo anotador (A −1,75, B −2,02), sin las series de solo premisa (−1,58), sin series infantiles y familiares (−1,31) y ajustando por género y popularidad (−1,40). La nota de utopía baja de 5,1 a 3,5. Series españolas: 5,5, 6,0, 5,3, 4,5, 3,9; diferencia −1,78 (IC 95 %: −2,31 a −1,24).
+
+**Lectura.** A diferencia del cine, donde el cambio es pequeño y reciente, las series populares sí se han vuelto mucho menos *feel good* desde los noventa. Parte puede deberse a qué series se recuerdan y se votan hoy (supervivencia de las comedias de los noventa frente al auge del drama de prestigio) y a que el juicio se hace sobre premisas.
+
 ## 10. Reproducibilidad
 
 Todo el flujo se ejecuta desde el `README.md`: descarga, catálogo, cobertura, muestra, lotes cegados, análisis, gráficos e informe. Se comprobó clonando el repositorio en un entorno limpio: el resultado fue idéntico (ver `README.md`). Las etiquetas de anotación están versionadas en `annotation/labels/`. La segunda parte se regenera con `python -m finales.v2`, `python -m finales.analysis_v2`, `python -m finales.web` y `python -m finales.report` (ver `README.md`). Las decisiones y sus motivos están en `docs/registro_decisiones.md` y el diccionario de datos, en `docs/diccionario_datos.md`.
