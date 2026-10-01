@@ -241,6 +241,7 @@ details.more summary{margin-top:6px}
 .quad{display:grid;grid-template-columns:1fr;gap:10px 18px;margin-top:14px}
 @media(min-width:620px){.quad{grid-template-columns:1fr 1fr}}
 .gfill{background:var(--ser)!important}
+.curio{margin-top:48px;padding:18px 22px 10px;border:1px solid var(--rule);border-radius:14px;background:var(--paper)}
 .decgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:8px}
 .lnk{all:unset;cursor:pointer;text-align:left}.lnk:hover{text-decoration:underline}
 </style>
@@ -340,90 +341,41 @@ details.more summary{margin-top:6px}
     <svg id="famdec" class="chart" role="img" aria-label="Caída de la nota feel good media entre los noventa y 2010-2025, separada en cambio de público y caída dentro de cada grupo" data-title="Menos series familiares explica solo parte de la caída"></svg>
     <p class="note" id="famNote"></p>
     <p class="small" style="margin-top:22px">Las 10 series estadounidenses más votadas de cada década y su nota <i>feel good</i> (pulsa para ver la ficha):</p><div class="decgrid" id="cmpEx"></div>
+    <div class="curio">
+    <h3 style="margin-top:6px">Curiosidad: ¿y el cine?</h3>
+    <p>Empezamos este estudio con las películas, no con las series, y ahí la sospecha no se cumplía. Por eso acabamos mirando la tele.</p>
+    <p>En las películas populares estadounidenses la nota <i>feel good</i> apenas se mueve: <b data-k="fgm80"></b> en los ochenta, <b data-k="fgm90"></b> en los noventa, <b data-k="fgm10"></b> en los años diez. Solo en 2020-2025 baja algo, a <b data-k="fgm20"></b>. <i>Toy Story</i> (10) y <i>Joker</i> (0) conviven en todas las épocas: <i>Solo en casa</i> saca un 9,5, e <i>Interstellar</i>, un 8,5; <i>Seven</i>, un 0,5, y <i>Oppenheimer</i>, un 1,5.</p>
+    <div class="exs" id="exsF"></div>
+    <p style="margin-top:18px">En el cine hay un matiz con el final feliz: los noventa son la década con más finales felices (el <b data-k="f90"></b>, frente al <b data-k="frec"></b> desde 2010), pero no la única con muchos, y los finales trágicos no han aumentado. <i>Titanic</i>, con su final agridulce, saca un 7,5 de <i>feel good</i>. <span id="forestFText"></span></p>
+    <svg id="ci" class="chart" role="img" aria-label="Nota feel good media de las películas por década" data-title="Las películas apenas han perdido feel good desde los ochenta"></svg>
+    <div class="pair"><span style="--c:var(--us)">Películas EE. UU.</span><span style="--c:var(--es)">Películas España</span></div>
+    <p id="ciText" class="small"></p>
+  </div>
   </div>
 </section>
 
 <section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
   <div class="wrap">
     <div class="kicker">Capítulo 3</div>
-    <h2>Las series de hoy no solo tienen protagonistas más sombríos: también retratan sociedades más podridas</h2>
-    <p>Hay otra forma de dejar mal cuerpo: mostrar una sociedad podrida. Por eso pusimos una segunda nota, de 0 (<b>distopía</b>: una sociedad que oprime, se corrompe o se destruye) a 10 (<b>utopía</b>: justa, solidaria y que va a mejor), a todos los títulos, sean o no de ciencia ficción. <span id="utoText"></span></p>
-    <svg id="mood" class="chart" role="img" aria-label="Utopía por década: series frente a películas"></svg>
-    <div class="pair"><span style="--c:var(--ser)">Series</span><span style="--c:var(--pel)">Películas</span></div>
-    <p class="note">Estados Unidos. Media por década con intervalo del 95 %.</p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="kicker">Capítulo 4</div>
-    <h2>Acabar bien no es lo mismo que dejarte bien</h2>
-    <p>También clasificamos cómo acaba cada título: <span class="chip feliz">Feliz</span> · <span class="chip agri">Agridulce</span> · <span class="chip amb">Ambiguo</span> · <span class="chip trag">Trágico</span>. En las series solo se puede cuando el resumen cuenta el final o el patrón de la serie, y eso pasa en una minoría. Donde se puede, las dos medidas van de la mano, pero no son lo mismo: hay finales agridulces muy <i>feel good</i> y finales felices que no reconfortan.</p>
-    <svg id="heat" class="chart heat" role="img" aria-label="Matriz de series por tipo de final y nota feel good"></svg>
-    <p class="note">Número de series estadounidenses con final clasificable según su final y su nota <i>feel good</i>.</p>
-    <div class="quad" id="quad"></div>
-    <p class="note">Series estadounidenses por década de estreno. El final feliz y el trágico, solo entre series con final clasificable (<span data-k="sCl"></span> de <span data-k="sNus2"></span>).</p>
-  </div>
-</section>
-
-<section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
-  <div class="wrap">
-    <div class="kicker">Capítulo 5</div>
-    <h2>España, igual</h2>
-    <p>Las series españolas cuentan la misma historia: <span id="esText"></span> En cambio, el cine español va al revés: su nota <i>feel good</i> <b>sube</b>, de <b data-k="esF90"></b> en los noventa a <b data-k="esF20"></b> en 2020-2025.</p>
-    <svg id="esus" class="chart" role="img" aria-label="Nota feel good media por década de las series españolas y estadounidenses"></svg>
+    <h2>La singularidad de España: sus series se oscurecen como las de EE. UU., pero su cine es cada vez más <i>feel good</i></h2>
+    <p>Las series españolas cuentan la misma historia que las estadounidenses: <span id="esText"></span></p>
+    <svg id="esus" class="chart" role="img" aria-label="Nota feel good media por década de las series españolas y estadounidenses" data-title="Las series españolas pierden feel good igual que las estadounidenses"></svg>
     <div class="pair"><span style="--c:var(--us)">Series EE. UU.</span><span style="--c:var(--es)">Series España</span></div>
+    <p style="margin-top:22px"><span id="esText2"></span></p>
+    <svg id="esfs" class="chart" role="img" aria-label="Nota feel good media por década en España: series frente a películas" data-title="En España, el cine sube mientras las series bajan"></svg>
+    <div class="pair"><span style="--c:var(--ser)">Series españolas</span><span style="--c:var(--pel)">Películas españolas</span></div>
     <p class="small"><b>Ojo:</b> hay pocas series españolas con votos antes de 2005 (<span data-k="esN80"></span> en los ochenta y <span data-k="esN90"></span> en los noventa), así que las décadas antiguas tienen mucha incertidumbre.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="kicker">Capítulo 6</div>
-    <h2>¿Y el cine?</h2>
-    <p>En las películas populares estadounidenses la nota <i>feel good</i> apenas se mueve: <b data-k="fgm80"></b> en los ochenta, <b data-k="fgm90"></b> en los noventa, <b data-k="fgm10"></b> en los años diez. Solo en 2020-2025 baja algo, a <b data-k="fgm20"></b>. <i>Toy Story</i> (10) y <i>Joker</i> (0) conviven en todas las épocas: <i>Solo en casa</i> saca un 9,5, e <i>Interstellar</i>, un 8,5; <i>Seven</i>, un 0,5, y <i>Oppenheimer</i>, un 1,5.</p>
-    <div class="exs" id="exsF"></div>
-    <p style="margin-top:18px">En el cine hay un matiz con el final feliz: los noventa son la década con más finales felices (el <b data-k="f90"></b>, frente al <b data-k="frec"></b> desde 2010), pero no la única con muchos, y los finales trágicos no han aumentado. <i>Titanic</i>, con su final agridulce, saca un 7,5 de <i>feel good</i>. <span id="forestFText"></span></p>
-    <svg id="ci" class="chart" role="img" aria-label="Nota feel good media de las películas por década"></svg>
-    <p id="ciText" class="small"></p>
-  </div>
-</section>
-
-<section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
-  <div class="wrap">
-    <div class="kicker">Capítulo 7</div>
-    <h2>Quien vota en IMDb no premia el <i>feel good</i></h2>
-    <p>No podemos saber si la gente echa de menos las series de los noventa; eso requiere una encuesta. Pero entre películas del mismo año y género, <mark>cada punto más de <i>feel good</i> se asocia con <b data-k="imfg"></b> puntos de nota en IMDb</mark>. Las series más votadas de hoy, como <i>Breaking Bad</i> (9,5 en IMDb y un 1 de <i>feel good</i>), apuntan en la misma dirección.</p>
-    <p class="note">La nota de IMDb mide la opinión de quien vota en IMDb, no la de todo el público, y no dice nada de la nostalgia.</p>
-  </div>
-</section>
-
-<section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
-  <div class="wide">
-    <div class="wrap" style="padding:0">
-      <div class="kicker">Cómo lo hicimos</div>
-      <h2>Dos lectores artificiales y un árbitro</h2>
-      <p>Nadie puede ver <span data-k="sN">2.000</span> series en una tarde, pero sí leer sus resúmenes. Así funcionó:</p>
-    </div>
-    <div class="flow">
-      <div><b>Catálogo.</b> Series y películas de ficción con votos en IMDb, estadounidenses o españolas (país según TMDB y Wikidata; sin coproducciones mayoritariamente extranjeras).</div>
-      <div><b>Censo.</b> Las 30 series más votadas de cada año de estreno por país, y las 50 películas estadounidenses y 30 españolas más votadas de cada año: todas, sin sorteo.</div>
-      <div><b>Resúmenes.</b> Wikipedia (volcado de septiembre de 2026) en el idioma disponible; si no había, sinopsis de TMDB. Con títulos y años borrados.</div>
-      <div><b>Dos anotadores.</b> Dos modelos de lenguaje distintos puntuaron cada resumen por separado con un manual de reglas y explicaron su nota.</div>
-      <div><b>Árbitro.</b> Un tercero resolvió los desacuerdos (sobre el final, el público y cuando las notas diferían 3 puntos o más) sin saber quién había dicho qué.</div>
-    </div>
-    <div class="wrap" style="padding:0;margin-top:28px">
-      <p>Los dos anotadores coincidieron mucho: en las series, sus notas <i>feel good</i> quedaron a 2 puntos o menos en el <b data-k="sd2"></b> de los casos (α de Krippendorff <b data-k="safg"></b>); en las películas, α <b data-k="afg"></b>. Pero eso no significa que acierten siempre: dos máquinas pueden equivocarse igual.</p>
-      <h3 style="margin-top:28px">Lo que debes saber antes de creerte nada</h3>
-    </div>
-    <div class="caveats">
-      <div class="caveat"><h3>De las series sabemos la premisa</h3><p class="small">Wikipedia rara vez cuenta cómo acaba una serie: solo en el <b data-k="sFin"></b> de las series el resumen llega al final. La nota mide sobre todo la experiencia que promete la serie (sus personajes, su mundo, su tono), no su desenlace. Aun así, la caída se mantiene al quitar las series de las que solo sabemos la premisa.</p></div>
-      <div class="caveat"><h3>Los votos son memoria</h3><p class="small">«Las más votadas» se mide con votos actuales de IMDb. De los noventa se siguen votando las series que recordamos, sobre todo comedias; de ahora, lo que está de moda. Eso puede exagerar la diferencia.</p></div>
-      <div class="caveat"><h3>No las ha revisado ninguna persona</h3><p class="small">Todas las notas son de modelos de lenguaje. El material para validarlas con anotadores humanos está preparado, pero aún no se ha usado. Los modelos, además, reconocieron casi todos los títulos.</p></div>
-      <div class="caveat"><h3>Un resumen no es la obra</h3><p class="small">El <i>feel good</i> depende de la música, las caras, el ritmo… Aquí se juzga a partir de un texto. Y nuestra definición (paz, amor y esperanza) es una entre varias posibles.</p></div>
-      <div class="caveat"><h3>España cuenta con pocos datos antiguos</h3><p class="small">Hay pocas series españolas con votos antes de 2005, y muchas películas españolas solo tienen una sinopsis comercial que no cuenta el final.</p></div>
-      <div class="caveat"><h3>Muchas comparaciones</h3><p class="small">Con tantos subgrupos, alguna diferencia saldrá significativa por azar. Los resultados por tipo de serie son exploratorios.</p></div>
-    </div>
+    <div class="kicker">Capítulo 4</div>
+    <h2>Las series de hoy no solo tienen protagonistas más sombríos: también retratan sociedades más podridas</h2>
+    <p>Hay otra forma de dejar mal cuerpo: mostrar una sociedad podrida. Por eso pusimos una segunda nota, de 0 (<b>distopía</b>: una sociedad que oprime, se corrompe o se destruye) a 10 (<b>utopía</b>: justa, solidaria y que va a mejor), a todos los títulos, sean o no de ciencia ficción. <span id="utoText"></span></p>
+    <svg id="mood" class="chart" role="img" aria-label="Utopía por década: series frente a películas"></svg>
+    <div class="pair"><span style="--c:var(--ser)">Series</span><span style="--c:var(--pel)">Películas</span></div>
+    <p class="note">Estados Unidos. Media por década con intervalo del 95 %.</p>
   </div>
 </section>
 
@@ -466,7 +418,7 @@ details.more summary{margin-top:6px}
   <div class="wrap">
     <div class="kicker">Anexo</div>
     <h2>Para quien quiera más detalle</h2>
-    <p>Tres comprobaciones que sostienen la historia: si la caída de las series es real o un artefacto del método, cuánto se debe a que hoy vemos otros géneros, y en qué tipo de series cayó más.</p>
+    <p>Lo que sostiene la historia y algunos hallazgos secundarios: si la caída de las series es real o un artefacto del método, cuánto se debe a que hoy vemos otros géneros, en qué tipo de series cayó más, cómo encaja con los finales felices, qué premia quien vota en IMDb y cómo lo medimos.</p>
   </div>
 </section>
 
@@ -500,6 +452,56 @@ details.more summary{margin-top:6px}
     <p><span id="subText"></span></p>
     <svg id="subg" class="chart" role="img" aria-label="Cambio en la nota feel good entre los noventa y 2010-2025 por tipo de serie"></svg>
     <p class="note">Series estadounidenses. Diferencia 2010-2025 menos 1990-1999 dentro de cada grupo, con intervalo del 95 %. Solo grupos con al menos 12 series en cada periodo. Son muchas comparaciones a la vez: alguna saldrá «significativa» por azar.</p>
+  </div>
+</section>
+
+<section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+  <div class="wrap">
+    <div class="kicker">Anexo D · Finales</div>
+    <h2>Acabar bien no es lo mismo que dejarte bien</h2>
+    <p>También clasificamos cómo acaba cada título: <span class="chip feliz">Feliz</span> · <span class="chip agri">Agridulce</span> · <span class="chip amb">Ambiguo</span> · <span class="chip trag">Trágico</span>. En las series solo se puede cuando el resumen cuenta el final o el patrón de la serie, y eso pasa en una minoría. Donde se puede, las dos medidas van de la mano, pero no son lo mismo: hay finales agridulces muy <i>feel good</i> y finales felices que no reconfortan.</p>
+    <svg id="heat" class="chart heat" role="img" aria-label="Matriz de series por tipo de final y nota feel good"></svg>
+    <p class="note">Número de series estadounidenses con final clasificable según su final y su nota <i>feel good</i>.</p>
+    <div class="quad" id="quad"></div>
+    <p class="note">Series estadounidenses por década de estreno. El final feliz y el trágico, solo entre series con final clasificable (<span data-k="sCl"></span> de <span data-k="sNus2"></span>).</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Anexo E · IMDb</div>
+    <h2>Quien vota en IMDb no premia el <i>feel good</i></h2>
+    <p>No podemos saber si la gente echa de menos las series de los noventa; eso requiere una encuesta. Pero entre películas del mismo año y género, <mark>cada punto más de <i>feel good</i> se asocia con <b data-k="imfg"></b> puntos de nota en IMDb</mark>. Las series más votadas de hoy, como <i>Breaking Bad</i> (9,5 en IMDb y un 1 de <i>feel good</i>), apuntan en la misma dirección.</p>
+    <p class="note">La nota de IMDb mide la opinión de quien vota en IMDb, no la de todo el público, y no dice nada de la nostalgia.</p>
+  </div>
+</section>
+
+<section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+  <div class="wide">
+    <div class="wrap" style="padding:0">
+      <div class="kicker">Anexo F · Cómo lo hicimos</div>
+      <h2>Dos lectores artificiales y un árbitro</h2>
+      <p>Nadie puede ver <span data-k="sN">2.000</span> series en una tarde, pero sí leer sus resúmenes. Así funcionó:</p>
+    </div>
+    <div class="flow">
+      <div><b>Catálogo.</b> Series y películas de ficción con votos en IMDb, estadounidenses o españolas (país según TMDB y Wikidata; sin coproducciones mayoritariamente extranjeras).</div>
+      <div><b>Censo.</b> Las 30 series más votadas de cada año de estreno por país, y las 50 películas estadounidenses y 30 españolas más votadas de cada año: todas, sin sorteo.</div>
+      <div><b>Resúmenes.</b> Wikipedia (volcado de septiembre de 2026) en el idioma disponible; si no había, sinopsis de TMDB. Con títulos y años borrados.</div>
+      <div><b>Dos anotadores.</b> Dos modelos de lenguaje distintos puntuaron cada resumen por separado con un manual de reglas y explicaron su nota.</div>
+      <div><b>Árbitro.</b> Un tercero resolvió los desacuerdos (sobre el final, el público y cuando las notas diferían 3 puntos o más) sin saber quién había dicho qué.</div>
+    </div>
+    <div class="wrap" style="padding:0;margin-top:28px">
+      <p>Los dos anotadores coincidieron mucho: en las series, sus notas <i>feel good</i> quedaron a 2 puntos o menos en el <b data-k="sd2"></b> de los casos (α de Krippendorff <b data-k="safg"></b>); en las películas, α <b data-k="afg"></b>. Pero eso no significa que acierten siempre: dos máquinas pueden equivocarse igual.</p>
+      <h3 style="margin-top:28px">Lo que debes saber antes de creerte nada</h3>
+    </div>
+    <div class="caveats">
+      <div class="caveat"><h3>De las series sabemos la premisa</h3><p class="small">Wikipedia rara vez cuenta cómo acaba una serie: solo en el <b data-k="sFin"></b> de las series el resumen llega al final. La nota mide sobre todo la experiencia que promete la serie (sus personajes, su mundo, su tono), no su desenlace. Aun así, la caída se mantiene al quitar las series de las que solo sabemos la premisa.</p></div>
+      <div class="caveat"><h3>Los votos son memoria</h3><p class="small">«Las más votadas» se mide con votos actuales de IMDb. De los noventa se siguen votando las series que recordamos, sobre todo comedias; de ahora, lo que está de moda. Eso puede exagerar la diferencia.</p></div>
+      <div class="caveat"><h3>No las ha revisado ninguna persona</h3><p class="small">Todas las notas son de modelos de lenguaje. El material para validarlas con anotadores humanos está preparado, pero aún no se ha usado. Los modelos, además, reconocieron casi todos los títulos.</p></div>
+      <div class="caveat"><h3>Un resumen no es la obra</h3><p class="small">El <i>feel good</i> depende de la música, las caras, el ritmo… Aquí se juzga a partir de un texto. Y nuestra definición (paz, amor y esperanza) es una entre varias posibles.</p></div>
+      <div class="caveat"><h3>España cuenta con pocos datos antiguos</h3><p class="small">Hay pocas series españolas con votos antes de 2005, y muchas películas españolas solo tienen una sinopsis comercial que no cuenta el final.</p></div>
+      <div class="caveat"><h3>Muchas comparaciones</h3><p class="small">Con tantos subgrupos, alguna diferencia saldrá significativa por azar. Los resultados por tipo de serie son exploratorios.</p></div>
+    </div>
   </div>
 </section>
 
@@ -886,13 +888,16 @@ function drawEsUs(){
   twoSeries('#esus',[['Series EE. UU.',SU.feel_good,css('--us'),-8],['Series España',SE.feel_good,css('--es'),8]],[2,8],n1);
   const d=SR.diff.ES.feel_good;
   $('#esText').textContent=`su nota feel good pasa de ${n1(SE.feel_good[1][0])} en los noventa a ${n1(SE.feel_good[3][0])} en los años diez y ${n1(SE.feel_good[4][0])} en 2020-2025 (diferencia 2010-2025 frente a los noventa: ${dpt(d[0])}; IC 95 %: ${dpt(d[1])} a ${dpt(d[2])}). Médico de familia y Farmacia de guardia sacan un 8; La casa de papel, un 4, y Élite, un 2,5.`;
+  const dF=FG.diff.ES.feel_good, D=SR.familiar.ES.decomp.tres_grupos, DU=SR.familiar.US.decomp.tres_grupos;
+  $('#esText2').innerHTML=`Pero España tiene dos singularidades. La primera: <b>su cine va al revés</b>. La nota <i>feel good</i> de las películas españolas más vistas sube, de <b>${n1(PE.feel_good[1][0])}</b> en los noventa a <b>${n1(PE.feel_good[4][0])}</b> en 2020-2025 (diferencia 2010-2025 frente a los noventa: ${dpt(dF[0])}; IC 95 %: ${dpt(dF[1])} a ${dpt(dF[2])}), mientras la de sus series cae. Comedias como <i>Ocho apellidos vascos</i> o <i>Campeones</i> (un 9 cada una) llenan las salas, mientras las series se llenan de atracos (<i>La casa de papel</i>), narcos (<i>Fariña</i>) y cárceles (<i>Vis a vis</i>). La segunda: <b>en las series españolas pesa más el cambio de público</b>. En los noventa, el ${pct(D.share90_familiar)} de las más votadas eran familiares (<i>Farmacia de guardia</i>, <i>Médico de familia</i>); en 2010-2025, el ${pct(D.share_rec_familiar)}. Ese cambio explica alrededor del ${Math.round(100*D.composicion[0]/D.total[0])} % de la caída, frente al ${Math.round(100*DU.composicion[0]/DU.total[0])} % en EE. UU.`;
+  twoSeries('#esfs',[['Series españolas',SE.feel_good,css('--ser'),-8],['Películas españolas',PE.feel_good,css('--pel'),8]],[2,8],n1);
 }
 
 // ---- capítulo 9: cine
 function drawCI(){
   twoSeries('#ci',[['Películas EE. UU.',fgc.feel_good,css('--us'),-8],['Películas España',FG.cohortes.ES.feel_good,css('--es'),8]],[2,8],n1,260);
   const dd=FG.diff.US, d20=dd.por_cohorte['2020-2025'].feel_good;
-  $('#ciText').textContent=`Películas estadounidenses: diferencia con los noventa en 2010-2025, ${dpt(dd.feel_good[0])} (IC 95 %: ${dpt(dd.feel_good[1])} a ${dpt(dd.feel_good[2])}); solo 2020-2025, ${dpt(d20[0])} (${dpt(d20[1])} a ${dpt(d20[2])}). En España, el cine sube.`;
+  $('#ciText').textContent=`Películas estadounidenses: diferencia con los noventa en 2010-2025, ${dpt(dd.feel_good[0])} (IC 95 %: ${dpt(dd.feel_good[1])} a ${dpt(dd.feel_good[2])}); solo 2020-2025, ${dpt(d20[0])} (${dpt(d20[1])} a ${dpt(d20[2])}).`;
 }
 
 // ---- explorer: facetas visuales con recuento
