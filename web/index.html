@@ -145,7 +145,7 @@ footer li{margin-bottom:6px}
 .part .big{font-size:clamp(40px,8vw,84px)}
 .pair{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin:8px 0}
 .pair span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;background:var(--c)}
-:root{--us:#2a78d6;--es:#e0a100;--fg:#1a9850;--fg0:#d73027;--fg1:#f46d43;--fgm:#f2c14e;--fg3:#86c35b;--uto:#1baf7a;--dis:#7b3fb0;--ser:#d6452f;--pel:#2a6fd1;--fam:#c2700a;--inf:#f2b632;--imdb:#d9a90f;--pop:#6c4fc2}
+:root{--us:#2a78d6;--es:#e0a100;--fg:#1a9850;--fg0:#d73027;--fg1:#f46d43;--fgm:#f2c14e;--fg3:#86c35b;--uto:#1baf7a;--dis:#7b3fb0;--ser:#d6452f;--pel:#2a6fd1;--fam:#d9860b;--juv:#2a9d8f;--imdb:#d9a90f;--pop:#6c4fc2}
 .seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
 .seg button{border-radius:0;background:transparent;color:var(--ink);padding:7px 14px;font-size:14px}
 .seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
@@ -332,12 +332,12 @@ details.more summary{margin-top:6px}
     <div class="pair"><span style="--c:var(--ser)">Series</span><span style="--c:var(--pel)">Películas</span></div>
     <svg id="yearly" class="chart" role="img" aria-label="Nota feel good media por año: series frente a películas"></svg>
     <p class="note">Arriba, media por década de estreno con intervalo del 95 %. Abajo, año a año (puntos) y media móvil de 5 años (línea).</p>
-    <h3 style="margin-top:44px">¿Es porque ya no hay series infantiles y familiares?</h3>
+    <h3 style="margin-top:44px">¿Es porque ya no hay series familiares?</h3>
     <p id="famText"></p>
-    <svg id="famshare" class="chart" role="img" aria-label="Porcentaje de series infantiles y familiares entre las más votadas, por década de estreno" data-title="Las series infantiles y familiares casi han desaparecido de las más vistas"></svg>
-    <svg id="famfg" class="chart" role="img" aria-label="Nota feel good media (0-10) de las series infantiles, las familiares y el resto, por década (solo décadas con al menos 5 series)" data-title="Infantiles y familiares siguen siendo feel good; el resto se ha oscurecido"></svg>
-    <div class="pair"><span style="--c:var(--inf)">Infantiles</span><span style="--c:var(--fam)">Familiares</span><span style="--c:var(--ser)">Resto de series</span></div>
-    <svg id="famdec" class="chart" role="img" aria-label="Caída de la nota feel good media entre los noventa y 2010-2025, separada en cambio de público y caída dentro de cada grupo" data-title="Menos series infantiles y familiares explica solo parte de la caída"></svg>
+    <svg id="famshare" class="chart" role="img" aria-label="Porcentaje de series familiares (incluidas las infantiles) y de series para adolescentes y jóvenes entre las más votadas, por década de estreno" data-title="Las series familiares casi han desaparecido de las más vistas; las juveniles se mantienen"></svg>
+    <svg id="famfg" class="chart" role="img" aria-label="Nota feel good media (0-10) de las series familiares, las juveniles y las de adultos, por década (solo décadas con al menos 5 series)" data-title="Las familiares siguen siendo feel good; juveniles y adultas se han oscurecido"></svg>
+    <div class="pair"><span style="--c:var(--fam)">Familiares e infantiles</span><span style="--c:var(--juv)">Adolescentes y jóvenes</span><span style="--c:var(--ser)">Adultos</span></div>
+    <svg id="famdec" class="chart" role="img" aria-label="Caída de la nota feel good media entre los noventa y 2010-2025, separada en cambio de público y caída dentro de cada grupo" data-title="Menos series familiares explica solo parte de la caída"></svg>
     <p class="note" id="famNote"></p>
     <p class="small" style="margin-top:22px">Las 10 series estadounidenses más votadas de cada década y su nota <i>feel good</i> (pulsa para ver la ficha):</p><div class="decgrid" id="cmpEx"></div>
   </div>
@@ -702,42 +702,41 @@ function drawYearly(){
   svg.append('text').attr('x',x(1995)).attr('y',m.t+14).attr('text-anchor','middle').style('font-size','12px').style('font-weight',700).text('los noventa');
 }
 
-// ---- ¿es por las series familiares e infantiles?
+// ---- ¿es por las series familiares? (familiares+infantiles, juveniles, adultos)
 function drawFam(){
-  const F=SR.familiar[scf], C=F.cohortes, D=F.decomp.infantil_familiar, J=F.decomp.con_juvenil;
-  const cI=css('--inf'),cF=css('--fam'),cR=css('--ser');
-  // barras apiladas: % infantiles + % familiares por década
+  const F=SR.familiar[scf], C=F.cohortes, D=F.decomp.tres_grupos;
+  const cF=css('--fam'),cJ=css('--juv'),cR=css('--ser');
   {const svg=d3.select('#famshare'),W=svg.node().clientWidth||640,H=230,m={t:24,r:16,b:52,l:16};
    svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
-   const x=d3.scaleBand().domain(d3.range(5)).range([m.l,W-m.r]).padding(.35),y=d3.scaleLinear().domain([0,.6]).range([H-m.b,m.t]);
-   COH.forEach((c,i)=>{const r=C[c];if(!r)return;const a=r.share_inf,b=r.share_fam;
-     const tip=e=>showTip(e,`<b>${COH_LAB[i]}</b><br>Infantiles: ${pct(a)}<br>Familiares: ${pct(b)}<br>n=${r.n}`);
-     svg.append('rect').attr('x',x(i)).attr('width',x.bandwidth()).attr('y',y(a)).attr('height',y(0)-y(a)).attr('fill',cI).on('mousemove',tip).on('mouseleave',hideTip);
-     svg.append('rect').attr('x',x(i)).attr('width',x.bandwidth()).attr('y',y(a+b)).attr('height',y(a)-y(a+b)).attr('fill',cF).on('mousemove',tip).on('mouseleave',hideTip);
-     svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',y(a+b)-6).attr('text-anchor','middle').style('font-weight',700).style('font-size','14px').style('fill','var(--ink)').text(pct(a+b));
+   const x=d3.scaleBand().domain(d3.range(5)).range([m.l,W-m.r]).padding(.35),y=d3.scaleLinear().domain([0,.7]).range([H-m.b,m.t]);
+   COH.forEach((c,i)=>{const r=C[c];if(!r)return;const a=r.share_fam,b=r.share_juv;
+     const tip=e=>showTip(e,`<b>${COH_LAB[i]}</b><br>Familiares e infantiles: ${pct(a)}<br>Adolescentes y jóvenes: ${pct(b)}<br>n=${r.n}`);
+     svg.append('rect').attr('x',x(i)).attr('width',x.bandwidth()).attr('y',y(a)).attr('height',y(0)-y(a)).attr('fill',cF).on('mousemove',tip).on('mouseleave',hideTip);
+     svg.append('rect').attr('x',x(i)).attr('width',x.bandwidth()).attr('y',y(a+b)).attr('height',y(a)-y(a+b)).attr('fill',cJ).on('mousemove',tip).on('mouseleave',hideTip);
+     if(y(0)-y(a)>18)svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',y(a)+15).attr('text-anchor','middle').style('font-weight',700).style('font-size','13px').style('fill','#fff').text(pct(a));
+     svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',y(a+b)-6).attr('text-anchor','middle').style('font-weight',700).style('font-size','13px').style('fill',cJ).text(pct(b));
      svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',H-m.b+18).attr('text-anchor','middle').style('font-size','13px').style('fill','var(--ink)').text(COH_LAB[i]);
-     svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',H-m.b+36).attr('text-anchor','middle').style('font-size','11px').style('fill','var(--muted)').text(`${pct(a)} + ${pct(b)}`);});}
-  // líneas: infantiles, familiares y resto
-  twoSeries('#famfg',[['Infantiles',COH.map(c=>C[c]?C[c].fg_inf:[null]),cI,-12],['Familiares',COH.map(c=>C[c]?C[c].fg_famonly:[null]),cF,0],['Resto de series',COH.map(c=>C[c]?C[c].fg_resto:[null]),cR,12]],[2,9],n1,280);
-  // descomposición en tres partes
-  {const svg=d3.select('#famdec'),W=svg.node().clientWidth||640,nar=W<520,H=nar?170:126,m={t:34,r:16,b:40,l:16};
+     if(y(0)-y(a)<=18)svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',H-m.b+36).attr('text-anchor','middle').style('font-size','11px').style('fill',cF).style('font-weight',700).text(`familiares ${pct(a)}`);});}
+  twoSeries('#famfg',[['Familiares e infantiles',COH.map(c=>C[c]?C[c].fg_fam:[null]),cF,-12],['Adolescentes y jóvenes',COH.map(c=>C[c]?C[c].fg_juv:[null]),cJ,0],['Adultos',COH.map(c=>C[c]?C[c].fg_resto:[null]),cR,12]],[2,9],n1,280);
+  {const svg=d3.select('#famdec'),W=svg.node().clientWidth||640,nar=W<560,H=nar?170:126,m={t:34,r:16,b:40,l:16};
    svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
-   const tot=-D.total[0],pi=-D.comp_infantil[0],pf=-D.comp_familiar[0],dn=-D.dentro[0],x=d3.scaleLinear().domain([0,tot]).range([m.l,W-m.r]),bh=38,y0=m.t;
-   const seg=[[0,pi,cI,'Menos series infantiles',D.comp_infantil],[pi,pi+pf,cF,'Menos series familiares',D.comp_familiar],[pi+pf,pi+pf+dn,cR,'Caída dentro de cada grupo',D.dentro]];
-   seg.forEach(([a,b,c,l,ci])=>{svg.append('rect').attr('x',x(a)).attr('width',Math.max(0,x(b)-x(a))-2).attr('y',y0).attr('height',bh).attr('rx',4).attr('fill',c)
-     .on('mousemove',e=>showTip(e,`<b>${l}: ${n1(b-a)} puntos</b><br>IC 95 %: ${n1(-ci[2])} a ${n1(-ci[1])}`)).on('mouseleave',hideTip);
-     if(x(b)-x(a)>34)svg.append('text').attr('x',x(a)+8).attr('y',y0+bh/2+5).style('font-weight',700).style('font-size','14px').style('fill','#fff').text(Math.round(100*(b-a)/tot)+' %');});
+   const tot=-D.total[0],pf=-D.comp_familiar[0],pj=-D.comp_juvenil[0],dn=-D.dentro[0];
+   const parts=[[Math.max(0,pf),cF,'Menos series familiares',pf,D.comp_familiar],[Math.max(0,pj),cJ,'Cambio en el peso de las juveniles',pj,D.comp_juvenil],[Math.max(0,dn),cR,'Caída dentro de cada grupo',dn,D.dentro]];
+   const sum=d3.sum(parts,p=>p[0]),x=d3.scaleLinear().domain([0,sum]).range([m.l,W-m.r]),bh=38,y0=m.t;let acc=0;
+   parts.forEach(([w,c,l,v,ci])=>{const a=acc;acc+=w;if(!w)return;svg.append('rect').attr('x',x(a)).attr('width',Math.max(0,x(acc)-x(a)-2)).attr('y',y0).attr('height',bh).attr('rx',4).attr('fill',c)
+     .on('mousemove',e=>showTip(e,`<b>${l}: ${n1(v)} puntos</b><br>IC 95 %: ${n1(-ci[2])} a ${n1(-ci[1])}`)).on('mouseleave',hideTip);
+     if(x(acc)-x(a)>34)svg.append('text').attr('x',x(a)+8).attr('y',y0+bh/2+5).style('font-weight',700).style('font-size','14px').style('fill','#fff').text(Math.round(100*v/tot)+' %');});
    svg.append('text').attr('x',x(0)).attr('y',y0-10).style('font-size','13px').style('fill','var(--ink)').html(`Caída total de la nota media: <tspan font-weight="700">${n1(tot)} puntos</tspan> (de ${n1(D.m90)} a ${n1(D.m_rec)})`);
    const lg=svg.append('g').attr('transform',`translate(${x(0)},${y0+bh+22})`);
-   [[cI,`Menos infantiles (${n1(pi)})`],[cF,`Menos familiares (${n1(pf)})`],[cR,`Caída dentro de cada grupo (${n1(dn)})`]].forEach(([c,l],i)=>{const gg=lg.append('g').attr('transform',nar?`translate(0,${i*20})`:`translate(${[0,170,340][i]},0)`);
+   [[cF,`Menos familiares (${n1(pf)})`],[cJ,`Peso de las juveniles (${n1(pj)})`],[cR,`Caída dentro de cada grupo (${n1(dn)})`]].forEach(([c,l],i)=>{const gg=lg.append('g').attr('transform',nar?`translate(0,${i*20})`:`translate(${[0,175,360][i]},0)`);
      gg.append('rect').attr('width',12).attr('height',12).attr('y',-10).attr('rx',2).attr('fill',c);gg.append('text').attr('x',18).style('font-size','12.5px').style('fill','var(--ink)').text(l)});}
-  const us=scf==='US', exI=us?'<i>Bob Esponja</i>, <i>El laboratorio de Dexter</i>':'<i>Las tres mellizas</i>, <i>Los Fruittis</i>', exF=us?'<i>El príncipe de Bel-Air</i>, <i>La niñera</i>':'<i>Farmacia de guardia</i>, <i>Médico de familia</i>';
-  const part=Math.round(100*D.composicion[0]/D.total[0]), fi=D.fg_infantil, ff=D.fg_familiar, rr=D.fg_resto;
-  $('#famText').innerHTML=`Es una hipótesis razonable: si los niños ya no ven la tele con sus padres, se hacen y se ven menos series para ellos y para toda la familia, que suelen ser las más amables. Los datos le dan <b>parte</b> de razón. En los noventa, el <b>${pct(D.share90_infantil)}</b> de las series más votadas eran infantiles (${exI}) y el <b>${pct(D.share90_familiar)}</b>, familiares (${exF}). En 2010-2025 son el <b>${pct(D.share_rec_infantil,D.share_rec_infantil<.01?1:0)}</b> y el <b>${pct(D.share_rec_familiar)}</b>. Las dos siguen siendo de las más amables: las familiares pasan de ${n1(ff[0])} a ${n1(ff[1])}; las infantiles sacaban un ${n1(fi[0])} en los noventa${fi[3]>=5?` y un ${n1(fi[1])} ahora`:' y hoy apenas quedan para medirlas'}. `+
-    `Con la mezcla de público de los noventa, la media de 2010-2025 sería <b>${n1(D.m_rec_mezcla90[0])}</b> en lugar de ${n1(D.m_rec)}. El cambio de público explica unos <b>${n1(-D.composicion[0])} de los ${n1(-D.total[0])} puntos</b> de caída (alrededor del ${part} %): ${n1(-D.comp_infantil[0])} por las infantiles y ${n1(-D.comp_familiar[0])} por las familiares. `+
-    `El resto, ${n1(-D.dentro[0])} puntos (IC 95 %: ${n1(-D.dentro[2])} a ${n1(-D.dentro[1])}), es caída dentro de cada grupo: las series para adultos y jóvenes bajan de ${n1(rr[0])} a ${n1(rr[1])}. `+
-    (us?`<mark>Menos series infantiles y familiares ayuda a explicar la caída, pero no la explica entera.</mark>`:`<mark>En España el cambio de público pesa más que en EE. UU.: explica la mayor parte de la caída, aunque no toda.</mark>`);
-  $('#famNote').innerHTML=`Público de cada serie anotado a partir de la sinopsis. Descomposición de Kitagawa con tres grupos (infantiles, familiares y resto) y 2.000 remuestreos; si un grupo tiene menos de 5 series en un periodo, se usa su nota del otro periodo. Si se cuentan también las juveniles, el cambio de público explica ${n1(-J.composicion[0])} puntos (IC 95 %: ${n1(-J.composicion[2])} a ${n1(-J.composicion[1])}). Ojo: esto mide qué series están entre las más votadas en IMDb, no qué ven los niños. Que haya menos series infantiles y familiares en esa lista encaja con que el público infantil se haya ido a YouTube y a las plataformas, pero estos datos no lo demuestran.`;
+  const us=scf==='US', ex=us?'<i>El príncipe de Bel-Air</i>, <i>La niñera</i>, <i>Bob Esponja</i>':'<i>Farmacia de guardia</i>, <i>Médico de familia</i>, <i>Las tres mellizas</i>';
+  const ff=D.fg_familiar, fj=D.fg_juvenil, fr=D.fg_resto, part=Math.round(100*D.composicion[0]/D.total[0]);
+  $('#famText').innerHTML=`Es una hipótesis razonable: si los niños ya no ven la tele con sus padres, se hacen y se ven menos series para toda la familia, que suelen ser las más amables. Agrupamos las series en tres públicos: familiares (incluidas las infantiles), adolescentes y jóvenes, y adultos. En los noventa, el <b>${pct(D.share90_familiar)}</b> de las series más votadas eran familiares (${ex}). En 2010-2025 son el <b>${pct(D.share_rec_familiar)}</b>. Las juveniles, en cambio, apenas cambian de peso: del ${pct(D.share90_juvenil)} al ${pct(D.share_rec_juvenil)}. `+
+    `Las familiares siguen siendo las más amables (${n1(ff[0])} en los noventa, ${n1(ff[1])} ahora). ${fj[2]>=5?`Las juveniles se oscurecen (de ${n1(fj[0])} a ${n1(fj[1])}) y las de adultos también (de ${n1(fr[0])} a ${n1(fr[1])}). `:`Las de adultos se oscurecen: de ${n1(fr[0])} a ${n1(fr[1])}. `}`+
+    `Con la mezcla de público de los noventa, la media de 2010-2025 sería <b>${n1(D.m_rec_mezcla90[0])}</b> en lugar de ${n1(D.m_rec)}. El cambio de público explica unos <b>${n1(-D.composicion[0])} de los ${n1(-D.total[0])} puntos</b> de caída (alrededor del ${part} %), y casi todo por las familiares; el peso de las juveniles no cambia nada. El resto, ${n1(-D.dentro[0])} puntos (IC 95 %: ${n1(-D.dentro[2])} a ${n1(-D.dentro[1])}), es caída dentro de cada grupo. `+
+    (us?`<mark>Menos series familiares ayuda a explicar la caída, pero no la explica entera: también las series para jóvenes y para adultos son hoy menos amables.</mark>`:`<mark>En España el cambio de público pesa más que en EE. UU.: explica dos tercios de la caída, y la que queda dentro de cada grupo no es estadísticamente clara.</mark>`);
+  $('#famNote').innerHTML=`Público de cada serie anotado a partir de la sinopsis. Las infantiles van con las familiares porque, desde 2010, casi ninguna serie infantil llega a las más votadas de IMDb (allí votan adultos) y la frontera entre infantil y familiar es difusa. Descomposición de Kitagawa con tres grupos y 2.000 remuestreos; si un grupo tiene menos de 5 series en un periodo, se usa su nota del otro periodo. Ojo: esto mide qué series están entre las más votadas en IMDb, no qué ven los niños. Que haya menos series familiares en esa lista encaja con que el público infantil se haya ido a YouTube y a las plataformas, pero estos datos no lo demuestran.`;
 }
 (function(){const card=(tit,items)=>`<div class="stat" style="padding:14px"><div class="small" style="margin-bottom:6px;font-weight:700">${tit}</div>${items.map(z=>`<div style="display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:3px 0;border-bottom:1px solid var(--rule)"><button class="lnk" data-t="${z[FC.tconst]}">${z[0]} <span class="small">(${z[2]})</span></button><b style="color:${fgTxtCol(z[FC.feel_good])}">${z[FC.feel_good]==null?'—':fgTxt(z[FC.feel_good])}</b></div>`).join('')}</div>`;
   const top=d=>US_S.filter(z=>Math.min(4,Math.floor((z[2]-1980)/10))===d).sort((a,b)=>(b[FC.imdb_votos]||0)-(a[FC.imdb_votos]||0)).slice(0,10);

@@ -217,38 +217,32 @@ def _fam_decomp(a0, a1, col="grp3", groups=("INFANTIL", "FAMILIAR", "RESTO")):
 
 
 def _familiar(g, g0, g1, B=2000):
+    """Familiares (infantiles + familiares), juveniles (adolescentes y jóvenes) y adultos."""
     g = g.dropna(subset=["feel_good"]).copy()
-    g["grp3"] = np.where(g.publico.isin(["INFANTIL", "FAMILIAR"]), g.publico, "RESTO")
+    g["grp3"] = np.select([g.publico.isin(["INFANTIL", "FAMILIAR"]), g.publico == "JUVENIL"], ["FAMILIAR", "JUVENIL"], "RESTO")
     a0, a1 = g[g.periodo == REF], g[g.periodo == "2010-2025"]
     out = {"cohortes": {}, "decomp": {}}
+    e = lambda sub: _est(sub, "feel_good") if len(sub) >= 5 else [None, None, None, int(len(sub))]
     for c in COHORTS:
         x = g[g.cohort == c]
         if not len(x):
             continue
-        e = lambda sub: _est(sub, "feel_good") if len(sub) >= 5 else [None, None, None, int(len(sub))]
-        out["cohortes"][c] = {"n": int(len(x)), "share_inf": float((x.grp3 == "INFANTIL").mean()), "share_fam": float((x.grp3 == "FAMILIAR").mean()),
-                              "share": float(x.infantil_familiar.mean()),
-                              "fg_inf": e(x[x.grp3 == "INFANTIL"]), "fg_famonly": e(x[x.grp3 == "FAMILIAR"]),
-                              "fg_fam": _est(x[x.infantil_familiar], "feel_good"), "fg_resto": _est(x[x.grp3 == "RESTO"], "feel_good")}
+        out["cohortes"][c] = {"n": int(len(x)), "share_fam": float((x.grp3 == "FAMILIAR").mean()), "share_juv": float((x.grp3 == "JUVENIL").mean()),
+                              "fg_fam": e(x[x.grp3 == "FAMILIAR"]), "fg_juv": e(x[x.grp3 == "JUVENIL"]), "fg_resto": e(x[x.grp3 == "RESTO"])}
     rng = np.random.default_rng(0)
-    variants = (("infantil_familiar", "grp3", ("INFANTIL", "FAMILIAR", "RESTO")),)
-    g["grp_j"] = np.where(g.publico.isin(["INFANTIL", "FAMILIAR", "JUVENIL"]), "NJ", "RESTO")
-    a0, a1 = g[g.periodo == REF], g[g.periodo == "2010-2025"]
-    variants += (("con_juvenil", "grp_j", ("NJ", "RESTO")),)
-    for key, col, grs in variants:
-        pt = _fam_decomp(a0, a1, col, grs)
-        bs = np.array([_fam_decomp(a0.iloc[rng.integers(0, len(a0), len(a0))], a1.iloc[rng.integers(0, len(a1), len(a1))], col, grs) for _ in range(B)])
-        ci = lambda j: [float(pt[j]), float(np.nanpercentile(bs[:, j], 2.5)), float(np.nanpercentile(bs[:, j], 97.5))]
-        d = {"total": ci(0), "composicion": ci(1), "dentro": ci(2), "m_rec_mezcla90": ci(3),
-             "m90": float(a0.feel_good.mean()), "m_rec": float(a1.feel_good.mean())}
-        for k, gname in enumerate(grs[:-1]):
-            d["comp_" + gname.lower()] = ci(4 + k)
-            d["share90_" + gname.lower()] = float((a0[col] == gname).mean()); d["share_rec_" + gname.lower()] = float((a1[col] == gname).mean())
-            d["fg_" + gname.lower()] = [float(a0[a0[col] == gname].feel_good.mean()), float(a1[a1[col] == gname].feel_good.mean()), int((a0[col] == gname).sum()), int((a1[col] == gname).sum())]
-        d["fg_resto"] = [float(a0[a0[col] == "RESTO"].feel_good.mean()), float(a1[a1[col] == "RESTO"].feel_good.mean())]
-        if key == "infantil_familiar":
-            d["share90"] = d["share90_infantil"] + d["share90_familiar"]; d["share_rec"] = d["share_rec_infantil"] + d["share_rec_familiar"]
-        out["decomp"][key] = d
+    grs = ("FAMILIAR", "JUVENIL", "RESTO")
+    pt = _fam_decomp(a0, a1, "grp3", grs)
+    bs = np.array([_fam_decomp(a0.iloc[rng.integers(0, len(a0), len(a0))], a1.iloc[rng.integers(0, len(a1), len(a1))], "grp3", grs) for _ in range(B)])
+    ci = lambda j: [float(pt[j]), float(np.nanpercentile(bs[:, j], 2.5)), float(np.nanpercentile(bs[:, j], 97.5))]
+    d = {"total": ci(0), "composicion": ci(1), "dentro": ci(2), "m_rec_mezcla90": ci(3),
+         "m90": float(a0.feel_good.mean()), "m_rec": float(a1.feel_good.mean())}
+    for k, gname in enumerate(grs):
+        key = gname.lower()
+        if k < 2:
+            d["comp_" + key] = ci(4 + k)
+        d["share90_" + key] = float((a0.grp3 == gname).mean()); d["share_rec_" + key] = float((a1.grp3 == gname).mean())
+        d["fg_" + key] = [float(a0[a0.grp3 == gname].feel_good.mean()), float(a1[a1.grp3 == gname].feel_good.mean()), int((a0.grp3 == gname).sum()), int((a1.grp3 == gname).sum())]
+    out["decomp"]["tres_grupos"] = d
     return out
 
 
