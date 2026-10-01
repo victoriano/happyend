@@ -341,16 +341,6 @@ details.more summary{margin-top:6px}
     <svg id="famdec" class="chart" role="img" aria-label="Caída de la nota feel good media entre los noventa y 2010-2025, separada en cambio de público y caída dentro de cada grupo" data-title="Menos series familiares explica solo parte de la caída"></svg>
     <p class="note" id="famNote"></p>
     <p class="small" style="margin-top:22px">Las 10 series estadounidenses más votadas de cada década y su nota <i>feel good</i> (pulsa para ver la ficha):</p><div class="decgrid" id="cmpEx"></div>
-    <div class="curio">
-    <h3 style="margin-top:6px">Curiosidad: ¿y el cine?</h3>
-    <p>Empezamos este estudio con las películas, no con las series, y ahí la sospecha no se cumplía. Por eso acabamos mirando la tele.</p>
-    <p>En las películas populares estadounidenses la nota <i>feel good</i> apenas se mueve: <b data-k="fgm80"></b> en los ochenta, <b data-k="fgm90"></b> en los noventa, <b data-k="fgm10"></b> en los años diez. Solo en 2020-2025 baja algo, a <b data-k="fgm20"></b>. <i>Toy Story</i> (10) y <i>Joker</i> (0) conviven en todas las épocas: <i>Solo en casa</i> saca un 9,5, e <i>Interstellar</i>, un 8,5; <i>Seven</i>, un 0,5, y <i>Oppenheimer</i>, un 1,5.</p>
-    <div class="exs" id="exsF"></div>
-    <p style="margin-top:18px">En el cine hay un matiz con el final feliz: los noventa son la década con más finales felices (el <b data-k="f90"></b>, frente al <b data-k="frec"></b> desde 2010), pero no la única con muchos, y los finales trágicos no han aumentado. <i>Titanic</i>, con su final agridulce, saca un 7,5 de <i>feel good</i>. <span id="forestFText"></span></p>
-    <svg id="ci" class="chart" role="img" aria-label="Nota feel good media de las películas por década" data-title="Las películas apenas han perdido feel good desde los ochenta"></svg>
-    <div class="pair"><span style="--c:var(--us)">Películas EE. UU.</span><span style="--c:var(--es)">Películas España</span></div>
-    <p id="ciText" class="small"></p>
-  </div>
   </div>
 </section>
 
@@ -602,7 +592,7 @@ $('#fgscale').innerHTML=[['10','Muy feel good','Todos los vínculos importantes 
  addEventListener('scroll',upd,{passive:true});upd();}
 const exHTML=ts=>ts.map(t=>F.films.find(f=>f[FC.tconst]===t)).filter(Boolean).map(f=>`<button class="ex" data-t="${f[FC.tconst]}"><div class="pw">${f[FC.poster]?`<img loading="lazy" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:''}<span class="fgb" style="background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</span></div><div class="t">${f[0]}</div><div class="y">${f[2]}</div></button>`).join('');
 $('#exs').innerHTML=exHTML(['tt0096697','tt0182576','tt2861424','tt0115284','tt0362372','tt7660850','tt0124938','tt1153059','tt7134908','tt0159206','tt1723816','tt10986410']);
-$('#exsF').innerHTML=exHTML(['tt0114709','tt0099785','tt0816692','tt0120338','tt15398776','tt7286456']);
+
 $$('.ex').forEach(b=>b.onclick=()=>detail(F.films.find(f=>f[FC.tconst]===b.dataset.t)));
 
 // ---- hero rain (series)
@@ -894,11 +884,6 @@ function drawEsUs(){
 }
 
 // ---- capítulo 9: cine
-function drawCI(){
-  twoSeries('#ci',[['Películas EE. UU.',fgc.feel_good,css('--us'),-8],['Películas España',FG.cohortes.ES.feel_good,css('--es'),8]],[2,8],n1,260);
-  const dd=FG.diff.US, d20=dd.por_cohorte['2020-2025'].feel_good;
-  $('#ciText').textContent=`Películas estadounidenses: diferencia con los noventa en 2010-2025, ${dpt(dd.feel_good[0])} (IC 95 %: ${dpt(dd.feel_good[1])} a ${dpt(dd.feel_good[2])}); solo 2020-2025, ${dpt(d20[0])} (${dpt(d20[1])} a ${dpt(d20[2])}).`;
-}
 
 // ---- explorer: facetas visuales con recuento
 const PAIS=['EE. UU.','España','EE. UU. y España'];
@@ -1086,7 +1071,7 @@ function addDlButtons(){
     after.after(b);
   });
 }
-function redraw(){drawWaffle();drawCmp();drawForest();drawCompo();drawSlope();drawSub();drawMood();drawHeat();drawQuad();drawEsUs();drawCI()}
+function redraw(){drawWaffle();drawCmp();drawForest();drawCompo();drawSlope();drawSub();drawMood();drawHeat();drawQuad();drawEsUs()}
 redraw();addDlButtons();
 let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,200)});
 })();
