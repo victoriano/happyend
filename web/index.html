@@ -471,8 +471,8 @@ details.more summary{margin-top:6px}
       <label class="small" style="display:inline-flex;align-items:center;gap:6px;margin-left:8px"><input type="checkbox" id="scPop"> Solo las muy votadas (más de 100.000 votos)</label>
     </div>
     <svg id="scat" class="chart" role="img" aria-label="Nota feel good frente a nota en IMDb: cada punto es una serie o película; tamaño según votos" data-title="La nota en IMDb apenas tiene que ver con lo feel good que es una serie o película"></svg>
-    <div class="pair"><span style="--c:var(--ser)">Series</span><span style="--c:var(--pel)">Películas</span><span style="--c:var(--ink)">Media de IMDb por nota feel good</span></div>
-    <p class="note">Pasa el cursor por los puntos para ver cada título; pulsa para abrir su ficha. El tamaño es proporcional a los votos en IMDb. Las notas <i>feel good</i> van de medio en medio punto; se separan un poco en horizontal para que no se tapen. La nota de IMDb mide la opinión de quien vota en IMDb, no la de todo el público, y no dice nada de la nostalgia.</p>
+    <div class="pair"><span style="--c:var(--ser)">Series</span><span style="--c:var(--pel)">Películas</span><span style="--c:var(--ink)">Media feel good por nota de IMDb</span></div>
+    <p class="note">Pasa el cursor por los puntos para ver cada título; pulsa para abrir su ficha. El tamaño es proporcional a los votos en IMDb. Las notas <i>feel good</i> van de medio en medio punto; se separan un poco en vertical para que no se tapen. La nota de IMDb mide la opinión de quien vota en IMDb, no la de todo el público, y no dice nada de la nostalgia.</p>
   </div>
 </section>
 
@@ -1035,25 +1035,26 @@ function drawScat(){
   const pts=F.films.filter(f=>f[FC.feel_good]!=null&&f[FC.imdb_nota]!=null&&(scT===2||(f[FC.tipo]??0)===scT)&&(!pop||f[FC.imdb_votos]>=1e5));
   const svg=d3.select('#scat'),W=svg.node().clientWidth||640,H=Math.min(560,Math.max(380,W*.68)),m={t:18,r:16,b:46,l:44};
   svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
-  const x=d3.scaleLinear().domain([-.5,10.5]).range([m.l,W-m.r]),y=d3.scaleLinear().domain([2,10]).range([H-m.b,m.t]);
+  const x=d3.scaleLinear().domain([2,10]).range([m.l,W-m.r]),y=d3.scaleLinear().domain([-.5,10.5]).range([H-m.b,m.t]);
   const rv=d3.scaleSqrt().domain([0,d3.max(F.films,f=>f[FC.imdb_votos])||1]).range([1.6,W<520?11:16]);
-  axisY(svg,y,W,m,d=>d,4);
-  svg.append('g').selectAll('text').data([0,2,4,6,8,10]).join('text').attr('x',x).attr('y',H-m.b+20).attr('text-anchor','middle').style('font-size','12px').text(d=>d);
-  svg.append('text').attr('x',(m.l+W-m.r)/2).attr('y',H-6).attr('text-anchor','middle').style('font-size','12.5px').style('font-weight',700).text('Nota feel good (0 = nada, 10 = mucho) →');
-  svg.append('text').attr('x',m.l-36).attr('y',m.t-4).style('font-size','12.5px').style('font-weight',700).text('★ IMDb');
-  const P2=pts.map(f=>({f,cx:x(f[FC.feel_good]+hashJ(f[FC.tconst])*.42),cy:y(f[FC.imdb_nota]),r:rv(f[FC.imdb_votos]||0),c:css((f[FC.tipo]??0)?'--ser':'--pel')})).sort((a,b)=>b.r-a.r);
+  svg.append('g').attr('class','grid').selectAll('line').data([0,2,4,6,8,10]).join('line').attr('x1',m.l).attr('x2',W-m.r).attr('y1',y).attr('y2',y);
+  svg.append('g').selectAll('text').data([0,2,4,6,8,10]).join('text').attr('x',m.l-8).attr('y',d=>y(d)+4).attr('text-anchor','end').style('font-size','12px').text(d=>d);
+  svg.append('g').selectAll('text').data([2,4,6,8,10]).join('text').attr('x',x).attr('y',H-m.b+20).attr('text-anchor','middle').style('font-size','12px').text(d=>d);
+  svg.append('text').attr('x',(m.l+W-m.r)/2).attr('y',H-6).attr('text-anchor','middle').style('font-size','12.5px').style('font-weight',700).text('Nota en IMDb (★) →');
+  svg.append('text').attr('x',m.l-36).attr('y',m.t-4).style('font-size','12.5px').style('font-weight',700).text('Feel good ↑');
+  const P2=pts.map(f=>({f,cx:x(f[FC.imdb_nota]+hashJ(f[FC.tconst]+'i')*.08),cy:y(f[FC.feel_good]+hashJ(f[FC.tconst])*.42),r:rv(f[FC.imdb_votos]||0),c:css((f[FC.tipo]??0)?'--ser':'--pel')})).sort((a,b)=>b.r-a.r);
   svg.append('g').selectAll('circle').data(P2).join('circle').attr('cx',d=>d.cx).attr('cy',d=>d.cy).attr('r',d=>d.r).attr('fill',d=>d.c).attr('fill-opacity',.42).attr('stroke',d=>d.c).attr('stroke-opacity',.75).attr('stroke-width',.7);
   // media por nota feel good (bins de 1 punto)
-  const bins=d3.range(0,11).map(v=>{const s=pts.filter(f=>Math.round(f[FC.feel_good])===v);return s.length>=8?[v,d3.mean(s,f=>f[FC.imdb_nota])]:null}).filter(Boolean);
+  const bins=d3.range(2,10.01,.5).map(v=>{const s=pts.filter(f=>Math.abs(f[FC.imdb_nota]-v)<=.25);return s.length>=8?[v,d3.mean(s,f=>f[FC.feel_good])]:null}).filter(Boolean);
   svg.append('path').datum(bins).attr('fill','none').attr('stroke','var(--bg)').attr('stroke-width',7).attr('d',d3.line().curve(d3.curveMonotoneX).x(d=>x(d[0])).y(d=>y(d[1])));
   svg.append('path').datum(bins).attr('fill','none').attr('stroke',css('--ink')).attr('stroke-width',3).attr('d',d3.line().curve(d3.curveMonotoneX).x(d=>x(d[0])).y(d=>y(d[1])));
   // atípicos: muy votados y lejos de la media de su nota feel good
-  const mean=new Map(bins.map(b=>[b[0],b[1]]));
-  const cand=P2.filter(d=>(d.f[FC.imdb_votos]||0)>=(pop?3e5:1e5)).map(d=>({...d,res:d.f[FC.imdb_nota]-(mean.get(Math.round(d.f[FC.feel_good]))??7)}));
+  const mean=new Map(bins.map(b=>[b[0],b[1]])),mfg=d3.mean(pts,f=>f[FC.feel_good]);
+  const cand=P2.filter(d=>(d.f[FC.imdb_votos]||0)>=(pop?3e5:1e5)).map(d=>({...d,res:d.f[FC.imdb_nota]-7}));
   const pick=[...cand.filter(d=>d.f[FC.feel_good]<=3).sort((a,b)=>b.res-a.res).slice(0,3),...cand.filter(d=>d.f[FC.feel_good]>=7).sort((a,b)=>a.res-b.res).slice(0,2),...cand.filter(d=>d.f[FC.feel_good]>=8).sort((a,b)=>b.res-a.res).slice(0,2)];
   const lab=svg.append('g');
   const placed=[],pk=(W<520?pick.slice(0,2).concat(pick.slice(3,4),pick.slice(5,6)):pick).filter((d,i,arr)=>arr.findIndex(z=>z.f===d.f)===i);
-  pk.forEach(d=>{const right=d.cx<W*.6,txt=`${d.f[0]} (${String(d.f[FC.imdb_nota]).replace('.',',')})`,tw=txt.length*6.6;
+  pk.forEach(d=>{const right=d.cx<W*.62,txt=`${d.f[0]} (${String(d.f[FC.imdb_nota]).replace('.',',')})`,tw=txt.length*6.6;
     let tx=d.cx+(right?d.r+6:-d.r-6),ty=d.cy+4;const box=y0=>right?[tx,y0-11,tx+tw,y0+3]:[tx-tw,y0-11,tx,y0+3];
     for(let k=0;k<12&&placed.some(q=>{const b=box(ty);return !(b[2]<q[0]||b[0]>q[2]||b[3]<q[1]||b[1]>q[3])});k++)ty+=(k%2?-1:1)*(k+1)*15;
     placed.push(box(ty));
@@ -1069,7 +1070,7 @@ function drawScat(){
     .on('click',e=>{const d=near(e);if(d)detail(d.f)});
   const r=pearson(pts.map(f=>f[FC.feel_good]),pts.map(f=>f[FC.imdb_nota]));
   const what=scT===1?'las series':scT===0?'las películas':'series y películas';
-  $('#scText').innerHTML=`Si a quien vota en IMDb le gustara más lo <i>feel good</i>, los puntos subirían hacia la derecha. No lo hacen: entre ${what}${pop?' muy votadas':''} (${nnum(pts.length)} títulos), la correlación entre las dos notas es de <b>${r.toFixed(2).replace('.',',').replace('-','−')}</b>, prácticamente nula. Hay obras maestras sombrías y joyas amables, y también lo contrario.`;
+  $('#scText').innerHTML=`Si a quien vota en IMDb le gustara más lo <i>feel good</i>, las series y películas mejor valoradas (a la derecha) estarían más arriba. No lo están: entre ${what}${pop?' muy votadas':''} (${nnum(pts.length)} títulos), la correlación entre las dos notas es de <b>${r.toFixed(2).replace('.',',').replace('-','−')}</b>, prácticamente nula. Hay obras maestras sombrías y joyas amables, y también lo contrario.`;
 }
 
 // ---- descarga de gráficos como imagen (título, leyenda y fuente)
