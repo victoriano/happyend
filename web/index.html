@@ -128,7 +128,7 @@ footer li{margin-bottom:6px}
 .part .big{font-size:clamp(40px,8vw,84px)}
 .pair{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin:8px 0}
 .pair span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;background:var(--c)}
-:root{--us:#2a78d6;--es:#e0a100;--fg:#f29d0b;--fg0:#6b7a99;--uto:#1baf7a;--dis:#7b3fb0}
+:root{--us:#2a78d6;--es:#e0a100;--fg:#1a9850;--fg0:#d73027;--fg1:#f46d43;--fgm:#f2c14e;--fg3:#86c35b;--uto:#1baf7a;--dis:#7b3fb0}
 .seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
 .seg button{border-radius:0;background:transparent;color:var(--ink);padding:7px 14px;font-size:14px}
 .seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
@@ -512,10 +512,13 @@ const LAB={CIENCIA_FICCION:'Ciencia ficción',FANTASIA:'Fantasía',SOBRENATURAL:
   AMISTAD:'Amistad',ROMANCE:'Romance',MATRIMONIO:'Matrimonio',DIVORCIO_SEPARACION:'Divorcio o separación',PADRES_HIJOS:'Padres e hijos',HERMANOS:'Hermanos',FAMILIA_EXTENSA:'Familia extensa',MENTOR_DISCIPULO:'Mentor y discípulo',EQUIPO_COMPANEROS:'Equipo o compañeros',RIVALIDAD:'Rivalidad',COMUNIDAD:'Comunidad',NINGUNA:'Ninguna'};
 const COH=["1980-1989","1990-1999","2000-2009","2010-2019","2020-2025"];
 const fgBin=v=>v==null?null:v<2.5?0:v<4.5?1:v<6.5?2:v<8.5?3:4;
-const FGS=[{v:0,l:'Nada',c:'--fg0',s:'0-2'},{v:1,l:'Poco',c:'--fg0',o:.55,s:'3-4'},{v:2,l:'A medias',c:'--amb',s:'5-6'},{v:3,l:'Bastante',c:'--fg',o:.6,s:'7-8'},{v:4,l:'Mucho',c:'--fg',s:'9-10'}];
+const FGS=[{v:0,l:'Nada',c:'--fg0',s:'0-2'},{v:1,l:'Poco',c:'--fg1',s:'3-4'},{v:2,l:'A medias',c:'--fgm',s:'5-6'},{v:3,l:'Bastante',c:'--fg3',s:'7-8'},{v:4,l:'Mucho',c:'--fg',s:'9-10'}];
 const UTS=[{v:0,l:'Distopía',c:'--dis',s:'0-2'},{v:1,l:'Sociedad enferma',c:'--dis',o:.55,s:'3-4'},{v:2,l:'Neutral',c:'--amb',s:'5-6'},{v:3,l:'Sociedad sana',c:'--uto',o:.6,s:'7-8'},{v:4,l:'Utopía',c:'--uto',s:'9-10'}];
 const PUB_LAB={INFANTIL:'Infantil',FAMILIAR:'Familiar',JUVENIL:'Juvenil',ADULTO:'Adulto'};
-const fgCol=v=>v==null?css('--nc'):d3.interpolateRgb(css('--fg0'),css('--fg'))(v/10);
+const FG_STOPS=()=>['--fg0','--fg1','--fgm','--fg3','--fg'].map(css);
+const fgCol=v=>v==null?css('--nc'):d3.interpolateRgbBasis(FG_STOPS())(v/10);
+const fgTxtCol=v=>v==null?css('--muted'):d3.color(fgCol(v)).darker(v>3&&v<7.5?1.1:0.3).formatHex();
+const fgInk=v=>v!=null&&v>3.2&&v<7.2?'#1b1a17':'#fff';
 const fgTxt=v=>(Math.round(v*2)/2).toFixed(v%1?1:0).replace('.',',');
 const P=H.periodos, C=H.cohortes, FG=H.fg, SR=D.series, SA=D.series_acuerdo;
 const FC=F.cols.reduce((o,c,i)=>(o[c]=i,o),{});
@@ -540,14 +543,14 @@ const fill={nTot:nnum(V.n.total),nExpl:nnum(F.films.filter(f=>!f[FC.tipo]).lengt
 $$('[data-k]').forEach(el=>{if(fill[el.dataset.k]!==undefined)el.textContent=fill[el.dataset.k]});
 
 // ---- escala y ejemplos
-const FGBIN_COL=()=>[css('--fg0'),d3.interpolateRgb(css('--fg0'),css('--amb'))(.5),css('--amb'),d3.interpolateRgb(css('--amb'),css('--fg'))(.6),css('--fg')];
+const FGBIN_COL=()=>FG_STOPS();
 const FGB_LAB=['0-2 nada','3-4 poco','5-6 a medias','7-8 bastante','9-10 mucho'];
 $('#fgscale').innerHTML=[['10','Muy feel good','Todos los vínculos importantes quedan en paz y amor; irradia esperanza.',10],
   ['7-8','Bastante','Hay pérdidas o dolor, pero el balance es de armonía y esperanza.',7.5],
   ['5','A medias','Luces y sombras equilibradas, o un cierre deliberadamente ambiguo.',5],
   ['2-3','Poco','Algo de consuelo, pero predominan la soledad, la pérdida o la inquietud.',2.5],
-  ['0','Nada','Desesperanza, vínculos destruidos o el mal triunfa.',0]].map(([n,t,d,v])=>`<div class="fgs"><span class="fgn" style="background:${fgCol(v)}">${n}</span><div><b>${t}.</b> ${d}</div></div>`).join('');
-const exHTML=ts=>ts.map(t=>F.films.find(f=>f[FC.tconst]===t)).filter(Boolean).map(f=>`<button class="ex" data-t="${f[FC.tconst]}"><div class="pw">${f[FC.poster]?`<img loading="lazy" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:''}<span class="fgb" style="background:${fgCol(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</span></div><div class="t">${f[0]}</div><div class="y">${f[2]}</div></button>`).join('');
+  ['0','Nada','Desesperanza, vínculos destruidos o el mal triunfa.',0]].map(([n,t,d,v])=>`<div class="fgs"><span class="fgn" style="background:${fgCol(v)};color:${fgInk(v)}">${n}</span><div><b>${t}.</b> ${d}</div></div>`).join('');
+const exHTML=ts=>ts.map(t=>F.films.find(f=>f[FC.tconst]===t)).filter(Boolean).map(f=>`<button class="ex" data-t="${f[FC.tconst]}"><div class="pw">${f[FC.poster]?`<img loading="lazy" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:''}<span class="fgb" style="background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</span></div><div class="t">${f[0]}</div><div class="y">${f[2]}</div></button>`).join('');
 $('#exs').innerHTML=exHTML(['tt0096697','tt0182576','tt2861424','tt0115284','tt0362372','tt7660850','tt0124938','tt1153059','tt7134908','tt0159206','tt1723816','tt10986410']);
 $('#exsF').innerHTML=exHTML(['tt0114709','tt0099785','tt0816692','tt0120338','tt15398776','tt7286456']);
 $$('.ex').forEach(b=>b.onclick=()=>detail(F.films.find(f=>f[FC.tconst]===b.dataset.t)));
@@ -655,7 +658,7 @@ function drawYearly(){
   });
   svg.append('text').attr('x',x(1995)).attr('y',m.t+14).attr('text-anchor','middle').style('font-size','12px').style('font-weight',700).text('los noventa');
 }
-(function(){const card=(tit,items)=>`<div class="stat" style="padding:14px"><div class="small" style="margin-bottom:6px;font-weight:700">${tit}</div>${items.map(z=>`<div style="display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:3px 0;border-bottom:1px solid var(--rule)"><button class="lnk" data-t="${z[FC.tconst]}">${z[0]} <span class="small">(${z[2]})</span></button><b style="color:${fgCol(z[FC.feel_good])}">${z[FC.feel_good]==null?'—':fgTxt(z[FC.feel_good])}</b></div>`).join('')}</div>`;
+(function(){const card=(tit,items)=>`<div class="stat" style="padding:14px"><div class="small" style="margin-bottom:6px;font-weight:700">${tit}</div>${items.map(z=>`<div style="display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:3px 0;border-bottom:1px solid var(--rule)"><button class="lnk" data-t="${z[FC.tconst]}">${z[0]} <span class="small">(${z[2]})</span></button><b style="color:${fgTxtCol(z[FC.feel_good])}">${z[FC.feel_good]==null?'—':fgTxt(z[FC.feel_good])}</b></div>`).join('')}</div>`;
   const top=d=>US_S.filter(z=>Math.min(4,Math.floor((z[2]-1980)/10))===d).sort((a,b)=>(b[FC.imdb_votos]||0)-(a[FC.imdb_votos]||0)).slice(0,10);
   $('#cmpEx').innerHTML=[0,1,2,3,4].map(d=>{const t=top(d),m=d3.mean(t,z=>z[FC.feel_good]);return card(`Top 10 ${COH_LAB[d]} · media ${n1(m)}`,t)}).join('');
   $$('#cmpEx .lnk').forEach(b=>b.onclick=()=>detail(F.films.find(z=>z[FC.tconst]===b.dataset.t)));})();
@@ -878,7 +881,7 @@ function run(){
 const kvotes=n=>n==null?'':n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' M':n>=1e3?Math.round(n/1e3)+' mil':String(n);
 function card(f){
   const b=document.createElement('button');b.className='film';b.setAttribute('aria-label',`${f[0]} (${f[2]}), final ${FIN_LAB[f[5]].toLowerCase()}`);
-  b.innerHTML=`<div class="pw">${f[FC.poster]?`<img loading="lazy" decoding="async" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:`<div class="ph">${f[0]}</div>`}${f[3]||f[FC.tipo]?`<span class="flag">${f[FC.tipo]?'SERIE':''}${f[FC.tipo]&&f[3]?' · ':''}${f[3]===1?'ES':f[3]===2?'US·ES':''}</span>`:''}${f[FC.feel_good]!=null?`<span class="fgb" style="background:${fgCol(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</span>`:''}<i class="fb" style="background:var(${FCOL[f[5]]})"></i></div><div class="t">${f[0]}</div><div class="y">${f[2]}${f[FC.anio_en_curso]?' · en curso':''}${f[FC.imdb_nota]!=null?` · <span class="imdb">★ ${String(f[FC.imdb_nota]).replace('.',',')}</span> <span class="vv">${kvotes(f[FC.imdb_votos])}</span>`:''}</div>`;
+  b.innerHTML=`<div class="pw">${f[FC.poster]?`<img loading="lazy" decoding="async" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:`<div class="ph">${f[0]}</div>`}${f[3]||f[FC.tipo]?`<span class="flag">${f[FC.tipo]?'SERIE':''}${f[FC.tipo]&&f[3]?' · ':''}${f[3]===1?'ES':f[3]===2?'US·ES':''}</span>`:''}${f[FC.feel_good]!=null?`<span class="fgb" style="background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</span>`:''}<i class="fb" style="background:var(${FCOL[f[5]]})"></i></div><div class="t">${f[0]}</div><div class="y">${f[2]}${f[FC.anio_en_curso]?' · en curso':''}${f[FC.imdb_nota]!=null?` · <span class="imdb">★ ${String(f[FC.imdb_nota]).replace('.',',')}</span> <span class="vv">${kvotes(f[FC.imdb_votos])}</span>`:''}</div>`;
   b.onclick=()=>detail(f);return b}
 function more_(){const frag=document.createDocumentFragment();cur.slice(shown,shown+PAGE).forEach(f=>frag.appendChild(card(f)));$('#xgrid').appendChild(frag);shown+=PAGE;$('#more').hidden=shown>=cur.length}
 $('#more').onclick=more_;
@@ -901,7 +904,7 @@ async function detail(f){
    <h3 style="font-size:28px;margin-bottom:4px">${esc(f[0])}</h3>${f[1]?`<div class="small">${esc(f[1])}</div>`:''}
    <p style="margin:12px 0 0"><span class="chip ${['feliz','agri','amb','trag','amb'][f[5]]}">${FIN_LAB[f[5]]}</span> ${isS?'<span class="small">final de la serie (o último punto descrito)</span>':`<span class="small">cierre: ${TONO_LAB[F.tones[f[FC.tono_cierre]]]||'—'}</span>`}</p>
    <p class="imdbrow">${f[FC.imdb_nota]!=null?`<span class="imdbbadge">IMDb</span> <b>★ ${String(f[FC.imdb_nota]).replace('.',',')}</b> · ${nnum(f[FC.imdb_votos])} votos · n.º ${f[FC.rango_votos_anio]} en votos de ${f[2]}${f[3]===1?' (España)':''}`:''} <a href="https://www.imdb.com/title/${f[FC.tconst]}/" target="_blank" rel="noopener">Ficha en IMDb ↗</a>${f[FC.anio_en_curso]?' <span class="small">· estreno de 2026: votos y etiquetas provisionales, fuera del análisis</span>':''}</p>
-   <div style="display:flex;gap:18px;align-items:center;margin-top:14px;flex-wrap:wrap">${f[FC.feel_good]!=null?`<div><div class="small">Feel good</div><div class="bigfg" style="color:${fgCol(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}<span class="small">/10</span></div></div>`:'<div class="small">Feel good: el resumen no permite juzgarlo</div>'}${f[FC.utopia]!=null?`<div><div class="small">Sociedad (0 distopía · 10 utopía)</div><div class="bigfg" style="font-size:28px">${fgTxt(f[FC.utopia])}</div></div>`:''}${f[FC.publico]>=0?`<div><div class="small">Público</div><b>${PUB_LAB[F.publicos[f[FC.publico]]]}</b></div>`:''}</div>
+   <div style="display:flex;gap:18px;align-items:center;margin-top:14px;flex-wrap:wrap">${f[FC.feel_good]!=null?`<div><div class="small">Feel good</div><div class="bigfg" style="color:${fgTxtCol(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}<span class="small">/10</span></div></div>`:'<div class="small">Feel good: el resumen no permite juzgarlo</div>'}${f[FC.utopia]!=null?`<div><div class="small">Sociedad (0 distopía · 10 utopía)</div><div class="bigfg" style="font-size:28px">${fgTxt(f[FC.utopia])}</div></div>`:''}${f[FC.publico]>=0?`<div><div class="small">Público</div><b>${PUB_LAB[F.publicos[f[FC.publico]]]}</b></div>`:''}</div>
    <div id="xfg"></div>
    <div id="xnotes"><p class="small">Cargando las notas…</p></div>
    <dl><dt>Optimismo de los personajes</dt><dd>${meter(f[6])}</dd><dt>Tono general</dt><dd>${meter(f[7])}</dd>
