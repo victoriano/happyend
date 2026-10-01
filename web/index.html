@@ -55,6 +55,18 @@ mark{background:linear-gradient(transparent 55%,var(--mark) 55%);color:inherit;p
 .byline{margin-top:28px;font-size:14px;color:var(--muted)}
 #rain{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.18;pointer-events:none}
 .hero .wide{position:relative;z-index:1}
+.xcard{display:flex;gap:18px;align-items:center;margin-top:28px;max-width:640px;padding:14px;border:1px solid var(--rule);border-radius:14px;background:color-mix(in srgb,var(--paper) 92%,transparent);color:var(--ink);text-decoration:none;box-shadow:0 6px 30px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s}
+.xcard:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(0,0,0,.1)}
+.xmos{display:grid;grid-template-columns:repeat(4,38px);gap:4px;flex:none}
+.xmos div{position:relative;width:38px;height:56px;border-radius:4px;overflow:hidden;background:var(--nc)}
+.xmos img{width:100%;height:100%;object-fit:cover;display:block}
+.xmos i{position:absolute;right:2px;bottom:2px;min-width:15px;height:13px;border-radius:3px;font:700 9px/13px "Public Sans";text-align:center;font-style:normal}
+.xtxt{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--ink2);line-height:1.4}
+.xtxt b{font-size:17px;color:var(--ink);line-height:1.25}
+.xgo{font-weight:700;color:var(--ink);margin-top:2px}
+@media(max-width:560px){.xcard{flex-direction:column;align-items:flex-start}.xmos{grid-template-columns:repeat(8,1fr);width:100%}.xmos div{width:auto;aspect-ratio:2/3;height:auto}}
+.xpill{position:fixed;top:12px;right:62px;z-index:60;display:inline-flex;align-items:center;gap:6px;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:999px;padding:6px 12px;font:700 13px "Public Sans";text-decoration:none;opacity:0;pointer-events:none;transition:opacity .3s}
+.xpill.on{opacity:1;pointer-events:auto}
 .scrollcue{margin-top:40px;font-size:14px;color:var(--muted)}
 /* guess */
 .card{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:22px}
@@ -91,6 +103,11 @@ button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
   .step{padding:0 0 0 16px}
 }
 #waffle{width:min(620px,94vw)}
+.wtitle{font-family:Fraunces,serif;font-size:clamp(20px,3vw,28px);line-height:1.15;margin:0 0 6px;max-width:620px;opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s;min-height:2.3em}
+.wtitle.on{opacity:1;transform:none}
+.dlbtn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;width:fit-content;justify-content:flex-start;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin:2px 0 12px;padding:4px 8px 4px 4px;border-radius:6px}
+.dlbtn:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.dlbtn svg{width:16px!important;height:16px!important;flex:none;margin:0!important;display:block}
 .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:14px;margin:10px 0}
 .legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--c)}
 /* charts */
@@ -128,7 +145,7 @@ footer li{margin-bottom:6px}
 .part .big{font-size:clamp(40px,8vw,84px)}
 .pair{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin:8px 0}
 .pair span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;background:var(--c)}
-:root{--us:#2a78d6;--es:#e0a100;--fg:#1a9850;--fg0:#d73027;--fg1:#f46d43;--fgm:#f2c14e;--fg3:#86c35b;--uto:#1baf7a;--dis:#7b3fb0;--ser:#d6452f;--pel:#2a6fd1}
+:root{--us:#2a78d6;--es:#e0a100;--fg:#1a9850;--fg0:#d73027;--fg1:#f46d43;--fgm:#f2c14e;--fg3:#86c35b;--uto:#1baf7a;--dis:#7b3fb0;--ser:#d6452f;--pel:#2a6fd1;--fam:#e08e0b}
 .seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
 .seg button{border-radius:0;background:transparent;color:var(--ink);padding:7px 14px;font-size:14px}
 .seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
@@ -228,6 +245,7 @@ details.more summary{margin-top:6px}
 </style>
 </head>
 <body>
+<a class="xpill" id="xpill" href="#explorador"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>Explorador</a>
 <button class="theme" id="theme" aria-label="Cambiar tema">◐</button>
 <div class="tip" id="tip" role="tooltip"></div>
 
@@ -238,7 +256,14 @@ details.more summary{margin-top:6px}
     <h1>¿Se acabaron las series <span class="strike">feel good</span>?</h1>
     <p class="dek">Dicen que la tele de los noventa te dejaba con buen cuerpo y que ahora todo es oscuro. Pusimos nota a las <b data-k="sN">2.000</b> series y las <b data-k="nTot">3.600</b> películas más vistas en EE. UU. y en España desde 1980. En el cine apenas ha cambiado nada. En las series, casi todo.</p>
     <p class="byline">Por Victoriano Izquierdo · Septiembre de 2026 · Lectura de 12 minutos · <a href="#explorador">Ir al explorador</a></p>
-    <p class="scrollcue">↓ Desliza</p>
+    <a class="xcard" href="#explorador" aria-label="Abrir el explorador de series y películas">
+      <div class="xmos" id="xmos" aria-hidden="true"></div>
+      <div class="xtxt"><div class="kicker" style="margin:0">¿Ya leíste la historia?</div>
+        <b>Explorador: todas las series y películas, una por una</b>
+        <span>Busca cualquiera de las <span data-k="sN">2.000</span> series y <span data-k="nTot">3.600</span> películas, filtra por década o país y mira su nota y por qué.</span>
+        <span class="xgo">Abrir el explorador →</span></div>
+    </a>
+    <p class="scrollcue">↓ O desliza para leer la historia</p>
   </div>
 </header>
 
@@ -277,17 +302,19 @@ details.more summary{margin-top:6px}
 
 <div class="scrolly" id="scrolly">
   <div class="sticky"><div>
+    <h3 id="wtitle" class="wtitle" aria-live="polite"></h3>
     <div class="legend" id="wlegend"></div>
     <svg id="waffle" role="img" aria-label="Cuadrícula de series por década coloreadas según su nota feel good"></svg>
-    <p class="note">Cada cuadrado es una serie. Pasa el cursor o toca para ver cuál es y su nota.</p>
+    <p class="note" id="wnote">Cada cuadrado es una serie. Pasa el cursor o toca para ver cuál es y su nota.</p>
   </div></div>
   <div class="steps">
     <div class="step" data-step="0"><div class="box">Cada columna es una década de estreno y cada cuadrado, una de las 300 series estadounidenses más votadas de esa década (180 en 2020-2025, que abarca seis años; por eso sus cuadrados son más grandes: cada columna ocupa el mismo alto).</div></div>
-    <div class="step" data-step="1"><div class="box">En naranja, las claramente <i>feel good</i> (7 o más). En los ochenta y los noventa eran casi la mitad: <i>Los Simpson</i>, <i>Friends</i>, <i>Cosas de marcianos</i>…</div></div>
-    <div class="step" data-step="2"><div class="box">Del naranja al gris azulado, el resto de la escala. Abajo del todo, las que no dejan ningún consuelo: <i>Los Soprano</i>, <i>Breaking Bad</i>, <i>The Last of Us</i>…</div></div>
+    <div class="step" data-step="1"><div class="box">En verde, las claramente <i>feel good</i> (7 o más). En los ochenta y los noventa eran casi la mitad: <i>Los Simpson</i>, <i>Friends</i>, <i>Cosas de marcianos</i>…</div></div>
+    <div class="step" data-step="2"><div class="box">Del amarillo al rojo, el resto de la escala. Arriba del todo, en rojo intenso, las que no dejan ningún consuelo: <i>Los Soprano</i>, <i>Breaking Bad</i>, <i>The Last of Us</i>…</div></div>
     <div class="step" data-step="3"><div class="box">Los noventa: el <b data-k="s7_90">44 %</b> de las series populares saca un 7 o más. La nota media es un <b data-k="sm90">6,1</b>.</div></div>
-    <div class="step" data-step="4"><div class="box">2020-2025: solo el <b data-k="s7_20">9 %</b>. La media baja a <b data-k="sm20">3,8</b>. <mark>En treinta años, el naranja casi ha desaparecido.</mark></div></div>
+    <div class="step" data-step="4"><div class="box">2020-2025: solo el <b data-k="s7_20">9 %</b>. La media baja a <b data-k="sm20">3,8</b>. <mark>En treinta años, el verde casi ha desaparecido.</mark></div></div>
     <div class="step" data-step="5"><div class="box">La caída no es de un día: empieza en los dos mil y se acelera en los años diez, con la llegada del gran drama de cable y de plataformas.</div></div>
+    <div class="step" data-step="6"><div class="box">Cuarenta y cinco años de series, de un vistazo.</div></div>
   </div>
 </div>
 
@@ -304,6 +331,13 @@ details.more summary{margin-top:6px}
     <div class="pair"><span style="--c:var(--ser)">Series</span><span style="--c:var(--pel)">Películas</span></div>
     <svg id="yearly" class="chart" role="img" aria-label="Nota feel good media por año: series frente a películas"></svg>
     <p class="note">Arriba, media por década de estreno con intervalo del 95 %. Abajo, año a año (puntos) y media móvil de 5 años (línea).</p>
+    <h3 style="margin-top:44px">¿Es porque ya no hay series familiares?</h3>
+    <p id="famText"></p>
+    <svg id="famshare" class="chart" role="img" aria-label="Porcentaje de series infantiles y familiares entre las más votadas, por década de estreno" data-title="Las series infantiles y familiares casi han desaparecido de las más vistas"></svg>
+    <svg id="famfg" class="chart" role="img" aria-label="Nota feel good media (0-10) de las series infantiles y familiares frente al resto, por década" data-title="Las familiares siguen siendo feel good; el resto se ha oscurecido"></svg>
+    <div class="pair"><span style="--c:var(--fam)">Infantiles y familiares</span><span style="--c:var(--ser)">Resto de series</span></div>
+    <svg id="famdec" class="chart" role="img" aria-label="Caída de la nota feel good media entre los noventa y 2010-2025, separada en cambio de público y caída dentro de cada grupo" data-title="Menos series familiares explica solo parte de la caída"></svg>
+    <p class="note" id="famNote"></p>
     <p class="small" style="margin-top:22px">Las 10 series estadounidenses más votadas de cada década y su nota <i>feel good</i> (pulsa para ver la ficha):</p><div class="decgrid" id="cmpEx"></div>
   </div>
 </section>
@@ -550,6 +584,11 @@ $('#fgscale').innerHTML=[['10','Muy feel good','Todos los vínculos importantes 
   ['5','A medias','Luces y sombras equilibradas, o un cierre deliberadamente ambiguo.',5],
   ['2-3','Poco','Algo de consuelo, pero predominan la soledad, la pérdida o la inquietud.',2.5],
   ['0','Nada','Desesperanza, vínculos destruidos o el mal triunfa.',0]].map(([n,t,d,v])=>`<div class="fgs"><span class="fgn" style="background:${fgCol(v)};color:${fgInk(v)}">${n}</span><div><b>${t}.</b> ${d}</div></div>`).join('');
+{const M=['tt0098800','tt0096697','tt0115284','tt0108778','tt10986410','tt7134908','tt0141842','tt7660850'].map(t=>F.films.find(f=>f[FC.tconst]===t)).filter(f=>f&&f[FC.poster]);
+ $('#xmos').innerHTML=M.map(f=>`<div><img loading="lazy" src="https://image.tmdb.org/t/p/w92${f[FC.poster]}" alt=""><i style="background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</i></div>`).join('');
+ const hero=document.querySelector('.hero'),ex=$('#explorador'),pill=$('#xpill');
+ const upd=()=>{const h=hero.getBoundingClientRect().bottom<0,e=ex.getBoundingClientRect();pill.classList.toggle('on',h&&!(e.top<innerHeight&&e.bottom>0))};
+ addEventListener('scroll',upd,{passive:true});upd();}
 const exHTML=ts=>ts.map(t=>F.films.find(f=>f[FC.tconst]===t)).filter(Boolean).map(f=>`<button class="ex" data-t="${f[FC.tconst]}"><div class="pw">${f[FC.poster]?`<img loading="lazy" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:''}<span class="fgb" style="background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</span></div><div class="t">${f[0]}</div><div class="y">${f[2]}</div></button>`).join('');
 $('#exs').innerHTML=exHTML(['tt0096697','tt0182576','tt2861424','tt0115284','tt0362372','tt7660850','tt0124938','tt1153059','tt7134908','tt0159206','tt1723816','tt10986410']);
 $('#exsF').innerHTML=exHTML(['tt0114709','tt0099785','tt0816692','tt0120338','tt15398776','tt7286456']);
@@ -607,7 +646,10 @@ function applyStep(k,instant){
       .attr('fill',d=>{const b=fgBin(d[FC.feel_good]);return b==null||k===0?nc:k===1?(b>=3?col[b]:nc):col[b]});
     g.select('.wpct').text(k>=1?pct(SU.y_fg7[c][0]):'');
   });
+  $('#wtitle').textContent=wTitle();
+  $('#wtitle').classList.toggle('on',k>=6);
 }
+const wTitle=()=>`Las series feel good casi han desaparecido: del ${pct(SU.y_fg7[1][0])} en los noventa al ${pct(SU.y_fg7[4][0])} hoy`;
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)applyStep(+e.target.dataset.step)}),{rootMargin:'-45% 0px -45% 0px'});
 $$('.step').forEach(s=>io.observe(s));
 
@@ -639,7 +681,7 @@ function drawCmp(){
   twoSeries('#sercoh',[['Series',S.feel_good,css('--ser'),-8],['Películas',Pf.feel_good,css('--pel'),8]],[2,8],n1);
   const dS=SR.diff[scf].feel_good, dF=(scf==='US'?FG.diff.US:FG.diff.ES).feel_good;
   $('#cmpText').innerHTML=`Entre los noventa y 2010-2025, la nota media de las series ${scf==='US'?'estadounidenses':'españolas'} baja <b>${dpt(dS[0]).replace('−','')} puntos</b> (IC 95 %: ${dpt(dS[1])} a ${dpt(dS[2])}); la de las películas, ${dpt(dF[0])} (${dpt(dF[1])} a ${dpt(dF[2])}).`;
-  drawYearly();
+  drawYearly();drawFam();
 }
 function drawYearly(){
   const svg=d3.select('#yearly'),W=svg.node().clientWidth||640,H=300,m={t:16,r:16,b:30,l:44};
@@ -657,6 +699,41 @@ function drawYearly(){
     svg.append('path').datum(roll).attr('fill','none').attr('stroke',c).attr('stroke-width',3).attr('d',d3.line().curve(d3.curveMonotoneX).x(r=>x(r[0])).y(r=>y(r[1])));
   });
   svg.append('text').attr('x',x(1995)).attr('y',m.t+14).attr('text-anchor','middle').style('font-size','12px').style('font-weight',700).text('los noventa');
+}
+
+// ---- ¿es por las series familiares?
+function drawFam(){
+  const F=SR.familiar[scf], C=F.cohortes, K=COH.filter(c=>C[c]), D=F.decomp.infantil_familiar, J=F.decomp.con_juvenil;
+  const share=COH.map(c=>C[c]?C[c].share:null);
+  // barras: % familiar por década
+  {const svg=d3.select('#famshare'),W=svg.node().clientWidth||640,H=200,m={t:24,r:16,b:30,l:16};
+   svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
+   const x=d3.scaleBand().domain(d3.range(5)).range([m.l,W-m.r]).padding(.35),y=d3.scaleLinear().domain([0,.6]).range([H-m.b,m.t]);
+   const g=svg.append('g').selectAll('g').data(share.map((v,i)=>[v,i]).filter(d=>d[0]!=null)).join('g');
+   g.append('rect').attr('x',d=>x(d[1])).attr('width',x.bandwidth()).attr('y',d=>y(d[0])).attr('height',d=>y(0)-y(d[0])).attr('rx',4).attr('fill',css('--fam'));
+   g.append('text').attr('x',d=>x(d[1])+x.bandwidth()/2).attr('y',d=>y(d[0])-6).attr('text-anchor','middle').style('font-weight',700).style('font-size','14px').style('fill','var(--ink)').text(d=>pct(d[0]));
+   svg.append('g').selectAll('text').data(d3.range(5)).join('text').attr('x',i=>x(i)+x.bandwidth()/2).attr('y',H-8).attr('text-anchor','middle').style('font-size','13px').style('fill','var(--ink)').text(i=>COH_LAB[i]);}
+  // líneas: nota de familiares frente al resto
+  twoSeries('#famfg',[['Infantiles y familiares',COH.map(c=>C[c]?C[c].fg_fam:[null]),css('--fam'),-8],['Resto de series',COH.map(c=>C[c]?C[c].fg_resto:[null]),css('--ser'),8]],[2,9],n1,260);
+  // descomposición
+  {const svg=d3.select('#famdec'),W=svg.node().clientWidth||640,H=(svg.node().clientWidth||640)<520?150:126,m={t:34,r:16,b:40,l:16};
+   svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
+   const tot=-D.total[0],cp=-D.composicion[0],dn=-D.dentro[0],x=d3.scaleLinear().domain([0,tot]).range([m.l,W-m.r]),bh=38,y0=m.t;
+   const seg=[[0,cp,'--fam',`Menos series familiares: ${n1(cp)} puntos`,D.composicion],[cp,cp+dn,'--ser',`Caída dentro de cada grupo: ${n1(dn)} puntos`,D.dentro]];
+   seg.forEach(([a,b,c,l,ci])=>{svg.append('rect').attr('x',x(a)).attr('width',Math.max(0,x(b)-x(a))-2).attr('y',y0).attr('height',bh).attr('rx',4).attr('fill',css(c))
+     .on('mousemove',e=>showTip(e,`<b>${l}</b><br>IC 95 %: ${n1(-ci[2])} a ${n1(-ci[1])}`)).on('mouseleave',hideTip);
+     svg.append('text').attr('x',x(a)+8).attr('y',y0+bh/2+5).style('font-weight',700).style('font-size','14px').style('fill','#fff').text(Math.round(100*(b-a)/tot)+' %');});
+   svg.append('text').attr('x',x(0)).attr('y',y0-10).style('font-size','13px').style('fill','var(--ink)').html(`Caída total de la nota media: <tspan font-weight="700">${n1(tot)} puntos</tspan> (de ${n1(D.m90)} a ${n1(D.m_rec)})`);
+   const lg=svg.append('g').attr('transform',`translate(${x(0)},${y0+bh+22})`);
+   [['--fam','Por tener menos series familiares'],['--ser','Por caer dentro de cada grupo']].forEach(([c,l],i)=>{const gg=lg.append('g').attr('transform',W<520?`translate(0,${i*20})`:`translate(${i*260},0)`);
+     gg.append('rect').attr('width',12).attr('height',12).attr('y',-10).attr('rx',2).attr('fill',css(c));gg.append('text').attr('x',18).style('font-size','12.5px').style('fill','var(--ink)').text(l)});}
+  const us=scf==='US', ex=us?'<i>El príncipe de Bel-Air</i>, <i>La niñera</i>, <i>Bob Esponja</i>…':'<i>Farmacia de guardia</i>, <i>Médico de familia</i>, <i>Las tres mellizas</i>…';
+  const fRec=D.fg_fam[1], rr=D.fg_resto, part=Math.round(100*D.composicion[0]/D.total[0]);
+  $('#famText').innerHTML=`Es una hipótesis razonable: si los niños ya no ven la tele con sus padres, se hacen y se ven menos series para toda la familia, que suelen ser las más amables. Los datos le dan <b>parte</b> de razón. En los noventa, el <b>${pct(D.share90)}</b> de las series más votadas eran infantiles o familiares (${ex}). En 2010-2025 son el <b>${pct(D.share_rec)}</b>. Y esas series siguen sacando buena nota: ${n1(D.fg_fam[0])} de media en los noventa, ${n1(fRec)} ahora. `+
+    `Si hoy se mantuviera la mezcla de público de los noventa, la media de 2010-2025 sería <b>${n1(D.m_rec_mezcla90[0])}</b> en lugar de ${n1(D.m_rec)}: el cambio de público explica unos <b>${n1(-D.composicion[0])} de los ${n1(-D.total[0])} puntos</b> de caída (alrededor del ${part} %). `+
+    (us?`El resto, ${n1(-D.dentro[0])} puntos (IC 95 %: ${n1(-D.dentro[2])} a ${n1(-D.dentro[1])}), es caída dentro de cada grupo: las series para adultos y jóvenes bajan de ${n1(rr[0])} a ${n1(rr[1])}. <mark>Menos series familiares ayuda a explicar la caída, pero no la explica entera.</mark>`
+        :`El resto, ${n1(-D.dentro[0])} puntos (IC 95 %: ${n1(-D.dentro[2])} a ${n1(-D.dentro[1])}), es caída dentro de cada grupo: las series para adultos y jóvenes bajan de ${n1(rr[0])} a ${n1(rr[1])}. <mark>En España el cambio de público pesa más que en EE. UU.: explica la mayor parte de la caída, aunque no toda.</mark>`);
+  $('#famNote').innerHTML=`«Infantiles y familiares» según el público al que va dirigida cada serie, anotado a partir de la sinopsis. Si se cuentan también las juveniles, el cambio de público explica ${n1(-J.composicion[0])} puntos (IC 95 %: ${n1(-J.composicion[2])} a ${n1(-J.composicion[1])}). Descomposición de Kitagawa con 2.000 remuestreos. Ojo: esto mide qué series están entre las más votadas en IMDb, no qué ven los niños. Que haya menos series familiares en esa lista encaja con que el público infantil se haya ido a YouTube y a las plataformas, pero estos datos no lo demuestran.`;
 }
 (function(){const card=(tit,items)=>`<div class="stat" style="padding:14px"><div class="small" style="margin-bottom:6px;font-weight:700">${tit}</div>${items.map(z=>`<div style="display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:3px 0;border-bottom:1px solid var(--rule)"><button class="lnk" data-t="${z[FC.tconst]}">${z[0]} <span class="small">(${z[2]})</span></button><b style="color:${fgTxtCol(z[FC.feel_good])}">${z[FC.feel_good]==null?'—':fgTxt(z[FC.feel_good])}</b></div>`).join('')}</div>`;
   const top=d=>US_S.filter(z=>Math.min(4,Math.floor((z[2]-1980)/10))===d).sort((a,b)=>(b[FC.imdb_votos]||0)-(a[FC.imdb_votos]||0)).slice(0,10);
@@ -931,8 +1008,66 @@ async function detail(f){
 $('#xclose').onclick=()=>$('#xd').close();$('#xd').onclick=e=>{if(e.target===$('#xd'))$('#xd').close()};
 run();
 
+
+// ---- descarga de gráficos como imagen (título, leyenda y fuente)
+const DL_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>';
+const SCF_CH=new Set(['sercoh','yearly','serforest','famshare','famfg','famdec']);
+const SVG_PROPS=['fill','stroke','stroke-width','stroke-opacity','fill-opacity','opacity','stroke-dasharray','stroke-linecap','stroke-linejoin','font-family','font-size','font-weight','font-style','letter-spacing','text-anchor','dominant-baseline','visibility','display'];
+const sib=(el,dir)=>{let e=el[dir];while(e&&e.classList.contains('dlbtn'))e=e[dir];return e};
+function legendOf(svg){if(svg.id==='waffle')return $('#wlegend');return [sib(svg,'nextElementSibling'),sib(svg,'previousElementSibling')].find(e=>e&&e.matches('.pair,.legend'))}
+function titleOf(svg){if(svg.id==='waffle')return wTitle();return svg.dataset.title||(svg.closest('section,.scrolly')?.querySelector('h2')?.textContent||'').trim()}
+function subOf(svg){
+  if(svg.id==='waffle')return 'Las series estadounidenses más votadas en IMDb por década de estreno, coloreadas según su nota feel good (0-10). Debajo, el porcentaje con 7 o más.';
+  return (svg.getAttribute('aria-label')||'')+(SCF_CH.has(svg.id)?(scf==='US'?' · EE. UU.':' · España'):'');
+}
+function inlineSvg(src){
+  const cl=src.cloneNode(true),a=[src,...src.querySelectorAll('*')],b=[cl,...cl.querySelectorAll('*')];
+  a.forEach((el,i)=>{const cs=getComputedStyle(el);b[i].setAttribute('style',SVG_PROPS.map(p=>`${p}:${cs.getPropertyValue(p)}`).join(';'))});
+  const r=src.getBoundingClientRect();
+  cl.setAttribute('width',r.width);cl.setAttribute('height',r.height);cl.setAttribute('xmlns','http://www.w3.org/2000/svg');cl.removeAttribute('class');
+  return [cl,r.width,r.height];
+}
+function wrapText(ctx,text,maxW){const out=[];let line='';text.split(/\s+/).forEach(w=>{const t=line?line+' '+w:w;if(ctx.measureText(t).width>maxW&&line){out.push(line);line=w}else line=t});if(line)out.push(line);return out}
+async function exportChart(svg){
+  if(svg.id==='waffle'){applyStep(6,true);await new Promise(r=>setTimeout(r,60))}
+  try{await document.fonts.ready}catch(e){}
+  const [cl,w,h]=inlineSvg(svg);
+  const url=URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(cl)],{type:'image/svg+xml;charset=utf-8'}));
+  const img=new Image();await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=url});
+  const bodyF=getComputedStyle(document.body).fontFamily, ink=css('--ink'), muted=css('--muted'), bg=css('--bg');
+  const pad=40, Wc=Math.max(Math.round(w)+2*pad,640), inner=Wc-2*pad, sc=2;
+  const c=document.createElement('canvas'), ctx=c.getContext('2d');
+  const TF='800 30px Fraunces, Georgia, serif', SF=`15px ${bodyF}`, LF=`14px ${bodyF}`, FF=`13px ${bodyF}`;
+  ctx.font=TF;const tl=wrapText(ctx,titleOf(svg),inner);
+  ctx.font=SF;const sl=wrapText(ctx,subOf(svg),inner);
+  const lg=legendOf(svg), items=lg?[...lg.children].map(sp=>[getComputedStyle(sp).getPropertyValue('--c').trim()||ink,sp.textContent.trim()]):[];
+  ctx.font=LF;const rows=[[]];let x=0;items.forEach(it=>{const iw=18+ctx.measureText(it[1]).width+18;if(x+iw>inner&&rows.at(-1).length){rows.push([]);x=0}rows.at(-1).push([x,...it]);x+=iw});
+  const legH=items.length?rows.length*22+6:0;
+  const H=pad+tl.length*36+6+sl.length*21+14+legH+h+24+20+pad*0.7;
+  c.width=Wc*sc;c.height=Math.round(H*sc);ctx.scale(sc,sc);
+  ctx.fillStyle=bg;ctx.fillRect(0,0,Wc,H);
+  let y=pad;ctx.textBaseline='top';
+  ctx.font=TF;ctx.fillStyle=ink;tl.forEach(l=>{ctx.fillText(l,pad,y);y+=36});y+=6;
+  ctx.font=SF;ctx.fillStyle=muted;sl.forEach(l=>{ctx.fillText(l,pad,y);y+=21});y+=14;
+  if(items.length){ctx.font=LF;rows.forEach(r=>{r.forEach(([ox,col,t])=>{ctx.fillStyle=col;ctx.beginPath();ctx.roundRect?ctx.roundRect(pad+ox,y+2,12,12,2):ctx.rect(pad+ox,y+2,12,12);ctx.fill();ctx.fillStyle=ink;ctx.fillText(t,pad+ox+18,y)});y+=22});y+=6}
+  ctx.drawImage(img,(Wc-w)/2,y,w,h);y+=h+24;
+  ctx.strokeStyle=css('--rule');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad,y-10);ctx.lineTo(Wc-pad,y-10);ctx.stroke();
+  ctx.font=`700 13px ${bodyF}`;ctx.fillStyle=ink;const src='Fuente: feelgood.victoriano.me';ctx.fillText(src,pad,y);
+  ctx.font=FF;ctx.fillStyle=muted;ctx.fillText('  ·  Datos: IMDb, TMDB y Wikipedia; notas de anotadores IA',pad+ctx.measureText(src).width+4,y);
+  URL.revokeObjectURL(url);
+  c.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`feelgood-${svg.id}${SCF_CH.has(svg.id)?'-'+scf.toLowerCase():''}.png`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)},'image/png');
+}
+function addDlButtons(){
+  $$('svg.chart, #waffle').forEach(svg=>{
+    if(svg.closest('#quad')||svg.dataset.dl)return;svg.dataset.dl=1;
+    const b=document.createElement('button');b.type='button';b.className='dlbtn';b.innerHTML=DL_ICON+'Descargar imagen';b.setAttribute('aria-label','Descargar el gráfico como imagen');
+    b.onclick=()=>exportChart(svg).catch(e=>console.error('export',e));
+    let after=svg;if(svg.id==='waffle')after=$('#wnote');else{const n=sib(svg,'nextElementSibling');if(n&&n.matches('.pair,.legend'))after=n}
+    after.after(b);
+  });
+}
 function redraw(){drawWaffle();drawCmp();drawForest();drawCompo();drawSlope();drawSub();drawMood();drawHeat();drawQuad();drawEsUs();drawCI()}
-redraw();
+redraw();addDlButtons();
 let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,200)});
 })();
 </script>

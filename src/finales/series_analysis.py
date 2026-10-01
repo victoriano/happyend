@@ -196,6 +196,46 @@ def analytic() -> pd.DataFrame:
     return d
 
 
+def _fam_decomp(a0, a1, flag):
+    """Kitagawa: diferencia total = composición (cambio en % familiar) + dentro de grupos."""
+    s0, s1 = a0[flag].mean(), a1[flag].mean()
+    m0f, m0a = a0[a0[flag]].feel_good.mean(), a0[~a0[flag]].feel_good.mean()
+    m1f, m1a = a1[a1[flag]].feel_good.mean(), a1[~a1[flag]].feel_good.mean()
+    tot = a1.feel_good.mean() - a0.feel_good.mean()
+    comp = (s1 - s0) * ((m0f + m1f) / 2 - (m0a + m1a) / 2)
+    cf = s0 * m1f + (1 - s0) * m1a  # 2010-2025 con el % familiar de los noventa
+    return tot, comp, tot - comp, cf
+
+
+def _familiar(g, g0, g1, B=2000):
+    g = g.dropna(subset=["feel_good"]).copy()
+    g["juv_fam"] = g.publico.isin(["INFANTIL", "FAMILIAR", "JUVENIL"])
+    a0, a1 = g[g.periodo == REF], g[g.periodo == "2010-2025"]
+    out = {"cohortes": {}, "decomp": {}}
+    for c in COHORTS:
+        x = g[g.cohort == c]
+        if not len(x):
+            continue
+        out["cohortes"][c] = {"n": int(len(x)), "share": float(x.infantil_familiar.mean()),
+                              "fg_fam": _est(x[x.infantil_familiar], "feel_good"), "fg_resto": _est(x[~x.infantil_familiar], "feel_good")}
+    rng = np.random.default_rng(0)
+    for key, flag in (("infantil_familiar", "infantil_familiar"), ("con_juvenil", "juv_fam")):
+        pt = _fam_decomp(a0, a1, flag)
+        bs = []
+        for _ in range(B):
+            b0 = a0.iloc[rng.integers(0, len(a0), len(a0))]
+            b1 = a1.iloc[rng.integers(0, len(a1), len(a1))]
+            bs.append(_fam_decomp(b0, b1, flag))
+        bs = np.array(bs)
+        ci = lambda j: [float(pt[j]), float(np.nanpercentile(bs[:, j], 2.5)), float(np.nanpercentile(bs[:, j], 97.5))]
+        out["decomp"][key] = {"total": ci(0), "composicion": ci(1), "dentro": ci(2), "m_rec_mezcla90": ci(3),
+                              "share90": float(a0[flag].mean()), "share_rec": float(a1[flag].mean()),
+                              "m90": float(a0.feel_good.mean()), "m_rec": float(a1.feel_good.mean()),
+                              "fg_fam": [float(a0[a0[flag]].feel_good.mean()), float(a1[a1[flag]].feel_good.mean())],
+                              "fg_resto": [float(a0[~a0[flag]].feel_good.mean()), float(a1[~a1[flag]].feel_good.mean())]}
+    return out
+
+
 def story(d: pd.DataFrame) -> dict:
     d = d[d.anio_en_curso != True].copy()
     d["periodo"] = np.where(d.cohort == REF, REF, np.where(d.cohort.isin(REC), "2010-2025", "otro"))
@@ -250,6 +290,7 @@ def story(d: pd.DataFrame) -> dict:
         m1 = g1.groupby("genre_main").feel_good.mean()
         rew = float(sum(w90.get(k, 0) * m1.get(k, np.nan) for k in w90.index if k in m1.index) / sum(w90.get(k, 0) for k in w90.index if k in m1.index))
         out.setdefault("reponderado", {})[cf] = {"m90": float(g0.feel_good.mean()), "m_rec": float(g1.feel_good.mean()), "m_rec_mezcla90": rew}
+        out.setdefault("familiar", {})[cf] = _familiar(g, g0, g1)
         # subgrupos
         sub = []
         g["tipo_serie"] = np.where(g.titleType == "tvMiniSeries", "Miniserie", "Serie")
