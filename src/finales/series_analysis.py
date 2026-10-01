@@ -196,43 +196,59 @@ def analytic() -> pd.DataFrame:
     return d
 
 
-def _fam_decomp(a0, a1, flag):
-    """Kitagawa: diferencia total = composición (cambio en % familiar) + dentro de grupos."""
-    s0, s1 = a0[flag].mean(), a1[flag].mean()
-    m0f, m0a = a0[a0[flag]].feel_good.mean(), a0[~a0[flag]].feel_good.mean()
-    m1f, m1a = a1[a1[flag]].feel_good.mean(), a1[~a1[flag]].feel_good.mean()
+def _fam_decomp(a0, a1, col="grp3", groups=("INFANTIL", "FAMILIAR", "RESTO")):
+    """Kitagawa con varios grupos. composición = Σ Δs_g·(m̄_g − m̄_resto) (repartida por grupo);
+    dentro = Σ Δm_g·s̄_g. Si un grupo tiene menos de 5 series en un periodo, su media se toma del otro."""
+    s0 = a0[col].value_counts(normalize=True); s1 = a1[col].value_counts(normalize=True)
+    n0 = a0[col].value_counts(); n1 = a1[col].value_counts()
+    m0 = a0.groupby(col).feel_good.mean().where(n0 >= 5); m1 = a1.groupby(col).feel_good.mean().where(n1 >= 5)
+    S0 = {g: s0.get(g, 0.0) for g in groups}; S1 = {g: s1.get(g, 0.0) for g in groups}
+    M0 = {g: m0.get(g, np.nan) for g in groups}; M1 = {g: m1.get(g, np.nan) for g in groups}
+    for g in groups:
+        if np.isnan(M0[g]): M0[g] = M1[g]
+        if np.isnan(M1[g]): M1[g] = M0[g]
+    mb = {g: (M0[g] + M1[g]) / 2 for g in groups}
+    ref = groups[-1]
+    comp = {g: (S1[g] - S0[g]) * (mb[g] - mb[ref]) for g in groups[:-1]}
+    dentro = sum((M1[g] - M0[g]) * (S0[g] + S1[g]) / 2 for g in groups)
     tot = a1.feel_good.mean() - a0.feel_good.mean()
-    comp = (s1 - s0) * ((m0f + m1f) / 2 - (m0a + m1a) / 2)
-    cf = s0 * m1f + (1 - s0) * m1a  # 2010-2025 con el % familiar de los noventa
-    return tot, comp, tot - comp, cf
+    cf = sum(S0[g] * M1[g] for g in groups)  # 2010-2025 con la mezcla de público de los noventa
+    return [tot, sum(comp.values()), dentro, cf] + [comp[g] for g in groups[:-1]]
 
 
 def _familiar(g, g0, g1, B=2000):
     g = g.dropna(subset=["feel_good"]).copy()
-    g["juv_fam"] = g.publico.isin(["INFANTIL", "FAMILIAR", "JUVENIL"])
+    g["grp3"] = np.where(g.publico.isin(["INFANTIL", "FAMILIAR"]), g.publico, "RESTO")
     a0, a1 = g[g.periodo == REF], g[g.periodo == "2010-2025"]
     out = {"cohortes": {}, "decomp": {}}
     for c in COHORTS:
         x = g[g.cohort == c]
         if not len(x):
             continue
-        out["cohortes"][c] = {"n": int(len(x)), "share": float(x.infantil_familiar.mean()),
-                              "fg_fam": _est(x[x.infantil_familiar], "feel_good"), "fg_resto": _est(x[~x.infantil_familiar], "feel_good")}
+        e = lambda sub: _est(sub, "feel_good") if len(sub) >= 5 else [None, None, None, int(len(sub))]
+        out["cohortes"][c] = {"n": int(len(x)), "share_inf": float((x.grp3 == "INFANTIL").mean()), "share_fam": float((x.grp3 == "FAMILIAR").mean()),
+                              "share": float(x.infantil_familiar.mean()),
+                              "fg_inf": e(x[x.grp3 == "INFANTIL"]), "fg_famonly": e(x[x.grp3 == "FAMILIAR"]),
+                              "fg_fam": _est(x[x.infantil_familiar], "feel_good"), "fg_resto": _est(x[x.grp3 == "RESTO"], "feel_good")}
     rng = np.random.default_rng(0)
-    for key, flag in (("infantil_familiar", "infantil_familiar"), ("con_juvenil", "juv_fam")):
-        pt = _fam_decomp(a0, a1, flag)
-        bs = []
-        for _ in range(B):
-            b0 = a0.iloc[rng.integers(0, len(a0), len(a0))]
-            b1 = a1.iloc[rng.integers(0, len(a1), len(a1))]
-            bs.append(_fam_decomp(b0, b1, flag))
-        bs = np.array(bs)
+    variants = (("infantil_familiar", "grp3", ("INFANTIL", "FAMILIAR", "RESTO")),)
+    g["grp_j"] = np.where(g.publico.isin(["INFANTIL", "FAMILIAR", "JUVENIL"]), "NJ", "RESTO")
+    a0, a1 = g[g.periodo == REF], g[g.periodo == "2010-2025"]
+    variants += (("con_juvenil", "grp_j", ("NJ", "RESTO")),)
+    for key, col, grs in variants:
+        pt = _fam_decomp(a0, a1, col, grs)
+        bs = np.array([_fam_decomp(a0.iloc[rng.integers(0, len(a0), len(a0))], a1.iloc[rng.integers(0, len(a1), len(a1))], col, grs) for _ in range(B)])
         ci = lambda j: [float(pt[j]), float(np.nanpercentile(bs[:, j], 2.5)), float(np.nanpercentile(bs[:, j], 97.5))]
-        out["decomp"][key] = {"total": ci(0), "composicion": ci(1), "dentro": ci(2), "m_rec_mezcla90": ci(3),
-                              "share90": float(a0[flag].mean()), "share_rec": float(a1[flag].mean()),
-                              "m90": float(a0.feel_good.mean()), "m_rec": float(a1.feel_good.mean()),
-                              "fg_fam": [float(a0[a0[flag]].feel_good.mean()), float(a1[a1[flag]].feel_good.mean())],
-                              "fg_resto": [float(a0[~a0[flag]].feel_good.mean()), float(a1[~a1[flag]].feel_good.mean())]}
+        d = {"total": ci(0), "composicion": ci(1), "dentro": ci(2), "m_rec_mezcla90": ci(3),
+             "m90": float(a0.feel_good.mean()), "m_rec": float(a1.feel_good.mean())}
+        for k, gname in enumerate(grs[:-1]):
+            d["comp_" + gname.lower()] = ci(4 + k)
+            d["share90_" + gname.lower()] = float((a0[col] == gname).mean()); d["share_rec_" + gname.lower()] = float((a1[col] == gname).mean())
+            d["fg_" + gname.lower()] = [float(a0[a0[col] == gname].feel_good.mean()), float(a1[a1[col] == gname].feel_good.mean()), int((a0[col] == gname).sum()), int((a1[col] == gname).sum())]
+        d["fg_resto"] = [float(a0[a0[col] == "RESTO"].feel_good.mean()), float(a1[a1[col] == "RESTO"].feel_good.mean())]
+        if key == "infantil_familiar":
+            d["share90"] = d["share90_infantil"] + d["share90_familiar"]; d["share_rec"] = d["share_rec_infantil"] + d["share_rec_familiar"]
+        out["decomp"][key] = d
     return out
 
 
