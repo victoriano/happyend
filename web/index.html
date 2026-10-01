@@ -145,7 +145,7 @@ footer li{margin-bottom:6px}
 .part .big{font-size:clamp(40px,8vw,84px)}
 .pair{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin:8px 0}
 .pair span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;background:var(--c)}
-:root{--us:#2a78d6;--es:#e0a100;--fg:#1a9850;--fg0:#d73027;--fg1:#f46d43;--fgm:#f2c14e;--fg3:#86c35b;--uto:#1baf7a;--dis:#7b3fb0;--ser:#d6452f;--pel:#2a6fd1;--fam:#e08e0b}
+:root{--us:#2a78d6;--es:#e0a100;--fg:#1a9850;--fg0:#d73027;--fg1:#f46d43;--fgm:#f2c14e;--fg3:#86c35b;--uto:#1baf7a;--dis:#7b3fb0;--ser:#d6452f;--pel:#2a6fd1;--fam:#e08e0b;--imdb:#d9a90f;--pop:#6c4fc2}
 .seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
 .seg button{border-radius:0;background:transparent;color:var(--ink);padding:7px 14px;font-size:14px}
 .seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
@@ -217,7 +217,8 @@ details.more2{margin:2px 0 6px}details.more2 summary{cursor:pointer;font-size:13
 .facet.scale .fopts{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;max-width:520px}
 .facet.scale button{flex-direction:column;align-items:stretch;gap:2px;border-radius:10px;padding:6px 6px 5px;position:relative;text-align:center}
 .facet.scale .sw{display:block;height:28px;border-radius:5px;background:linear-gradient(to top,color-mix(in srgb,var(--c) calc(var(--o)*100%),transparent) var(--h,0%),var(--nc) var(--h,0%))}
-.facet.scale .sl{font:900 15px Fraunces}
+.facet.scale .sl{font:900 15px Fraunces;white-space:nowrap}
+.facet[data-k=popu] .sl{font-size:13px;letter-spacing:-.02em}
 .facet.scale .sn{font-size:10.5px;font-weight:600;color:var(--ink2);line-height:1.1}
 .facet.scale button[aria-pressed=true]{background:var(--paper);color:var(--ink);border-color:var(--c);box-shadow:0 0 0 2px var(--c) inset}
 .facet.scale button[aria-pressed=true] .n{color:var(--muted);opacity:1}
@@ -890,6 +891,10 @@ const FCOL=['--feliz','--agri','--amb','--trag','--muted'];
 const bround=x=>{if(x==null)return null;const r=Math.round(x);return Math.abs(x%1)===.5?2*Math.round(x/2):r}; // redondeo como en el mapa de calor
 const SCALE=[{v:-2,l:'Muy pesimistas',c:'--trag',s:'−2'},{v:-1,l:'Pesimistas',c:'--trag',o:.55,s:'−1'},{v:0,l:'Neutros',c:'--amb',s:'0'},{v:1,l:'Optimistas',c:'--feliz',o:.55,s:'+1'},{v:2,l:'Muy optimistas',c:'--feliz',s:'+2'}];
 const SCALE_T=SCALE.map((o,i)=>({...o,l:['Muy sombrío','Sombrío','Neutro','Luminoso','Muy luminoso'][i]}));
+const IMDBS=[{v:0,l:'Floja',s:'<5',c:'--imdb',o:.25},{v:1,l:'Regular',s:'5-6',c:'--imdb',o:.42},{v:2,l:'Buena',s:'6-7',c:'--imdb',o:.6},{v:3,l:'Muy buena',s:'7-8',c:'--imdb',o:.8},{v:4,l:'Excelente',s:'8+',c:'--imdb',o:1}];
+const imdbBin=x=>x==null?null:x<5?0:x<6?1:x<7?2:x<8?3:4;
+const POPS=[{v:0,l:'Minoritaria',s:'<2k',c:'--pop',o:.25},{v:1,l:'Conocida',s:'2-20k',c:'--pop',o:.42},{v:2,l:'Popular',s:'20-100k',c:'--pop',o:.6},{v:3,l:'Muy popular',s:'100-500k',c:'--pop',o:.8},{v:4,l:'Fenómeno',s:'500k+',c:'--pop',o:1}];
+const popBin=x=>x==null?null:x<2e3?0:x<2e4?1:x<1e5?2:x<5e5?3:4;
 const catOpts=k=>F.cats[k].map((v,i)=>({v:i,l:LAB[v]||v})).filter(o=>F.cats[k][o.v]!=='NO_CLARO');
 const FACETS=[
   {k:'tipo',t:'Tipo',main:1,type:'chips',opts:[{v:1,l:'Series'},{v:0,l:'Películas'}],get:f=>f[FC.tipo]??0},
@@ -897,8 +902,10 @@ const FACETS=[
   {k:'pais',t:'País',main:1,type:'chips',opts:[{v:'US',l:'EE. UU.'},{v:'ES',l:'España'}],get:f=>f[3]===0?['US']:f[3]===1?['ES']:['US','ES']},
   {k:'fin',t:'Final',main:1,type:'chips',opts:FIN_LAB.map((l,i)=>({v:i,l,c:FCOL[i]})),get:f=>f[5]},
   {k:'fg',t:'Feel good (0-10)',main:1,type:'scale',opts:FGS,get:f=>fgBin(f[FC.feel_good])},
+  {k:'uto',t:'Sociedad: distopía o utopía (0-10)',main:1,type:'scale',opts:UTS,get:f=>fgBin(f[FC.utopia])},
+  {k:'imdb',t:'Nota en IMDb (0-10)',main:1,type:'scale',opts:IMDBS,get:f=>imdbBin(f[FC.imdb_nota])},
+  {k:'popu',t:'Popularidad (votos en IMDb; k = miles)',main:1,type:'scale',opts:POPS,get:f=>popBin(f[FC.imdb_votos])},
   {k:'pub',t:'Público',main:1,type:'chips',opts:F.publicos.map((v,i)=>({v:i,l:PUB_LAB[v]})),get:f=>f[FC.publico]},
-  {k:'uto',t:'Sociedad: distopía o utopía (0-10)',main:0,type:'scale',opts:UTS,get:f=>fgBin(f[FC.utopia])},
   {k:'opt',t:'Optimismo de los personajes',main:1,type:'scale',opts:SCALE,get:f=>bround(f[6])},
   {k:'tono',t:'Tono general de la película',main:1,type:'scale',opts:SCALE_T,get:f=>bround(f[7])},
   {k:'gen',t:'Género',main:1,type:'chips',opts:F.genres.map((g,i)=>({v:i,l:g})).filter(o=>o.l!=='Otros'),get:f=>f[4]},
