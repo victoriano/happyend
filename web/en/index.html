@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>(function(){var ls=null;try{ls=localStorage.getItem('lang')}catch(e){}if(/[?&]lang=en/.test(location.search)){try{localStorage.setItem('lang','en')}catch(e){}return}if(ls!=='en'&&/^es\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||''))location.replace('../'+location.hash)})();</script>
+<script>(function(){if(/[?&]lang=es/.test(location.search)){try{localStorage.setItem('lang','es')}catch(x){}location.replace('/es/'+location.hash);return}if(/[?&]lang=en/.test(location.search)){try{localStorage.setItem('lang','en')}catch(x){}}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Is feel good TV over?</title>
 <meta name="description" content="We scored the 1,384 most-voted US TV series and the 2,343 most-watched US movies since 1980 on how feel good they are. Movies have barely changed. TV has changed almost completely.">
 <meta property="og:title" content="Is feel good TV over?">
 <meta property="og:description" content="1,384 TV series, 2,343 movies and one question: was the TV of the ’90s more feel good?">
-<link rel="alternate" hreflang="es" href="https://feelgood.victoriano.me/">
+<link rel="alternate" hreflang="es" href="https://feelgood.victoriano.me/es/">
 <link rel="alternate" hreflang="en" href="https://feelgood.victoriano.me/en/">
 <style>
 :root{
@@ -257,7 +257,7 @@ details.more summary{margin-top:6px}
     <div class="kicker">TV · movies · data</div>
     <h1>Is <span class="strike">feel good</span> TV over?</h1>
     <p class="dek">People say ’90s TV left you with a warm glow and that everything is dark now. We scored the <b data-k="sN">1,384</b> most-voted US TV series and the <b data-k="nTot">2,343</b> most-watched US movies since 1980. Movies have barely changed. TV has changed almost completely.</p>
-    <p class="byline">By Victoriano Izquierdo · September 2026 · 12-minute read · <a href="#explorador">Jump to the explorer</a> · <a href="../?lang=es" lang="es" hreflang="es" onclick="try{localStorage.setItem('lang','es')}catch(e){}">Leer en español</a></p>
+    <p class="byline">By Victoriano Izquierdo · September 2026 · 12-minute read · <a href="#explorador">Jump to the explorer</a> · <a href="/es/" lang="es" hreflang="es" onclick="try{localStorage.setItem('lang','es')}catch(e){}">Leer en español</a></p>
     <a class="xcard" href="#explorador" aria-label="Open the TV and movie explorer">
       <div class="xmos" id="xmos" aria-hidden="true"></div>
       <div class="xtxt"><div class="kicker" style="margin:0">Already read the story?</div>

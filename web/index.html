@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-<script>(function(){var q=location.search.match(/[?&]lang=(es|en)/),ls=null;try{ls=localStorage.getItem('lang')}catch(e){}if(q){try{localStorage.setItem('lang',q[1])}catch(e){}if(q[1]==='es')return}var pref=q?q[1]:ls?ls:(/^es\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'es':'en');if(pref!=='es')location.replace('en/'+location.hash)})();</script>
+<script>(function(){var q=location.search.match(/[?&]lang=(es|en)/),ls=null;try{ls=localStorage.getItem('lang')}catch(e){}if(/^\/es(\/|$)/.test(location.pathname))return;if(q){try{localStorage.setItem('lang',q[1])}catch(e){}if(q[1]==='es')return}var pref=q?q[1]:ls?ls:(/^es\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'es':'en');if(pref!=='es')location.replace('/en/'+location.hash)})();</script>
 <meta charset="utf-8">
-<link rel="alternate" hreflang="es" href="https://feelgood.victoriano.me/">
+<link rel="alternate" hreflang="es" href="https://feelgood.victoriano.me/es/">
 <link rel="alternate" hreflang="en" href="https://feelgood.victoriano.me/en/">
-<link rel="alternate" hreflang="x-default" href="https://feelgood.victoriano.me/en/">
+<link rel="alternate" hreflang="x-default" href="https://feelgood.victoriano.me/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>¿Se acabaron las series feel good?</title>
 <meta name="description" content="Pusimos nota feel good a las 2.000 series y 3.600 películas más vistas en EE. UU. y España desde 1980. En el cine apenas ha cambiado nada; en las series, casi todo.">
@@ -261,7 +261,7 @@ details.more summary{margin-top:6px}
     <div class="kicker">Series · cine · datos</div>
     <h1>¿Se acabaron las series <span class="strike">feel good</span>?</h1>
     <p class="dek">Dicen que la tele de los noventa te dejaba con buen cuerpo y que ahora todo es oscuro. Pusimos nota a las <b data-k="sN">2.000</b> series y las <b data-k="nTot">3.600</b> películas más vistas en EE. UU. y en España desde 1980. En el cine apenas ha cambiado nada. En las series, casi todo.</p>
-    <p class="byline">Por Victoriano Izquierdo · Septiembre de 2026 · Lectura de 12 minutos · <a href="#explorador">Ir al explorador</a> · <a href="en/?lang=en" lang="en" hreflang="en" onclick="try{localStorage.setItem('lang','en')}catch(e){}">Read in English</a></p>
+    <p class="byline">Por Victoriano Izquierdo · Septiembre de 2026 · Lectura de 12 minutos · <a href="#explorador">Ir al explorador</a> · <a href="/en/" lang="en" hreflang="en" onclick="try{localStorage.setItem('lang','en')}catch(e){}">Read in English</a></p>
     <a class="xcard" href="#explorador" aria-label="Abrir el explorador de series y películas">
       <div class="xmos" id="xmos" aria-hidden="true"></div>
       <div class="xtxt"><div class="kicker" style="margin:0">¿Ya leíste la historia?</div>
