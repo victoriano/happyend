@@ -10,7 +10,15 @@
 <meta property="og:description" content="1,384 TV series, 2,343 movies and one question: was the TV of the ’90s more feel good?">
 <link rel="alternate" hreflang="es" href="https://feelgood.victoriano.me/es/">
 <link rel="alternate" hreflang="en" href="https://feelgood.victoriano.me/en/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+.langsw{position:fixed;top:12px;right:56px;z-index:61;display:inline-flex;background:var(--paper);border:1px solid var(--rule);border-radius:999px;padding:2px;font:700 12px "Public Sans";box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.langsw a{color:var(--muted);text-decoration:none;padding:4px 9px;border-radius:999px;letter-spacing:.04em}
+.langsw a[aria-current]{background:var(--ink);color:var(--bg)}
+.langsw a:not([aria-current]):hover{color:var(--ink)}
+
 :root{
   --bg:#fbf6ec; --paper:#fffdf8; --ink:#1b1a17; --ink2:#55524b; --muted:#8a867c; --rule:#e6dfd0;
   --feliz:#2a78d6; --agri:#86b6ef; --amb:#b5b3ad; --trag:#e34948; --nc:#e9e4d8;
@@ -65,7 +73,7 @@ mark{background:linear-gradient(transparent 55%,var(--mark) 55%);color:inherit;p
 .xtxt b{font-size:17px;color:var(--ink);line-height:1.25}
 .xgo{font-weight:700;color:var(--ink);margin-top:2px}
 @media(max-width:560px){.xcard{flex-direction:column;align-items:flex-start}.xmos{grid-template-columns:repeat(8,1fr);width:100%}.xmos div{width:auto;aspect-ratio:2/3;height:auto}}
-.xpill{position:fixed;top:12px;right:62px;z-index:60;display:inline-flex;align-items:center;gap:6px;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:999px;padding:6px 12px;font:700 13px "Public Sans";text-decoration:none;opacity:0;pointer-events:none;transition:opacity .3s}
+.xpill{position:fixed;top:12px;right:150px;z-index:60;display:inline-flex;align-items:center;gap:6px;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:999px;padding:6px 12px;font:700 13px "Public Sans";text-decoration:none;opacity:0;pointer-events:none;transition:opacity .3s}
 .xpill.on{opacity:1;pointer-events:auto}
 .scrollcue{margin-top:40px;font-size:14px;color:var(--muted)}
 /* guess */
@@ -248,6 +256,7 @@ details.more summary{margin-top:6px}
 </head>
 <body>
 <a class="xpill" id="xpill" href="#explorador"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>Explorer</a>
+<nav class="langsw" aria-label="Idioma / Language"><a href="/es/" lang="es" hreflang="es" onclick="try{localStorage.setItem('lang','es')}catch(e){}">ES</a><a href="/en/" lang="en" hreflang="en" aria-current="true" onclick="try{localStorage.setItem('lang','en')}catch(e){}">EN</a></nav>
 <button class="theme" id="theme" aria-label="Toggle theme">◐</button>
 <div class="tip" id="tip" role="tooltip"></div>
 

@@ -10,7 +10,7 @@ for fn in sorted(glob.glob('/home/claude/finales-cine/i18n/in/*.json')):
         for kk in v['texts']:
             t=o.get(k,{}).get(kk) if isinstance(o.get(k),dict) else None
             if not t or not isinstance(t,str): miss+=1
-            elif re.search(r'[ñ¿¡]|\b(una|los|las|que|pero|sociedad|serie)\b',t): es+=1
+            elif re.search(r'[¿¡]|\b(que|pero|sociedad|aunque|porque)\b',t): es+=1
     if miss or es>2: bad.append((os.path.basename(fn),f'miss={miss} es={es}'))
     else: ok+=1
 print('ok',ok,'bad',len(bad));[print(b) for b in bad[:200] if '-q' not in sys.argv]

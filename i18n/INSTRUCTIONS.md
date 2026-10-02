@@ -10,7 +10,7 @@ Field meanings (context only): A/B/J = why the ending was classified as happy/bi
 Rules:
 - Translate faithfully and completely, same meaning and similar length; concise, fluent American English. Don't add or drop information.
 - Keep the term "feel good" as is. Use "dystopia/utopia", "happy ending", "bittersweet", "ambiguous", "tragic".
-- If a show/film title appears in Spanish translation, use its original English title (the "title" field is the original title of the work itself).
+- If a show/film title appears in Spanish translation, use its original English title (the "title" field is the original title of the work itself). Many titles are Spanish productions: keep Spanish proper names and original Spanish titles as they are (e.g. "La casa de papel"), but translate everything else.
 - Output must be valid JSON. Writing it with a short Python script (json.dump(..., ensure_ascii=False)) is fine, but YOU must do the translation yourself — no external APIs or translation libraries.
 - Process files one at a time; you may build each output in several steps if long.
 - When done, run: python3 /home/claude/finales-cine/i18n/check.py and make sure none of YOUR files are listed as bad (other agents' files may be missing — ignore those); fix yours if needed. Reply with one line: which files you completed.
