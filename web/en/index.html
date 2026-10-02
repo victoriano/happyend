@@ -1,19 +1,15 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
-<script>(function(){var q=location.search.match(/[?&]lang=(es|en)/),ls=null;try{ls=localStorage.getItem('lang')}catch(e){}if(q){try{localStorage.setItem('lang',q[1])}catch(e){}if(q[1]==='es')return}var pref=q?q[1]:ls?ls:(/^es\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'es':'en');if(pref!=='es')location.replace('en/'+location.hash)})();</script>
+<script>(function(){var ls=null;try{ls=localStorage.getItem('lang')}catch(e){}if(/[?&]lang=en/.test(location.search)){try{localStorage.setItem('lang','en')}catch(e){}return}if(ls!=='en'&&/^es\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||''))location.replace('../'+location.hash)})();</script>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is feel good TV over?</title>
+<meta name="description" content="We scored the 1,384 most-voted US TV series and the 2,343 most-watched US movies since 1980 on how feel good they are. Movies have barely changed. TV has changed almost completely.">
+<meta property="og:title" content="Is feel good TV over?">
+<meta property="og:description" content="1,384 TV series, 2,343 movies and one question: was the TV of the ’90s more feel good?">
 <link rel="alternate" hreflang="es" href="https://feelgood.victoriano.me/">
 <link rel="alternate" hreflang="en" href="https://feelgood.victoriano.me/en/">
-<link rel="alternate" hreflang="x-default" href="https://feelgood.victoriano.me/en/">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>¿Se acabaron las series feel good?</title>
-<meta name="description" content="Pusimos nota feel good a las 2.000 series y 3.600 películas más vistas en EE. UU. y España desde 1980. En el cine apenas ha cambiado nada; en las series, casi todo.">
-<meta property="og:title" content="¿Se acabaron las series feel good?">
-<meta property="og:description" content="2.000 series, 3.600 películas y una pregunta: ¿eran más feel good los noventa?">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#fbf6ec; --paper:#fffdf8; --ink:#1b1a17; --ink2:#55524b; --muted:#8a867c; --rule:#e6dfd0;
@@ -251,43 +247,43 @@ details.more summary{margin-top:6px}
 </style>
 </head>
 <body>
-<a class="xpill" id="xpill" href="#explorador"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>Explorador</a>
-<button class="theme" id="theme" aria-label="Cambiar tema">◐</button>
+<a class="xpill" id="xpill" href="#explorador"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>Explorer</a>
+<button class="theme" id="theme" aria-label="Toggle theme">◐</button>
 <div class="tip" id="tip" role="tooltip"></div>
 
 <header class="hero">
   <canvas id="rain" aria-hidden="true"></canvas>
   <div class="wide">
-    <div class="kicker">Series · cine · datos</div>
-    <h1>¿Se acabaron las series <span class="strike">feel good</span>?</h1>
-    <p class="dek">Dicen que la tele de los noventa te dejaba con buen cuerpo y que ahora todo es oscuro. Pusimos nota a las <b data-k="sN">2.000</b> series y las <b data-k="nTot">3.600</b> películas más vistas en EE. UU. y en España desde 1980. En el cine apenas ha cambiado nada. En las series, casi todo.</p>
-    <p class="byline">Por Victoriano Izquierdo · Septiembre de 2026 · Lectura de 12 minutos · <a href="#explorador">Ir al explorador</a> · <a href="en/?lang=en" lang="en" hreflang="en" onclick="try{localStorage.setItem('lang','en')}catch(e){}">Read in English</a></p>
-    <a class="xcard" href="#explorador" aria-label="Abrir el explorador de series y películas">
+    <div class="kicker">TV · movies · data</div>
+    <h1>Is <span class="strike">feel good</span> TV over?</h1>
+    <p class="dek">People say ’90s TV left you with a warm glow and that everything is dark now. We scored the <b data-k="sN">1,384</b> most-voted US TV series and the <b data-k="nTot">2,343</b> most-watched US movies since 1980. Movies have barely changed. TV has changed almost completely.</p>
+    <p class="byline">By Victoriano Izquierdo · September 2026 · 12-minute read · <a href="#explorador">Jump to the explorer</a> · <a href="../?lang=es" lang="es" hreflang="es" onclick="try{localStorage.setItem('lang','es')}catch(e){}">Leer en español</a></p>
+    <a class="xcard" href="#explorador" aria-label="Open the TV and movie explorer">
       <div class="xmos" id="xmos" aria-hidden="true"></div>
-      <div class="xtxt"><div class="kicker" style="margin:0">¿Ya leíste la historia?</div>
-        <b>Explorador: todas las series y películas, una por una</b>
-        <span>Busca cualquiera de las <span data-k="sN">2.000</span> series y <span data-k="nTot">3.600</span> películas, filtra por década o país y mira su nota y por qué.</span>
-        <span class="xgo">Abrir el explorador →</span></div>
+      <div class="xtxt"><div class="kicker" style="margin:0">Already read the story?</div>
+        <b>Explorer: every show and movie, one by one</b>
+        <span>Search any of the <span data-k="sN">1,384</span> TV series and <span data-k="nTot">2,343</span> movies, filter by decade or genre, and see each score and the reasoning behind it.</span>
+        <span class="xgo">Open the explorer →</span></div>
     </a>
-    <p class="scrollcue">↓ O desliza para leer la historia</p>
+    <p class="scrollcue">↓ Or scroll to read the story</p>
   </div>
 </header>
 
 <section>
   <div class="wrap">
-    <div class="kicker">Antes de empezar</div>
-    <h2>Haz tu apuesta</h2>
-    <p>Piensa en las series estadounidenses más vistas: <i>Friends</i>, <i>Aquellos maravillosos 70</i>, <i>Juego de tronos</i>, <i>The Last of Us</i>… ¿Qué proporción crees que es claramente <b>feel good</b>, de las que te dejan con la sensación de que el mundo tiene arreglo?</p>
+    <div class="kicker">Before we start</div>
+    <h2>Place your bet</h2>
+    <p>Think of the most-watched American TV shows: <i>Friends</i>, <i>That ’70s Show</i>, <i>Game of Thrones</i>, <i>The Last of Us</i>… What share do you think is clearly <b>feel good</b> — the kind that leaves you feeling the world can still be fixed?</p>
     <div class="card guess">
-      <label for="g90">Series estrenadas en los noventa</label>
-      <div class="row"><input id="g90" type="range" min="0" max="100" value="50"><output id="o90">50 %</output></div>
-      <label for="gnow">Series estrenadas desde 2010</label>
-      <div class="row"><input id="gnow" type="range" min="0" max="100" value="50"><output id="onow">50 %</output></div>
-      <p style="margin-top:18px"><button id="reveal">Ver la respuesta</button></p>
+      <label for="g90">Shows that premiered in the 1990s</label>
+      <div class="row"><input id="g90" type="range" min="0" max="100" value="50"><output id="o90">50%</output></div>
+      <label for="gnow">Shows that premiered since 2010</label>
+      <div class="row"><input id="gnow" type="range" min="0" max="100" value="50"><output id="onow">50%</output></div>
+      <p style="margin-top:18px"><button id="reveal">Show me the answer</button></p>
       <div id="guessResult" hidden>
         <div class="gbar"><span>1990-1999</span><div class="gtrack"><div class="gfill" id="f90"></div><div class="gci" id="c90"></div><div class="gyou" id="y90"></div><span class="gval" id="v90"></span></div></div>
         <div class="gbar"><span>2010-2025</span><div class="gtrack"><div class="gfill" id="fnow"></div><div class="gci" id="cnow"></div><div class="gyou" id="ynow"></div><span class="gval" id="vnow"></span></div></div>
-        <p class="small">Proporción de series con nota <i>feel good</i> de 7 o más sobre 10. La línea amarilla es tu apuesta; la barra naranja, lo que encontramos; los topes marcan el intervalo de confianza del 95 %. <span id="guessMsg"></span></p>
+        <p class="small">Share of shows with a <i>feel good</i> score of 7 or higher out of 10. The yellow line is your guess; the orange bar is what we found; the caps mark the 95% confidence interval. <span id="guessMsg"></span></p>
       </div>
     </div>
   </div>
@@ -295,14 +291,14 @@ details.more summary{margin-top:6px}
 
 <section style="padding-bottom:0">
   <div class="wrap">
-    <div class="kicker">Capítulo 1</div>
-    <h2>Qué es <i>feel good</i></h2>
-    <p>No basta con que acabe bien. Una serie o una película es <i>feel good</i> si sus personajes quedan <b>en paz, en armonía y queridos</b> por su familia, sus amigos, su comunidad, su país o el universo, y si nos deja la idea de que <b>hay esperanza en la humanidad</b>.</p>
-    <p>Leímos el resumen de cada título, <b>sin nombre ni año</b>, y le pusimos una nota de 0 a 10, con una explicación escrita:</p>
+    <div class="kicker">Chapter 1</div>
+    <h2>What is <i>feel good</i>?</h2>
+    <p>A happy ending isn’t enough. A show or a movie is <i>feel good</i> if its characters end up <b>at peace, in harmony and loved</b> — by their family, their friends, their community, their country or the universe — and if it leaves us with the sense that <b>there’s hope for humanity</b>.</p>
+    <p>We read the plot summary of every title, <b>with no name or year</b>, and gave it a score from 0 to 10, with a written explanation:</p>
     <div class="fgscale" id="fgscale"></div>
-    <p class="small" style="margin-top:14px">Algunas notas de las series más votadas (media de los dos anotadores). Pulsa para ver por qué:</p>
+    <p class="small" style="margin-top:14px">Scores for some of the most-voted shows (average of the two annotators). Tap one to see why:</p>
     <div class="exs" id="exs"></div>
-    <p style="margin-top:22px">Lo hicimos con las <b data-k="sNus">1.380</b> series estadounidenses más votadas en IMDb (las 30 primeras de cada año de estreno, de 1980 a 2025) y con las <b data-k="sNes">600</b> españolas más votadas. Y, para comparar, con <b data-k="nTot">3.600</b> películas.</p>
+    <p style="margin-top:22px">We did this for the <b data-k="sNus">1,380</b> most-voted US TV series on IMDb (the top 30 for every premiere year from 1980 to 2025). And, for comparison, for <b data-k="nFilmsUS">2,295</b> movies.</p>
   </div>
 </section>
 
@@ -310,236 +306,217 @@ details.more summary{margin-top:6px}
   <div class="sticky"><div>
     <h3 id="wtitle" class="wtitle" aria-live="polite"></h3>
     <div class="legend" id="wlegend"></div>
-    <svg id="waffle" role="img" aria-label="Cuadrícula de series por década coloreadas según su nota feel good"></svg>
-    <p class="note" id="wnote">Cada cuadrado es una serie. Pasa el cursor o toca para ver cuál es y su nota.</p>
+    <svg id="waffle" role="img" aria-label="Grid of TV shows by decade, colored by feel good score"></svg>
+    <p class="note" id="wnote">Each square is a show. Hover or tap to see which one and its score.</p>
   </div></div>
   <div class="steps">
-    <div class="step" data-step="0"><div class="box">Cada columna es una década de estreno y cada cuadrado, una de las 300 series estadounidenses más votadas de esa década (180 en 2020-2025, que abarca seis años; por eso sus cuadrados son más grandes: cada columna ocupa el mismo alto).</div></div>
-    <div class="step" data-step="1"><div class="box">En verde, las claramente <i>feel good</i> (7 o más). En los ochenta y los noventa eran casi la mitad: <i>Los Simpson</i>, <i>Friends</i>, <i>Cosas de marcianos</i>…</div></div>
-    <div class="step" data-step="2"><div class="box">Del amarillo al rojo, el resto de la escala. Arriba del todo, en rojo intenso, las que no dejan ningún consuelo: <i>Los Soprano</i>, <i>Breaking Bad</i>, <i>The Last of Us</i>…</div></div>
-    <div class="step" data-step="3"><div class="box">Los noventa: el <b data-k="s7_90">44 %</b> de las series populares saca un 7 o más. La nota media es un <b data-k="sm90">6,1</b>.</div></div>
-    <div class="step" data-step="4"><div class="box">2020-2025: solo el <b data-k="s7_20">9 %</b>. La media baja a <b data-k="sm20">3,8</b>. <mark>En treinta años, el verde casi ha desaparecido.</mark></div></div>
-    <div class="step" data-step="5"><div class="box">La caída no es de un día: empieza en los dos mil y se acelera en los años diez, con la llegada del gran drama de cable y de plataformas.</div></div>
-    <div class="step" data-step="6"><div class="box">Cuarenta y cinco años de series, de un vistazo.</div></div>
+    <div class="step" data-step="0"><div class="box">Each column is a premiere decade, and each square is one of the 300 most-voted US shows of that decade (180 for 2020-2025, which spans only six years — that’s why its squares are bigger: every column is the same height).</div></div>
+    <div class="step" data-step="1"><div class="box">In green, the clearly <i>feel good</i> ones (7 or higher). In the ’80s and ’90s they were almost half: <i>The Simpsons</i>, <i>Friends</i>, <i>3rd Rock from the Sun</i>…</div></div>
+    <div class="step" data-step="2"><div class="box">Yellow through red covers the rest of the scale. At the very top, in deep red, the ones that offer no comfort at all: <i>The Sopranos</i>, <i>Breaking Bad</i>, <i>The Last of Us</i>…</div></div>
+    <div class="step" data-step="3"><div class="box">The ’90s: <b data-k="s7_90">44%</b> of popular shows score a 7 or higher. The average score is <b data-k="sm90">6.1</b>.</div></div>
+    <div class="step" data-step="4"><div class="box">2020-2025: just <b data-k="s7_20">9%</b>. The average drops to <b data-k="sm20">3.8</b>. <mark>In thirty years, the green has all but vanished.</mark></div></div>
+    <div class="step" data-step="5"><div class="box">It didn’t happen overnight: the decline starts in the 2000s and speeds up in the 2010s, with the rise of big cable and streaming dramas.</div></div>
+    <div class="step" data-step="6"><div class="box">Forty-five years of TV, at a glance.</div></div>
   </div>
 </div>
 
 <section>
   <div class="wrap">
-    <div class="kicker">Capítulo 2</div>
-    <h2>Desde los noventa, las películas siguen igual de <i>feel good</i>; las series, mucho menos</h2>
-    <p>Medimos lo mismo, con el mismo manual y los mismos anotadores, en las películas más vistas de cada año. El resultado es muy distinto. <span id="cmpText"></span></p>
-    <div class="tabs" role="group" aria-label="País">
-      <button class="ghost" aria-pressed="true" data-scf="US">EE. UU.</button>
-      <button class="ghost" aria-pressed="false" data-scf="ES">España</button>
-    </div>
-    <svg id="sercoh" class="chart" role="img" aria-label="Nota feel good media por década: series frente a películas"></svg>
-    <div class="pair"><span style="--c:var(--ser)">Series</span><span style="--c:var(--pel)">Películas</span></div>
-    <svg id="yearly" class="chart" role="img" aria-label="Nota feel good media por año: series frente a películas"></svg>
-    <p class="note">Arriba, media por década de estreno con intervalo del 95 %. Abajo, año a año (puntos) y media móvil de 5 años (línea).</p>
-    <h3 style="margin-top:44px">¿Es porque ya no hay series familiares?</h3>
+    <div class="kicker">Chapter 2</div>
+    <h2>Since the ’90s, movies have stayed just as <i>feel good</i>. TV hasn’t.</h2>
+    <p>We measured the same thing, with the same rulebook and the same annotators, for the most-watched movies of every year. The result is very different. <span id="cmpText"></span></p>
+    <svg id="sercoh" class="chart" role="img" aria-label="Average feel good score by decade: TV series vs. movies"></svg>
+    <div class="pair"><span style="--c:var(--ser)">TV series</span><span style="--c:var(--pel)">Movies</span></div>
+    <svg id="yearly" class="chart" role="img" aria-label="Average feel good score by year: TV series vs. movies"></svg>
+    <p class="note">Top: average by premiere decade, with 95% interval. Bottom: year by year (dots) and 5-year moving average (line).</p>
+    <h3 style="margin-top:44px">Is it because there are no more family shows?</h3>
     <p id="famText"></p>
-    <svg id="famshare" class="chart" role="img" aria-label="Porcentaje de series familiares (incluidas las infantiles) y de series para adolescentes y jóvenes entre las más votadas, por década de estreno" data-title="Las series familiares casi han desaparecido de las más vistas; las juveniles se mantienen"></svg>
-    <svg id="famfg" class="chart" role="img" aria-label="Nota feel good media (0-10) de las series familiares, las juveniles y las de adultos, por década (solo décadas con al menos 5 series)" data-title="Las familiares siguen siendo feel good; juveniles y adultas se han oscurecido"></svg>
-    <div class="pair"><span style="--c:var(--fam)">Familiares e infantiles</span><span style="--c:var(--juv)">Adolescentes y jóvenes</span><span style="--c:var(--ser)">Adultos</span></div>
-    <svg id="famdec" class="chart" role="img" aria-label="Caída de la nota feel good media entre los noventa y 2010-2025, separada en cambio de público y caída dentro de cada grupo" data-title="Menos series familiares explica solo parte de la caída"></svg>
+    <svg id="famshare" class="chart" role="img" aria-label="Share of family shows (including kids’ shows) and of teen and young-adult shows among the most voted, by premiere decade" data-title="Family shows have nearly vanished from the most watched; teen shows are holding steady"></svg>
+    <svg id="famfg" class="chart" role="img" aria-label="Average feel good score (0-10) of family, teen and adult shows, by decade (only decades with at least 5 shows)" data-title="Family shows are still feel good; teen and adult shows have turned darker"></svg>
+    <div class="pair"><span style="--c:var(--fam)">Family &amp; kids</span><span style="--c:var(--juv)">Teens &amp; young adults</span><span style="--c:var(--ser)">Adults</span></div>
+    <svg id="famdec" class="chart" role="img" aria-label="Drop in the average feel good score between the ’90s and 2010-2025, split into the shift in audience and the decline within each group" data-title="Fewer family shows explains only part of the decline"></svg>
     <p class="note" id="famNote"></p>
-    <p class="small" style="margin-top:22px">Las 10 series estadounidenses más votadas de cada década y su nota <i>feel good</i> (pulsa para ver la ficha):</p><div class="decgrid" id="cmpEx"></div>
+    <p class="small" style="margin-top:22px">The 10 most-voted US shows of each decade and their <i>feel good</i> score (tap one for details):</p><div class="decgrid" id="cmpEx"></div>
   </div>
 </section>
 
 <section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
   <div class="wrap">
-    <div class="kicker">Capítulo 3</div>
-    <h2>La singularidad de España: sus series se oscurecen como las de EE. UU., pero su cine es cada vez más <i>feel good</i></h2>
-    <p>Las series españolas cuentan la misma historia que las estadounidenses: <span id="esText"></span></p>
-    <svg id="esus" class="chart" role="img" aria-label="Nota feel good media por década de las series españolas y estadounidenses" data-title="Las series españolas pierden feel good igual que las estadounidenses"></svg>
-    <div class="pair"><span style="--c:var(--us)">Series EE. UU.</span><span style="--c:var(--es)">Series España</span></div>
-    <p style="margin-top:22px"><span id="esText2"></span></p>
-    <svg id="esfs" class="chart" role="img" aria-label="Nota feel good media por década en España: series frente a películas" data-title="En España, el cine sube mientras las series bajan"></svg>
-    <div class="pair"><span style="--c:var(--ser)">Series españolas</span><span style="--c:var(--pel)">Películas españolas</span></div>
-    <p class="small"><b>Ojo:</b> hay pocas series españolas con votos antes de 2005 (<span data-k="esN80"></span> en los ochenta y <span data-k="esN90"></span> en los noventa), así que las décadas antiguas tienen mucha incertidumbre.</p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="kicker">Capítulo 4</div>
-    <h2>Las series de hoy no solo tienen protagonistas más sombríos: también retratan sociedades más podridas</h2>
-    <p>Hay otra forma de dejar mal cuerpo: mostrar una sociedad podrida. Por eso pusimos una segunda nota, de 0 (<b>distopía</b>: una sociedad que oprime, se corrompe o se destruye) a 10 (<b>utopía</b>: justa, solidaria y que va a mejor), a todos los títulos, sean o no de ciencia ficción. <span id="utoText"></span></p>
-    <svg id="mood" class="chart" role="img" aria-label="Utopía por década: series frente a películas"></svg>
-    <div class="pair"><span style="--c:var(--ser)">Series</span><span style="--c:var(--pel)">Películas</span></div>
-    <p class="note">Estados Unidos. Media por década con intervalo del 95 %.</p>
+    <div class="kicker">Chapter 3</div>
+    <h2>Today’s shows don’t just have gloomier heroes. They also portray more rotten societies.</h2>
+    <p>There’s another way to leave you feeling bad: show a society that’s rotten. So we added a second score, from 0 (<b>dystopia</b>: a society that oppresses, decays or destroys itself) to 10 (<b>utopia</b>: fair, caring and getting better), for every title, science fiction or not. <span id="utoText"></span></p>
+    <svg id="mood" class="chart" role="img" aria-label="Utopia score by decade: TV series vs. movies"></svg>
+    <div class="pair"><span style="--c:var(--ser)">TV series</span><span style="--c:var(--pel)">Movies</span></div>
+    <p class="note">US titles. Average by decade, with 95% interval.</p>
   </div>
 </section>
 
 <section id="explorador" style="background:var(--paper);border-top:1px solid var(--rule)">
   <div class="wide">
-    <div class="kicker">Explora</div>
-    <h2>Todas las series y películas, una por una</h2>
-    <p style="max-width:680px">Las <b data-k="nSer">2.000</b> series y <b data-k="nExpl">2.922</b> películas, de más a menos votadas en IMDb, incluidas las más votadas de 2026 (un año aún en curso, que dejamos fuera del análisis). Filtra por década, año, país, nota <i>feel good</i>, público, género, final o cualquier otra cosa que hayamos anotado. Pulsa una carátula para ver su nota <i>feel good</i> y por qué, qué sociedad muestra, cómo acaba y el resumen que leyeron los anotadores.</p>
+    <div class="kicker">Explore</div>
+    <h2>Every show and movie, one by one</h2>
+    <p style="max-width:680px">All <b data-k="nSer">1,384</b> TV series and <b data-k="nExpl">2,343</b> movies, from most to least voted on IMDb, including the most-voted titles of 2026 (a year still in progress, which we left out of the analysis). Filter by decade, year, <i>feel good</i> score, audience, genre, ending or anything else we annotated. Tap a poster to see its <i>feel good</i> score and why, what kind of society it shows, how it ends and the summary the annotators read.</p>
     <div class="xbar">
       <div class="xrow">
-        <input id="xq" type="search" placeholder="Busca un título: Titanic, Mar adentro, Barbie…" aria-label="Buscar título">
-        <select id="xyear" aria-label="Año"><option value="">Cualquier año</option></select>
-        <select id="xsort" aria-label="Orden"><option value="votos" selected>Más votadas en IMDb</option><option value="fg">Más feel good primero</option><option value="nofg">Menos feel good primero</option><option value="uto">Sociedad más utópica primero</option><option value="dis">Sociedad más distópica primero</option><option value="asc">Más antiguas primero</option><option value="desc">Más recientes primero</option><option value="opt">Personajes más optimistas primero</option><option value="pes">Personajes más pesimistas primero</option><option value="nota">Mejor nota en IMDb</option><option value="rango">Más populares de su año (IMDb)</option></select>
-        <button class="ghost clear" id="xclear" hidden>Quitar filtros</button>
+        <input id="xq" type="search" placeholder="Search a title: Titanic, Friends, Barbie…" aria-label="Search titles">
+        <select id="xyear" aria-label="Year"><option value="">Any year</option></select>
+        <select id="xsort" aria-label="Sort by"><option value="votos" selected>Most voted on IMDb</option><option value="fg">Most feel good first</option><option value="nofg">Least feel good first</option><option value="uto">Most utopian society first</option><option value="dis">Most dystopian society first</option><option value="asc">Oldest first</option><option value="desc">Newest first</option><option value="opt">Most optimistic characters first</option><option value="pes">Most pessimistic characters first</option><option value="nota">Highest IMDb rating</option><option value="rango">Most popular of their year (IMDb)</option></select>
+        <button class="ghost clear" id="xclear" hidden>Clear filters</button>
       </div>
       <div id="xfacets" class="facets"></div>
-      <details class="more"><summary>Más filtros: protagonista, clase social, época, relaciones… <span id="xmorecount"></span></summary>
+      <details class="more"><summary>More filters: protagonist, social class, era, relationships… <span id="xmorecount"></span></summary>
         <div id="xfacets2" class="facets"></div>
       </details>
     </div>
     <div class="xstat" aria-live="polite"><span id="xcount"></span><div class="xdist" id="xdist"></div><span id="xhappy" class="small"></span></div>
     <div class="grid" id="xgrid"></div>
-    <button class="ghost" id="more" hidden>Ver más</button>
-    <p class="note">Carátulas y títulos en español de <a href="https://www.themoviedb.org">TMDB</a>. Resúmenes de Wikipedia (CC BY-SA 4.0), con enlace a la versión usada. Etiquetas puestas por modelos de lenguaje: pueden equivocarse. Nota y votos de IMDb a fecha de la descarga (29 de septiembre de 2026). Information courtesy of IMDb (https://www.imdb.com).</p>
+    <button class="ghost" id="more" hidden>Show more</button>
+    <p class="note">Posters from <a href="https://www.themoviedb.org">TMDB</a>. Summaries from Wikipedia (CC BY-SA 4.0), linked to the version used. Labels assigned by language models: they can be wrong. IMDb ratings and votes as of the download date (September 29, 2026). Information courtesy of IMDb (https://www.imdb.com).</p>
   </div>
-  <dialog id="xd" aria-label="Ficha de la película"><button class="x" id="xclose" aria-label="Cerrar">×</button><div id="xdbody"></div></dialog>
+  <dialog id="xd" aria-label="Title details"><button class="x" id="xclose" aria-label="Close">×</button><div id="xdbody"></div></dialog>
 </section>
 
 <section style="padding-top:48px">
   <div class="wrap">
-    <div class="kicker">Veredicto</div>
-    <p class="verdict">El cine sigue siendo tan <i>feel good</i> como en los noventa. Las series, no.</p>
-    <p>Lo que los datos <b>sostienen</b>: las series estadounidenses más votadas han pasado de un <i>feel good</i> medio de <b data-k="vs90"></b> (estrenadas en los noventa) a <b data-k="vs20"></b> (2020-2025), y las claramente <i>feel good</i>, del <b data-k="vs7a"></b> al <b data-k="vs7b"></b>. La caída se repite en España, en casi todos los géneros y con todas las comprobaciones. En las películas, en cambio, la nota apenas se mueve hasta 2020 y solo baja algo después.</p>
-    <p>Lo que <b>sugieren</b>: una parte, en torno a un tercio, se debe a que hoy vemos menos series de animación y comedia y más de acción y crimen; el resto ocurre dentro de cada género (lo detallamos en el <a href="#anexo">anexo</a>). Las series actuales muestran además sociedades peores. Y quien vota en IMDb puntúa algo peor lo más <i>feel good</i>.</p>
-    <p>Lo que <b>no pueden decir</b>: de la mayoría de las series solo sabemos la premisa, no cómo acaban; los votos de hoy favorecen las series de antes que recordamos; y las notas son de modelos de lenguaje, sin revisión humana. Tampoco dicen nada de las causas (el drama de prestigio, las plataformas, los gustos del público) ni de si la gente echa de menos aquellas series: esa encuesta está diseñada, pero no hecha.</p>
+    <div class="kicker">The verdict</div>
+    <p class="verdict">Movies are as <i>feel good</i> as they were in the ’90s. TV isn’t.</p>
+    <p>What the data <b>supports</b>: the most-voted US shows have gone from an average <i>feel good</i> score of <b data-k="vs90"></b> (premiered in the ’90s) to <b data-k="vs20"></b> (2020-2025), and the share of clearly <i>feel good</i> shows has fallen from <b data-k="vs7a"></b> to <b data-k="vs7b"></b>. The decline shows up in almost every genre and survives every check we ran. Movies, by contrast, barely move until 2020 and dip only slightly after that.</p>
+    <p>What it <b>suggests</b>: part of it, roughly a third, comes from the fact that we now watch fewer animated shows and comedies and more action and crime; the rest happens within each genre (details in the <a href="#anexo">appendix</a>). Today’s shows also depict worse societies. And IMDb voters rate the most <i>feel good</i> titles slightly lower.</p>
+    <p>What it <b>can’t tell us</b>: for most shows we only know the premise, not how they end; today’s votes favor the older shows we still remember; and the scores come from language models, with no human review. Nor does it say anything about causes (prestige drama, streaming, audience tastes) or whether people miss those shows: that survey has been designed, but not run.</p>
   </div>
 </section>
 
 <section id="anexo" style="padding-bottom:0">
   <div class="wrap">
-    <div class="kicker">Anexo</div>
-    <h2>Para quien quiera más detalle</h2>
-    <p>Lo que sostiene la historia y algunos hallazgos secundarios: si la caída de las series es real o un artefacto del método, cuánto se debe a que hoy vemos otros géneros, en qué tipo de series cayó más, cómo encaja con los finales felices, qué premia quien vota en IMDb y cómo lo medimos.</p>
+    <div class="kicker">Appendix</div>
+    <h2>For those who want more detail</h2>
+    <p>What holds the story up, plus a few side findings: whether the TV decline is real or an artifact of the method, how much of it comes from watching different genres, which kinds of shows fell the most, how it fits with happy endings, what IMDb voters reward and how we measured it all.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="kicker">Anexo A · Comprobaciones</div>
-    <h2>¿Es real esa diferencia?</h2>
-    <p>Hemos leído todas las series populares, así que no hay error de muestreo. Pero cada década es solo una tanda de títulos, y otra tanda parecida habría salido algo distinta. Además, las notas las ponen modelos de lenguaje, y la mayoría de los resúmenes de series cuentan la premisa y no el final. Así que lo comprobamos de muchas maneras. <span id="forestText"></span></p>
-    <svg id="serforest" class="chart" role="img" aria-label="Diferencia en la nota feel good de las series bajo distintas especificaciones"></svg>
-    <p class="note">Diferencia en la nota media <i>feel good</i> de las series (0 a 10) entre 2010-2025 y 1990-1999, con intervalo del 95 %. Cambia de país con los botones del capítulo 2.</p>
+    <div class="kicker">Appendix A · Robustness checks</div>
+    <h2>Is the gap real?</h2>
+    <p>We read every popular show, so there’s no sampling error. But each decade is just one batch of titles, and a similar batch would have come out somewhat differently. On top of that, the scores come from language models, and most TV summaries describe the premise, not the ending. So we checked it in many different ways. <span id="forestText"></span></p>
+    <svg id="serforest" class="chart" role="img" aria-label="Difference in the feel good score of TV series under different specifications"></svg>
+    <p class="note">Difference in the average <i>feel good</i> score of US TV series (0 to 10) between 2010-2025 and 1990-1999, with 95% interval.</p>
   </div>
 </section>
 
 <section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
   <div class="wrap">
-    <div class="kicker">Anexo B · Géneros</div>
-    <h2>Menos dibujos y comedias, más acción y crimen</h2>
-    <p>Parte del cambio está en <b>qué series vemos</b>. Entre las estadounidenses más populares, la animación y la comedia, los géneros más <i>feel good</i>, pasan del <b data-k="cmpAC90"></b> de las series en los noventa al <b data-k="cmpACrec"></b> desde 2010. La acción, el <i>thriller</i> y el crimen ocupan su lugar.</p>
-    <svg id="compo" class="chart" role="img" aria-label="Composición por géneros de las series populares"></svg>
+    <div class="kicker">Appendix B · Genres</div>
+    <h2>Fewer cartoons and sitcoms, more action and crime</h2>
+    <p>Part of the change lies in <b>which shows we watch</b>. Among the most popular US shows, animation and comedy, the most <i>feel good</i> genres, go from <b data-k="cmpAC90"></b> of all shows in the ’90s to <b data-k="cmpACrec"></b> since 2010. Action, thrillers and crime take their place.</p>
+    <svg id="compo" class="chart" role="img" aria-label="Genre mix of popular TV shows"></svg>
     <div class="legend" id="compoLegend"></div>
     <p><span id="rewText"></span></p>
-    <svg id="slope" class="chart" role="img" aria-label="Nota feel good por género, noventa frente a 2010-2025"></svg>
-    <p class="note">Series estadounidenses. Nota <i>feel good</i> media de cada género en los noventa y en 2010-2025, ordenado de mayor caída a menor. En negrita, los géneros cuyo cambio excluye el cero. Solo géneros con al menos 8 series en cada periodo.</p>
+    <svg id="slope" class="chart" role="img" aria-label="Feel good score by genre, the ’90s vs. 2010-2025"></svg>
+    <p class="note">US TV series. Average <i>feel good</i> score for each genre in the ’90s and in 2010-2025, sorted from biggest drop to smallest. In bold, genres whose change excludes zero. Only genres with at least 8 shows in each period.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="kicker">Anexo C · Subgrupos</div>
-    <h2>¿Dónde cayó más?</h2>
+    <div class="kicker">Appendix C · Subgroups</div>
+    <h2>Where did it fall the most?</h2>
     <p><span id="subText"></span></p>
-    <svg id="subg" class="chart" role="img" aria-label="Cambio en la nota feel good entre los noventa y 2010-2025 por tipo de serie"></svg>
-    <p class="note">Series estadounidenses. Diferencia 2010-2025 menos 1990-1999 dentro de cada grupo, con intervalo del 95 %. Solo grupos con al menos 12 series en cada periodo. Son muchas comparaciones a la vez: alguna saldrá «significativa» por azar.</p>
+    <svg id="subg" class="chart" role="img" aria-label="Change in feel good score between the ’90s and 2010-2025, by type of show"></svg>
+    <p class="note">US TV series. Difference between 2010-2025 and 1990-1999 within each group, with 95% interval. Only groups with at least 12 shows in each period. That’s a lot of comparisons at once: some will come out “significant” by chance.</p>
   </div>
 </section>
 
 <section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
   <div class="wrap">
-    <div class="kicker">Anexo D · Finales</div>
-    <h2>Acabar bien no es lo mismo que dejarte bien</h2>
-    <p>También clasificamos cómo acaba cada título: <span class="chip feliz">Feliz</span> · <span class="chip agri">Agridulce</span> · <span class="chip amb">Ambiguo</span> · <span class="chip trag">Trágico</span>. En las series solo se puede cuando el resumen cuenta el final o el patrón de la serie, y eso pasa en una minoría. Donde se puede, las dos medidas van de la mano, pero no son lo mismo: hay finales agridulces muy <i>feel good</i> y finales felices que no reconfortan.</p>
-    <svg id="heat" class="chart heat" role="img" aria-label="Matriz de series por tipo de final y nota feel good"></svg>
-    <p class="note">Número de series estadounidenses con final clasificable según su final y su nota <i>feel good</i>.</p>
+    <div class="kicker">Appendix D · Endings</div>
+    <h2>Ending well isn’t the same as leaving you feeling good</h2>
+    <p>We also classified how each title ends: <span class="chip feliz">Happy</span> · <span class="chip agri">Bittersweet</span> · <span class="chip amb">Ambiguous</span> · <span class="chip trag">Tragic</span>. For TV, that’s only possible when the summary describes the ending or the show’s pattern, which happens for a minority of shows. Where it is possible, the two measures go hand in hand, but they aren’t the same thing: some bittersweet endings are deeply <i>feel good</i>, and some happy endings offer no comfort at all.</p>
+    <svg id="heat" class="chart heat" role="img" aria-label="Matrix of TV shows by type of ending and feel good score"></svg>
+    <p class="note">Number of US shows with a classifiable ending, by ending and <i>feel good</i> score.</p>
     <div class="quad" id="quad"></div>
-    <p class="note">Series estadounidenses por década de estreno. El final feliz y el trágico, solo entre series con final clasificable (<span data-k="sCl"></span> de <span data-k="sNus2"></span>).</p>
+    <p class="note">US TV series by premiere decade. Happy and tragic endings counted only among shows with a classifiable ending (<span data-k="sCl"></span> of <span data-k="sNus2"></span>).</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="kicker">Anexo E · IMDb</div>
-    <h2>Quien vota en IMDb no premia el <i>feel good</i></h2>
-    <p>No podemos saber si la gente echa de menos las series de los noventa; eso requiere una encuesta. Pero entre películas del mismo año y género, <mark>cada punto más de <i>feel good</i> se asocia con <b data-k="imfg"></b> puntos de nota en IMDb</mark>. Las series más votadas de hoy, como <i>Breaking Bad</i> (9,5 en IMDb y un 1 de <i>feel good</i>), apuntan en la misma dirección.</p>
-    <h3 style="margin-top:36px">Cada punto, una serie o una película</h3>
+    <div class="kicker">Appendix E · IMDb</div>
+    <h2>IMDb voters don’t reward <i>feel good</i></h2>
+    <p>We can’t know whether people miss ’90s TV; that would take a survey. But among movies from the same year and genre, <mark>each extra point of <i>feel good</i> is associated with <b data-k="imfg"></b> points of IMDb rating</mark>. Today’s most-voted shows, like <i>Breaking Bad</i> (9.5 on IMDb and a 1 for <i>feel good</i>), point the same way.</p>
+    <h3 style="margin-top:36px">Each dot is a show or a movie</h3>
     <p id="scText"></p>
-    <div class="tabs" role="group" aria-label="Tipo" style="margin-top:10px">
-      <button class="ghost" aria-pressed="true" data-sct="1">Series</button>
-      <button class="ghost" aria-pressed="false" data-sct="0">Películas</button>
-      <button class="ghost" aria-pressed="false" data-sct="2">Todas</button>
-      <label class="small" style="display:inline-flex;align-items:center;gap:6px;margin-left:8px"><input type="checkbox" id="scPop"> Solo las muy votadas (más de 100.000 votos)</label>
+    <div class="tabs" role="group" aria-label="Type" style="margin-top:10px">
+      <button class="ghost" aria-pressed="true" data-sct="1">TV series</button>
+      <button class="ghost" aria-pressed="false" data-sct="0">Movies</button>
+      <button class="ghost" aria-pressed="false" data-sct="2">All</button>
+      <label class="small" style="display:inline-flex;align-items:center;gap:6px;margin-left:8px"><input type="checkbox" id="scPop"> Only heavily voted titles (over 100,000 votes)</label>
     </div>
-    <svg id="scat" class="chart" role="img" aria-label="Nota feel good frente a nota en IMDb: cada punto es una serie o película; tamaño según votos" data-title="La nota en IMDb apenas tiene que ver con lo feel good que es una serie o película"></svg>
-    <div class="pair"><span style="--c:var(--ser)">Series</span><span style="--c:var(--pel)">Películas</span><span style="--c:var(--ink)">Media feel good por nota de IMDb</span></div>
-    <p class="note">Pasa el cursor por los puntos para ver cada título; pulsa para abrir su ficha. El tamaño es proporcional a los votos en IMDb. Las notas <i>feel good</i> van de medio en medio punto; se separan un poco en vertical para que no se tapen. La nota de IMDb mide la opinión de quien vota en IMDb, no la de todo el público, y no dice nada de la nostalgia.</p>
+    <svg id="scat" class="chart" role="img" aria-label="Feel good score vs. IMDb rating: each dot is a show or a movie, sized by number of votes" data-title="IMDb ratings have almost nothing to do with how feel good a show or movie is"></svg>
+    <div class="pair"><span style="--c:var(--ser)">TV series</span><span style="--c:var(--pel)">Movies</span><span style="--c:var(--ink)">Average feel good by IMDb rating</span></div>
+    <p class="note">Hover over the dots to see each title; tap to open its details. Dot size is proportional to IMDb votes. <i>Feel good</i> scores come in half-point steps, so the dots are nudged vertically to keep them from overlapping. The IMDb rating reflects the opinion of IMDb voters, not of the whole audience, and says nothing about nostalgia.</p>
   </div>
 </section>
 
 <section style="background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
   <div class="wide">
     <div class="wrap" style="padding:0">
-      <div class="kicker">Anexo F · Cómo lo hicimos</div>
-      <h2>Dos lectores artificiales y un árbitro</h2>
-      <p>Nadie puede ver <span data-k="sN">2.000</span> series en una tarde, pero sí leer sus resúmenes. Así funcionó:</p>
+      <div class="kicker">Appendix F · How we did it</div>
+      <h2>Two artificial readers and a referee</h2>
+      <p>Nobody can watch <span data-k="sN">1,384</span> TV series in an afternoon, but you can read their summaries. Here’s how it worked:</p>
     </div>
     <div class="flow">
-      <div><b>Catálogo.</b> Series y películas de ficción con votos en IMDb, estadounidenses o españolas (país según TMDB y Wikidata; sin coproducciones mayoritariamente extranjeras).</div>
-      <div><b>Censo.</b> Las 30 series más votadas de cada año de estreno por país, y las 50 películas estadounidenses y 30 españolas más votadas de cada año: todas, sin sorteo.</div>
-      <div><b>Resúmenes.</b> Wikipedia (volcado de septiembre de 2026) en el idioma disponible; si no había, sinopsis de TMDB. Con títulos y años borrados.</div>
-      <div><b>Dos anotadores.</b> Dos modelos de lenguaje distintos puntuaron cada resumen por separado con un manual de reglas y explicaron su nota.</div>
-      <div><b>Árbitro.</b> Un tercero resolvió los desacuerdos (sobre el final, el público y cuando las notas diferían 3 puntos o más) sin saber quién había dicho qué.</div>
+      <div><b>Catalog.</b> Fiction TV series and movies with IMDb votes, made in the US (country of origin per TMDB and Wikidata; mostly-foreign co-productions excluded).</div>
+      <div><b>Census.</b> The 30 most-voted shows of every premiere year and the 50 most-voted movies of every year: all of them, no sampling.</div>
+      <div><b>Summaries.</b> Wikipedia (September 2026 dump) in whichever language was available; if there was none, the TMDB synopsis. Titles and years scrubbed.</div>
+      <div><b>Two annotators.</b> Two different language models scored each summary independently, following a rulebook, and explained their score.</div>
+      <div><b>Referee.</b> A third model settled disagreements (about the ending, the audience, and whenever scores were 3 or more points apart) without knowing who had said what.</div>
     </div>
     <div class="wrap" style="padding:0;margin-top:28px">
-      <p>Los dos anotadores coincidieron mucho: en las series, sus notas <i>feel good</i> quedaron a 2 puntos o menos en el <b data-k="sd2"></b> de los casos (α de Krippendorff <b data-k="safg"></b>); en las películas, α <b data-k="afg"></b>. Pero eso no significa que acierten siempre: dos máquinas pueden equivocarse igual.</p>
-      <h3 style="margin-top:28px">Lo que debes saber antes de creerte nada</h3>
+      <p>The two annotators agreed a lot: for TV, their <i>feel good</i> scores were within 2 points of each other in <b data-k="sd2"></b> of cases (Krippendorff’s α <b data-k="safg"></b>); for movies, α <b data-k="afg"></b>. But that doesn’t mean they’re always right: two machines can be wrong in the same way.</p>
+      <h3 style="margin-top:28px">What you should know before you believe any of this</h3>
     </div>
     <div class="caveats">
-      <div class="caveat"><h3>De las series sabemos la premisa</h3><p class="small">Wikipedia rara vez cuenta cómo acaba una serie: solo en el <b data-k="sFin"></b> de las series el resumen llega al final. La nota mide sobre todo la experiencia que promete la serie (sus personajes, su mundo, su tono), no su desenlace. Aun así, la caída se mantiene al quitar las series de las que solo sabemos la premisa.</p></div>
-      <div class="caveat"><h3>Los votos son memoria</h3><p class="small">«Las más votadas» se mide con votos actuales de IMDb. De los noventa se siguen votando las series que recordamos, sobre todo comedias; de ahora, lo que está de moda. Eso puede exagerar la diferencia.</p></div>
-      <div class="caveat"><h3>No las ha revisado ninguna persona</h3><p class="small">Todas las notas son de modelos de lenguaje. El material para validarlas con anotadores humanos está preparado, pero aún no se ha usado. Los modelos, además, reconocieron casi todos los títulos.</p></div>
-      <div class="caveat"><h3>Un resumen no es la obra</h3><p class="small">El <i>feel good</i> depende de la música, las caras, el ritmo… Aquí se juzga a partir de un texto. Y nuestra definición (paz, amor y esperanza) es una entre varias posibles.</p></div>
-      <div class="caveat"><h3>España cuenta con pocos datos antiguos</h3><p class="small">Hay pocas series españolas con votos antes de 2005, y muchas películas españolas solo tienen una sinopsis comercial que no cuenta el final.</p></div>
-      <div class="caveat"><h3>Muchas comparaciones</h3><p class="small">Con tantos subgrupos, alguna diferencia saldrá significativa por azar. Los resultados por tipo de serie son exploratorios.</p></div>
+      <div class="caveat"><h3>For TV, we know the premise</h3><p class="small">Wikipedia rarely says how a show ends: only for <b data-k="sFin"></b> of shows does the summary reach the finale. The score mostly measures the experience a show promises (its characters, its world, its tone), not how it wraps up. Even so, the decline holds when we drop the shows for which we only know the premise.</p></div>
+      <div class="caveat"><h3>Votes are memory</h3><p class="small">“Most voted” is measured with today’s IMDb votes. From the ’90s, people still vote for the shows they remember, mostly sitcoms; from today, whatever is trending. That can exaggerate the gap.</p></div>
+      <div class="caveat"><h3>No human has checked them</h3><p class="small">All the scores come from language models. The materials to validate them with human annotators are ready but haven’t been used yet. The models also recognized almost every title.</p></div>
+      <div class="caveat"><h3>A summary isn’t the show</h3><p class="small"><i>Feel good</i> depends on the music, the faces, the pacing… Here it’s judged from a text. And our definition (peace, love and hope) is just one of several possible.</p></div>
+      <div class="caveat"><h3>Lots of comparisons</h3><p class="small">With so many subgroups, some difference will turn out significant by chance. The results by type of show are exploratory.</p></div>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <h3>Metodología y fuentes</h3>
+    <h3>Methodology and sources</h3>
     <ul>
-      <li>Datos de IMDb Non-Commercial Datasets (uso no comercial). <i>Information courtesy of IMDb (https://www.imdb.com). Used with permission.</i> Nota media y número de votos por película tomados de la misma descarga (29 de septiembre de 2026).</li>
-      <li>País de origen y enlaces: <a href="https://www.wikidata.org">Wikidata</a> (CC0).</li>
-      <li>Resúmenes argumentales: Wikipedia en español, inglés, catalán, gallego, euskera, francés, italiano y portugués (<a href="https://dumps.wikimedia.org/">volcados</a> del 1 de septiembre de 2026, CC BY-SA 4.0). Cada ficha enlaza la revisión usada. Cuando no había resumen en Wikipedia, sinopsis de TMDB (solo enlazada, no reproducida).</li>
-      <li>Carátulas y títulos en español: <a href="https://www.themoviedb.org">TMDB</a>. <i>This product uses the TMDB API but is not endorsed or certified by TMDB.</i></li>
-      <li>Referencia: Stephen Follows (2026), <a href="https://stephenfollows.com/p/has-hollywood-given-up-on-the-happy-ending"><i>Has Hollywood given up on the happy ending?</i></a> Sus datos no son públicos; la comparación es orientativa.</li>
-      <li>Medidas: nota <i>feel good</i> (0-10), nota de utopía o distopía (0-10), público y tipo de final, con doble anotación ciega y árbitro. Análisis: intervalos de Wilson, t y bootstrap por película; comparaciones entre 1990-1999 y 2010-2025; modelos ajustados por género, popularidad y características de la historia; más de diez pruebas de sensibilidad. El informe completo, el manual de anotación y el código reproducible acompañan a este proyecto.</li>
-      <li>Etiquetas generadas por modelos de lenguaje, sin validación humana todavía. Resultados exploratorios.</li>
+      <li>Data from the IMDb Non-Commercial Datasets (non-commercial use). <i>Information courtesy of IMDb (https://www.imdb.com). Used with permission.</i> Average rating and number of votes per title taken from the same download (September 29, 2026).</li>
+      <li>Country of origin and links: <a href="https://www.wikidata.org">Wikidata</a> (CC0).</li>
+      <li>Plot summaries: Wikipedia in English and several other languages (<a href="https://dumps.wikimedia.org/">dumps</a> from September 1, 2026, CC BY-SA 4.0). Each title links to the revision used. When Wikipedia had no summary, the TMDB synopsis (linked only, not reproduced).</li>
+      <li>Posters: <a href="https://www.themoviedb.org">TMDB</a>. <i>This product uses the TMDB API but is not endorsed or certified by TMDB.</i></li>
+      <li>Reference: Stephen Follows (2026), <a href="https://stephenfollows.com/p/has-hollywood-given-up-on-the-happy-ending"><i>Has Hollywood given up on the happy ending?</i></a> His data isn’t public, so the comparison is only indicative.</li>
+      <li>Measures: <i>feel good</i> score (0-10), utopia/dystopia score (0-10), audience and type of ending, with blind double annotation and a referee. Analysis: Wilson intervals, t-tests and bootstrap by title; comparisons between 1990-1999 and 2010-2025; models adjusted for genre, popularity and story features; more than ten sensitivity checks. The full report, the annotation manual and reproducible code accompany this project.</li>
+      <li>Labels generated by language models, not yet validated by humans. Exploratory results.</li>
     </ul>
-    <p class="small">Datos: <a href="data.json">data.json</a> (agregados) y <a href="films.json">films.json</a> (etiquetas por película).</p>
+    <p class="small">Data: <a href="../data.json">data.json</a> (aggregates) and <a href="films.json">films.json</a> (per-title labels).</p>
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script>
 (async function(){
-const [D, F] = await Promise.all([fetch('data.json').then(r=>r.json()), fetch('films.json').then(r=>r.json())]);
+const [D, F] = await Promise.all([fetch('../data.json').then(r=>r.json()), fetch('films.json').then(r=>r.json())]);
 const V=D.v2, H=V.historia, U=V.cohortes.US, E=V.cohortes.ES;
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const COLS = () => ({0:css('--feliz'),1:css('--agri'),2:css('--amb'),3:css('--trag'),4:css('--nc')});
-const FIN_LAB = ['Feliz','Agridulce','Ambiguo','Trágico','No clasificable'];
+const FIN_LAB = ['Happy','Bittersweet','Ambiguous','Tragic','Unclassifiable'];
 const COH_LAB = ['1980-89','1990-99','2000-09','2010-19','2020-25*'];
-const pct = (x,d=0) => (x*100).toFixed(d).replace('.',',')+' %';
-const pp = x => (x<0?'−':'+')+Math.abs(x*100).toFixed(1).replace('.',',')+' pp';
-const nf=(x,d=1)=>(x<0?'−':'+')+Math.abs(x).toFixed(d).replace('.',',');
-const ppi=(a,b)=>`${pp(a)} a ${pp(b)}`;
-const nnum=x=>String(x).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const pct = (x,d=0) => (x*100).toFixed(d)+'%';
+const pp = x => (x<0?'−':'+')+Math.abs(x*100).toFixed(1)+' pp';
+const nf=(x,d=1)=>(x<0?'−':'+')+Math.abs(x).toFixed(d);
+const ppi=(a,b)=>`${pp(a)} to ${pp(b)}`;
+const nnum=x=>String(x).replace(/\B(?=(\d{3})+(?!\d))/g,',');
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 const tip = $('#tip');
 function showTip(e,html){tip.innerHTML=html;tip.style.opacity=1;const x=Math.min(e.clientX+14,innerWidth-270);tip.style.left=x+'px';tip.style.top=(e.clientY+14)+'px'}
@@ -550,62 +527,69 @@ $('#theme').onclick=()=>{const r=document.documentElement;const dark=r.dataset.t
 try{const t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
 
 // ---- numbers
-const LAB={CIENCIA_FICCION:'Ciencia ficción',FANTASIA:'Fantasía',SOBRENATURAL:'Sobrenatural',SUPERHEROES:'Superhéroes',NO:'No especulativa',
-  BAJA_MARGINAL:'Clase baja o marginal',TRABAJADORA:'Clase trabajadora',MEDIA:'Clase media',ALTA_ELITE:'Clase alta o élite',MIXTA:'Clases mezcladas',NO_CLARO:'No está claro',
-  INFANCIA:'Infancia',ADOLESCENCIA:'Adolescencia',JUVENTUD:'Juventud',CRIANZA:'Criando hijos',MADUREZ:'Madurez',CRISIS_VITAL:'Crisis vital',VEJEZ:'Vejez',
-  ANTES_1500:'Antes de 1500',DE_1500_A_1899:'1500-1899',DE_1900_A_1945:'1900-1945',DE_1946_A_1979:'1946-1979',DE_1980_EN_ADELANTE:'De 1980 en adelante',FUTURO:'Futuro',MUNDO_FICTICIO:'Mundo inventado',VARIAS:'Varias épocas',
-  HOMBRE:'Protagonista hombre',MUJER:'Protagonista mujer',MIXTO:'Protagonismo mixto',NO_HUMANO:'Protagonista no humano',
-  SOLTERO:'Soltero/a',EN_PAREJA:'En pareja',CASADO:'Casado/a',SEPARADO_DIVORCIADO:'Separado/a o divorciado/a',VIUDO:'Viudo/a',
-  NINO:'Niño/a',ADOLESCENTE:'Adolescente',JOVEN:'Joven',ADULTO:'Adulto/a',MADURO:'Maduro/a',MAYOR:'Mayor',
-  NINGUNO:'Sin humor',ALGO:'Algo de humor',CENTRAL:'Comedia central',
-  AMISTAD:'Amistad',ROMANCE:'Romance',MATRIMONIO:'Matrimonio',DIVORCIO_SEPARACION:'Divorcio o separación',PADRES_HIJOS:'Padres e hijos',HERMANOS:'Hermanos',FAMILIA_EXTENSA:'Familia extensa',MENTOR_DISCIPULO:'Mentor y discípulo',EQUIPO_COMPANEROS:'Equipo o compañeros',RIVALIDAD:'Rivalidad',COMUNIDAD:'Comunidad',NINGUNA:'Ninguna'};
+const LAB={CIENCIA_FICCION:'Science fiction',FANTASIA:'Fantasy',SOBRENATURAL:'Supernatural',SUPERHEROES:'Superheroes',NO:'Not speculative',
+  BAJA_MARGINAL:'Poor or marginalized',TRABAJADORA:'Working class',MEDIA:'Middle class',ALTA_ELITE:'Upper class or elite',MIXTA:'Mixed classes',NO_CLARO:'Unclear',
+  INFANCIA:'Childhood',ADOLESCENCIA:'Adolescence',JUVENTUD:'Young adulthood',CRIANZA:'Raising kids',MADUREZ:'Midlife',CRISIS_VITAL:'Life crisis',VEJEZ:'Old age',
+  ANTES_1500:'Before 1500',DE_1500_A_1899:'1500-1899',DE_1900_A_1945:'1900-1945',DE_1946_A_1979:'1946-1979',DE_1980_EN_ADELANTE:'1980 onward',FUTURO:'Future',MUNDO_FICTICIO:'Invented world',VARIAS:'Several eras',
+  HOMBRE:'Male lead',MUJER:'Female lead',MIXTO:'Mixed',NO_HUMANO:'Non-human lead',
+  SOLTERO:'Single',EN_PAREJA:'In a relationship',CASADO:'Married',SEPARADO_DIVORCIADO:'Separated or divorced',VIUDO:'Widowed',
+  NINO:'Child',ADOLESCENTE:'Teenager',JOVEN:'Young adult',ADULTO:'Adult',MADURO:'Middle-aged',MAYOR:'Senior',
+  NINGUNO:'No humor',ALGO:'Some humor',CENTRAL:'Comedy at the core',
+  AMISTAD:'Friendship',ROMANCE:'Romance',MATRIMONIO:'Marriage',DIVORCIO_SEPARACION:'Divorce or separation',PADRES_HIJOS:'Parents and kids',HERMANOS:'Siblings',FAMILIA_EXTENSA:'Extended family',MENTOR_DISCIPULO:'Mentor and protégé',EQUIPO_COMPANEROS:'Team or coworkers',RIVALIDAD:'Rivalry',COMUNIDAD:'Community',NINGUNA:'None'};
+// strings that come from data.json (generated in Spanish) -> English for display
+const TR={'Acción/aventura':'Action/adventure','Animación':'Animation','Ciencia ficción/fantasía':'Sci-fi/fantasy','Comedia':'Comedy','Drama':'Drama','Otros':'Other','Romance':'Romance','Terror':'Horror','Thriller/crimen':'Thriller/crime',
+  'Análisis principal':'Main analysis','Solo el anotador A':'Annotator A only','Solo el anotador B':'Annotator B only','Solo si A y B coinciden (±2)':'Only where A and B agree (±2)','Sin las que solo tienen premisa':'Excluding premise-only summaries','Solo sinopsis de Wikipedia':'Wikipedia summaries only','Sin series infantiles y familiares':'Excluding kids’ and family shows','Solo las 10 más votadas/año':'Only the top 10 per year','Pesando más las más votadas':'Weighted toward the most voted','Ajustado por género y popularidad':'Adjusted for genre and popularity',
+  'Solo sinopsis de TMDB':'TMDB synopses only','Sin las de animación':'Excluding animation','Contemporánea':'Contemporary','De época, futura o ficticia':'Period, future or fictional','Miniserie':'Miniseries','Serie':'Ongoing series'};
+const T=s=>TR[s]||s;
+// a few country names in films.json are still in Spanish
+const PAIS_EN={'Japón':'Japan','Canadá':'Canada','Grecia':'Greece','Suiza':'Switzerland','Marruecos':'Morocco','Egipto':'Egypt','Perú':'Peru','Turquía':'Turkey','Tailandia':'Thailand','Irak':'Iraq','Brasil':'Brazil','Rumanía':'Romania','Polonia':'Poland','Afganistán':'Afghanistan','Noruega':'Norway','República Checa':'Czech Republic','Bélgica':'Belgium','Ucrania':'Ukraine','España':'Spain','Estados Unidos':'United States','Reino Unido':'United Kingdom','Francia':'France','Italia':'Italy','México':'Mexico','Alemania':'Germany','Rusia':'Russia','No está claro':'Unclear','Mundo ficticio':'Fictional world','Espacio':'Space'};
 const COH=["1980-1989","1990-1999","2000-2009","2010-2019","2020-2025"];
 const fgBin=v=>v==null?null:v<2.5?0:v<4.5?1:v<6.5?2:v<8.5?3:4;
-const FGS=[{v:0,l:'Nada',c:'--fg0',s:'0-2'},{v:1,l:'Poco',c:'--fg1',s:'3-4'},{v:2,l:'A medias',c:'--fgm',s:'5-6'},{v:3,l:'Bastante',c:'--fg3',s:'7-8'},{v:4,l:'Mucho',c:'--fg',s:'9-10'}];
-const UTS=[{v:0,l:'Distopía',c:'--dis',s:'0-2'},{v:1,l:'Sociedad enferma',c:'--dis',o:.55,s:'3-4'},{v:2,l:'Neutral',c:'--amb',s:'5-6'},{v:3,l:'Sociedad sana',c:'--uto',o:.6,s:'7-8'},{v:4,l:'Utopía',c:'--uto',s:'9-10'}];
-const PUB_LAB={INFANTIL:'Infantil',FAMILIAR:'Familiar',JUVENIL:'Juvenil',ADULTO:'Adulto'};
+const FGS=[{v:0,l:'Not at all',c:'--fg0',s:'0-2'},{v:1,l:'Barely',c:'--fg1',s:'3-4'},{v:2,l:'Mixed',c:'--fgm',s:'5-6'},{v:3,l:'Fairly',c:'--fg3',s:'7-8'},{v:4,l:'Very',c:'--fg',s:'9-10'}];
+const UTS=[{v:0,l:'Dystopia',c:'--dis',s:'0-2'},{v:1,l:'Sick society',c:'--dis',o:.55,s:'3-4'},{v:2,l:'Neutral',c:'--amb',s:'5-6'},{v:3,l:'Healthy society',c:'--uto',o:.6,s:'7-8'},{v:4,l:'Utopia',c:'--uto',s:'9-10'}];
+const PUB_LAB={INFANTIL:'Kids',FAMILIAR:'Family',JUVENIL:'Teen',ADULTO:'Adult'};
 const FG_STOPS=()=>['--fg0','--fg1','--fgm','--fg3','--fg'].map(css);
 const fgCol=v=>v==null?css('--nc'):d3.interpolateRgbBasis(FG_STOPS())(v/10);
 const fgTxtCol=v=>v==null?css('--muted'):d3.color(fgCol(v)).darker(v>3&&v<7.5?1.1:0.3).formatHex();
 const fgInk=v=>v!=null&&v>3.2&&v<7.2?'#1b1a17':'#fff';
-const fgTxt=v=>(Math.round(v*2)/2).toFixed(v%1?1:0).replace('.',',');
+const fgTxt=v=>(Math.round(v*2)/2).toFixed(v%1?1:0);
 const P=H.periodos, C=H.cohortes, FG=H.fg, SR=D.series, SA=D.series_acuerdo;
 const FC=F.cols.reduce((o,c,i)=>(o[c]=i,o),{});
 const US_S=F.films.filter(f=>f[FC.tipo]===1&&f[3]!==1&&!f[FC.anio_en_curso]);
-const n1=x=>x==null?'—':x.toFixed(1).replace('.',',');
-const dpt=x=>(x<0?'−':'+')+Math.abs(x).toFixed(Math.abs(x)<0.095?2:1).replace('.',',');
-const SU=SR.cohortes.US, SE=SR.cohortes.ES, PU=SR.peliculas.US, PE=SR.peliculas.ES, fgc=FG.cohortes.US;
+const n1=x=>x==null?'—':x.toFixed(1);
+const dpt=x=>(x<0?'−':'+')+Math.abs(x).toFixed(Math.abs(x)<0.095?2:1);
+const SU=SR.cohortes.US, PU=SR.peliculas.US, fgc=FG.cohortes.US;
 const imf=FG.imdb.US['averageRating~feel_good'], A=V.acuerdo_censo;
-const alc=(()=>{let a=0,b=0;['US','ES'].forEach(k=>COH.forEach((c,i)=>{const v=SR.alcance[k][c]||{};a+=(v.FINAL||0)*SR.cohortes[k].n[i];b+=SR.cohortes[k].n[i]}));return a/b})();
+const alc=(()=>{let a=0,b=0;['US'].forEach(k=>COH.forEach((c,i)=>{const v=SR.alcance[k][c]||{};a+=(v.FINAL||0)*SR.cohortes[k].n[i];b+=SR.cohortes[k].n[i]}));return a/b})();
 const cmpS=SR.composicion.US, ac=k=>(cmpS[k]['Animación']||0)+(cmpS[k]['Comedia']||0);
-const fill={nTot:nnum(V.n.total),nExpl:nnum(F.films.filter(f=>!f[FC.tipo]).length),nSer:nnum(F.films.filter(f=>f[FC.tipo]===1).length),
-  sN:nnum(SR.n.US.total+SR.n.ES.total),sNus:nnum(SR.n.US.total),sNes:nnum(SR.n.ES.total),sNus2:nnum(SR.n.US.total),sCl:nnum(SR.n.US.clasificables),
+const nSerF=F.films.filter(f=>f[FC.tipo]===1).length, nFilmF=F.films.filter(f=>!f[FC.tipo]).length;
+const fill={nTot:nnum(nFilmF),nExpl:nnum(nFilmF),nSer:nnum(nSerF),nFilmsUS:nnum(V.n.US),
+  sN:nnum(nSerF),sNus:nnum(SR.n.US.total),sNus2:nnum(SR.n.US.total),sCl:nnum(SR.n.US.clasificables),
   s7_90:pct(SU.y_fg7[1][0]),s7_20:pct(SU.y_fg7[4][0]),sm90:n1(SU.feel_good[1][0]),sm20:n1(SU.feel_good[4][0]),
   cmpAC90:pct(ac('1990-1999')),cmpACrec:pct(ac('2010-2025')),
-  esF90:n1(PE.feel_good[1][0]),esF20:n1(PE.feel_good[4][0]),esN80:SE.n[0],esN90:SE.n[1],
   fgm80:n1(fgc.feel_good[0][0]),fgm90:n1(fgc.feel_good[1][0]),fgm10:n1(fgc.feel_good[3][0]),fgm20:n1(fgc.feel_good[4][0]),
   f90:pct(P.US.y_feliz['1990-1999'][0]),frec:pct(P.US.y_feliz['2010-2025'][0]),
   vs90:n1(SU.feel_good[1][0]),vs20:n1(SU.feel_good[4][0]),vs7a:pct(SU.y_fg7[1][0]),vs7b:pct(SU.y_fg7[4][0]),
-  imfg:(imf[0]<0?'−':'+')+Math.abs(imf[0]).toFixed(2).replace('.',','),
-  sd2:pct(SA.dentro2_feel_good),safg:SA.alfa_feel_good.toFixed(2).replace('.',','),afg:A.alfa_feel_good.toFixed(2).replace('.',','),
+  imfg:(imf[0]<0?'−':'+')+Math.abs(imf[0]).toFixed(2),
+  sd2:pct(SA.dentro2_feel_good),safg:SA.alfa_feel_good.toFixed(2),afg:A.alfa_feel_good.toFixed(2),
   sFin:pct(alc)};
 $$('[data-k]').forEach(el=>{if(fill[el.dataset.k]!==undefined)el.textContent=fill[el.dataset.k]});
 
-// ---- escala y ejemplos
+// ---- scale and examples
 const FGBIN_COL=()=>FG_STOPS();
-const FGB_LAB=['0-2 nada','3-4 poco','5-6 a medias','7-8 bastante','9-10 mucho'];
-$('#fgscale').innerHTML=[['10','Muy feel good','Todos los vínculos importantes quedan en paz y amor; irradia esperanza.',10],
-  ['7-8','Bastante','Hay pérdidas o dolor, pero el balance es de armonía y esperanza.',7.5],
-  ['5','A medias','Luces y sombras equilibradas, o un cierre deliberadamente ambiguo.',5],
-  ['2-3','Poco','Algo de consuelo, pero predominan la soledad, la pérdida o la inquietud.',2.5],
-  ['0','Nada','Desesperanza, vínculos destruidos o el mal triunfa.',0]].map(([n,t,d,v])=>`<div class="fgs"><span class="fgn" style="background:${fgCol(v)};color:${fgInk(v)}">${n}</span><div><b>${t}.</b> ${d}</div></div>`).join('');
-{const M=['tt0098800','tt0096697','tt0115284','tt0108778','tt10986410','tt7134908','tt0141842','tt7660850'].map(t=>F.films.find(f=>f[FC.tconst]===t)).filter(f=>f&&f[FC.poster]);
+const FGB_LAB=['0-2 not at all','3-4 barely','5-6 mixed','7-8 fairly','9-10 very'];
+$('#fgscale').innerHTML=[['10','Very feel good','Every important bond ends in peace and love; it radiates hope.',10],
+  ['7-8','Fairly','There’s loss or pain, but the balance tips toward harmony and hope.',7.5],
+  ['5','Mixed','Light and shadow in balance, or a deliberately ambiguous ending.',5],
+  ['2-3','Barely','Some comfort, but loneliness, loss or unease win out.',2.5],
+  ['0','Not at all','Hopelessness, broken bonds, or evil wins.',0]].map(([n,t,d,v])=>`<div class="fgs"><span class="fgn" style="background:${fgCol(v)};color:${fgInk(v)}">${n}</span><div><b>${t}.</b> ${d}</div></div>`).join('');
+{const M=['tt0098800','tt0096697','tt0092359','tt0108778','tt10986410','tt0903747','tt0141842','tt7660850'].map(t=>F.films.find(f=>f[FC.tconst]===t)).filter(f=>f&&f[FC.poster]);
  $('#xmos').innerHTML=M.map(f=>`<div><img loading="lazy" src="https://image.tmdb.org/t/p/w92${f[FC.poster]}" alt=""><i style="background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</i></div>`).join('');
  const hero=document.querySelector('.hero'),ex=$('#explorador'),pill=$('#xpill');
  const upd=()=>{const h=hero.getBoundingClientRect().bottom<0,e=ex.getBoundingClientRect();pill.classList.toggle('on',h&&!(e.top<innerHeight&&e.bottom>0))};
  addEventListener('scroll',upd,{passive:true});upd();}
 const exHTML=ts=>ts.map(t=>F.films.find(f=>f[FC.tconst]===t)).filter(Boolean).map(f=>`<button class="ex" data-t="${f[FC.tconst]}"><div class="pw">${f[FC.poster]?`<img loading="lazy" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:''}<span class="fgb" style="background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</span></div><div class="t">${f[0]}</div><div class="y">${f[2]}</div></button>`).join('');
-$('#exs').innerHTML=exHTML(['tt0096697','tt0182576','tt2861424','tt0115284','tt0362372','tt7660850','tt0124938','tt1153059','tt7134908','tt0159206','tt1723816','tt10986410']);
+$('#exs').innerHTML=exHTML(['tt0096697','tt0182576','tt2861424','tt0092359','tt0098904','tt7660850','tt0386676','tt0903747','tt4574334','tt0159206','tt1723816','tt10986410']);
 
 $$('.ex').forEach(b=>b.onclick=()=>detail(F.films.find(f=>f[FC.tconst]===b.dataset.t)));
 
@@ -615,33 +599,33 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;function tic
 
 // ---- guess (series)
 const g90=$('#g90'),gnow=$('#gnow'), g7=SR.periodos.US.y_fg7, gd=SR.diff.US.y_fg7;
-g90.oninput=()=>$('#o90').textContent=g90.value+' %';gnow.oninput=()=>$('#onow').textContent=gnow.value+' %';
+g90.oninput=()=>$('#o90').textContent=g90.value+'%';gnow.oninput=()=>$('#onow').textContent=gnow.value+'%';
 $('#reveal').onclick=()=>{
   $('#guessResult').hidden=false;
   const set=(id,v,you)=>{requestAnimationFrame(()=>{$('#f'+id).style.width=(v[0]*100)+'%'});$('#v'+id).textContent=pct(v[0]);
     $('#c'+id).style.left=(v[1]*100)+'%';$('#c'+id).style.width=((v[2]-v[1])*100)+'%';$('#y'+id).style.left=you+'%'};
   set('90',g7['1990-1999'],+g90.value);set('now',g7['2010-2025'],+gnow.value);
   const gap=(+g90.value)-(+gnow.value), real=-gd[0]*100;
-  $('#guessMsg').textContent = gap>real+10 ? `Imaginabas una caída de ${gap} puntos; la real es de ${real.toFixed(0)}.` :
-     gap<real-10 ? `Imaginabas menos diferencia de la que hay: ${real.toFixed(0)} puntos. En las películas, la misma cuenta da apenas ${Math.abs(FG.diff.US.y_fg7[0]*100).toFixed(0)}.` : `¡Bien visto! La diferencia es de unos ${real.toFixed(0)} puntos.`;
-  $('#reveal').textContent='Cambia tu apuesta y vuelve a mirar';
+  $('#guessMsg').textContent = gap>real+10 ? `You pictured a ${gap}-point drop; the real one is ${real.toFixed(0)}.` :
+     gap<real-10 ? `You pictured a smaller gap than there is: ${real.toFixed(0)} points. For movies, the same math gives just ${Math.abs(FG.diff.US.y_fg7[0]*100).toFixed(0)}.` : `Nice call! The gap is about ${real.toFixed(0)} points.`;
+  $('#reveal').textContent='Change your guess and look again';
 };
 
-// ---- waffle (series EE. UU.)
+// ---- waffle (US TV series)
 const wsvg=d3.select('#waffle');let wStep=0;
 const dec=y=>Math.min(4,Math.floor((y-1980)/10));
 function drawWaffle(){
   const col=FGBIN_COL();
-  $('#wlegend').innerHTML=FGB_LAB.map((l,i)=>`<span style="--c:${col[i]}">${l}</span>`).join('')+`<span style="--c:var(--nc)">sin nota</span>`;
+  $('#wlegend').innerHTML=FGB_LAB.map((l,i)=>`<span style="--c:${col[i]}">${l}</span>`).join('')+`<span style="--c:var(--nc)">no score</span>`;
   const W=Math.min(640,innerWidth*.94), cols=5, gap=W*0.035, colW=(W-gap*(cols-1))/cols, s=colW/15, colH=s*20, H2=colH+70;
   wsvg.attr('viewBox',`0 0 ${W} ${H2}`).attr('width',W).attr('height',H2);wsvg.selectAll('*').remove();
   const byC=d3.groups(US_S,f=>dec(f[2])).sort((a,b)=>a[0]-b[0]);
   byC.forEach(([c,fs])=>{
     fs=fs.slice().sort((a,b)=>(b[FC.feel_good]??-1)-(a[FC.feel_good]??-1)||a[2]-b[2]);
-    // cada columna ocupa el 100 % del alto: celdas casi cuadradas ajustadas al número de series de la década
+    // every column fills 100% of the height: near-square cells sized to the number of shows in the decade
     const per=Math.max(1,Math.round(15*Math.sqrt(fs.length/300))), rows=Math.ceil(fs.length/per), cw=colW/per, ch=colH/rows;
     const g=wsvg.append('g').attr('class','wcol').attr('data-c',c).attr('transform',`translate(${c*(colW+gap)},30)`);
-    const lab=d=>`<b>${d[0]}</b> (${d[2]})<br>Feel good: ${d[FC.feel_good]==null?'sin nota':fgTxt(d[FC.feel_good])}`;
+    const lab=d=>`<b>${d[0]}</b> (${d[2]})<br>Feel good: ${d[FC.feel_good]==null?'no score':fgTxt(d[FC.feel_good])}`;
     g.selectAll('rect').data(fs).join('rect').attr('class','sq')
       .attr('x',(d,i)=>(i%per)*cw+.4).attr('y',(d,i)=>(rows-1-Math.floor(i/per))*ch+.4).attr('width',Math.max(1,cw-.8)).attr('height',Math.max(1,ch-.8)).attr('rx',Math.min(1.5,cw/5))
       .on('mousemove',(e,d)=>showTip(e,lab(d))).on('mouseleave',hideTip).on('click',(e,d)=>detail(d))
@@ -664,7 +648,7 @@ function applyStep(k,instant){
   $('#wtitle').textContent=wTitle();
   $('#wtitle').classList.toggle('on',k>=6);
 }
-const wTitle=()=>`Las series feel good casi han desaparecido: del ${pct(SU.y_fg7[1][0])} en los noventa al ${pct(SU.y_fg7[4][0])} hoy`;
+const wTitle=()=>`Feel good TV has all but vanished: from ${pct(SU.y_fg7[1][0])} in the ’90s to ${pct(SU.y_fg7[4][0])} today`;
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)applyStep(+e.target.dataset.step)}),{rootMargin:'-45% 0px -45% 0px'});
 $$('.step').forEach(s=>io.observe(s));
 
@@ -683,19 +667,18 @@ function twoSeries(sel,series,dom,fmt,H=290){
     const g=svg.append('g').selectAll('g').data(ok).join('g');
     g.append('line').attr('x1',([d,i])=>x(i)+off).attr('x2',([d,i])=>x(i)+off).attr('y1',([d])=>y(d[1])).attr('y2',([d])=>y(d[2])).attr('stroke',c).attr('stroke-width',6).attr('stroke-linecap','round').attr('opacity',.3);
     g.append('circle').attr('cx',([d,i])=>x(i)+off).attr('cy',([d])=>y(d[0])).attr('r',6).attr('fill',c).attr('stroke','var(--bg)').attr('stroke-width',2)
-      .on('mousemove',(e,[d,i])=>showTip(e,`<b>${lab} · ${COH_LAB[i]}</b><br>${fmt(d[0])} (IC ${fmt(d[1])}–${fmt(d[2])}) · n=${d[3]}`)).on('mouseleave',hideTip);
+      .on('mousemove',(e,[d,i])=>showTip(e,`<b>${lab} · ${COH_LAB[i]}</b><br>${fmt(d[0])} (CI ${fmt(d[1])}–${fmt(d[2])}) · n=${d[3]}`)).on('mouseleave',hideTip);
     g.append('text').attr('x',([d,i])=>x(i)+off+(off<0?-10:10)).attr('y',([d])=>y(d[0])+4).attr('text-anchor',off<0?'end':'start').style('font-size','12px').style('font-weight',700).style('fill',c).text(([d])=>fmt(d[0]));
   });
 }
 
-// ---- capítulo 2: series frente a películas
-let scf='US';
-$$('[data-scf]').forEach(b=>b.onclick=()=>{scf=b.dataset.scf;$$('[data-scf]').forEach(x=>x.setAttribute('aria-pressed',x===b));drawCmp();drawForest()});
+// ---- chapter 2: TV series vs movies (US only)
+const scf='US';
 function drawCmp(){
   const S=SR.cohortes[scf], Pf=SR.peliculas[scf];
-  twoSeries('#sercoh',[['Series',S.feel_good,css('--ser'),-8],['Películas',Pf.feel_good,css('--pel'),8]],[2,8],n1);
-  const dS=SR.diff[scf].feel_good, dF=(scf==='US'?FG.diff.US:FG.diff.ES).feel_good;
-  $('#cmpText').innerHTML=`Entre los noventa y 2010-2025, la nota media de las series ${scf==='US'?'estadounidenses':'españolas'} baja <b>${dpt(dS[0]).replace('−','')} puntos</b> (IC 95 %: ${dpt(dS[1])} a ${dpt(dS[2])}); la de las películas, ${dpt(dF[0])} (${dpt(dF[1])} a ${dpt(dF[2])}).`;
+  twoSeries('#sercoh',[['TV series',S.feel_good,css('--ser'),-8],['Movies',Pf.feel_good,css('--pel'),8]],[2,8],n1);
+  const dS=SR.diff[scf].feel_good, dF=FG.diff.US.feel_good;
+  $('#cmpText').innerHTML=`Between the ’90s and 2010-2025, the average score of US TV series drops <b>${dpt(dS[0]).replace('−','')} points</b> (95% CI: ${dpt(dS[1])} to ${dpt(dS[2])}); for movies, the change is ${dpt(dF[0])} (${dpt(dF[1])} to ${dpt(dF[2])}).`;
   drawYearly();drawFam();
 }
 function drawYearly(){
@@ -705,18 +688,18 @@ function drawYearly(){
   axisY(svg,y,W,m,d=>d);
   svg.append('g').selectAll('text').data([1980,1990,2000,2010,2020]).join('text').attr('x',x).attr('y',H-8).attr('text-anchor','middle').style('font-size','12px').text(d=>d);
   svg.append('rect').attr('x',x(1990)).attr('width',x(2000)-x(1990)).attr('y',m.t).attr('height',H-m.b-m.t).attr('fill','var(--mark)').attr('opacity',.18);
-  const sets=[['Series',SR.anual[scf].map(r=>[r[0],r[2],r[1]]),css('--ser')],['Películas',SR.peliculas[scf].anual.map(r=>[r[0],r[1]]),css('--pel')]];
+  const sets=[['TV series',SR.anual[scf].map(r=>[r[0],r[2],r[1]]),css('--ser')],['Movies',SR.peliculas[scf].anual.map(r=>[r[0],r[1]]),css('--pel')]];
   sets.forEach(([lab,rows,c])=>{
     rows=rows.filter(r=>r[1]!=null&&r[0]<=2025);
     const roll=rows.map(r=>{const w=rows.filter(q=>Math.abs(q[0]-r[0])<=2);return [r[0],d3.mean(w,q=>q[1])]});
     svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx',r=>x(r[0])).attr('cy',r=>y(r[1])).attr('r',3).attr('fill',c).attr('opacity',.3)
-      .on('mousemove',(e,r)=>showTip(e,`<b>${r[0]} · ${lab}</b><br>Feel good medio ${n1(r[1])}`)).on('mouseleave',hideTip);
+      .on('mousemove',(e,r)=>showTip(e,`<b>${r[0]} · ${lab}</b><br>Average feel good ${n1(r[1])}`)).on('mouseleave',hideTip);
     svg.append('path').datum(roll).attr('fill','none').attr('stroke',c).attr('stroke-width',3).attr('d',d3.line().curve(d3.curveMonotoneX).x(r=>x(r[0])).y(r=>y(r[1])));
   });
-  svg.append('text').attr('x',x(1995)).attr('y',m.t+14).attr('text-anchor','middle').style('font-size','12px').style('font-weight',700).text('los noventa');
+  svg.append('text').attr('x',x(1995)).attr('y',m.t+14).attr('text-anchor','middle').style('font-size','12px').style('font-weight',700).text('the ’90s');
 }
 
-// ---- ¿es por las series familiares? (familiares+infantiles, juveniles, adultos)
+// ---- is it the family shows? (family+kids, teen, adult)
 function drawFam(){
   const F=SR.familiar[scf], C=F.cohortes, D=F.decomp.tres_grupos;
   const cF=css('--fam'),cJ=css('--juv'),cR=css('--ser');
@@ -724,81 +707,82 @@ function drawFam(){
    svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
    const x=d3.scaleBand().domain(d3.range(5)).range([m.l,W-m.r]).padding(.35),y=d3.scaleLinear().domain([0,.7]).range([H-m.b,m.t]);
    COH.forEach((c,i)=>{const r=C[c];if(!r)return;const a=r.share_fam,b=r.share_juv;
-     const tip=e=>showTip(e,`<b>${COH_LAB[i]}</b><br>Familiares e infantiles: ${pct(a)}<br>Adolescentes y jóvenes: ${pct(b)}<br>n=${r.n}`);
+     const tip=e=>showTip(e,`<b>${COH_LAB[i]}</b><br>Family &amp; kids: ${pct(a)}<br>Teens &amp; young adults: ${pct(b)}<br>n=${r.n}`);
      svg.append('rect').attr('x',x(i)).attr('width',x.bandwidth()).attr('y',y(a)).attr('height',y(0)-y(a)).attr('fill',cF).on('mousemove',tip).on('mouseleave',hideTip);
      svg.append('rect').attr('x',x(i)).attr('width',x.bandwidth()).attr('y',y(a+b)).attr('height',y(a)-y(a+b)).attr('fill',cJ).on('mousemove',tip).on('mouseleave',hideTip);
      if(y(0)-y(a)>18)svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',y(a)+15).attr('text-anchor','middle').style('font-weight',700).style('font-size','13px').style('fill','#fff').text(pct(a));
      svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',y(a+b)-6).attr('text-anchor','middle').style('font-weight',700).style('font-size','13px').style('fill',cJ).text(pct(b));
      svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',H-m.b+18).attr('text-anchor','middle').style('font-size','13px').style('fill','var(--ink)').text(COH_LAB[i]);
-     if(y(0)-y(a)<=18)svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',H-m.b+36).attr('text-anchor','middle').style('font-size','11px').style('fill',cF).style('font-weight',700).text(`familiares ${pct(a)}`);});}
-  twoSeries('#famfg',[['Familiares e infantiles',COH.map(c=>C[c]?C[c].fg_fam:[null]),cF,-12],['Adolescentes y jóvenes',COH.map(c=>C[c]?C[c].fg_juv:[null]),cJ,0],['Adultos',COH.map(c=>C[c]?C[c].fg_resto:[null]),cR,12]],[2,9],n1,280);
+     if(y(0)-y(a)<=18)svg.append('text').attr('x',x(i)+x.bandwidth()/2).attr('y',H-m.b+36).attr('text-anchor','middle').style('font-size','11px').style('fill',cF).style('font-weight',700).text(`family ${pct(a)}`);});}
+  twoSeries('#famfg',[['Family & kids',COH.map(c=>C[c]?C[c].fg_fam:[null]),cF,-12],['Teens & young adults',COH.map(c=>C[c]?C[c].fg_juv:[null]),cJ,0],['Adults',COH.map(c=>C[c]?C[c].fg_resto:[null]),cR,12]],[2,9],n1,280);
   {const svg=d3.select('#famdec'),W=svg.node().clientWidth||640,nar=W<560,H=nar?170:126,m={t:34,r:16,b:40,l:16};
    svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
    const tot=-D.total[0],pf=-D.comp_familiar[0],pj=-D.comp_juvenil[0],dn=-D.dentro[0];
-   const parts=[[Math.max(0,pf),cF,'Menos series familiares',pf,D.comp_familiar],[Math.max(0,pj),cJ,'Cambio en el peso de las juveniles',pj,D.comp_juvenil],[Math.max(0,dn),cR,'Caída dentro de cada grupo',dn,D.dentro]];
+   const parts=[[Math.max(0,pf),cF,'Fewer family shows',pf,D.comp_familiar],[Math.max(0,pj),cJ,'Shift in the share of teen shows',pj,D.comp_juvenil],[Math.max(0,dn),cR,'Decline within each group',dn,D.dentro]];
    const sum=d3.sum(parts,p=>p[0]),x=d3.scaleLinear().domain([0,sum]).range([m.l,W-m.r]),bh=38,y0=m.t;let acc=0;
    parts.forEach(([w,c,l,v,ci])=>{const a=acc;acc+=w;if(!w)return;svg.append('rect').attr('x',x(a)).attr('width',Math.max(0,x(acc)-x(a)-2)).attr('y',y0).attr('height',bh).attr('rx',4).attr('fill',c)
-     .on('mousemove',e=>showTip(e,`<b>${l}: ${n1(v)} puntos</b><br>IC 95 %: ${n1(-ci[2])} a ${n1(-ci[1])}`)).on('mouseleave',hideTip);
-     if(x(acc)-x(a)>34)svg.append('text').attr('x',x(a)+8).attr('y',y0+bh/2+5).style('font-weight',700).style('font-size','14px').style('fill','#fff').text(Math.round(100*v/tot)+' %');});
-   svg.append('text').attr('x',x(0)).attr('y',y0-10).style('font-size','13px').style('fill','var(--ink)').html(`Caída total de la nota media: <tspan font-weight="700">${n1(tot)} puntos</tspan> (de ${n1(D.m90)} a ${n1(D.m_rec)})`);
+     .on('mousemove',e=>showTip(e,`<b>${l}: ${n1(v)} points</b><br>95% CI: ${n1(-ci[2])} to ${n1(-ci[1])}`)).on('mouseleave',hideTip);
+     if(x(acc)-x(a)>34)svg.append('text').attr('x',x(a)+8).attr('y',y0+bh/2+5).style('font-weight',700).style('font-size','14px').style('fill','#fff').text(Math.round(100*v/tot)+'%');});
+   svg.append('text').attr('x',x(0)).attr('y',y0-10).style('font-size','13px').style('fill','var(--ink)').html(`Total drop in the average score: <tspan font-weight="700">${n1(tot)} points</tspan> (from ${n1(D.m90)} to ${n1(D.m_rec)})`);
    const lg=svg.append('g').attr('transform',`translate(${x(0)},${y0+bh+22})`);
-   [[cF,`Menos familiares (${n1(pf)})`],[cJ,`Peso de las juveniles (${n1(pj)})`],[cR,`Caída dentro de cada grupo (${n1(dn)})`]].forEach(([c,l],i)=>{const gg=lg.append('g').attr('transform',nar?`translate(0,${i*20})`:`translate(${[0,175,360][i]},0)`);
+   [[cF,`Fewer family shows (${n1(pf)})`],[cJ,`Teen-show share (${n1(pj)})`],[cR,`Decline within each group (${n1(dn)})`]].forEach(([c,l],i)=>{const gg=lg.append('g').attr('transform',nar?`translate(0,${i*20})`:`translate(${[0,175,360][i]},0)`);
      gg.append('rect').attr('width',12).attr('height',12).attr('y',-10).attr('rx',2).attr('fill',c);gg.append('text').attr('x',18).style('font-size','12.5px').style('fill','var(--ink)').text(l)});}
-  const us=scf==='US', ex=us?'<i>El príncipe de Bel-Air</i>, <i>La niñera</i>, <i>Bob Esponja</i>':'<i>Farmacia de guardia</i>, <i>Médico de familia</i>, <i>Las tres mellizas</i>';
+  const ex='<i>The Fresh Prince of Bel-Air</i>, <i>The Nanny</i>, <i>SpongeBob SquarePants</i>';
   const ff=D.fg_familiar, fj=D.fg_juvenil, fr=D.fg_resto, part=Math.round(100*D.composicion[0]/D.total[0]);
-  $('#famText').innerHTML=`Es una hipótesis razonable: si los niños ya no ven la tele con sus padres, se hacen y se ven menos series para toda la familia, que suelen ser las más amables. Agrupamos las series en tres públicos: familiares (incluidas las infantiles), adolescentes y jóvenes, y adultos. En los noventa, el <b>${pct(D.share90_familiar)}</b> de las series más votadas eran familiares (${ex}). En 2010-2025 son el <b>${pct(D.share_rec_familiar)}</b>. Las juveniles, en cambio, apenas cambian de peso: del ${pct(D.share90_juvenil)} al ${pct(D.share_rec_juvenil)}. `+
-    `Las familiares siguen siendo las más amables (${n1(ff[0])} en los noventa, ${n1(ff[1])} ahora). ${fj[2]>=5?`Las juveniles se oscurecen (de ${n1(fj[0])} a ${n1(fj[1])}) y las de adultos también (de ${n1(fr[0])} a ${n1(fr[1])}). `:`Las de adultos se oscurecen: de ${n1(fr[0])} a ${n1(fr[1])}. `}`+
-    `Con la mezcla de público de los noventa, la media de 2010-2025 sería <b>${n1(D.m_rec_mezcla90[0])}</b> en lugar de ${n1(D.m_rec)}. El cambio de público explica unos <b>${n1(-D.composicion[0])} de los ${n1(-D.total[0])} puntos</b> de caída (alrededor del ${part} %), y casi todo por las familiares; el peso de las juveniles no cambia nada. El resto, ${n1(-D.dentro[0])} puntos (IC 95 %: ${n1(-D.dentro[2])} a ${n1(-D.dentro[1])}), es caída dentro de cada grupo. `+
-    (us?`<mark>Menos series familiares ayuda a explicar la caída, pero no la explica entera: también las series para jóvenes y para adultos son hoy menos amables.</mark>`:`<mark>En España el cambio de público pesa más que en EE. UU.: explica dos tercios de la caída, y la que queda dentro de cada grupo no es estadísticamente clara.</mark>`);
-  $('#famNote').innerHTML=`Público de cada serie anotado a partir de la sinopsis. Las infantiles van con las familiares porque, desde 2010, casi ninguna serie infantil llega a las más votadas de IMDb (allí votan adultos) y la frontera entre infantil y familiar es difusa. Descomposición de Kitagawa con tres grupos y 2.000 remuestreos; si un grupo tiene menos de 5 series en un periodo, se usa su nota del otro periodo. Ojo: esto mide qué series están entre las más votadas en IMDb, no qué ven los niños. Que haya menos series familiares en esa lista encaja con que el público infantil se haya ido a YouTube y a las plataformas, pero estos datos no lo demuestran.`;
+  $('#famText').innerHTML=`It’s a reasonable hypothesis: if kids no longer watch TV with their parents, fewer shows for the whole family get made and watched, and those tend to be the kindest ones. We sorted shows into three audiences: family (including kids’ shows), teens and young adults, and adults. In the ’90s, <b>${pct(D.share90_familiar)}</b> of the most-voted shows were family shows (${ex}). In 2010-2025, it’s <b>${pct(D.share_rec_familiar)}</b>. Teen shows, on the other hand, barely change their share: from ${pct(D.share90_juvenil)} to ${pct(D.share_rec_juvenil)}. `+
+    `Family shows are still the kindest (${n1(ff[0])} in the ’90s, ${n1(ff[1])} now). ${fj[2]>=5?`Teen shows get darker (from ${n1(fj[0])} to ${n1(fj[1])}), and so do adult shows (from ${n1(fr[0])} to ${n1(fr[1])}). `:`Adult shows get darker: from ${n1(fr[0])} to ${n1(fr[1])}. `}`+
+    `With the ’90s audience mix, the 2010-2025 average would be <b>${n1(D.m_rec_mezcla90[0])}</b> instead of ${n1(D.m_rec)}. The shift in audience explains about <b>${n1(-D.composicion[0])} of the ${n1(-D.total[0])} points</b> of the drop (around ${part}%), nearly all of it through family shows; the teen share changes nothing. The rest, ${n1(-D.dentro[0])} points (95% CI: ${n1(-D.dentro[2])} to ${n1(-D.dentro[1])}), is decline within each group. `+
+    `<mark>Fewer family shows helps explain the decline, but not all of it: shows for young people and for adults are less kind today, too.</mark>`;
+  $('#famNote').innerHTML=`Each show’s audience was annotated from its synopsis. Kids’ shows are grouped with family shows because, since 2010, almost no kids’ show makes IMDb’s most-voted list (it’s adults who vote there), and the line between kids’ and family TV is blurry. Kitagawa decomposition with three groups and 2,000 resamples; if a group has fewer than 5 shows in a period, its score from the other period is used. Caveat: this measures which shows rank among IMDb’s most voted, not what kids watch. Fewer family shows on that list is consistent with young audiences moving to YouTube and streaming, but this data doesn’t prove it.`;
 }
 (function(){const card=(tit,items)=>`<div class="stat" style="padding:14px"><div class="small" style="margin-bottom:6px;font-weight:700">${tit}</div>${items.map(z=>`<div style="display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:3px 0;border-bottom:1px solid var(--rule)"><button class="lnk" data-t="${z[FC.tconst]}">${z[0]} <span class="small">(${z[2]})</span></button><b style="color:${fgTxtCol(z[FC.feel_good])}">${z[FC.feel_good]==null?'—':fgTxt(z[FC.feel_good])}</b></div>`).join('')}</div>`;
   const top=d=>US_S.filter(z=>Math.min(4,Math.floor((z[2]-1980)/10))===d).sort((a,b)=>(b[FC.imdb_votos]||0)-(a[FC.imdb_votos]||0)).slice(0,10);
-  $('#cmpEx').innerHTML=[0,1,2,3,4].map(d=>{const t=top(d),m=d3.mean(t,z=>z[FC.feel_good]);return card(`Top 10 ${COH_LAB[d]} · media ${n1(m)}`,t)}).join('');
+  $('#cmpEx').innerHTML=[0,1,2,3,4].map(d=>{const t=top(d),m=d3.mean(t,z=>z[FC.feel_good]);return card(`Top 10 ${COH_LAB[d]} · avg. ${n1(m)}`,t)}).join('');
   $$('#cmpEx .lnk').forEach(b=>b.onclick=()=>detail(F.films.find(z=>z[FC.tconst]===b.dataset.t)));})();
 
-// ---- capítulo 3: forest (series)
+// ---- appendix A: forest (TV series)
 function drawForest(){
   const rows=SR.sens[scf].filter(r=>r[1]!=null);
   const neg=rows.filter(r=>r[3]<0).length;
-  $('#forestText').textContent=`En ${scf==='US'?'las series estadounidenses':'las españolas'}, las ${rows.length} versiones dan una caída, y en ${neg} el intervalo deja fuera el cero. La más pequeña sale ${(()=>{const m=rows.reduce((a,b)=>b[1]>a[1]?b:a);return `«${m[0].toLowerCase()}»: ${dpt(m[1])} puntos`})()}.`;
+  $('#forestText').textContent=`For US TV series, all ${rows.length} versions show a decline, and in ${neg} of them the interval excludes zero. The smallest comes from “${(()=>{const m=rows.reduce((a,b)=>b[1]>a[1]?b:a);return `${T(m[0])}”: ${dpt(m[1])} points`})()}.`;
   const svg=d3.select('#serforest'),W=svg.node().clientWidth||640,rh=30,m={t:24,r:30,b:28,l:Math.min(250,W*.46)},HH=m.t+m.b+rh*rows.length;
   svg.attr('viewBox',`0 0 ${W} ${HH}`).attr('height',HH);svg.selectAll('*').remove();
   const xs=d3.scaleLinear().domain([-3.6,.6]).range([m.l,W-m.r]).clamp(true);
   svg.append('g').attr('class','grid').selectAll('line').data(xs.ticks(5)).join('line').attr('x1',xs).attr('x2',xs).attr('y1',m.t).attr('y2',HH-m.b);
   svg.append('line').attr('x1',xs(0)).attr('x2',xs(0)).attr('y1',m.t).attr('y2',HH-m.b).attr('stroke','var(--ink)').attr('stroke-width',1.5);
   svg.append('g').selectAll('text').data(xs.ticks(5)).join('text').attr('x',xs).attr('y',HH-8).attr('text-anchor','middle').style('font-size','12px').text(d=>d===0?'0':dpt(d));
-  svg.append('text').attr('x',xs(0)-6).attr('y',12).attr('text-anchor','end').style('font-size','11px').text('← menos feel good hoy');
+  svg.append('text').attr('x',xs(0)-6).attr('y',12).attr('text-anchor','end').style('font-size','11px').text('← less feel good today');
   const g=svg.append('g').selectAll('g').data(rows).join('g').attr('transform',(d,i)=>`translate(0,${m.t+i*rh+rh/2})`);
-  g.append('text').attr('x',m.l-10).attr('y',4).attr('text-anchor','end').style('font-size','13px').style('fill','var(--ink)').style('font-weight',(d,i)=>i===0?700:400).text(d=>d[0]);
+  const FSH={'Solo si A y B coinciden (±2)':'A and B agree (±2)','Sin las que solo tienen premisa':'No premise-only','Solo sinopsis de Wikipedia':'Wikipedia only','Sin series infantiles y familiares':'No kids/family shows','Solo las 10 más votadas/año':'Top 10 per year','Pesando más las más votadas':'Vote-weighted','Ajustado por género y popularidad':'Genre/popularity adj.'};
+  g.append('text').attr('x',m.l-10).attr('y',4).attr('text-anchor','end').style('font-size','13px').style('fill','var(--ink)').style('font-weight',(d,i)=>i===0?700:400).text(d=>W<560?(FSH[d[0]]||T(d[0])):T(d[0]));
   g.append('line').attr('x1',d=>xs(d[2])).attr('x2',d=>xs(d[3])).attr('stroke',css('--ser')).attr('stroke-width',5).attr('stroke-linecap','round').attr('opacity',.4);
   g.append('circle').attr('cx',d=>xs(d[1])).attr('r',6).attr('fill',css('--ser')).attr('stroke','var(--bg)').attr('stroke-width',1.5)
-    .on('mousemove',(e,d)=>showTip(e,`<b>${dpt(d[1])} puntos</b><br>IC 95 %: ${dpt(d[2])} a ${dpt(d[3])}`)).on('mouseleave',hideTip);
-  // referencia: películas
-  const dF=(scf==='US'?FG.diff.US:FG.diff.ES).feel_good;
+    .on('mousemove',(e,d)=>showTip(e,`<b>${dpt(d[1])} points</b><br>95% CI: ${dpt(d[2])} to ${dpt(d[3])}`)).on('mouseleave',hideTip);
+  // reference: movies
+  const dF=FG.diff.US.feel_good;
   svg.append('line').attr('x1',xs(dF[0])).attr('x2',xs(dF[0])).attr('y1',m.t).attr('y2',HH-m.b).attr('stroke','var(--ink2)').attr('stroke-dasharray','4 3');
-  svg.append('text').attr('x',xs(dF[0])+4).attr('y',HH-m.b-4).style('font-size','11px').style('fill','var(--ink2)').text('películas');
+  svg.append('text').attr('x',xs(dF[0])+4).attr('y',HH-m.b-4).style('font-size','11px').style('fill','var(--ink2)').text('movies');
 }
 
-// ---- capítulo 4: composición y géneros
+// ---- appendix B: genre mix (keys stay in Spanish as in data.json; labels via T())
 const GENS=['Animación','Comedia','Acción/aventura','Thriller/crimen','Terror','Drama','Ciencia ficción/fantasía','Romance'];
 const PAL=['#1baf7a','#eda100','#2a78d6','#4a3aa7','#e34948','#e87ba4','#008300','#b5b3ad'];
 function drawCompo(){
   const svg=d3.select('#compo'),W=svg.node().clientWidth||640,H2=150,m={t:10,r:10,b:10,l:90};
   svg.attr('viewBox',`0 0 ${W} ${H2}`).attr('height',H2);svg.selectAll('*').remove();
-  const SHORT={'Acción/aventura':'Acción','Comedia':'Comedia','Terror':'Terror','Thriller/crimen':'Thriller','Animación':'Animación','Drama':'Drama','Ciencia ficción/fantasía':'Ci-fi','Romance':'Romance'};
-  d3.select('#compoLegend').html(GENS.map((g,j)=>`<span style="--c:${PAL[j]}">${g}</span>`).join(''));
+  const SHORT={'Acción/aventura':'Action','Comedia':'Comedy','Terror':'Horror','Thriller/crimen':'Thriller','Animación':'Animation','Drama':'Drama','Ciencia ficción/fantasía':'Sci-fi','Romance':'Romance'};
+  d3.select('#compoLegend').html(GENS.map((g,j)=>`<span style="--c:${PAL[j]}">${T(g)}</span>`).join(''));
   const rows=[['1990-99',cmpS['1990-1999']],['2010-25',cmpS['2010-2025']]], x=d3.scaleLinear().domain([0,1]).range([m.l,W-m.r]);
   rows.forEach(([lab,cm],i)=>{let acc=0;const y=m.t+i*62;
     svg.append('text').attr('x',m.l-10).attr('y',y+26).attr('text-anchor','end').style('font-weight',700).style('fill','var(--ink)').text(lab);
     GENS.forEach((g,j)=>{const v=cm[g]||0;svg.append('rect').attr('x',x(acc)+1).attr('y',y).attr('width',Math.max(0,x(acc+v)-x(acc)-2)).attr('height',42).attr('rx',4).attr('fill',PAL[j])
-      .on('mousemove',e=>showTip(e,`<b>${g}</b><br>${pct(v)} de las series populares`)).on('mouseleave',hideTip);
+      .on('mousemove',e=>showTip(e,`<b>${T(g)}</b><br>${pct(v)} of popular shows`)).on('mouseleave',hideTip);
       const lbl=SHORT[g]+' '+Math.round(v*100)+'%', wpx=x(acc+v)-x(acc);
       if(wpx>lbl.length*7+6)svg.append('text').attr('x',x(acc+v/2)).attr('y',y+26).attr('text-anchor','middle').style('fill','#fff').style('font-size','12px').style('font-weight',700).text(lbl);
       else if(wpx>30)svg.append('text').attr('x',x(acc+v/2)).attr('y',y+26).attr('text-anchor','middle').style('fill','#fff').style('font-size','11px').style('font-weight',700).text(Math.round(v*100)+'%');
       acc+=v;});});
   const r=SR.reponderado.US, tot=r.m90-r.m_rec, comp=r.m_rec_mezcla90-r.m_rec;
-  $('#rewText').innerHTML=`¿Cuánto explica ese cambio de géneros? Si las series de 2010-2025 tuvieran la misma mezcla de géneros que las de los noventa, su nota media sería ${n1(r.m_rec_mezcla90)} en vez de ${n1(r.m_rec)}. Es decir, <mark>la composición explica en torno a un ${Math.round(comp/tot*100)} % de la caída</mark>; el resto ocurre <b>dentro de cada género</b>: la acción, el drama, el terror, la animación e incluso la comedia son hoy menos <i>feel good</i> que hace treinta años.`;
+  $('#rewText').innerHTML=`How much does that genre shift explain? If 2010-2025 shows had the same genre mix as ’90s shows, their average score would be ${n1(r.m_rec_mezcla90)} instead of ${n1(r.m_rec)}. In other words, <mark>the mix explains around ${Math.round(comp/tot*100)}% of the decline</mark>; the rest happens <b>within each genre</b>: action, drama, horror, animation and even comedy are less <i>feel good</i> today than thirty years ago.`;
 }
 function drawSlope(){
   const rows=SR.genero.US.slice().sort((a,b)=>a[5]-b[5]);
@@ -811,7 +795,7 @@ function drawSlope(){
   const lg=svg.append('g').attr('transform',`translate(${m.l},14)`);
   lg.append('circle').attr('r',6).attr('fill',c90);lg.append('text').attr('x',10).attr('y',4).style('font-size','13px').style('font-weight',700).style('fill','var(--ink)').text('1990-99');
   lg.append('circle').attr('cx',86).attr('r',6).attr('fill',cR);lg.append('text').attr('x',96).attr('y',4).style('font-size','13px').style('font-weight',700).style('fill','var(--ink)').text('2010-25');
-  const short=g=>narrow?g.replace('Ciencia ficción/fantasía','Ci-fi/fant.').replace('Acción/aventura','Acción').replace('Thriller/crimen','Thriller'):g.replace('Ciencia ficción/fantasía','Ci-fi/fantasía');
+  const short=g=>{g=T(g);return narrow?g.replace('Sci-fi/fantasy','Sci-fi/fant.').replace('Action/adventure','Action').replace('Thriller/crime','Thriller'):g};
   const g=svg.append('g').selectAll('g').data(rows).join('g').attr('transform',(d,i)=>`translate(0,${m.t+i*rh+rh/2})`);
   g.append('rect').attr('x',0).attr('y',-rh/2).attr('width',W).attr('height',rh).attr('fill','transparent');
   g.append('text').attr('x',m.l-14).attr('y',4).attr('text-anchor','end').style('font-size','13px').style('fill','var(--ink)').style('font-weight',d=>(d[6]>0||d[7]<0)?700:400).text(d=>short(d[0]));
@@ -819,39 +803,41 @@ function drawSlope(){
   g.append('circle').attr('cx',d=>x(d[3])).attr('r',6).attr('fill',c90).attr('stroke','var(--bg)').attr('stroke-width',2);
   g.append('circle').attr('cx',d=>x(d[4])).attr('r',6).attr('fill',cR).attr('stroke','var(--bg)').attr('stroke-width',2);
   g.append('text').attr('x',W-m.r+12).attr('y',4).style('font-size','12.5px').style('fill','var(--ink)').text(d=>narrow?dpt(d[5]):`${n1(d[3])} → ${n1(d[4])} (${dpt(d[5])})`);
-  g.on('mousemove',(e,d)=>showTip(e,`<b>${d[0]}</b><br>${n1(d[3])} → ${n1(d[4])}<br>Cambio ${dpt(d[5])} (IC 95 % ${dpt(d[6])} a ${dpt(d[7])})<br>${d[1]} series en los noventa · ${d[2]} en 2010-2025`)).on('mouseleave',hideTip);
+  g.on('mousemove',(e,d)=>showTip(e,`<b>${T(d[0])}</b><br>${n1(d[3])} → ${n1(d[4])}<br>Change ${dpt(d[5])} (95% CI ${dpt(d[6])} to ${dpt(d[7])})<br>${d[1]} shows in the ’90s · ${d[2]} in 2010-2025`)).on('mouseleave',hideTip);
 }
 
-// ---- capítulo 5: subgrupos (series)
-const SGN={genre_main:'Género',alcance_A:'Qué cuenta el resumen',publico:'Público',tipo_serie:'Formato'};
-const SGV={FINAL:'Cuenta el final',PARCIAL:'Llega a mitad de la serie',EPISODICA:'Serie de episodios sueltos',PREMISA:'Solo la premisa',ADULTO:'Para adultos',FAMILIAR:'Familiar',JUVENIL:'Juvenil',INFANTIL:'Infantil',Miniserie:'Miniserie',Serie:'Serie larga'};
+// ---- appendix C: subgroups (TV series)
+const SGN={genre_main:'Genre',alcance_A:'Summary covers',publico:'Audience',tipo_serie:'Format'};
+const SGV={FINAL:'Tells the ending',PARCIAL:'Stops mid-series',EPISODICA:'Standalone episodes',PREMISA:'Premise only',ADULTO:'Adult',FAMILIAR:'Family',JUVENIL:'Teen',INFANTIL:'Kids',Miniserie:'Miniseries',Serie:'Ongoing series'};
+const SGP={FINAL:'shows whose summary tells the ending',PARCIAL:'shows whose summary stops mid-series',EPISODICA:'shows with standalone episodes',PREMISA:'premise-only summaries',ADULTO:'adult shows',FAMILIAR:'family shows',JUVENIL:'teen shows',INFANTIL:'kids’ shows',Miniserie:'miniseries',Serie:'ongoing series'};
+const sgPhrase=d=>SGP[d[1]]||(d[0]==='genre_main'?T(d[1]).toLowerCase()+' shows':T(d[1]).toLowerCase());
 function drawSub(){
   const rows=SR.subgrupos.US.slice().sort((a,b)=>a[6]-b[6]);
   const small=rows.reduce((a,b)=>b[6]>a[6]?b:a), big=rows[0];
-  $('#subText').innerHTML=`La caída aparece en casi todos los grupos. Es mayor en <b>${(SGV[big[1]]||big[1]).toLowerCase()}</b> (${dpt(big[6])} puntos) y menor en <b>${(SGV[small[1]]||small[1]).toLowerCase()}</b> (${dpt(small[6])}). ${(()=>{const f=rows.find(r=>r[1]==='FINAL');if(!f)return '';const sig=f[8]<0;return `En las series cuyo resumen <b>sí cuenta el final</b> la caída es menor (${dpt(f[6])}; IC 95 %: ${dpt(f[7])} a ${dpt(f[8])})${sig?'':', y el intervalo incluye el cero'}. En las de solo premisa, ${dpt(rows.find(r=>r[1]==='PREMISA')[6])}. Así que parte de la diferencia podría deberse a que de las series recientes solemos leer solo la premisa.`})()}`;
+  $('#subText').innerHTML=`The decline shows up in almost every group. It’s steepest for <b>${sgPhrase(big)}</b> (${dpt(big[6])} points) and mildest for <b>${sgPhrase(small)}</b> (${dpt(small[6])}). ${(()=>{const f=rows.find(r=>r[1]==='FINAL');if(!f)return '';const sig=f[8]<0;return `For shows whose summary <b>does tell the ending</b>, the drop is smaller (${dpt(f[6])}; 95% CI: ${dpt(f[7])} to ${dpt(f[8])})${sig?'':', and the interval includes zero'}. For premise-only summaries, it’s ${dpt(rows.find(r=>r[1]==='PREMISA')[6])}. So part of the gap could come from the fact that, for recent shows, we usually only read the premise.`})()}`;
   const svg=d3.select('#subg'),W=svg.node().clientWidth||640,rh=26,m={t:10,r:24,b:30,l:Math.min(260,W*.4)},H=m.t+m.b+rh*rows.length;
   svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
   const x=d3.scaleLinear().domain([-3.5,.5]).range([m.l,W-m.r]).clamp(true);
   svg.append('g').attr('class','grid').selectAll('line').data(x.ticks(5)).join('line').attr('x1',x).attr('x2',x).attr('y1',m.t).attr('y2',H-m.b);
   svg.append('line').attr('x1',x(0)).attr('x2',x(0)).attr('y1',m.t).attr('y2',H-m.b).attr('stroke','var(--ink)').attr('stroke-width',1.5);
   svg.append('g').selectAll('text').data(x.ticks(5)).join('text').attr('x',x).attr('y',H-8).attr('text-anchor','middle').style('font-size','12px').text(d=>d===0?'0':dpt(d));
-  const narrow=W<560, SH={'Cuenta el final':'Resumen con final','Llega a mitad de la serie':'Resumen a mitad','Serie de episodios sueltos':'Episodios sueltos','Solo la premisa':'Solo premisa','Ciencia ficción/fantasía':'Ci-fi/fantasía','Acción/aventura':'Acción','Thriller/crimen':'Thriller'};
-  const name=d=>narrow?(SH[SGV[d[1]]||d[1]]||SGV[d[1]]||d[1]):`${SGN[d[0]]}: ${SGV[d[1]]||d[1]}`;
+  const narrow=W<560, SH={'Tells the ending':'Ending told','Stops mid-series':'Mid-series','Standalone episodes':'Episodic','Premise only':'Premise only','Sci-fi/fantasy':'Sci-fi/fantasy','Action/adventure':'Action','Thriller/crime':'Thriller'};
+  const val=d=>SGV[d[1]]||T(d[1]), name=d=>narrow?(SH[val(d)]||val(d)):`${SGN[d[0]]}: ${val(d)}`;
   const g=svg.append('g').selectAll('g').data(rows).join('g').attr('transform',(d,i)=>`translate(0,${m.t+i*rh+rh/2})`);
   g.append('text').attr('x',m.l-10).attr('y',4).attr('text-anchor','end').style('font-size','12.5px').style('fill','var(--ink)').text(name);
   const sig=d=>d[7]>0||d[8]<0;
   g.append('line').attr('x1',d=>x(d[7])).attr('x2',d=>x(d[8])).attr('stroke',css('--trag')).attr('stroke-width',5).attr('stroke-linecap','round').attr('opacity',d=>sig(d)?.5:.2);
   g.append('circle').attr('cx',d=>x(d[6])).attr('r',6).attr('fill',d=>sig(d)?css('--trag'):'var(--paper)').attr('stroke',css('--trag')).attr('stroke-width',2)
-    .on('mousemove',(e,d)=>showTip(e,`<b>${name(d)}</b><br>${n1(d[4])} → ${n1(d[5])}<br>Cambio ${dpt(d[6])} (IC ${dpt(d[7])} a ${dpt(d[8])})<br>n = ${d[2]} / ${d[3]}`)).on('mouseleave',hideTip);
+    .on('mousemove',(e,d)=>showTip(e,`<b>${name(d)}</b><br>${n1(d[4])} → ${n1(d[5])}<br>Change ${dpt(d[6])} (CI ${dpt(d[7])} to ${dpt(d[8])})<br>n = ${d[2]} / ${d[3]}`)).on('mouseleave',hideTip);
 }
 
-// ---- capítulo 6: utopía
+// ---- chapter 3: utopia
 function drawMood(){
-  twoSeries('#mood',[['Series',SU.utopia,css('--ser'),-8],['Películas',PU.utopia,css('--pel'),8]],[2.5,6.5],n1,260);
-  $('#utoText').innerHTML=`En las series estadounidenses, la nota de utopía cae de <b>${n1(SU.utopia[1][0])}</b> en los noventa a <b>${n1(SU.utopia[4][0])}</b> en 2020-2025: menos barrios amables y oficinas simpáticas, más imperios en guerra, cárteles y apocalipsis. En las películas, la sociedad que se muestra apenas cambia. Y no es solo el mundo: los protagonistas también son menos optimistas (de ${dpt(SU.optimismo_personajes[1][0])} en los noventa a ${dpt(SU.optimismo_personajes[4][0])} en 2020-2025, en una escala de −2 a +2). Hoy, personajes con menos esperanza en mundos peores.`;
+  twoSeries('#mood',[['TV series',SU.utopia,css('--ser'),-8],['Movies',PU.utopia,css('--pel'),8]],[2.5,6.5],n1,260);
+  $('#utoText').innerHTML=`In US TV series, the utopia score falls from <b>${n1(SU.utopia[1][0])}</b> in the ’90s to <b>${n1(SU.utopia[4][0])}</b> in 2020-2025: fewer friendly neighborhoods and cozy offices, more warring empires, cartels and apocalypses. In movies, the society on screen barely changes. And it’s not just the world: the characters are less optimistic too (from ${dpt(SU.optimismo_personajes[1][0])} in the ’90s to ${dpt(SU.optimismo_personajes[4][0])} in 2020-2025, on a scale from −2 to +2). Today: characters with less hope, in worse worlds.`;
 }
 
-// ---- capítulo 7: final × feel good y cuadro
+// ---- appendix D: ending × feel good, and small multiples
 function drawHeat(){
   const svg=d3.select('#heat'),W=svg.node().clientWidth||640,H=240,m={t:30,r:10,b:36,l:92};
   svg.attr('viewBox',`0 0 ${W} ${H}`).attr('height',H);svg.selectAll('*').remove();
@@ -859,11 +845,11 @@ function drawHeat(){
   const mx=d3.max(M.flat()), col=COLS();
   filas.forEach((f,i)=>cols.forEach(j=>{const n=M[i][j];
     svg.append('rect').attr('x',x(j)).attr('y',y(f)).attr('width',x.bandwidth()).attr('height',y.bandwidth()).attr('rx',5).attr('fill',col[i]).attr('opacity',.12+.88*Math.sqrt(n/mx))
-      .on('mousemove',e=>showTip(e,`<b>${n} series</b><br>Final ${FIN_LAB[i].toLowerCase()} · feel good ${FGB_LAB[j]}`)).on('mouseleave',hideTip);
+      .on('mousemove',e=>showTip(e,`<b>${n} shows</b><br>${FIN_LAB[i]} ending · feel good ${FGB_LAB[j]}`)).on('mouseleave',hideTip);
     svg.append('text').attr('x',x(j)+x.bandwidth()/2).attr('y',y(f)+y.bandwidth()/2+4).attr('text-anchor','middle').style('font-weight',700).style('fill',n/mx>.35?'#fff':'var(--ink)').style('pointer-events','none').text(n)}));
   svg.append('g').selectAll('text').data(filas).join('text').attr('x',m.l-8).attr('y',f=>y(f)+y.bandwidth()/2+4).attr('text-anchor','end').style('font-weight',700).style('fill','var(--ink)').text((f,i)=>FIN_LAB[i]);
   svg.append('g').selectAll('text').data(cols).join('text').attr('x',c=>x(c)+x.bandwidth()/2).attr('y',H-14).attr('text-anchor','middle').style('font-size','12px').text(c=>['0-2','3-4','5-6','7-8','9-10'][c]);
-  svg.append('text').attr('x',(m.l+W-m.r)/2).attr('y',14).attr('text-anchor','middle').style('font-size','12px').text('Nota feel good →');
+  svg.append('text').attr('x',(m.l+W-m.r)/2).attr('y',14).attr('text-anchor','middle').style('font-size','12px').text('Feel good score →');
 }
 function drawSM(el,data,dom,fmt,color){
   const svg=d3.select(el),W=svg.node().clientWidth||300,H2=190,m={t:14,r:10,b:28,l:40};
@@ -877,60 +863,47 @@ function drawSM(el,data,dom,fmt,color){
   const g=svg.append('g').selectAll('g').data(ok).join('g');
   g.append('line').attr('x1',([d,i])=>x(i)).attr('x2',([d,i])=>x(i)).attr('y1',([d])=>y(d[1])).attr('y2',([d])=>y(d[2])).attr('stroke',color).attr('stroke-width',5).attr('opacity',.25).attr('stroke-linecap','round');
   g.append('circle').attr('cx',([d,i])=>x(i)).attr('cy',([d])=>y(d[0])).attr('r',5).attr('fill',color)
-    .on('mousemove',(e,[d])=>showTip(e,`<b>${fmt(d[0])}</b><br>IC 95 %: ${fmt(d[1])}–${fmt(d[2])} · n=${d[3]}`)).on('mouseleave',hideTip);
+    .on('mousemove',(e,[d])=>showTip(e,`<b>${fmt(d[0])}</b><br>95% CI: ${fmt(d[1])}–${fmt(d[2])} · n=${d[3]}`)).on('mouseleave',hideTip);
 }
-const fp=d=>Math.round(d*100)+' %';
+const fp=d=>Math.round(d*100)+'%';
 function drawQuad(){
-  const Q=[['Nota feel good media',SU.feel_good,[3,7],n1,css('--ser')],['Feel good de 7 o más',SU.y_fg7,[0,.6],fp,css('--ser')],
-    ['Final feliz',SU.y_feliz,[.2,.9],fp,css('--feliz')],['Final trágico',SU.y_tragico,[0,.4],fp,css('--trag')]];
+  const Q=[['Average feel good score',SU.feel_good,[3,7],n1,css('--ser')],['Feel good of 7 or higher',SU.y_fg7,[0,.6],fp,css('--ser')],
+    ['Happy ending',SU.y_feliz,[.2,.9],fp,css('--feliz')],['Tragic ending',SU.y_tragico,[0,.4],fp,css('--trag')]];
   $('#quad').innerHTML=Q.map((q,i)=>`<div><h3 style="font-size:17px;margin:0">${q[0]}</h3><svg id="q${i}" class="chart" style="margin:4px 0"></svg></div>`).join('');
   Q.forEach((q,i)=>drawSM('#q'+i,q[1],q[2],q[3],q[4]));
 }
 
-// ---- capítulo 8: España
-function drawEsUs(){
-  twoSeries('#esus',[['Series EE. UU.',SU.feel_good,css('--us'),-8],['Series España',SE.feel_good,css('--es'),8]],[2,8],n1);
-  const d=SR.diff.ES.feel_good;
-  $('#esText').textContent=`su nota feel good pasa de ${n1(SE.feel_good[1][0])} en los noventa a ${n1(SE.feel_good[3][0])} en los años diez y ${n1(SE.feel_good[4][0])} en 2020-2025 (diferencia 2010-2025 frente a los noventa: ${dpt(d[0])}; IC 95 %: ${dpt(d[1])} a ${dpt(d[2])}). Médico de familia y Farmacia de guardia sacan un 8; La casa de papel, un 4, y Élite, un 2,5.`;
-  const dF=FG.diff.ES.feel_good, D=SR.familiar.ES.decomp.tres_grupos, DU=SR.familiar.US.decomp.tres_grupos;
-  $('#esText2').innerHTML=`Pero España tiene dos singularidades. La primera: <b>su cine va al revés</b>. La nota <i>feel good</i> de las películas españolas más vistas sube, de <b>${n1(PE.feel_good[1][0])}</b> en los noventa a <b>${n1(PE.feel_good[4][0])}</b> en 2020-2025 (diferencia 2010-2025 frente a los noventa: ${dpt(dF[0])}; IC 95 %: ${dpt(dF[1])} a ${dpt(dF[2])}), mientras la de sus series cae. Comedias como <i>Ocho apellidos vascos</i> o <i>Campeones</i> (un 9 cada una) llenan las salas, mientras las series se llenan de atracos (<i>La casa de papel</i>), narcos (<i>Fariña</i>) y cárceles (<i>Vis a vis</i>). La segunda: <b>en las series españolas pesa más el cambio de público</b>. En los noventa, el ${pct(D.share90_familiar)} de las más votadas eran familiares (<i>Farmacia de guardia</i>, <i>Médico de familia</i>); en 2010-2025, el ${pct(D.share_rec_familiar)}. Ese cambio explica alrededor del ${Math.round(100*D.composicion[0]/D.total[0])} % de la caída, frente al ${Math.round(100*DU.composicion[0]/DU.total[0])} % en EE. UU.`;
-  twoSeries('#esfs',[['Series españolas',SE.feel_good,css('--ser'),-8],['Películas españolas',PE.feel_good,css('--pel'),8]],[2,8],n1);
-}
 
-// ---- capítulo 9: cine
-
-// ---- explorer: facetas visuales con recuento
-const PAIS=['EE. UU.','España','EE. UU. y España'];
+// ---- explorer: visual facets with counts
 const FCOL=['--feliz','--agri','--amb','--trag','--muted'];
-const bround=x=>{if(x==null)return null;const r=Math.round(x);return Math.abs(x%1)===.5?2*Math.round(x/2):r}; // redondeo como en el mapa de calor
-const SCALE=[{v:-2,l:'Muy pesimistas',c:'--trag',s:'−2'},{v:-1,l:'Pesimistas',c:'--trag',o:.55,s:'−1'},{v:0,l:'Neutros',c:'--amb',s:'0'},{v:1,l:'Optimistas',c:'--feliz',o:.55,s:'+1'},{v:2,l:'Muy optimistas',c:'--feliz',s:'+2'}];
-const SCALE_T=SCALE.map((o,i)=>({...o,l:['Muy sombrío','Sombrío','Neutro','Luminoso','Muy luminoso'][i]}));
-const IMDBS=[{v:0,l:'Floja',s:'<5',c:'--imdb',o:.25},{v:1,l:'Regular',s:'5-6',c:'--imdb',o:.42},{v:2,l:'Buena',s:'6-7',c:'--imdb',o:.6},{v:3,l:'Muy buena',s:'7-8',c:'--imdb',o:.8},{v:4,l:'Excelente',s:'8+',c:'--imdb',o:1}];
+const bround=x=>{if(x==null)return null;const r=Math.round(x);return Math.abs(x%1)===.5?2*Math.round(x/2):r}; // round half to even, as in the heatmap
+const SCALE=[{v:-2,l:'Very pessimistic',c:'--trag',s:'−2'},{v:-1,l:'Pessimistic',c:'--trag',o:.55,s:'−1'},{v:0,l:'Neutral',c:'--amb',s:'0'},{v:1,l:'Optimistic',c:'--feliz',o:.55,s:'+1'},{v:2,l:'Very optimistic',c:'--feliz',s:'+2'}];
+const SCALE_T=SCALE.map((o,i)=>({...o,l:['Very dark','Dark','Neutral','Bright','Very bright'][i]}));
+const IMDBS=[{v:0,l:'Poor',s:'<5',c:'--imdb',o:.25},{v:1,l:'Fair',s:'5-6',c:'--imdb',o:.42},{v:2,l:'Good',s:'6-7',c:'--imdb',o:.6},{v:3,l:'Very good',s:'7-8',c:'--imdb',o:.8},{v:4,l:'Excellent',s:'8+',c:'--imdb',o:1}];
 const imdbBin=x=>x==null?null:x<5?0:x<6?1:x<7?2:x<8?3:4;
-const POPS=[{v:0,l:'Minoritaria',s:'<2k',c:'--pop',o:.25},{v:1,l:'Conocida',s:'2-20k',c:'--pop',o:.42},{v:2,l:'Popular',s:'20-100k',c:'--pop',o:.6},{v:3,l:'Muy popular',s:'100-500k',c:'--pop',o:.8},{v:4,l:'Fenómeno',s:'500k+',c:'--pop',o:1}];
+const POPS=[{v:0,l:'Niche',s:'<2k',c:'--pop',o:.25},{v:1,l:'Known',s:'2-20k',c:'--pop',o:.42},{v:2,l:'Popular',s:'20-100k',c:'--pop',o:.6},{v:3,l:'Very popular',s:'100-500k',c:'--pop',o:.8},{v:4,l:'Phenomenon',s:'500k+',c:'--pop',o:1}];
 const popBin=x=>x==null?null:x<2e3?0:x<2e4?1:x<1e5?2:x<5e5?3:4;
 const catOpts=k=>F.cats[k].map((v,i)=>({v:i,l:LAB[v]||v})).filter(o=>F.cats[k][o.v]!=='NO_CLARO');
 const FACETS=[
-  {k:'tipo',t:'Tipo',main:1,type:'chips',opts:[{v:1,l:'Series'},{v:0,l:'Películas'}],get:f=>f[FC.tipo]??0},
-  {k:'dec',t:'Década',main:1,type:'chips',opts:[1980,1990,2000,2010,2020].map(d=>({v:d,l:d===2020?'2020-26':`Años ${String(d).slice(2)}`})),get:f=>Math.min(2020,Math.floor(f[2]/10)*10)},
-  {k:'pais',t:'País',main:1,type:'chips',opts:[{v:'US',l:'EE. UU.'},{v:'ES',l:'España'}],get:f=>f[3]===0?['US']:f[3]===1?['ES']:['US','ES']},
-  {k:'fin',t:'Final',main:1,type:'chips',opts:FIN_LAB.map((l,i)=>({v:i,l,c:FCOL[i]})),get:f=>f[5]},
+  {k:'tipo',t:'Type',main:1,type:'chips',opts:[{v:1,l:'TV series'},{v:0,l:'Movies'}],get:f=>f[FC.tipo]??0},
+  {k:'dec',t:'Decade',main:1,type:'chips',opts:[1980,1990,2000,2010,2020].map(d=>({v:d,l:d===2020?'2020-26':`${d}s`})),get:f=>Math.min(2020,Math.floor(f[2]/10)*10)},
+  {k:'fin',t:'Ending',main:1,type:'chips',opts:FIN_LAB.map((l,i)=>({v:i,l,c:FCOL[i]})),get:f=>f[5]},
   {k:'fg',t:'Feel good (0-10)',main:1,type:'scale',opts:FGS,get:f=>fgBin(f[FC.feel_good])},
-  {k:'uto',t:'Sociedad: distopía o utopía (0-10)',main:1,type:'scale',opts:UTS,get:f=>fgBin(f[FC.utopia])},
-  {k:'imdb',t:'Nota en IMDb (0-10)',main:1,type:'scale',opts:IMDBS,get:f=>imdbBin(f[FC.imdb_nota])},
-  {k:'popu',t:'Popularidad (votos en IMDb; k = miles)',main:1,type:'scale',opts:POPS,get:f=>popBin(f[FC.imdb_votos])},
-  {k:'pub',t:'Público',main:1,type:'chips',opts:F.publicos.map((v,i)=>({v:i,l:PUB_LAB[v]})),get:f=>f[FC.publico]},
-  {k:'opt',t:'Optimismo de los personajes',main:1,type:'scale',opts:SCALE,get:f=>bround(f[6])},
-  {k:'tono',t:'Tono general de la película',main:1,type:'scale',opts:SCALE_T,get:f=>bround(f[7])},
-  {k:'gen',t:'Género',main:1,type:'chips',opts:F.genres.map((g,i)=>({v:i,l:g})).filter(o=>o.l!=='Otros'),get:f=>f[4]},
-  {k:'prot',t:'Protagonista',type:'chips',opts:catOpts('genero_protagonista'),get:f=>f[FC.genero_protagonista]},
-  {k:'edad',t:'Edad del protagonista',type:'chips',opts:catOpts('edad_protagonista'),get:f=>f[FC.edad_protagonista]},
-  {k:'mom',t:'Momento vital',type:'chips',opts:catOpts('momento_vital'),get:f=>f[FC.momento_vital]},
-  {k:'civil',t:'Estado civil',type:'chips',opts:catOpts('estado_civil'),get:f=>f[FC.estado_civil]},
-  {k:'clase',t:'Clase social',type:'chips',opts:catOpts('clase_social'),get:f=>f[FC.clase_social]},
-  {k:'rel',t:'Relaciones centrales',type:'chips',opts:F.relaciones.map((v,i)=>({v:i,l:LAB[v]||v})).filter(o=>F.relaciones[o.v]!=='NINGUNA'),get:f=>f[FC.relaciones]},
-  {k:'esp',t:'¿Especulativa?',type:'chips',opts:catOpts('especulativa'),get:f=>f[FC.especulativa]},
-  {k:'epoca',t:'Época en la que pasa',type:'chips',opts:catOpts('epoca_trama'),get:f=>f[FC.epoca_trama]},
+  {k:'uto',t:'Society: dystopia or utopia (0-10)',main:1,type:'scale',opts:UTS,get:f=>fgBin(f[FC.utopia])},
+  {k:'imdb',t:'IMDb rating (0-10)',main:1,type:'scale',opts:IMDBS,get:f=>imdbBin(f[FC.imdb_nota])},
+  {k:'popu',t:'Popularity (IMDb votes; k = thousands)',main:1,type:'scale',opts:POPS,get:f=>popBin(f[FC.imdb_votos])},
+  {k:'pub',t:'Audience',main:1,type:'chips',opts:F.publicos.map((v,i)=>({v:i,l:PUB_LAB[v]})),get:f=>f[FC.publico]},
+  {k:'opt',t:'Characters’ optimism',main:1,type:'scale',opts:SCALE,get:f=>bround(f[6])},
+  {k:'tono',t:'Overall tone',main:1,type:'scale',opts:SCALE_T,get:f=>bround(f[7])},
+  {k:'gen',t:'Genre',main:1,type:'chips',opts:F.genres.map((g,i)=>({v:i,l:T(g)})).filter(o=>o.l!=='Other'),get:f=>f[4]},
+  {k:'prot',t:'Protagonist',type:'chips',opts:catOpts('genero_protagonista'),get:f=>f[FC.genero_protagonista]},
+  {k:'edad',t:'Protagonist’s age',type:'chips',opts:catOpts('edad_protagonista'),get:f=>f[FC.edad_protagonista]},
+  {k:'mom',t:'Life stage',type:'chips',opts:catOpts('momento_vital'),get:f=>f[FC.momento_vital]},
+  {k:'civil',t:'Relationship status',type:'chips',opts:catOpts('estado_civil'),get:f=>f[FC.estado_civil]},
+  {k:'clase',t:'Social class',type:'chips',opts:catOpts('clase_social'),get:f=>f[FC.clase_social]},
+  {k:'rel',t:'Core relationships',type:'chips',opts:F.relaciones.map((v,i)=>({v:i,l:LAB[v]||v})).filter(o=>F.relaciones[o.v]!=='NINGUNA'),get:f=>f[FC.relaciones]},
+  {k:'esp',t:'Speculative?',type:'chips',opts:catOpts('especulativa'),get:f=>f[FC.especulativa]},
+  {k:'epoca',t:'When it’s set',type:'chips',opts:catOpts('epoca_trama'),get:f=>f[FC.epoca_trama]},
   {k:'humor',t:'Humor',type:'chips',opts:catOpts('humor'),get:f=>f[FC.humor]},
 ];
 const SEL=Object.fromEntries(FACETS.map(x=>[x.k,new Set()]));
@@ -946,7 +919,7 @@ function renderFacets(){
     SEL[k].has(v)?SEL[k].delete(v):SEL[k].add(v);if(k==='dec')years();run()});
 }
 function years(){const ds=[...SEL.dec];const ys=d3.range(1980,2027).filter(y=>!ds.length||ds.includes(Math.min(2020,Math.floor(y/10)*10)));const cur=$('#xyear').value;
-  $('#xyear').innerHTML='<option value="">Cualquier año</option>'+ys.map(y=>`<option${String(y)===cur?' selected':''}>${y}</option>`).join('')}
+  $('#xyear').innerHTML='<option value="">Any year</option>'+ys.map(y=>`<option${String(y)===cur?' selected':''}>${y}</option>`).join('')}
 SEL.tipo.add(1);renderFacets();years();
 ['#xyear','#xsort'].forEach(s=>$(s).onchange=run);
 $('#xclear').onclick=()=>{Object.values(SEL).forEach(s=>s.clear());$('#xq').value='';$('#xyear').value='';years();run()};
@@ -957,7 +930,7 @@ function run(){
   const base=F.films.filter(f=>(!q||norm(f[0]+' '+f[1]).includes(q))&&(!yr||f[2]===+yr));
   const pass=(f,skip)=>FACETS.every(x=>x.k===skip||!SEL[x.k].size||has(x,f));
   cur=base.filter(f=>pass(f));
-  // recuentos: cada faceta cuenta con los demás filtros aplicados (no el suyo)
+  // counts: each facet counts with the other filters applied (not its own)
   for(const x of FACETS){const sub=base.filter(f=>pass(f,x.k)),cnt=new Map();
     sub.forEach(f=>{const v=x.get(f);(Array.isArray(v)?v:[v]).forEach(e=>cnt.set(e,(cnt.get(e)||0)+1))});
     const el=$(`.facet[data-k="${x.k}"]`);const mx=Math.max(1,...x.opts.map(o=>cnt.get(o.v)||0));
@@ -965,70 +938,70 @@ function run(){
       b.querySelector('.n').textContent=nnum(n);b.setAttribute('aria-pressed',SEL[x.k].has(v));b.classList.toggle('zero',!n&&!SEL[x.k].has(v));
       if(x.type==='scale')b.style.setProperty('--h',(n/mx*100)+'%')});}
   const act=Object.values(SEL).reduce((a,s)=>a+s.size,0)+(q?1:0)+(yr?1:0);
-  $('#xclear').hidden=!act;$('#xclear').textContent=`Quitar filtros (${act})`;
-  const more=FACETS.filter(x=>!x.main).reduce((a,x)=>a+SEL[x.k].size,0);$('#xmorecount').textContent=more?`· ${more} activos`:'';
+  $('#xclear').hidden=!act;$('#xclear').textContent=`Clear filters (${act})`;
+  const more=FACETS.filter(x=>!x.main).reduce((a,x)=>a+SEL[x.k].size,0);$('#xmorecount').textContent=more?`· ${more} active`:'';
   const so=$('#xsort').value;
   if(so==='desc')cur.sort((a,b)=>b[2]-a[2]||a[0].localeCompare(b[0]));else if(so==='opt')cur.sort((a,b)=>(b[6]??-9)-(a[6]??-9)||a[2]-b[2]);else if(so==='pes')cur.sort((a,b)=>(a[6]??9)-(b[6]??9)||a[2]-b[2]);else if(so==='fg')cur.sort((a,b)=>(b[FC.feel_good]??-1)-(a[FC.feel_good]??-1)||(b[FC.imdb_votos]??0)-(a[FC.imdb_votos]??0));else if(so==='nofg')cur.sort((a,b)=>(a[FC.feel_good]??99)-(b[FC.feel_good]??99)||(b[FC.imdb_votos]??0)-(a[FC.imdb_votos]??0));else if(so==='uto')cur.sort((a,b)=>(b[FC.utopia]??-1)-(a[FC.utopia]??-1)||(b[FC.imdb_votos]??0)-(a[FC.imdb_votos]??0));else if(so==='dis')cur.sort((a,b)=>(a[FC.utopia]??99)-(b[FC.utopia]??99)||(b[FC.imdb_votos]??0)-(a[FC.imdb_votos]??0));else if(so==='votos')cur.sort((a,b)=>(b[FC.imdb_votos]??0)-(a[FC.imdb_votos]??0));else if(so==='nota')cur.sort((a,b)=>(b[FC.imdb_nota]??0)-(a[FC.imdb_nota]??0)||(b[FC.imdb_votos]??0)-(a[FC.imdb_votos]??0));else if(so==='rango')cur.sort((a,b)=>a[FC.rango_votos_anio]-b[FC.rango_votos_anio]||a[2]-b[2]);else cur.sort((a,b)=>a[2]-b[2]||a[0].localeCompare(b[0]));
   const cnt=[0,0,0,0,0];cur.forEach(f=>cnt[f[5]]++);const cl=cnt[0]+cnt[1]+cnt[2]+cnt[3];
-  {const ns=cur.filter(f=>f[FC.tipo]===1).length,nf=cur.length-ns;$('#xcount').innerHTML=ns&&nf?`<b>${nnum(nf)}</b> películas y <b>${nnum(ns)}</b> series`:ns?`<b>${nnum(ns)}</b> series`:`<b>${nnum(nf)}</b> películas`;}
+  {const ns=cur.filter(f=>f[FC.tipo]===1).length,nf=cur.length-ns,S=n=>`<b>${nnum(n)}</b> ${n===1?'show':'shows'}`,M=n=>`<b>${nnum(n)}</b> ${n===1?'movie':'movies'}`;$('#xcount').innerHTML=ns&&nf?`${M(nf)} and ${S(ns)}`:ns?S(ns):M(nf);}
   $('#xdist').innerHTML=cur.length?cnt.map((n,i)=>`<i style="width:${n/cur.length*100}%;background:var(${FCOL[i]})" title="${FIN_LAB[i]}: ${n}"></i>`).join(''):'';
   const fgv=cur.map(f=>f[FC.feel_good]).filter(v=>v!=null);
-  $('#xhappy').innerHTML=(fgv.length?`<b>feel good medio ${d3.mean(fgv).toFixed(1).replace('.',',')}</b> · ${pct(fgv.filter(v=>v>=7).length/fgv.length)} con 7 o más · `:'')+(cl?`${pct(cnt[0]/cl)} con final feliz`:'');
+  $('#xhappy').innerHTML=(fgv.length?`<b>average feel good ${d3.mean(fgv).toFixed(1)}</b> · ${pct(fgv.filter(v=>v>=7).length/fgv.length)} score 7+ · `:'')+(cl?`${pct(cnt[0]/cl)} with a happy ending`:'');
   $('#xgrid').innerHTML='';shown=0;more_();
 }
-const kvotes=n=>n==null?'':n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' M':n>=1e3?Math.round(n/1e3)+' mil':String(n);
+const kvotes=n=>n==null?'':n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?Math.round(n/1e3)+'K':String(n);
 function card(f){
-  const b=document.createElement('button');b.className='film';b.setAttribute('aria-label',`${f[0]} (${f[2]}), final ${FIN_LAB[f[5]].toLowerCase()}`);
-  b.innerHTML=`<div class="pw">${f[FC.poster]?`<img loading="lazy" decoding="async" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:`<div class="ph">${f[0]}</div>`}${f[3]||f[FC.tipo]?`<span class="flag">${f[FC.tipo]?'SERIE':''}${f[FC.tipo]&&f[3]?' · ':''}${f[3]===1?'ES':f[3]===2?'US·ES':''}</span>`:''}${f[FC.feel_good]!=null?`<span class="fgb" style="background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</span>`:''}<i class="fb" style="background:var(${FCOL[f[5]]})"></i></div><div class="t">${f[0]}</div><div class="y">${f[2]}${f[FC.anio_en_curso]?' · en curso':''}${f[FC.imdb_nota]!=null?` · <span class="imdb">★ ${String(f[FC.imdb_nota]).replace('.',',')}</span> <span class="vv">${kvotes(f[FC.imdb_votos])}</span>`:''}</div>`;
+  const b=document.createElement('button');b.className='film';b.setAttribute('aria-label',`${f[0]} (${f[2]}), ${FIN_LAB[f[5]].toLowerCase()} ending`);
+  b.innerHTML=`<div class="pw">${f[FC.poster]?`<img loading="lazy" decoding="async" src="https://image.tmdb.org/t/p/w185${f[FC.poster]}" alt="">`:`<div class="ph">${f[0]}</div>`}${f[FC.tipo]?`<span class="flag">SERIES</span>`:''}${f[FC.feel_good]!=null?`<span class="fgb" style="background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}</span>`:''}<i class="fb" style="background:var(${FCOL[f[5]]})"></i></div><div class="t">${f[0]}</div><div class="y">${f[2]}${f[FC.anio_en_curso]?' · in progress':''}${f[FC.imdb_nota]!=null?` · <span class="imdb">★ ${f[FC.imdb_nota]}</span> <span class="vv">${kvotes(f[FC.imdb_votos])}</span>`:''}</div>`;
   b.onclick=()=>detail(f);return b}
-function more_(){const frag=document.createDocumentFragment();cur.slice(shown,shown+PAGE).forEach(f=>frag.appendChild(card(f)));$('#xgrid').appendChild(frag);shown+=PAGE;const left=cur.length-shown;$('#more').hidden=left<=0;$('#more').textContent=`Cargar ${Math.min(PAGE,left)} más · quedan ${nnum(Math.max(0,left))}`}
+function more_(){const frag=document.createDocumentFragment();cur.slice(shown,shown+PAGE).forEach(f=>frag.appendChild(card(f)));$('#xgrid').appendChild(frag);shown+=PAGE;const left=cur.length-shown;$('#more').hidden=left<=0;$('#more').textContent=`Load ${Math.min(PAGE,left)} more · ${nnum(Math.max(0,left))} left`}
 $('#more').onclick=more_;
-function meter(v){if(v==null)return '<span class="small">sin dato</span>';const i=Math.round(v)+2;return `<span class="meter">${[0,1,2,3,4].map(k=>`<i style="${k===i?`background:var(${v>0?'--feliz':v<0?'--trag':'--amb'})`:''}"></i>`).join('')}</span> <span class="small">${nf(v,1)}</span>`}
-const TONO_LAB={ESPERANZA:'Esperanza',ALIVIO:'Alivio',CONEXION:'Conexión',RESIGNACION:'Resignación',DESESPERANZA:'Desesperanza',NO_CLARO:'No está claro'};
+function meter(v){if(v==null)return '<span class="small">no data</span>';const i=Math.round(v)+2;return `<span class="meter">${[0,1,2,3,4].map(k=>`<i style="${k===i?`background:var(${v>0?'--feliz':v<0?'--trag':'--amb'})`:''}"></i>`).join('')}</span> <span class="small">${nf(v,1)}</span>`}
+const TONO_LAB={ESPERANZA:'Hope',ALIVIO:'Relief',CONEXION:'Connection',RESIGNACION:'Resignation',DESESPERANZA:'Hopelessness',NO_CLARO:'Unclear'};
 const FICHAS={};
-const WLANG={es:'español',en:'inglés',ca:'catalán',gl:'gallego',eu:'euskera',fr:'francés',it:'italiano',pt:'portugués'};
+const WLANG={es:'Spanish',en:'English',ca:'Catalan',gl:'Galician',eu:'Basque',fr:'French',it:'Italian',pt:'Portuguese'};
 async function ficha(y){if(!FICHAS[y])FICHAS[y]=fetch(`fichas/${y}.json`).then(r=>r.json());return FICHAS[y]}
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
-function notaHTML(lab,n){if(!n||!n[1])return '';const i=FIN_LAB.map(x=>norm(x).replace(/ /g,'_').toUpperCase()).indexOf(n[0]);
+function notaHTML(lab,n){if(!n||!n[1])return '';const i=F.finals.indexOf(n[0]);
   return `<div class="nota"><span class="who">${lab}</span>${n[0]?`<span class="chip ${['feliz','agri','amb','trag','amb'][i<0?4:i]}">${FIN_LAB[i<0?4:i]}</span>`:''} ${esc(n[1])}</div>`}
 async function detail(f){
   const isS=f[FC.tipo]===1;
   const c=k=>f[FC[k]]<0?'—':(LAB[F.cats[k][f[FC[k]]]]||F.cats[k][f[FC[k]]]);
-  const paises=f[FC.paises_trama].map(i=>i>=0?F.paises[i]:'otro').join(', ')||'—';
+  const paises=f[FC.paises_trama].map(i=>i>=0?(PAIS_EN[F.paises[i]]||F.paises[i]):'other').join(', ')||'—';
   const rels=f[FC.relaciones].map(i=>LAB[F.relaciones[i]]).join(', ')||'—';
-  $('#xdbody').innerHTML=`<div class="dl"><div>${f[FC.poster]?`<img src="https://image.tmdb.org/t/p/w342${f[FC.poster]}" alt="Carátula de ${esc(f[0])}">`:''}</div><div>
-   <div class="kicker" style="margin-bottom:6px">${isS?'Serie · ':''}${f[2]} · ${PAIS[f[3]]} · ${F.genres[f[4]]}</div>
-   <h3 style="font-size:28px;margin-bottom:4px">${esc(f[0])}</h3>${f[1]?`<div class="small">${esc(f[1])}</div>`:''}
-   <p style="margin:12px 0 0"><span class="chip ${['feliz','agri','amb','trag','amb'][f[5]]}">${FIN_LAB[f[5]]}</span> ${isS?'<span class="small">final de la serie (o último punto descrito)</span>':`<span class="small">cierre: ${TONO_LAB[F.tones[f[FC.tono_cierre]]]||'—'}</span>`}</p>
-   <p class="imdbrow">${f[FC.imdb_nota]!=null?`<span class="imdbbadge">IMDb</span> <b>★ ${String(f[FC.imdb_nota]).replace('.',',')}</b> · ${nnum(f[FC.imdb_votos])} votos · n.º ${f[FC.rango_votos_anio]} en votos de ${f[2]}${f[3]===1?' (España)':''}`:''} <a href="https://www.imdb.com/title/${f[FC.tconst]}/" target="_blank" rel="noopener">Ficha en IMDb ↗</a>${f[FC.anio_en_curso]?' <span class="small">· estreno de 2026: votos y etiquetas provisionales, fuera del análisis</span>':''}</p>
-   <div style="display:flex;gap:18px;align-items:center;margin-top:14px;flex-wrap:wrap">${f[FC.feel_good]!=null?`<div><div class="small">Feel good</div><div class="bigfg" style="color:${fgTxtCol(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}<span class="small">/10</span></div></div>`:'<div class="small">Feel good: el resumen no permite juzgarlo</div>'}${f[FC.utopia]!=null?`<div><div class="small">Sociedad (0 distopía · 10 utopía)</div><div class="bigfg" style="font-size:28px">${fgTxt(f[FC.utopia])}</div></div>`:''}${f[FC.publico]>=0?`<div><div class="small">Público</div><b>${PUB_LAB[F.publicos[f[FC.publico]]]}</b></div>`:''}</div>
+  $('#xdbody').innerHTML=`<div class="dl"><div>${f[FC.poster]?`<img src="https://image.tmdb.org/t/p/w342${f[FC.poster]}" alt="Poster for ${esc(f[0])}">`:''}</div><div>
+   <div class="kicker" style="margin-bottom:6px">${isS?'TV series · ':''}${f[2]} · ${T(F.genres[f[4]])}</div>
+   <h3 style="font-size:28px;margin-bottom:4px">${esc(f[0])}</h3>${f[1]&&f[1]!==f[0]?`<div class="small">${esc(f[1])}</div>`:''}
+   <p style="margin:12px 0 0"><span class="chip ${['feliz','agri','amb','trag','amb'][f[5]]}">${FIN_LAB[f[5]]}</span> ${isS?'<span class="small">series finale (or the last point described)</span>':`<span class="small">closing note: ${TONO_LAB[F.tones[f[FC.tono_cierre]]]||'—'}</span>`}</p>
+   <p class="imdbrow">${f[FC.imdb_nota]!=null?`<span class="imdbbadge">IMDb</span> <b>★ ${f[FC.imdb_nota]}</b> · ${nnum(f[FC.imdb_votos])} votes · #${f[FC.rango_votos_anio]} by votes in ${f[2]}`:''} <a href="https://www.imdb.com/title/${f[FC.tconst]}/" target="_blank" rel="noopener">IMDb page ↗</a>${f[FC.anio_en_curso]?' <span class="small">· 2026 release: votes and labels are provisional and excluded from the analysis</span>':''}</p>
+   <div style="display:flex;gap:18px;align-items:center;margin-top:14px;flex-wrap:wrap">${f[FC.feel_good]!=null?`<div><div class="small">Feel good</div><div class="bigfg" style="color:${fgTxtCol(f[FC.feel_good])}">${fgTxt(f[FC.feel_good])}<span class="small">/10</span></div></div>`:'<div class="small">Feel good: the summary isn’t enough to judge</div>'}${f[FC.utopia]!=null?`<div><div class="small">Society (0 dystopia · 10 utopia)</div><div class="bigfg" style="font-size:28px">${fgTxt(f[FC.utopia])}</div></div>`:''}${f[FC.publico]>=0?`<div><div class="small">Audience</div><b>${PUB_LAB[F.publicos[f[FC.publico]]]}</b></div>`:''}</div>
    <div id="xfg"></div>
-   <div id="xnotes"><p class="small">Cargando las notas…</p></div>
-   <dl><dt>Optimismo de los personajes</dt><dd>${meter(f[6])}</dd><dt>Tono general</dt><dd>${meter(f[7])}</dd>
-   ${isS?'':`<dt>Protagonista</dt><dd>${c('genero_protagonista')} · ${c('edad_protagonista')}</dd><dt>Momento vital</dt><dd>${c('momento_vital')}</dd>
-   <dt>Estado civil</dt><dd>${c('estado_civil')}</dd><dt>Clase social</dt><dd>${c('clase_social')}</dd>
-   <dt>Relaciones</dt><dd>${rels}</dd><dt>Especulativa</dt><dd>${c('especulativa')}</dd><dt>Época</dt><dd>${c('epoca_trama')}</dd>
-   <dt>Dónde pasa</dt><dd>${paises}</dd><dt>Humor</dt><dd>${c('humor')}</dd>`}</dl>
+   <div id="xnotes"><p class="small">Loading the notes…</p></div>
+   <dl><dt>Characters’ optimism</dt><dd>${meter(f[6])}</dd><dt>Overall tone</dt><dd>${meter(f[7])}</dd>
+   ${isS?'':`<dt>Protagonist</dt><dd>${c('genero_protagonista')} · ${c('edad_protagonista')}</dd><dt>Life stage</dt><dd>${c('momento_vital')}</dd>
+   <dt>Relationship status</dt><dd>${c('estado_civil')}</dd><dt>Social class</dt><dd>${c('clase_social')}</dd>
+   <dt>Relationships</dt><dd>${rels}</dd><dt>Speculative</dt><dd>${c('especulativa')}</dd><dt>Era</dt><dd>${c('epoca_trama')}</dd>
+   <dt>Where it’s set</dt><dd>${paises}</dd><dt>Humor</dt><dd>${c('humor')}</dd>`}</dl>
    <div id="xsyn"></div>
-   <p class="note">Etiquetas de dos modelos de lenguaje; los desacuerdos sobre el final los resolvió un tercero. ${f[FC.tmdb]?`<a href="https://www.themoviedb.org/${isS?'tv':'movie'}/${f[FC.tmdb]}" target="_blank" rel="noopener">Ficha en TMDB</a>`:''}</p></div></div>`;
+   <p class="note">Labels from two language models; disagreements about the ending were settled by a third. ${f[FC.tmdb]?`<a href="https://www.themoviedb.org/${isS?'tv':'movie'}/${f[FC.tmdb]}" target="_blank" rel="noopener">TMDB page</a>`:''}</p></div></div>`;
   $('#xd').showModal();
   try{
     const r=(await ficha(f[2]))[f[FC.tconst]];if(!r)throw 0;
-    const more=h=>h?`<details class="more2"><summary>Ver la segunda anotación${h.includes('Árbitro')?' y el árbitro':''}</summary>${h}</details>`:'';
+    const more=h=>h?`<details class="more2"><summary>Show the second annotation${h.includes('Referee')?' and the referee':''}</summary>${h}</details>`:'';
     const fn=(lab,t)=>t?`<div class="nota"><span class="who">${lab}</span>${esc(t)}</div>`:'';
-    $('#xfg').innerHTML=(r.fA||r.fB?`<h4 class="nh">¿Por qué es (o no) feel good?</h4>${r.fM?fn('Nota ajustada a mano (con información externa al resumen)',r.fM)+more(fn('Anotación original',r.fA)+fn('Segundo anotador',r.fB)):fn('Anotación',r.fA||r.fB)+more(fn('Segundo anotador',r.fA?r.fB:null)+fn('Árbitro',r.fJ))}`:'')+
-      (r.uA||r.uB?`<details class="syn" style="margin-top:8px"><summary>¿Qué sociedad muestra?</summary>${fn('Anotación',r.uA||r.uB)}${more(fn('Segundo anotador',r.uA?r.uB:null)+fn('Árbitro',r.uJ))}</details>`:'');
-    $('#xnotes').innerHTML=`<h4 class="nh">${isS?'¿Cómo acaba (o dónde se queda)?':'¿Por qué este final?'}</h4>${notaHTML('Anotación',r.A&&r.A[1]?r.A:r.B)}${more(notaHTML('Segundo anotador',r.A&&r.A[1]?r.B:null)+notaHTML('Árbitro',r.J))}`;
-    if(r.l==='tmdb'){$('#xsyn').innerHTML=`<p class="note" style="margin-top:14px">Para esta película no había resumen del argumento en Wikipedia: los anotadores leyeron la sinopsis comercial de TMDB, que suele ser breve y no contar el final. <a href="${esc(r.u)}" target="_blank" rel="noopener">Leer la sinopsis en TMDB ↗</a></p>`}
+    $('#xfg').innerHTML=(r.fA||r.fB?`<h4 class="nh">Why is it (or isn’t it) feel good?</h4>${r.fM?fn('Score adjusted by hand (using information beyond the summary)',r.fM)+more(fn('Original annotation (annotator A)',r.fA)+fn('Annotator B',r.fB)):fn('Annotation',r.fA||r.fB)+more(fn('Annotator B',r.fA?r.fB:null)+fn('Referee',r.fJ))}`:'')+
+      (r.uA||r.uB?`<details class="syn" style="margin-top:8px"><summary>What kind of society does it show?</summary>${fn('Annotation',r.uA||r.uB)}${more(fn('Annotator B',r.uA?r.uB:null)+fn('Referee',r.uJ))}</details>`:'');
+    $('#xnotes').innerHTML=`<h4 class="nh">${isS?'How does it end (or where does it leave off)?':'Why this ending?'}</h4>${notaHTML('Annotation',r.A&&r.A[1]?r.A:r.B)}${more(notaHTML('Annotator B',r.A&&r.A[1]?r.B:null)+notaHTML('Referee',r.J))}`;
+    if(r.l==='tmdb'){$('#xsyn').innerHTML=`<p class="note" style="margin-top:14px">Wikipedia had no plot summary for this title, so the annotators read the TMDB marketing synopsis, which tends to be short and doesn’t reveal the ending. <a href="${esc(r.u)}" target="_blank" rel="noopener">Read the synopsis on TMDB ↗</a></p>`}
     else if(r.s){const paras=r.s.split(/\n+/).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join('');
-      $('#xsyn').innerHTML=`<details class="syn"><summary>Leer el resumen que usamos (Wikipedia en ${WLANG[r.l]||r.l}) · contiene spoilers</summary><div class="syntext">${paras}</div>
-      <p class="note">Texto de Wikipedia, <a href="${esc(r.u)}" target="_blank" rel="noopener">revisión usada</a>, bajo licencia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Los anotadores lo leyeron sin título ni año (y recortado por el medio si pasaba de 1.100 palabras).</p></details>`}
-  }catch(e){$('#xnotes').innerHTML='<p class="small">No se pudieron cargar las notas.</p>'}
+      $('#xsyn').innerHTML=`<details class="syn"><summary>Read the summary we used (Wikipedia in ${WLANG[r.l]||r.l}) · contains spoilers</summary><div class="syntext">${paras}</div>
+      <p class="note">Wikipedia text, <a href="${esc(r.u)}" target="_blank" rel="noopener">revision used</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>. The annotators read it without title or year (and trimmed in the middle if it ran longer than 1,100 words).</p></details>`}
+  }catch(e){$('#xnotes').innerHTML='<p class="small">Couldn’t load the notes.</p>'}
 }
 $('#xclose').onclick=()=>$('#xd').close();$('#xd').onclick=e=>{if(e.target===$('#xd'))$('#xd').close()};
 run();
 
-// ---- anexo E: dispersión feel good × IMDb
+// ---- appendix E: feel good × IMDb scatter
 let scT=1;
 $$('[data-sct]').forEach(b=>b.onclick=()=>{scT=+b.dataset.sct;$$('[data-sct]').forEach(x=>x.setAttribute('aria-pressed',x===b));drawScat()});
 $('#scPop').onchange=()=>drawScat();
@@ -1044,49 +1017,49 @@ function drawScat(){
   svg.append('g').attr('class','grid').selectAll('line').data([0,2,4,6,8,10]).join('line').attr('x1',m.l).attr('x2',W-m.r).attr('y1',y).attr('y2',y);
   svg.append('g').selectAll('text').data([0,2,4,6,8,10]).join('text').attr('x',m.l-8).attr('y',d=>y(d)+4).attr('text-anchor','end').style('font-size','12px').text(d=>d);
   svg.append('g').selectAll('text').data([2,4,6,8,10]).join('text').attr('x',x).attr('y',H-m.b+20).attr('text-anchor','middle').style('font-size','12px').text(d=>d);
-  svg.append('text').attr('x',(m.l+W-m.r)/2).attr('y',H-6).attr('text-anchor','middle').style('font-size','12.5px').style('font-weight',700).text('Nota en IMDb (★) →');
+  svg.append('text').attr('x',(m.l+W-m.r)/2).attr('y',H-6).attr('text-anchor','middle').style('font-size','12.5px').style('font-weight',700).text('IMDb rating (★) →');
   svg.append('text').attr('x',m.l-36).attr('y',m.t-4).style('font-size','12.5px').style('font-weight',700).text('Feel good ↑');
   const P2=pts.map(f=>({f,cx:x(f[FC.imdb_nota]+hashJ(f[FC.tconst]+'i')*.08),cy:y(f[FC.feel_good]+hashJ(f[FC.tconst])*.42),r:rv(f[FC.imdb_votos]||0),c:css((f[FC.tipo]??0)?'--ser':'--pel')})).sort((a,b)=>b.r-a.r);
   svg.append('g').selectAll('circle').data(P2).join('circle').attr('cx',d=>d.cx).attr('cy',d=>d.cy).attr('r',d=>d.r).attr('fill',d=>d.c).attr('fill-opacity',.42).attr('stroke',d=>d.c).attr('stroke-opacity',.75).attr('stroke-width',.7);
-  // media por nota feel good (bins de 1 punto)
+  // average feel good per IMDb rating (half-point bins)
   const bins=d3.range(2,10.01,.5).map(v=>{const s=pts.filter(f=>Math.abs(f[FC.imdb_nota]-v)<=.25);return s.length>=8?[v,d3.mean(s,f=>f[FC.feel_good])]:null}).filter(Boolean);
   svg.append('path').datum(bins).attr('fill','none').attr('stroke','var(--bg)').attr('stroke-width',7).attr('d',d3.line().curve(d3.curveMonotoneX).x(d=>x(d[0])).y(d=>y(d[1])));
   svg.append('path').datum(bins).attr('fill','none').attr('stroke',css('--ink')).attr('stroke-width',3).attr('d',d3.line().curve(d3.curveMonotoneX).x(d=>x(d[0])).y(d=>y(d[1])));
-  // atípicos: muy votados y lejos de la media de su nota feel good
+  // outliers: heavily voted and far from the average
   const mean=new Map(bins.map(b=>[b[0],b[1]])),mfg=d3.mean(pts,f=>f[FC.feel_good]);
   const cand=P2.filter(d=>(d.f[FC.imdb_votos]||0)>=(pop?3e5:1e5)).map(d=>({...d,res:d.f[FC.imdb_nota]-7}));
   const pick=[...cand.filter(d=>d.f[FC.feel_good]<=3).sort((a,b)=>b.res-a.res).slice(0,3),...cand.filter(d=>d.f[FC.feel_good]>=7).sort((a,b)=>a.res-b.res).slice(0,2),...cand.filter(d=>d.f[FC.feel_good]>=8).sort((a,b)=>b.res-a.res).slice(0,2)];
   const lab=svg.append('g');
   const placed=[],pk=(W<520?pick.slice(0,2).concat(pick.slice(3,4),pick.slice(5,6)):pick).filter((d,i,arr)=>arr.findIndex(z=>z.f===d.f)===i);
-  pk.forEach(d=>{const right=d.cx<W*.62,txt=`${d.f[0]} (${String(d.f[FC.imdb_nota]).replace('.',',')})`,tw=txt.length*6.6;
+  pk.forEach(d=>{const right=d.cx<W*.62,txt=`${d.f[0]} (${d.f[FC.imdb_nota]})`,tw=txt.length*6.6;
     let tx=d.cx+(right?d.r+6:-d.r-6),ty=d.cy+4;const box=y0=>right?[tx,y0-11,tx+tw,y0+3]:[tx-tw,y0-11,tx,y0+3];
     for(let k=0;k<12&&placed.some(q=>{const b=box(ty);return !(b[2]<q[0]||b[0]>q[2]||b[3]<q[1]||b[1]>q[3])});k++)ty+=(k%2?-1:1)*(k+1)*15;
     placed.push(box(ty));
     lab.append('circle').attr('cx',d.cx).attr('cy',d.cy).attr('r',d.r+2.5).attr('fill','none').attr('stroke',css('--ink')).attr('stroke-width',1.4);
     if(Math.abs(ty-4-d.cy)>6)lab.append('line').attr('x1',d.cx).attr('y1',d.cy).attr('x2',tx).attr('y2',ty-4).attr('stroke',css('--ink')).attr('stroke-width',.8);
     lab.append('text').attr('x',tx).attr('y',ty).attr('text-anchor',right?'start':'end').style('font-size','12px').style('font-weight',700).style('fill','var(--ink)').style('paint-order','stroke').style('stroke','var(--bg)').style('stroke-width','4px').text(txt)});
-  // hover con Delaunay
+  // hover via Delaunay
   const del=d3.Delaunay.from(P2,d=>d.cx,d=>d.cy),hl=svg.append('circle').attr('fill','none').attr('stroke',css('--ink')).attr('stroke-width',2.5).style('pointer-events','none').attr('r',0);
   const near=e=>{const [mx,my]=d3.pointer(e,svg.node()),vb=svg.node().viewBox.baseVal,k=vb.width/svg.node().clientWidth;const i=del.find(mx*k,my*k);if(i<0)return null;const d=P2[i];return Math.hypot(d.cx-mx*k,d.cy-my*k)<Math.max(14,d.r+6)?d:null};
   svg.on('mousemove',e=>{const d=near(e);if(!d){hl.attr('r',0);hideTip();svg.style('cursor',null);return}svg.style('cursor','pointer');hl.attr('cx',d.cx).attr('cy',d.cy).attr('r',d.r+4);const f=d.f;
-      showTip(e,`<div style="display:flex;gap:9px;align-items:center">${f[FC.poster]?`<img src="https://image.tmdb.org/t/p/w92${f[FC.poster]}" style="width:46px;border-radius:4px">`:''}<div><b>${f[0]}</b><br>${(f[FC.tipo]??0)?'Serie':'Película'} · ${f[2]}<br><span style="display:inline-block;padding:0 6px;border-radius:4px;background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])};font-weight:700">${fgTxt(f[FC.feel_good])}</span> feel good · ★ ${String(f[FC.imdb_nota]).replace('.',',')} (${kvotes(f[FC.imdb_votos])})</div></div>`)})
+      showTip(e,`<div style="display:flex;gap:9px;align-items:center">${f[FC.poster]?`<img src="https://image.tmdb.org/t/p/w92${f[FC.poster]}" style="width:46px;border-radius:4px">`:''}<div><b>${f[0]}</b><br>${(f[FC.tipo]??0)?'TV series':'Movie'} · ${f[2]}<br><span style="display:inline-block;padding:0 6px;border-radius:4px;background:${fgCol(f[FC.feel_good])};color:${fgInk(f[FC.feel_good])};font-weight:700">${fgTxt(f[FC.feel_good])}</span> feel good · ★ ${f[FC.imdb_nota]} (${kvotes(f[FC.imdb_votos])})</div></div>`)})
     .on('mouseleave',()=>{hl.attr('r',0);hideTip()})
     .on('click',e=>{const d=near(e);if(d)detail(d.f)});
   const r=pearson(pts.map(f=>f[FC.feel_good]),pts.map(f=>f[FC.imdb_nota]));
-  const what=scT===1?'las series':scT===0?'las películas':'series y películas';
-  $('#scText').innerHTML=`Si a quien vota en IMDb le gustara más lo <i>feel good</i>, las series y películas mejor valoradas (a la derecha) estarían más arriba. No lo están: entre ${what}${pop?' muy votadas':''} (${nnum(pts.length)} títulos), la correlación entre las dos notas es de <b>${r.toFixed(2).replace('.',',').replace('-','−')}</b>, prácticamente nula. Hay obras maestras sombrías y joyas amables, y también lo contrario.`;
+  const what=scT===1?'TV series':scT===0?'movies':'TV series and movies';
+  $('#scText').innerHTML=`If IMDb voters preferred <i>feel good</i>, the best-rated shows and movies (on the right) would sit higher up. They don’t: among ${what}${pop?' with lots of votes':''} (${nnum(pts.length)} titles), the correlation between the two scores is <b>${r.toFixed(2).replace('-','−')}</b>, practically zero. There are bleak masterpieces and kindhearted gems, and plenty of the opposite.`;
 }
 
-// ---- descarga de gráficos como imagen (título, leyenda y fuente)
+// ---- download charts as images (title, legend and source)
 const DL_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>';
-const SCF_CH=new Set(['sercoh','yearly','serforest','famshare','famfg','famdec']);
+const SCF_CH=new Set();
 const SVG_PROPS=['fill','stroke','stroke-width','stroke-opacity','fill-opacity','opacity','stroke-dasharray','stroke-linecap','stroke-linejoin','font-family','font-size','font-weight','font-style','letter-spacing','text-anchor','dominant-baseline','visibility','display'];
 const sib=(el,dir)=>{let e=el[dir];while(e&&e.classList.contains('dlbtn'))e=e[dir];return e};
 function legendOf(svg){if(svg.id==='waffle')return $('#wlegend');return [sib(svg,'nextElementSibling'),sib(svg,'previousElementSibling')].find(e=>e&&e.matches('.pair,.legend'))}
 function titleOf(svg){if(svg.id==='waffle')return wTitle();return svg.dataset.title||(svg.closest('section,.scrolly')?.querySelector('h2')?.textContent||'').trim()}
 function subOf(svg){
-  if(svg.id==='waffle')return 'Las series estadounidenses más votadas en IMDb por década de estreno, coloreadas según su nota feel good (0-10). Debajo, el porcentaje con 7 o más.';
-  return (svg.getAttribute('aria-label')||'')+(SCF_CH.has(svg.id)?(scf==='US'?' · EE. UU.':' · España'):'');
+  if(svg.id==='waffle')return 'The most-voted US TV series on IMDb by premiere decade, colored by feel good score (0-10). Below each column, the share scoring 7 or higher.';
+  return svg.getAttribute('aria-label')||'';
 }
 function inlineSvg(src){
   const cl=src.cloneNode(true),a=[src,...src.querySelectorAll('*')],b=[cl,...cl.querySelectorAll('*')];
@@ -1120,21 +1093,21 @@ async function exportChart(svg){
   if(items.length){ctx.font=LF;rows.forEach(r=>{r.forEach(([ox,col,t])=>{ctx.fillStyle=col;ctx.beginPath();ctx.roundRect?ctx.roundRect(pad+ox,y+2,12,12,2):ctx.rect(pad+ox,y+2,12,12);ctx.fill();ctx.fillStyle=ink;ctx.fillText(t,pad+ox+18,y)});y+=22});y+=6}
   ctx.drawImage(img,(Wc-w)/2,y,w,h);y+=h+24;
   ctx.strokeStyle=css('--rule');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad,y-10);ctx.lineTo(Wc-pad,y-10);ctx.stroke();
-  ctx.font=`700 13px ${bodyF}`;ctx.fillStyle=ink;const src='Fuente: feelgood.victoriano.me';ctx.fillText(src,pad,y);
-  ctx.font=FF;ctx.fillStyle=muted;ctx.fillText('  ·  Datos: IMDb, TMDB y Wikipedia; notas de anotadores IA',pad+ctx.measureText(src).width+4,y);
+  ctx.font=`700 13px ${bodyF}`;ctx.fillStyle=ink;const src='Source: feelgood.victoriano.me';ctx.fillText(src,pad,y);
+  ctx.font=FF;ctx.fillStyle=muted;ctx.fillText('  ·  Data: IMDb, TMDB and Wikipedia; scores by AI annotators',pad+ctx.measureText(src).width+4,y);
   URL.revokeObjectURL(url);
-  c.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`feelgood-${svg.id}${SCF_CH.has(svg.id)?'-'+scf.toLowerCase():''}.png`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)},'image/png');
+  c.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`feelgood-${svg.id}-en.png`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)},'image/png');
 }
 function addDlButtons(){
   $$('svg.chart, #waffle').forEach(svg=>{
     if(svg.closest('#quad')||svg.dataset.dl)return;svg.dataset.dl=1;
-    const b=document.createElement('button');b.type='button';b.className='dlbtn';b.innerHTML=DL_ICON+'Descargar imagen';b.setAttribute('aria-label','Descargar el gráfico como imagen');
+    const b=document.createElement('button');b.type='button';b.className='dlbtn';b.innerHTML=DL_ICON+'Download image';b.setAttribute('aria-label','Download chart as image');
     b.onclick=()=>exportChart(svg).catch(e=>console.error('export',e));
     let after=svg;if(svg.id==='waffle')after=$('#wnote');else{const n=sib(svg,'nextElementSibling');if(n&&n.matches('.pair,.legend'))after=n}
     after.after(b);
   });
 }
-function redraw(){drawWaffle();drawCmp();drawForest();drawCompo();drawSlope();drawSub();drawMood();drawHeat();drawQuad();drawEsUs();drawScat()}
+function redraw(){drawWaffle();drawCmp();drawForest();drawCompo();drawSlope();drawSub();drawMood();drawHeat();drawQuad();drawScat()}
 redraw();addDlButtons();
 let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,200)});
 })();
