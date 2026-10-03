@@ -6,6 +6,7 @@ Proyecto reproducible para contrastar con datos la afirmación de que el cine po
 * **Informe completo:** [`reports/informe.md`](reports/informe.md)
 * **Manual de anotación (versión 1.0, congelada):** [`docs/manual_anotacion.md`](docs/manual_anotacion.md)
 * **Registro de decisiones:** [`docs/registro_decisiones.md`](docs/registro_decisiones.md) · **Diccionario de datos:** [`docs/diccionario_datos.md`](docs/diccionario_datos.md)
+* **Dataset por título (CSV y Parquet):** [`data/dataset/`](data/dataset/)
 * **Diseño de la encuesta (no ejecutada):** [`docs/diseno_encuesta.md`](docs/diseno_encuesta.md)
 
 > **Estado (2026-09-29).** Primera versión exploratoria. 994 películas estadounidenses (1980-2024) anotadas por **dos modelos de lenguaje independientes con adjudicación, sin validación humana todavía** (material preparado en `annotation/validacion_humana/`). La parte sobre la nostalgia del público **no se ha probado**.
