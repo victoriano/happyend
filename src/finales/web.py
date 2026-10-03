@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import re
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -91,6 +92,7 @@ def main() -> None:
     out.parent.mkdir(exist_ok=True)
     main_v2()
     main_fichas()
+    main_dataset()
 
 
 
@@ -323,6 +325,40 @@ def build_fichas() -> dict[int, dict]:
                 "fM": txt(getattr(r, "feel_good_por_que_M", None)),
                 "uA": txt(r.utopia_por_que_A), "uB": txt(r.utopia_por_que_B), "uJ": txt(r.utopia_por_que_J)}
     return out
+
+
+def build_dataset(src: Path | None = None) -> pd.DataFrame:
+    """Tabla descargable (una fila por título) decodificando web/films.json."""
+    j = json.loads((src or ROOT / "web" / "films.json").read_text(encoding="utf-8"))
+    d = pd.DataFrame(j["films"], columns=j["cols"])
+    code = lambda s, lab: s.map(lambda i: lab[i] if isinstance(i, int) and 0 <= i < len(lab) else None)
+    out = pd.DataFrame({
+        "tconst": d.tconst, "titulo": d.titulo, "titulo_original": d.original.replace("", None),
+        "anio": d.anio, "tipo": d.tipo.map({0: "PELICULA", 1: "SERIE"}),
+        "pais_produccion": code(d.pais, ["US", "ES", "US+ES"]), "genero": code(d.genero, j["genres"]),
+        "final": code(d.final, j["finals"]), "tono_cierre": code(d.tono_cierre, j["tones"]),
+        "feel_good": d.feel_good, "utopia": d.utopia,
+        "optimismo_personajes": d.optimismo, "tono_general": d.tono, "publico": code(d.publico, j["publicos"]),
+    })
+    for k, lab in j["cats"].items():
+        out[k] = code(d[k], lab)
+    out["relaciones"] = d.relaciones.map(lambda xs: "|".join(j["relaciones"][i] for i in xs) or None)
+    out["paises_trama"] = d.paises_trama.map(
+        lambda xs: "|".join(j["paises"][i] if i >= 0 else "Otro" for i in xs) or None)
+    out["imdb_nota"], out["imdb_votos"] = d.imdb_nota, d.imdb_votos.astype("Int64")
+    out["rango_votos_anio"], out["anio_en_curso"] = d.rango_votos_anio, d.anio_en_curso.astype(bool)
+    out["tmdb_id"] = d.tmdb.replace(0, None).astype("Int64")
+    out["poster_url"] = d.poster.map(lambda p: f"https://image.tmdb.org/t/p/w342{p}" if p else None)
+    return out
+
+
+def main_dataset() -> None:
+    dd = ROOT / "web" / "datos"
+    dd.mkdir(parents=True, exist_ok=True)
+    df = build_dataset()
+    df.to_csv(dd / "happyend.csv", index=False)
+    df.to_parquet(dd / "happyend.parquet", index=False)
+    print("dataset", len(df), "filas")
 
 
 def main_fichas() -> None:
